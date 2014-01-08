@@ -1,0 +1,11 @@
+<!-- Indices written at Tue, 7 Jan 2014 22:39:29 CET -->
+
+<datastore-indexes>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Ctorzs" ancestor="false" source="auto">
+        <property name="torolt" direction="asc"/>
+        <property name="cikkszam" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

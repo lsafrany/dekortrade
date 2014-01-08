@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<datastore-indexes autoGenerate="true">
+
+    <datastore-index kind="Ctorzs" ancestor="false">
+    	<property name="cikkszam" direction="asc" /> 
+    	<property name="jel" direction="asc" /> 
+		<property name="torolt" direction="asc" /> 
+    </datastore-index> 
+
+</datastore-indexes>

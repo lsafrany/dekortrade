@@ -1,0 +1,19 @@
+.top
+{
+	background-color : #EFE3AF;
+} 
+
+.middle
+{
+	background-color : #FCF8E6;
+} 
+
+.bottom
+{
+	background-color : #7D3C3F;
+} 
+
+.version_label{
+  font-weight:normal;
+  font-style:italic;
+}	

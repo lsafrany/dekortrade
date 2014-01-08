@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>initServlet</servlet-name>
+    <servlet-class>hu.dekortrade99.server.Init</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>serviceServlet</servlet-name>
+    <servlet-class>hu.dekortrade99.server.DekorTrade99ServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>initServlet</servlet-name>
+    <url-pattern>/dekortrade99/init</url-pattern>
+  </servlet-mapping>
+    
+  <servlet-mapping>
+    <servlet-name>serviceServlet</servlet-name>
+    <url-pattern>/dekortrade99/service</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>DekorTrade99.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>
