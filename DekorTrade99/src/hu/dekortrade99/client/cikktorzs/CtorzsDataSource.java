@@ -57,6 +57,7 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceTextField(CtorzsConstants.CTORZS_JEL,
 				ctorzsLabels.ctorzs_jel());
+		field.setValueMap(ClientConstants.getJelek());
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CTORZS_BSULY,

@@ -1,7 +1,5 @@
 package hu.dekortrade99.client.cikktorzs;
 
-import java.util.LinkedHashMap;
-import com.smartgwt.client.widgets.Window;
 import hu.dekortrade99.client.ClientConstants;
 import hu.dekortrade99.client.CommonLabels;
 import hu.dekortrade99.client.DisplayRequest;
@@ -19,19 +17,20 @@ import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 public class Ctorzs {
 
@@ -48,7 +47,7 @@ public class Ctorzs {
 		DisplayRequest.counterInit();
 		VLayout ctorzsLayout = new VLayout();
 		ctorzsLayout.setStyleName("middle");
-		ctorzsLayout.setWidth("1000px");
+		ctorzsLayout.setWidth("1100px");
 
 		HLayout ctorzsFormLayout = new HLayout();
 		ctorzsFormLayout.setHeight("3%");
@@ -57,22 +56,16 @@ public class Ctorzs {
 
 		final DynamicForm ctorzsForm = new DynamicForm();
 		ctorzsForm.setNumCols(4);
-		ctorzsForm.setColWidths("25%", "25%", "25%", "*");
+		ctorzsForm.setColWidths("10%", "25%", "10%", "*");
 
-		final TextItem cikkszamItem = new TextItem();
+		final TextItem cikkszamItem = new TextItem();	
 		cikkszamItem.setTitle(ctorzsLabels.ctorzs_cikkszam());
 		cikkszamItem.setLength(15);
 
-		LinkedHashMap<String, String> jelMap = new LinkedHashMap<String, String>();
-		jelMap.put("DP", "DP");
-		jelMap.put("DS", "DS");
-		jelMap.put("MB", "MB");
-		jelMap.put("US", "US");
-		jelMap.put("UG", "UG");
-
 		final SelectItem jelSelectItem = new SelectItem();
+		jelSelectItem.setWidth("250");
 		jelSelectItem.setTitle(ctorzsLabels.ctorzs_jel());
-		jelSelectItem.setValueMap(jelMap);
+		jelSelectItem.setValueMap(ClientConstants.getJelek());
 
 		ctorzsForm.setFields(cikkszamItem, jelSelectItem);
 
@@ -161,8 +154,7 @@ public class Ctorzs {
 
 		ListGridField jelGridField = new ListGridField(
 				CtorzsConstants.CTORZS_JEL);
-		jelGridField.setAlign(Alignment.CENTER);
-		jelGridField.setWidth("8%");
+		jelGridField.setWidth("18%");
 
 		ListGridField bsulyGridField = new ListGridField(
 				CtorzsConstants.CTORZS_BSULY);

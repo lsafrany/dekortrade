@@ -5,7 +5,7 @@ import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable
 public class Kosar {
-	
+
 	@Persistent
 	private String rovidnev;
 

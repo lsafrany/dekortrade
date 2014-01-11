@@ -5,6 +5,10 @@ import hu.dekortrade99.client.CommonLabels;
 import hu.dekortrade99.client.DisplayRequest;
 import hu.dekortrade99.client.UserInfo;
 
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DSRequest;
@@ -18,6 +22,7 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -84,11 +89,15 @@ public class Archive {
 		ListGridField rendelesGridField = new ListGridField(
 				ArchiveConstants.RENDELT_RENDELES);
 	
+		ListGridField datumGridField = new ListGridField(
+				ArchiveConstants.RENDELT_DATUM);
+		datumGridField.setWidth("40%");
+	
 		ListGridField statuszGridField = new ListGridField(
 				ArchiveConstants.RENDELT_STATUSZ);
-		statuszGridField.setWidth("30%");
+		statuszGridField.setWidth("15%");
 		
-		rendeltGrid.setFields(rendelesGridField, statuszGridField);
+		rendeltGrid.setFields(rendelesGridField, datumGridField, statuszGridField);
 		
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
@@ -160,7 +169,26 @@ public class Archive {
 		
 		middleLayout.addMember(rendeltLayout);
 		middleLayout.addMember(rendeltcikkLayout);
+		
+		frissitIButton.addClickHandler(new ClickHandler() {  
+	    	public void onClick(ClickEvent event) {	    		
+	    		Criteria criteria = new Criteria();
+	    		criteria.setAttribute(ArchiveConstants.RENDELT_ROVIDNEV, UserInfo.userId);
+	    		rendeltGrid.invalidateCache();
+	    		rendeltGrid.fetchData(criteria);
+	    		rendeltcikkGrid.setData(new ListGridRecord[]{});
+  	    	}	
+        });         	    	    	 
 
+		rendeltGrid.addRecordClickHandler(new RecordClickHandler() {   
+            public void onRecordClick(RecordClickEvent event) {
+            	Criteria criteria = new Criteria();
+            	criteria.setAttribute(ArchiveConstants.RENDELTCIKK_ROVIDNEV, UserInfo.userId);
+            	criteria.setAttribute(ArchiveConstants.RENDELTCIKK_RENDELES, rendeltGrid.getSelectedRecord().getAttribute(ArchiveConstants.RENDELT_RENDELES));
+            	rendeltcikkGrid.fetchData(criteria);
+            }
+        });   
+	
 		return middleLayout;
 
 	}

@@ -11,7 +11,7 @@ public class RendeltcikkSer implements IsSerializable {
 	private String cikkszam;
 
 	private Integer exportkarton;
-
+	
 	public String getRovidnev() {
 		return rovidnev;
 	}

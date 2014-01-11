@@ -1,8 +1,9 @@
 package hu.dekortrade99.server.jdo;
 
+import java.util.Date;
+
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import java.util.Date;
 
 @PersistenceCapable
 public class Rendelt {

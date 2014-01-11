@@ -15,5 +15,6 @@ public interface OrderLabels extends Constants {
 	String torles();
 	
 	String veglegesites();
-
+	String veglegesitve();
+	
 }

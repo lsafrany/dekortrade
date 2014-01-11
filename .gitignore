@@ -69,5 +69,9 @@ DekorTrade/war/dekortrade
 DekorTrade99/war/dekortrade99
 
 
-DekorTrade/war/dekortrade/WEB-INF/deploy
-DekorTrade99/war/dekortrade99/WEB-INF/deploy
+DekorTrade/war/WEB-INF/deploy
+DekorTrade99/war/WEB-INF/deploy
+
+DekorTrade/war/WEB-INF/appengine-generated
+DekorTrade99/war/WEB-INF/appengine-generated
+

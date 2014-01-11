@@ -11,4 +11,10 @@ public interface CommonLabels extends Constants {
 	String loading();
 
 	String filter();
+	
+	String ok();
+	
+	String cancel();
+	
+	String sure();
 }

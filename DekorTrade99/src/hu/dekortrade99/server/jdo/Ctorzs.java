@@ -56,7 +56,7 @@ public class Ctorzs {
 		this.kepek = kepek;
 		this.torolt = torolt;
 	}
-
+	
 	public String getCikkszam() {
 		return cikkszam;
 	}

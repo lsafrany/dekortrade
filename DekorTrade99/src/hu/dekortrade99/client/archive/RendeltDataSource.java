@@ -43,6 +43,7 @@ public class RendeltDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceTextField(ArchiveConstants.RENDELT_STATUSZ,
 				archiveLabels.rendelt_statusz());
+		field.setValueMap(ArchiveConstants.getStatusz());
 		addField(field);
 
 	}

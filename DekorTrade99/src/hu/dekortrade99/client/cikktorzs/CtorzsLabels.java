@@ -6,8 +6,6 @@ public interface CtorzsLabels extends Constants {
 
 	String ctorzs();
 
-	String ctorzs_key();
-
 	String ctorzs_cikkszam();
 
 	String ctorzs_megnevezes();

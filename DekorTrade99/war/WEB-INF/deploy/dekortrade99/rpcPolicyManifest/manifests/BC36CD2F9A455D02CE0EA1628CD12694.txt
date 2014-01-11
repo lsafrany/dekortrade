@@ -1,2 +1,0 @@
-serviceClass: hu.dekortrade99.client.DekorTrade99Service
-path: 3B48894E184B9A69637FE6F5C0569320.gwt.rpc

@@ -40,4 +40,12 @@ public interface DekorTrade99Service extends RemoteService {
 	ArrayList<RendeltcikkSer> getRendeltcikk(String rovidnev,String rendeles)
 			throws IllegalArgumentException, SQLExceptionSer;
 
+	KosarSer addKosar(KosarSer kosarSer) throws IllegalArgumentException, SQLExceptionSer;
+
+	KosarSer removeKosar(KosarSer kosarSer) throws IllegalArgumentException, SQLExceptionSer;	
+	
+	KosarSer updateKosar(KosarSer kosarSer) throws IllegalArgumentException, SQLExceptionSer;	
+
+	String commitKosar(String rovidnev) throws IllegalArgumentException, SQLExceptionSer;	
+
 }
