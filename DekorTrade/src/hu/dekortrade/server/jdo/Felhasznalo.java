@@ -1,0 +1,63 @@
+package hu.dekortrade.server.jdo;
+
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+@PersistenceCapable
+public class Felhasznalo implements IsSerializable {
+	
+	@Persistent
+	private String rovidnev;
+
+	@Persistent
+	private String nev;
+
+	@Persistent
+	private String jelszo;
+
+	@Persistent
+	private Boolean torolt;
+
+	public Felhasznalo(String rovidnev,String nev,String jelszo,Boolean torolt) {
+		this.rovidnev = rovidnev;
+		this.nev = nev;
+		this.jelszo = jelszo;
+		this.torolt = torolt;
+	}
+
+	public String getRovidnev() {
+		return rovidnev;
+	}
+
+	public void setRovidnev(String rovidnev) {
+		this.rovidnev = rovidnev;
+	}
+
+	public String getNev() {
+		return nev;
+	}
+
+	public void setNev(String nev) {
+		this.nev = nev;
+	}
+
+	public String getJelszo() {
+		return jelszo;
+	}
+
+	public void setJelszo(String jelszo) {
+		this.jelszo = jelszo;
+	}
+
+	public Boolean getTorolt() {
+		return torolt;
+	}
+
+	public void setTorolt(Boolean torolt) {
+		this.torolt = torolt;
+	}
+
+}
+

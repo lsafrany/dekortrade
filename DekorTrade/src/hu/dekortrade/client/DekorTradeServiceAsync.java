@@ -1,8 +1,12 @@
 package hu.dekortrade.client;
 
+import hu.dekortrade.shared.serialized.FelhasznaloSer;
+import hu.dekortrade.shared.serialized.JogSer;
+import hu.dekortrade.shared.serialized.SzallitoSer;
 import hu.dekortrade.shared.serialized.UserSer;
+import hu.dekortrade.shared.serialized.VevoSer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -18,7 +22,16 @@ public interface DekorTradeServiceAsync {
 			@SuppressWarnings("rawtypes") AsyncCallback callback)
 			throws IllegalArgumentException;
 
-	void getRights(String userId, String tabId, AsyncCallback<ArrayList<String>> callback)
+	void getJog(String rovidnev,AsyncCallback<List<JogSer>> callback)
+			throws IllegalArgumentException;
+
+	void getFelhasznalo(AsyncCallback<List<FelhasznaloSer>> callback)
+			throws IllegalArgumentException;
+
+	void getSzallito(AsyncCallback<List<SzallitoSer>> callback)
+			throws IllegalArgumentException;
+
+	void getVevo(AsyncCallback<List<VevoSer>> callback)
 			throws IllegalArgumentException;
 
 }

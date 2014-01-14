@@ -27,5 +27,7 @@ public interface DekorTradeLabels extends Constants {
 	String password_change();
 
 	String menu_system();
+
+	String menu_basedata();
 	
 }

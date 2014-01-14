@@ -6,8 +6,6 @@ public class UserInfo {
 
 	public static String userId = "";
 
-	public static boolean sysadmin = false;
-
 	public static Integer orderID = null;
 
 	public static ArrayList<String> order = null;
@@ -18,7 +16,6 @@ public class UserInfo {
 
 	public static void clearValues() {
 		userId = "";
-		sysadmin = false;
 		orderID = null;
 		order = null;
 		archiveID = null;

@@ -7,10 +7,20 @@
 
   <!-- Servlets -->
   <servlet>
+    <servlet-name>initServlet</servlet-name>
+    <servlet-class>hu.dekortrade.server.Init</servlet-class>
+  </servlet>
+  
+  <servlet>
     <servlet-name>serviceServlet</servlet-name>
     <servlet-class>hu.dekortrade.server.DekorTradeServiceImpl</servlet-class>
   </servlet>
   
+  <servlet-mapping>
+    <servlet-name>initServlet</servlet-name>
+    <url-pattern>/dekortrade/init</url-pattern>
+  </servlet-mapping>
+    
   <servlet-mapping>
     <servlet-name>serviceServlet</servlet-name>
     <url-pattern>/dekortrade/service</url-pattern>

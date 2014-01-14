@@ -10,8 +10,6 @@ public class UserSer implements IsSerializable {
 
 	private String name = "";
 
-	private boolean sysadmin = false;
-
 	private ArrayList<TabPageSer> tabList = new ArrayList<TabPageSer>();
 
 	private int defultTab = 0;
@@ -30,14 +28,6 @@ public class UserSer implements IsSerializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public boolean isSysadmin() {
-		return sysadmin;
-	}
-
-	public void setSysadmin(boolean sysadmin) {
-		this.sysadmin = sysadmin;
 	}
 
 	public ArrayList<TabPageSer> getTabList() {

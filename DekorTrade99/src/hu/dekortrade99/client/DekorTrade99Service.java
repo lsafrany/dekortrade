@@ -25,9 +25,6 @@ public interface DekorTrade99Service extends RemoteService {
 	void setPassword(String user, String password)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	ArrayList<String> getRights(String userId, String tabId)
-			throws IllegalArgumentException, SQLExceptionSer;
-
 	ArrayList<CtorzsSer> getCtorzs(int page, String cikkszam, String jel)
 			throws IllegalArgumentException, SQLExceptionSer;
 

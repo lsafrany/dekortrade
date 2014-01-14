@@ -66,7 +66,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			else  {		
 				Query query = pm.newQuery(Vevo.class);
 				query.setFilter("rovidnev == providnev && jelszo == pjelszo");
-				query.declareParameters("String probidnev,String pjelszo");
+				query.declareParameters("String providnev,String pjelszo");
 				@SuppressWarnings("unchecked")
 				List<Vevo>  list = (List<Vevo>) pm.newQuery(query).execute(userId,password);
 				if ((list != null) && (!list.isEmpty())) {
@@ -120,14 +120,6 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		} finally {
 			pm.close();
 		}
-	}
-
-	public ArrayList<String> getRights(String userId, String tabId)
-			throws IllegalArgumentException, SQLExceptionSer {
-
-		ArrayList<String> rights = new ArrayList<String>();
-
-		return rights;
 	}
 
 	public ArrayList<CtorzsSer> getCtorzs(int page, String cikkszam, String jel)

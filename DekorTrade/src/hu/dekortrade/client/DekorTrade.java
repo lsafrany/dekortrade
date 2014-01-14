@@ -7,6 +7,7 @@ import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.UserInfo;
+import hu.dekortrade.client.basedata.Basedata;
 import hu.dekortrade.client.system.System;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
@@ -349,7 +350,6 @@ public class DekorTrade implements EntryPoint {
 								expire);
 
 						UserInfo.userId = userSer.getUserId();
-						UserInfo.sysadmin = userSer.isSysadmin();
 
 						if ((password != null) && (password.equals(Constants.INIT_PASSWORD))) {
 							topLayoutRight.addMember(getPassword(userSer
@@ -381,12 +381,12 @@ public class DekorTrade implements EntryPoint {
 										.getTabList().get(i).getId();
 								final Tab tab = new Tab(dekorTradeLabels.menu_system());
 								tabSet.addTab(tab);
-								final System order = new System();
+								final System system = new System();
 
 								if (userSer.getTabList().get(i).getId() == userSer
 										.getDefultTab()) {
 
-									tab.setPane(order.get());
+									tab.setPane(system.get());
 									tabSet.selectTab(i);
 								}
 								tab.addTabSelectedHandler(new TabSelectedHandler() {
@@ -395,12 +395,37 @@ public class DekorTrade implements EntryPoint {
 									public void onTabSelected(
 											TabSelectedEvent event) {
 
-										tab.setPane(order.get());
+										tab.setPane(system.get());
 									}
 
 								});
 							}
 						
+							if (userSer.getTabList().get(i).getName()
+									.equals("Basedata")) {
+								UserInfo.orderID = userSer
+										.getTabList().get(i).getId();
+								final Tab tab = new Tab(dekorTradeLabels.menu_basedata());
+								tabSet.addTab(tab);
+								final Basedata basedata = new Basedata();
+
+								if (userSer.getTabList().get(i).getId() == userSer
+										.getDefultTab()) {
+
+									tab.setPane(basedata.get());
+									tabSet.selectTab(i);
+								}
+								tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+									@Override
+									public void onTabSelected(
+											TabSelectedEvent event) {
+
+										tab.setPane(basedata.get());
+									}
+
+								});
+							}
 
 							
 							

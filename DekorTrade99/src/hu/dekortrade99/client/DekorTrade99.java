@@ -353,7 +353,6 @@ public class DekorTrade99 implements EntryPoint {
 								expire);
 
 						UserInfo.userId = userSer.getUserId();
-						UserInfo.sysadmin = userSer.isSysadmin();
 						
 						if ((password != null) && (password.equals(Constants.INIT_PASSWORD))) {
 							topLayoutRight.addMember(getPassword(userSer

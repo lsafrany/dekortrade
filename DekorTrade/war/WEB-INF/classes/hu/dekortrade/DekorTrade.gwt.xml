@@ -18,9 +18,12 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
-  <inherits name="com.google.gwt.i18n.I18N"/>  
+  <inherits name="com.google.gwt.i18n.I18N"/>
+  
+  <extend-property name="locale" values="hu_HU"/>
+  <set-property name="locale" value="hu_HU" />
+    
   <inherits name="com.smartgwt.SmartGwt"/>
- 
   <inherits name="com.smartclient.theme.simplicity.SimplicityResources" />
   <inherits name="com.smartclient.theme.simplicity.Simplicity" /> 
  

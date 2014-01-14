@@ -22,10 +22,6 @@ public interface DekorTrade99ServiceAsync {
 			@SuppressWarnings("rawtypes") AsyncCallback callback)
 			throws IllegalArgumentException;
 
-	void getRights(String userId, String tabId,
-			AsyncCallback<ArrayList<String>> callback)
-			throws IllegalArgumentException;
-
 	void getCtorzs(int page, String cikkszam, String jel,
 			AsyncCallback<ArrayList<CtorzsSer>> asyncCallback);
 
