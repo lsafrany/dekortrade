@@ -1,6 +1,9 @@
 package hu.dekortrade.client.basedata;
 
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.client.basedata.cikktorzs.Ctorzs;
+import hu.dekortrade.client.basedata.szallito.Szallito;
+import hu.dekortrade.client.basedata.vevo.Vevo;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
@@ -38,6 +41,11 @@ public class Basedata {
 		vevoTab.setPane(vevo.get());
 		tabSet.addTab(vevoTab);	
 		
+		final Tab ctorzsTab = new Tab(basedataLabels.cikkek());
+		Ctorzs ctorzs = new Ctorzs();
+		ctorzsTab.setPane(ctorzs.get(null));
+		tabSet.addTab(ctorzsTab);	
+
 		middleLayout.addMember(tabSet);
 		
 		return middleLayout;

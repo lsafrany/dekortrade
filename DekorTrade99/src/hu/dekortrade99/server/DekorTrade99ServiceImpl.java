@@ -82,12 +82,12 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 			TabPageSer tabPageSer1 = new TabPageSer();
 			tabPageSer1.setId(1);
-			tabPageSer1.setName("Order");
+			tabPageSer1.setName(Constants.MENU_ORDER);
 			userSer.getTabList().add(tabPageSer1);
 
 			TabPageSer tabPageSer2 = new TabPageSer();
 			tabPageSer2.setId(2);
-			tabPageSer2.setName("Archive");
+			tabPageSer2.setName(Constants.MENU_ARCHIV);
 			userSer.getTabList().add(tabPageSer2);
 
 			userSer.setDefultTab(1);

@@ -380,7 +380,7 @@ public class DekorTrade99 implements EntryPoint {
 						for (int i = 0; i < userSer.getTabList().size(); i++) {
 
 							if (userSer.getTabList().get(i).getName()
-									.equals("Order")) {
+									.equals(Constants.MENU_ORDER)) {
 								UserInfo.orderID = userSer.getTabList().get(i)
 										.getId();
 								final Tab tab = new Tab(dekorTrade99Labels
@@ -407,7 +407,7 @@ public class DekorTrade99 implements EntryPoint {
 							}
 
 							if (userSer.getTabList().get(i).getName()
-									.equals("Archive")) {
+									.equals(Constants.MENU_ARCHIV)) {
 								UserInfo.archiveID = userSer.getTabList()
 										.get(i).getId();
 								final Tab tab = new Tab(dekorTrade99Labels

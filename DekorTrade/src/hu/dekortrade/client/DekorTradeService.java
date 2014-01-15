@@ -7,7 +7,11 @@ import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.SzallitoSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoSer;
+import hu.dekortrade.shared.serialized.CtorzsSer;
+import hu.dekortrade.shared.serialized.RendeltSer;
+import hu.dekortrade.shared.serialized.RendeltcikkSer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -32,5 +36,16 @@ public interface DekorTradeService extends RemoteService {
 	List<SzallitoSer> getSzallito() throws IllegalArgumentException, SQLExceptionSer;
 	
 	List<VevoSer> getVevo() throws IllegalArgumentException, SQLExceptionSer;
+	
+	List<CtorzsSer> getCtorzs(int page, String cikkszam, String jel)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	ArrayList<RendeltSer> getRendelt()
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	ArrayList<RendeltcikkSer> getRendeltcikk(String rovidnev,String rendeles)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	String szinkron() throws IllegalArgumentException, SQLExceptionSer;
 	
 }

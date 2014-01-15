@@ -18,9 +18,9 @@ public class System {
 		Felhasznalo felhasznalo = new Felhasznalo();
 		middleLayout.addMember(felhasznalo.get());
 		
-		Jog jog = new Jog();
-		middleLayout.addMember(jog.get());
-		
+		Szinkron szinkron = new Szinkron();
+		middleLayout.addMember(szinkron.get());
+
 		return middleLayout;
 
 	}

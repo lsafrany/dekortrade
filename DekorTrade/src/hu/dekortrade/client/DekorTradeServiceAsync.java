@@ -5,7 +5,11 @@ import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.SzallitoSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoSer;
+import hu.dekortrade.shared.serialized.CtorzsSer;
+import hu.dekortrade.shared.serialized.RendeltSer;
+import hu.dekortrade.shared.serialized.RendeltcikkSer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -33,5 +37,15 @@ public interface DekorTradeServiceAsync {
 
 	void getVevo(AsyncCallback<List<VevoSer>> callback)
 			throws IllegalArgumentException;
+
+	void getCtorzs(int page, String cikkszam, String jel,
+			AsyncCallback<List<CtorzsSer>> asyncCallback);
+
+	void getRendelt(AsyncCallback<ArrayList<RendeltSer>> asyncCallback);
+
+	void getRendeltcikk(String rovidnev,String rendeles,
+			AsyncCallback<ArrayList<RendeltcikkSer>> asyncCallback);
+
+	void szinkron(AsyncCallback<String> callback) throws IllegalArgumentException;
 
 }

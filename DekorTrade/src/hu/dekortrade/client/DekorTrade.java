@@ -8,6 +8,7 @@ import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.client.basedata.Basedata;
+import hu.dekortrade.client.order.Order;
 import hu.dekortrade.client.system.System;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
@@ -56,7 +57,7 @@ public class DekorTrade implements EntryPoint {
 	 * Create a remote service proxy to talk to the server-side ManagementTool
 	 * service.
 	 */
-	private final DekorTradeServiceAsync dekorTrade99Service = GWT
+	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
 	private DekorTradeLabels dekorTradeLabels = GWT
@@ -327,7 +328,7 @@ public class DekorTrade implements EntryPoint {
 			final String passwordSetting) {
 
 		DisplayRequest.startRequest();
-		dekorTrade99Service.getUser(userId, password,
+		dekorTradeService.getUser(userId, password,
 				new AsyncCallback<UserSer>() {
 					public void onFailure(Throwable caught) {
 						DisplayRequest.serverResponse();
@@ -376,7 +377,7 @@ public class DekorTrade implements EntryPoint {
 						for (int i = 0; i < userSer.getTabList().size(); i++) {
 
 							if (userSer.getTabList().get(i).getName()
-									.equals("System")) {
+									.equals(Constants.MENU_SYSTEM)) {
 								UserInfo.orderID = userSer
 										.getTabList().get(i).getId();
 								final Tab tab = new Tab(dekorTradeLabels.menu_system());
@@ -402,7 +403,7 @@ public class DekorTrade implements EntryPoint {
 							}
 						
 							if (userSer.getTabList().get(i).getName()
-									.equals("Basedata")) {
+									.equals(Constants.MENU_BASEDATA)) {
 								UserInfo.orderID = userSer
 										.getTabList().get(i).getId();
 								final Tab tab = new Tab(dekorTradeLabels.menu_basedata());
@@ -427,6 +428,31 @@ public class DekorTrade implements EntryPoint {
 								});
 							}
 
+							if (userSer.getTabList().get(i).getName()
+									.equals(Constants.MENU_ORDER)) {
+								UserInfo.orderID = userSer
+										.getTabList().get(i).getId();
+								final Tab tab = new Tab(dekorTradeLabels.menu_order());
+								tabSet.addTab(tab);
+								final Order order = new Order();
+
+								if (userSer.getTabList().get(i).getId() == userSer
+										.getDefultTab()) {
+
+									tab.setPane(order.get());
+									tabSet.selectTab(i);
+								}
+								tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+									@Override
+									public void onTabSelected(
+											TabSelectedEvent event) {
+
+										tab.setPane(order.get());
+									}
+
+								});
+							}
 							
 							
 							
@@ -502,7 +528,7 @@ public class DekorTrade implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				if (form.validate(false)) {
 					DisplayRequest.startRequest();
-					dekorTrade99Service.setPassword(UserInfo.userId,
+					dekorTradeService.setPassword(UserInfo.userId,
 						passwordItem.getValue().toString(),
 						new AsyncCallback<String>() {
 							public void onFailure(Throwable caught) {
@@ -531,7 +557,7 @@ public class DekorTrade implements EntryPoint {
 						if(keyName.equals("Enter")) {
 							if (form.validate(false)) {
 								DisplayRequest.startRequest();
-								dekorTrade99Service.setPassword(UserInfo.userId,
+								dekorTradeService.setPassword(UserInfo.userId,
 									passwordItem.getValue().toString(),
 									new AsyncCallback<String>() {
 										public void onFailure(Throwable caught) {
@@ -563,7 +589,7 @@ public class DekorTrade implements EntryPoint {
 						if(keyName.equals("Enter")) {							
 							if (form.validate(false)) {
 								DisplayRequest.startRequest();
-								dekorTrade99Service.setPassword(UserInfo.userId,
+								dekorTradeService.setPassword(UserInfo.userId,
 									passwordItem.getValue().toString(),
 									new AsyncCallback<String>() {
 										public void onFailure(Throwable caught) {

@@ -9,5 +9,19 @@ public interface CommonLabels extends Constants {
 	String server_sqlerror();
 			
 	String loading();
+
+	String filter();
+	
+	String ok();
+	
+	String cancel();
+	
+	String sure();
+	
+	String add();
+	
+	String modify();
+	
+	String delete();
 	
 }

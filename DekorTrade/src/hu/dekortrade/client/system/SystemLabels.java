@@ -14,7 +14,10 @@ public interface SystemLabels extends Constants {
 	
 	String jogok();
 	
-	String jog_kod();
-	
 	String jog_nev();
+	
+	String jog_jog();
+	
+	String szinkron();
+
 }

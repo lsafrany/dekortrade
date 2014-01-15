@@ -1,4 +1,4 @@
-package hu.dekortrade.client.basedata;
+package hu.dekortrade.client.basedata.szallito;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
@@ -22,28 +22,28 @@ public class SzallitoDataSource extends GwtRpcDataSource {
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private BasedataLabels basedataLabels = GWT.create(BasedataLabels.class);
+	private SzallitoLabels szallitoLabels = GWT.create(SzallitoLabels.class);
 
 	public SzallitoDataSource() {
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(BasedataConstants.SZALLITO_KOD,
-				basedataLabels.szallito_kod());
+		field = new DataSourceTextField(SzallitoConstants.SZALLITO_KOD,
+				szallitoLabels.szallito_kod());
 		field.setPrimaryKey(true);
 		field.setHidden(true);
 		addField(field);
 
-		field = new DataSourceTextField(BasedataConstants.SZALLITO_NEV,
-				basedataLabels.szallito_nev());
+		field = new DataSourceTextField(SzallitoConstants.SZALLITO_NEV,
+				szallitoLabels.szallito_nev());
 		addField(field);
 		
-		field = new DataSourceTextField(BasedataConstants.SZALLITO_CIM,
-				basedataLabels.szallito_cim());
+		field = new DataSourceTextField(SzallitoConstants.SZALLITO_CIM,
+				szallitoLabels.szallito_cim());
 		addField(field);
 
-		field = new DataSourceTextField(BasedataConstants.SZALLITO_ELERHETOSEG,
-				basedataLabels.szallito_elerhetoseg());
+		field = new DataSourceTextField(SzallitoConstants.SZALLITO_ELERHETOSEG,
+				szallitoLabels.szallito_elerhetoseg());
 		addField(field);
 		
 	}
@@ -98,10 +98,10 @@ public class SzallitoDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(SzallitoSer from, ListGridRecord to) {
-		to.setAttribute(BasedataConstants.SZALLITO_KOD, from.getKod());
-		to.setAttribute(BasedataConstants.SZALLITO_NEV, from.getNev());
-		to.setAttribute(BasedataConstants.SZALLITO_CIM, from.getCim());
-		to.setAttribute(BasedataConstants.SZALLITO_ELERHETOSEG, from.getElerhetoseg());		
+		to.setAttribute(SzallitoConstants.SZALLITO_KOD, from.getKod());
+		to.setAttribute(SzallitoConstants.SZALLITO_NEV, from.getNev());
+		to.setAttribute(SzallitoConstants.SZALLITO_CIM, from.getCim());
+		to.setAttribute(SzallitoConstants.SZALLITO_ELERHETOSEG, from.getElerhetoseg());		
 	}
 
 }

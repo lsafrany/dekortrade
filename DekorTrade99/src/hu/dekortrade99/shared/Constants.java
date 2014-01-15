@@ -6,4 +6,7 @@ public class Constants {
 
 	public static final int FETCH_SIZE = 50;
 
+	public static final String MENU_ORDER = "Order";
+	public static final String MENU_ARCHIV = "Archiv";
+
 }

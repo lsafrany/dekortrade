@@ -12,11 +12,11 @@ public class Jog implements IsSerializable {
 	private String rovidnev;
 
 	@Persistent
-	private String jog;
+	private String nev;
 
-	public Jog(String rovidnev,String jog) {
+	public Jog(String rovidnev,String nev) {
 		this.rovidnev = rovidnev;
-		this.jog = jog;
+		this.nev = nev;
 	}
 
 	public String getRovidnev() {
@@ -27,13 +27,13 @@ public class Jog implements IsSerializable {
 		this.rovidnev = rovidnev;
 	}
 
-	public String getJog() {
-		return jog;
+	public String getNev() {
+		return nev;
 	}
 
-	public void setJog(String jog) {
-		this.jog = jog;
+	public void setNev(String nev) {
+		this.nev = nev;
 	}
-	
+
 }
 

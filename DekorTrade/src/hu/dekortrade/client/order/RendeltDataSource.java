@@ -1,53 +1,43 @@
-package hu.dekortrade.client.basedata;
+package hu.dekortrade.client.order;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
+import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
-import hu.dekortrade.shared.serialized.VevoSer;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
-import com.smartgwt.client.data.fields.DataSourceBooleanField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class VevoDataSource extends GwtRpcDataSource {
+public class RendeltDataSource extends GwtRpcDataSource {
 
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private BasedataLabels basedataLabels = GWT.create(BasedataLabels.class);
+	private OrderLabels orderLabels = GWT.create(OrderLabels.class);
 
-	public VevoDataSource() {
+	public RendeltDataSource() {
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(BasedataConstants.VEVO_ROVIDNEV,
-				basedataLabels.vevo_rovidnev());
-		field.setPrimaryKey(true);
+		field = new DataSourceTextField(OrderConstants.RENDELT_ROVIDNEV,
+				orderLabels.rendelt_rovidnev());
 		addField(field);
 
-		field = new DataSourceTextField(BasedataConstants.VEVO_NEV,
-				basedataLabels.vevo_nev());
-		addField(field);
-		
-		field = new DataSourceTextField(BasedataConstants.VEVO_CIM,
-				basedataLabels.vevo_cim());
+		field = new DataSourceTextField(OrderConstants.RENDELT_RENDELES,
+				orderLabels.rendelt_rendeles());
 		addField(field);
 
-		field = new DataSourceTextField(BasedataConstants.VEVO_ELERHETOSEG,
-				basedataLabels.vevo_elerhetoseg());
-		addField(field);
-
-		field = new DataSourceBooleanField(BasedataConstants.VEVO_INTERNET,
-				basedataLabels.vevo_internet());
+		field = new DataSourceTextField(OrderConstants.RENDELT_DATUM,
+				orderLabels.rendelt_datum());
 		addField(field);
 
 	}
@@ -55,8 +45,8 @@ public class VevoDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getVevo(				
-				new AsyncCallback<List<VevoSer>>() {
+		dekorTradeService.getRendelt(
+				new AsyncCallback<ArrayList<RendeltSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
 							response.setAttribute(
@@ -69,7 +59,7 @@ public class VevoDataSource extends GwtRpcDataSource {
 						processResponse(requestId, response);
 					}
 
-					public void onSuccess(List<VevoSer> result) {
+					public void onSuccess(ArrayList<RendeltSer> result) {
 						ListGridRecord[] list = new ListGridRecord[result
 								.size()];
 						for (int i = 0; i < result.size(); i++) {
@@ -101,11 +91,10 @@ public class VevoDataSource extends GwtRpcDataSource {
 			final DSRequest request, final DSResponse response) {
 	}
 
-	private static void copyValues(VevoSer from, ListGridRecord to) {
-		to.setAttribute(BasedataConstants.VEVO_ROVIDNEV, from.getRovidnev());
-		to.setAttribute(BasedataConstants.VEVO_NEV, from.getNev());
-		to.setAttribute(BasedataConstants.VEVO_CIM, from.getCim());
-		to.setAttribute(BasedataConstants.VEVO_ELERHETOSEG, from.getElerhetoseg());		
+	private static void copyValues(RendeltSer from, ListGridRecord to) {
+		to.setAttribute(OrderConstants.RENDELT_ROVIDNEV, from.getRovidnev());
+		to.setAttribute(OrderConstants.RENDELT_RENDELES, from.getRendeles());
+		to.setAttribute(OrderConstants.RENDELT_DATUM, from.getDatum());
 	}
 
 }

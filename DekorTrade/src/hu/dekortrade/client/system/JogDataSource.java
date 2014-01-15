@@ -14,6 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceBooleanField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
@@ -28,13 +29,12 @@ public class JogDataSource extends GwtRpcDataSource {
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(SystemConstants.JOG_KOD,
-				systemLabels.jog_kod());
-		field.setPrimaryKey(true);
-		addField(field);
-
 		field = new DataSourceTextField(SystemConstants.JOG_NEV,
 				systemLabels.jog_nev());
+		addField(field);
+
+		field = new DataSourceBooleanField(SystemConstants.JOG_JOG,
+				systemLabels.jog_jog());
 		addField(field);
 		
 	}
@@ -91,8 +91,8 @@ public class JogDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(JogSer from, ListGridRecord to) {
-		to.setAttribute(SystemConstants.JOG_KOD, from.getRovidnev());
 		to.setAttribute(SystemConstants.JOG_NEV, from.getNev());
+		to.setAttribute(SystemConstants.JOG_JOG, from.getJog());
 	}
 
 }

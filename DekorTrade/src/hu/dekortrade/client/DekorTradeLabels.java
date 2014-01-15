@@ -30,4 +30,6 @@ public interface DekorTradeLabels extends Constants {
 
 	String menu_basedata();
 	
+	String menu_order();
+	
 }
