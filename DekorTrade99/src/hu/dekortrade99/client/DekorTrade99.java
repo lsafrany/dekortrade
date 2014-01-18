@@ -213,24 +213,30 @@ public class DekorTrade99 implements EntryPoint {
 		final IButton loginButtonItem = new IButton(
 				dekorTrade99Labels.login_login());
 		loginButtonItem.setDisabled(true);
-		
+
 		final CheckboxItem passwordCheckboxItem = new CheckboxItem();
 		passwordCheckboxItem.setTitle(dekorTrade99Labels.newPassword());
-	
+
 		userIdItem.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
-				if ((userIdItem.getValueAsString() != null) && (passwordItem.getValueAsString() !=null)) loginButtonItem.setDisabled(false);
-				else loginButtonItem.setDisabled(true);
+				if ((userIdItem.getValueAsString() != null)
+						&& (passwordItem.getValueAsString() != null))
+					loginButtonItem.setDisabled(false);
+				else
+					loginButtonItem.setDisabled(true);
 			}
 		});
 
 		passwordItem.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
-				if ((userIdItem.getValueAsString() != null) && (passwordItem.getValueAsString() != null)) loginButtonItem.setDisabled(false);
-				else loginButtonItem.setDisabled(true);								
+				if ((userIdItem.getValueAsString() != null)
+						&& (passwordItem.getValueAsString() != null))
+					loginButtonItem.setDisabled(false);
+				else
+					loginButtonItem.setDisabled(true);
 			}
 		});
-		
+
 		loginButtonItem.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if ((userIdItem.getValue() != null)
@@ -353,28 +359,30 @@ public class DekorTrade99 implements EntryPoint {
 								expire);
 
 						UserInfo.userId = userSer.getUserId();
-						
-						if ((password != null) && (password.equals(Constants.INIT_PASSWORD))) {
+
+						if ((password != null)
+								&& (password.equals(Constants.INIT_PASSWORD))) {
 							topLayoutRight.addMember(getPassword(userSer
 									.getName()));
-						}
-						else {
-							if ((passwordSetting == null) || ((password != null) && (!password.equals(Constants.INIT_PASSWORD))))
+						} else {
+							if ((passwordSetting == null)
+									|| ((password != null) && (!password
+											.equals(Constants.INIT_PASSWORD))))
 								topLayoutRight.addMember(getLogout(userSer
-									.getName()));
+										.getName()));
 							else
 								topLayoutRight.addMember(getPassword(userSer
-									.getName()));
+										.getName()));
 						}
 
 						middleLayout.removeMembers(middleLayout.getMembers());
-						
+
 						final TabSet tabSet = new TabSet();
 						tabSet.setTabBarPosition(Side.TOP);
 						tabSet.setTabBarAlign(Side.LEFT);
 						tabSet.setWidth100();
 						tabSet.setHeight100();
-						
+
 						middleLayout.addMember(tabSet);
 
 						for (int i = 0; i < userSer.getTabList().size(); i++) {
@@ -481,21 +489,27 @@ public class DekorTrade99 implements EntryPoint {
 		final IButton changeButtonItem = new IButton(
 				dekorTrade99Labels.password_change());
 		changeButtonItem.setDisabled(true);
-		
+
 		passwordItem.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
-				if ((passwordItem.getValueAsString() != null) && (passwordItem2.getValueAsString() !=null)) changeButtonItem.setDisabled(false);
-				else changeButtonItem.setDisabled(true);
+				if ((passwordItem.getValueAsString() != null)
+						&& (passwordItem2.getValueAsString() != null))
+					changeButtonItem.setDisabled(false);
+				else
+					changeButtonItem.setDisabled(true);
 			}
 		});
 
 		passwordItem2.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
-				if ((passwordItem.getValueAsString() != null) && (passwordItem2.getValueAsString() !=null)) changeButtonItem.setDisabled(false);
-				else changeButtonItem.setDisabled(true);
+				if ((passwordItem.getValueAsString() != null)
+						&& (passwordItem2.getValueAsString() != null))
+					changeButtonItem.setDisabled(false);
+				else
+					changeButtonItem.setDisabled(true);
 			}
-		});		
-		
+		});
+
 		topLayoutRight.addMember(form);
 		topLayoutRight.addMember(changeButtonItem);
 

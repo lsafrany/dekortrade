@@ -7,17 +7,21 @@ public interface ArchiveLabels extends Constants {
 	String archive();
 
 	String rendeles();
-	
+
 	String rendeltcikk();
-	
+
 	String rendelt_rovidnev();
+
 	String rendelt_rendeles();
+
 	String rendelt_datum();
+
 	String rendelt_statusz();
 
 	String rendelt_cikkszam();
+
 	String rendelt_exportkarton();
 
 	String frissit();
-	
+
 }

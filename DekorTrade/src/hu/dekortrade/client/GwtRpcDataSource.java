@@ -42,8 +42,8 @@ import com.smartgwt.client.types.DSProtocol;
  */
 public abstract class GwtRpcDataSource extends DataSource {
 
-	private String lastId = null; 
-	
+	private String lastId = null;
+
 	public String getLastId() {
 		return lastId;
 	}

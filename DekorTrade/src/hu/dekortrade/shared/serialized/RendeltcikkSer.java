@@ -3,7 +3,7 @@ package hu.dekortrade.shared.serialized;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class RendeltcikkSer implements IsSerializable {
-	
+
 	private String rovidnev;
 
 	private String rendeles;
@@ -11,7 +11,7 @@ public class RendeltcikkSer implements IsSerializable {
 	private String cikkszam;
 
 	private Integer exportkarton;
-	
+
 	public String getRovidnev() {
 		return rovidnev;
 	}

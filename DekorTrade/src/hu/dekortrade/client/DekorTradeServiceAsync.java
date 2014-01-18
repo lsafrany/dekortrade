@@ -1,13 +1,13 @@
 package hu.dekortrade.client;
 
+import hu.dekortrade.shared.serialized.CtorzsSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.JogSer;
+import hu.dekortrade.shared.serialized.RendeltSer;
+import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SzallitoSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoSer;
-import hu.dekortrade.shared.serialized.CtorzsSer;
-import hu.dekortrade.shared.serialized.RendeltSer;
-import hu.dekortrade.shared.serialized.RendeltcikkSer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,34 +18,67 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * The async counterpart of <code>GreetingService</code>.
  */
 public interface DekorTradeServiceAsync {
-	
-	void getUser(String user, String password, AsyncCallback<UserSer> callback)
-			throws IllegalArgumentException;
+
+	void getUser(String user, String password, AsyncCallback<UserSer> callback);
 
 	void setPassword(String user, String password,
-			@SuppressWarnings("rawtypes") AsyncCallback callback)
-			throws IllegalArgumentException;
+			@SuppressWarnings("rawtypes") AsyncCallback callback);
 
-	void getJog(String rovidnev,AsyncCallback<List<JogSer>> callback)
-			throws IllegalArgumentException;
+	void getJog(String rovidnev, AsyncCallback<List<JogSer>> callback);
 
-	void getFelhasznalo(AsyncCallback<List<FelhasznaloSer>> callback)
-			throws IllegalArgumentException;
+	void getFelhasznalo(AsyncCallback<List<FelhasznaloSer>> callback);
 
-	void getSzallito(AsyncCallback<List<SzallitoSer>> callback)
-			throws IllegalArgumentException;
+	void addFelhasznalo(FelhasznaloSer felhasznaloSer,
+			AsyncCallback<FelhasznaloSer> asyncCallback);
 
-	void getVevo(AsyncCallback<List<VevoSer>> callback)
-			throws IllegalArgumentException;
+	void updateFelhasznalo(FelhasznaloSer felhasznaloSer,
+			AsyncCallback<FelhasznaloSer> asyncCallback);
+
+	void setFelhasznaloJelszo(String rovidnev, AsyncCallback<String> callback);
+
+	void removeFelhasznalo(FelhasznaloSer felhasznaloSer,
+			AsyncCallback<FelhasznaloSer> asyncCallback);
+
+	void updateJog(String rovidnev, JogSer jogSer,
+			AsyncCallback<JogSer> callback);
+
+	void getSzallito(AsyncCallback<List<SzallitoSer>> callback);
+
+	void addSzallito(SzallitoSer szallitoSer,
+			AsyncCallback<SzallitoSer> asyncCallback);
+
+	void updateSzallito(SzallitoSer szallitoSer,
+			AsyncCallback<SzallitoSer> asyncCallback);
+
+	void removeSzallito(SzallitoSer szallitoSer,
+			AsyncCallback<SzallitoSer> asyncCallback);
+
+	void getVevo(AsyncCallback<List<VevoSer>> callback);
+
+	void addVevo(VevoSer vevoSer, AsyncCallback<VevoSer> asyncCallback);
+
+	void updateVevo(VevoSer vevoSer, AsyncCallback<VevoSer> asyncCallback);
+
+	void setVevoJelszo(String rovidnev, AsyncCallback<String> callback);
+
+	void removeVevo(VevoSer vevoSer, AsyncCallback<VevoSer> asyncCallback);
 
 	void getCtorzs(int page, String cikkszam, String jel,
 			AsyncCallback<List<CtorzsSer>> asyncCallback);
 
+	void addCtorzs(CtorzsSer ctorzsSer, AsyncCallback<CtorzsSer> asyncCallback);
+
+	void updateCtorzs(CtorzsSer ctorzsSer,
+			AsyncCallback<CtorzsSer> asyncCallback);
+
+	void removeCtorzs(CtorzsSer ctorzsSer,
+			AsyncCallback<CtorzsSer> asyncCallback);
+
 	void getRendelt(AsyncCallback<ArrayList<RendeltSer>> asyncCallback);
 
-	void getRendeltcikk(String rovidnev,String rendeles,
+	void getRendeltcikk(String rovidnev, String rendeles,
 			AsyncCallback<ArrayList<RendeltcikkSer>> asyncCallback);
 
-	void szinkron(AsyncCallback<String> callback) throws IllegalArgumentException;
+	void szinkron(AsyncCallback<String> callback);
 
 }

@@ -14,9 +14,8 @@ import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 
 public class Basedata {
-	
-	private BasedataLabels basedataLabels = GWT
-			.create(BasedataLabels.class);
+
+	private BasedataLabels basedataLabels = GWT.create(BasedataLabels.class);
 
 	public Canvas get() {
 		DisplayRequest.counterInit();
@@ -30,24 +29,24 @@ public class Basedata {
 		tabSet.setTabBarAlign(Side.LEFT);
 		tabSet.setWidth100();
 		tabSet.setHeight100();
-		
+
 		final Tab szallitoTab = new Tab(basedataLabels.szallitok());
 		Szallito szallito = new Szallito();
 		szallitoTab.setPane(szallito.get());
 		tabSet.addTab(szallitoTab);
-		
+
 		final Tab vevoTab = new Tab(basedataLabels.vevok());
 		Vevo vevo = new Vevo();
 		vevoTab.setPane(vevo.get());
-		tabSet.addTab(vevoTab);	
-		
+		tabSet.addTab(vevoTab);
+
 		final Tab ctorzsTab = new Tab(basedataLabels.cikkek());
 		Ctorzs ctorzs = new Ctorzs();
 		ctorzsTab.setPane(ctorzs.get(null));
-		tabSet.addTab(ctorzsTab);	
+		tabSet.addTab(ctorzsTab);
 
 		middleLayout.addMember(tabSet);
-		
+
 		return middleLayout;
 
 	}

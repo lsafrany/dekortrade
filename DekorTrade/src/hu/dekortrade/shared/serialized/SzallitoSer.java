@@ -3,7 +3,7 @@ package hu.dekortrade.shared.serialized;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class SzallitoSer implements IsSerializable {
-	
+
 	private String kod;
 
 	private String nev;
@@ -45,4 +45,3 @@ public class SzallitoSer implements IsSerializable {
 	}
 
 }
-

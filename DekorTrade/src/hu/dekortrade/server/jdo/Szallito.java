@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
 public class Szallito implements IsSerializable {
-	
+
 	@Persistent
 	private String kod;
 
@@ -23,9 +23,10 @@ public class Szallito implements IsSerializable {
 	@Persistent
 	private Boolean torolt;
 
-	public Szallito(String kod,String nev,String cim,String elerhetoseg,Boolean torolt) {
+	public Szallito(String kod, String nev, String cim, String elerhetoseg,
+			Boolean torolt) {
 		this.kod = kod;
-		this.nev = nev;		
+		this.nev = nev;
 		this.cim = cim;
 		this.elerhetoseg = elerhetoseg;
 		this.torolt = torolt;
@@ -72,4 +73,3 @@ public class Szallito implements IsSerializable {
 	}
 
 }
-

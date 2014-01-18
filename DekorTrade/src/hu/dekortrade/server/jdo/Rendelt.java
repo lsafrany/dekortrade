@@ -7,17 +7,17 @@ import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable
 public class Rendelt {
-	
+
 	@Persistent
 	private String rovidnev;
 
 	@Persistent
 	private String rendeles;
-	
+
 	@Persistent
 	private Date datum;
-	
-	public Rendelt(String rovidnev,String rendeles, Date datum) {
+
+	public Rendelt(String rovidnev, String rendeles, Date datum) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.datum = datum;
@@ -46,6 +46,5 @@ public class Rendelt {
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
-	
-}
 
+}

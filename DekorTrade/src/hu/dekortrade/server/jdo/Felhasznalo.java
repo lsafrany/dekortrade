@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
 public class Felhasznalo implements IsSerializable {
-	
+
 	@Persistent
 	private String rovidnev;
 
@@ -15,14 +15,19 @@ public class Felhasznalo implements IsSerializable {
 	private String nev;
 
 	@Persistent
+	private String menu;
+
+	@Persistent
 	private String jelszo;
 
 	@Persistent
 	private Boolean torolt;
 
-	public Felhasznalo(String rovidnev,String nev,String jelszo,Boolean torolt) {
+	public Felhasznalo(String rovidnev, String nev, String menu, String jelszo,
+			Boolean torolt) {
 		this.rovidnev = rovidnev;
 		this.nev = nev;
+		this.menu = menu;
 		this.jelszo = jelszo;
 		this.torolt = torolt;
 	}
@@ -59,5 +64,12 @@ public class Felhasznalo implements IsSerializable {
 		this.torolt = torolt;
 	}
 
-}
+	public String getMenu() {
+		return menu;
+	}
 
+	public void setMenu(String menu) {
+		this.menu = menu;
+	}
+
+}

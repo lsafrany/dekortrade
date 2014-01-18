@@ -3,7 +3,7 @@ package hu.dekortrade.shared.serialized;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class VevoSer implements IsSerializable {
-	
+
 	private String rovidnev;
 
 	private String nev;
@@ -55,4 +55,3 @@ public class VevoSer implements IsSerializable {
 	}
 
 }
-

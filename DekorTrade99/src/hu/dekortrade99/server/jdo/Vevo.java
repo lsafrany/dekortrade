@@ -20,7 +20,7 @@ public class Vevo {
 
 	public Vevo(String rovidnev, String jelszo, String nev, Boolean torolt) {
 		this.rovidnev = rovidnev;
-		this.jelszo = jelszo; 
+		this.jelszo = jelszo;
 		this.nev = nev;
 		this.torolt = false;
 	}
@@ -32,7 +32,7 @@ public class Vevo {
 	public void setRovidnev(String rovidnev) {
 		this.rovidnev = rovidnev;
 	}
-	
+
 	public String getJelszo() {
 		return jelszo;
 	}

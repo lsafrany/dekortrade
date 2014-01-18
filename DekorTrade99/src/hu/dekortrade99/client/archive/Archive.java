@@ -34,14 +34,14 @@ public class Archive {
 
 	public Canvas get() {
 		DisplayRequest.counterInit();
-		
+
 		final HLayout middleLayout = new HLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
-		
+
 		VLayout rendeltLayout = new VLayout();
 		rendeltLayout.setDefaultLayoutAlign(Alignment.CENTER);
-				
+
 		final RendeltDataSource rendeltDataSource = new RendeltDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
@@ -73,7 +73,7 @@ public class Archive {
 				}
 			}
 		});
-		
+
 		final ListGrid rendeltGrid = new ListGrid();
 		rendeltGrid.setTitle(archiveLabels.rendeles());
 		rendeltGrid.setWidth("50%");
@@ -83,22 +83,24 @@ public class Archive {
 		rendeltGrid.setShowAllRecords(true);
 		rendeltGrid.setDataSource(rendeltDataSource);
 		Criteria criteria = new Criteria();
-		criteria.setAttribute(ArchiveConstants.RENDELT_ROVIDNEV, UserInfo.userId);
+		criteria.setAttribute(ArchiveConstants.RENDELT_ROVIDNEV,
+				UserInfo.userId);
 		rendeltGrid.fetchData(criteria);
 
 		ListGridField rendelesGridField = new ListGridField(
 				ArchiveConstants.RENDELT_RENDELES);
-	
+
 		ListGridField datumGridField = new ListGridField(
 				ArchiveConstants.RENDELT_DATUM);
 		datumGridField.setWidth("40%");
-	
+
 		ListGridField statuszGridField = new ListGridField(
 				ArchiveConstants.RENDELT_STATUSZ);
 		statuszGridField.setWidth("15%");
-		
-		rendeltGrid.setFields(rendelesGridField, datumGridField, statuszGridField);
-		
+
+		rendeltGrid.setFields(rendelesGridField, datumGridField,
+				statuszGridField);
+
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -108,13 +110,13 @@ public class Archive {
 		IButton frissitIButton = new IButton(archiveLabels.frissit());
 
 		buttonsLayout.addMember(frissitIButton);
-		
+
 		rendeltLayout.addMember(rendeltGrid);
 		rendeltLayout.addMember(buttonsLayout);
-		
+
 		VLayout rendeltcikkLayout = new VLayout();
 		rendeltcikkLayout.setDefaultLayoutAlign(Alignment.CENTER);
-		
+
 		final RendeltcikkDataSource rendeltcikkDataSource = new RendeltcikkDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
@@ -146,7 +148,7 @@ public class Archive {
 				}
 			}
 		});
-		
+
 		final ListGrid rendeltcikkGrid = new ListGrid();
 		rendeltcikkGrid.setTitle(archiveLabels.rendeltcikk());
 		rendeltcikkGrid.setWidth("50%");
@@ -158,37 +160,42 @@ public class Archive {
 
 		ListGridField cikkszamGridField = new ListGridField(
 				ArchiveConstants.RENDELTCIKK_CIKKSZAM);
-	
+
 		ListGridField exportkartonGridField = new ListGridField(
 				ArchiveConstants.RENDELTCIKK_EXPORTKARTON);
 		exportkartonGridField.setWidth("30%");
-		
+
 		rendeltcikkGrid.setFields(cikkszamGridField, exportkartonGridField);
 
 		rendeltcikkLayout.addMember(rendeltcikkGrid);
-		
+
 		middleLayout.addMember(rendeltLayout);
 		middleLayout.addMember(rendeltcikkLayout);
-		
-		frissitIButton.addClickHandler(new ClickHandler() {  
-	    	public void onClick(ClickEvent event) {	    		
-	    		Criteria criteria = new Criteria();
-	    		criteria.setAttribute(ArchiveConstants.RENDELT_ROVIDNEV, UserInfo.userId);
-	    		rendeltGrid.invalidateCache();
-	    		rendeltGrid.fetchData(criteria);
-	    		rendeltcikkGrid.setData(new ListGridRecord[]{});
-  	    	}	
-        });         	    	    	 
 
-		rendeltGrid.addRecordClickHandler(new RecordClickHandler() {   
-            public void onRecordClick(RecordClickEvent event) {
-            	Criteria criteria = new Criteria();
-            	criteria.setAttribute(ArchiveConstants.RENDELTCIKK_ROVIDNEV, UserInfo.userId);
-            	criteria.setAttribute(ArchiveConstants.RENDELTCIKK_RENDELES, rendeltGrid.getSelectedRecord().getAttribute(ArchiveConstants.RENDELT_RENDELES));
-            	rendeltcikkGrid.fetchData(criteria);
-            }
-        });   
-	
+		frissitIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Criteria criteria = new Criteria();
+				criteria.setAttribute(ArchiveConstants.RENDELT_ROVIDNEV,
+						UserInfo.userId);
+				rendeltGrid.invalidateCache();
+				rendeltGrid.fetchData(criteria);
+				rendeltcikkGrid.setData(new ListGridRecord[] {});
+			}
+		});
+
+		rendeltGrid.addRecordClickHandler(new RecordClickHandler() {
+			public void onRecordClick(RecordClickEvent event) {
+				Criteria criteria = new Criteria();
+				criteria.setAttribute(ArchiveConstants.RENDELTCIKK_ROVIDNEV,
+						UserInfo.userId);
+				criteria.setAttribute(
+						ArchiveConstants.RENDELTCIKK_RENDELES,
+						rendeltGrid.getSelectedRecord().getAttribute(
+								ArchiveConstants.RENDELT_RENDELES));
+				rendeltcikkGrid.fetchData(criteria);
+			}
+		});
+
 		return middleLayout;
 
 	}

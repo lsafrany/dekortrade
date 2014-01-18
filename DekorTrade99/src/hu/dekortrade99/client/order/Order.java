@@ -49,14 +49,14 @@ public class Order {
 
 	public Canvas get() {
 		DisplayRequest.counterInit();
-		
+
 		HLayout middleLayout = new HLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
-		
+
 		VLayout kosarLayout = new VLayout();
 		kosarLayout.setDefaultLayoutAlign(Alignment.CENTER);
-		
+
 		final KosarDataSource kosarDataSource = new KosarDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
@@ -88,7 +88,7 @@ public class Order {
 				}
 			}
 		});
-		
+
 		final ListGrid kosarGrid = new ListGrid();
 		kosarGrid.setTitle(orderLabels.order());
 		kosarGrid.setWidth("50%");
@@ -101,11 +101,11 @@ public class Order {
 
 		ListGridField cikkszamGridField = new ListGridField(
 				OrderConstants.KOSAR_CIKKSZAM);
-	
+
 		ListGridField exportkartonGridField = new ListGridField(
 				OrderConstants.KOSAR_EXPORTKARTON);
 		exportkartonGridField.setWidth("30%");
-		
+
 		kosarGrid.setFields(cikkszamGridField, exportkartonGridField);
 
 		HLayout buttons1Layout = new HLayout();
@@ -121,7 +121,7 @@ public class Order {
 		emptyLabel.setContents("");
 		emptyLabel.setAlign(Alignment.CENTER);
 		emptyLabel.setWidth("50px");
-		
+
 		final IButton kosarRemoveIButton = new IButton(orderLabels.torles());
 		kosarRemoveIButton.setDisabled(true);
 
@@ -135,24 +135,25 @@ public class Order {
 		buttons2Layout.setHeight("3%");
 		buttons2Layout.setWidth("100%");
 
-		final IButton kosarCommitIButton = new IButton(orderLabels.veglegesites());
+		final IButton kosarCommitIButton = new IButton(
+				orderLabels.veglegesites());
 		kosarCommitIButton.setWidth("250px");
 		kosarCommitIButton.setDisabled(true);
 
 		buttons2Layout.addMember(kosarCommitIButton);
-		
+
 		kosarLayout.addMember(buttons1Layout);
 		kosarLayout.addMember(kosarGrid);
 		kosarLayout.addMember(buttons2Layout);
 
 		final Ctorzs ctorzs = new Ctorzs();
-		
+
 		middleLayout.addMember(ctorzs.get(kosarAddIButton));
 		middleLayout.addMember(kosarLayout);
-				
+
 		kosarAddIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
+
 				final Window winModal = new Window();
 				winModal.setWidth(400);
 				winModal.setHeight(110);
@@ -171,22 +172,28 @@ public class Order {
 
 				int found = 0;
 				for (int i = 0; i < kosarGrid.getRecords().length; i++) {
-					if (kosarGrid.getRecord(i).getAttribute(OrderConstants.KOSAR_CIKKSZAM).equals(ctorzs.getCikkszam())) {
+					if (kosarGrid.getRecord(i)
+							.getAttribute(OrderConstants.KOSAR_CIKKSZAM)
+							.equals(ctorzs.getCikkszam())) {
 						found = i;
 						i = kosarGrid.getRecords().length;
 					}
-				}			
+				}
 
-				if (found > 0) 
-					kosarEditForm.editRecord(kosarGrid.getRecord(found));				
+				if (found > 0)
+					kosarEditForm.editRecord(kosarGrid.getRecord(found));
 				else
 					kosarEditForm.editNewRecord();
-				
-				kosarEditForm.getField(OrderConstants.KOSAR_CIKKSZAM).setValue(ctorzs.getCikkszam());
-				kosarEditForm.getField(OrderConstants.KOSAR_CIKKSZAM).setCanEdit(false);
-				kosarEditForm.getField(OrderConstants.KOSAR_EXPORTKARTON).setValidateOnChange(true);
-				kosarEditForm.getField(OrderConstants.KOSAR_EXPORTKARTON).setValidators(new IsIntegerValidator());
-				
+
+				kosarEditForm.getField(OrderConstants.KOSAR_CIKKSZAM).setValue(
+						ctorzs.getCikkszam());
+				kosarEditForm.getField(OrderConstants.KOSAR_CIKKSZAM)
+						.setCanEdit(false);
+				kosarEditForm.getField(OrderConstants.KOSAR_EXPORTKARTON)
+						.setValidateOnChange(true);
+				kosarEditForm.getField(OrderConstants.KOSAR_EXPORTKARTON)
+						.setValidators(new IsIntegerValidator());
+
 				HLayout buttonsLayout = new HLayout();
 				buttonsLayout.setWidth100();
 
@@ -195,8 +202,8 @@ public class Order {
 
 				saveLayout.addMember(saveIButton);
 				buttonsLayout.addMember(saveLayout);
-//				buttonsLayout.setHeight("5%");
-				
+				// buttonsLayout.setHeight("5%");
+
 				HLayout cancelLayout = new HLayout();
 				cancelLayout.setAlign(Alignment.RIGHT);
 				final IButton cancelIButton = new IButton(commonLabels.cancel());
@@ -207,11 +214,12 @@ public class Order {
 					public void onClick(ClickEvent event) {
 						cancelIButton.setDisabled(true);
 						kosarEditForm.saveData(new DSCallback() {
-							public void execute(DSResponse response, Object rawData,
-									DSRequest request) {
+							public void execute(DSResponse response,
+									Object rawData, DSRequest request) {
 								if (response.getStatus() == DSResponse.STATUS_SUCCESS)
 									winModal.destroy();
-								else cancelIButton.setDisabled(false);
+								else
+									cancelIButton.setDisabled(false);
 							}
 						});
 					}
@@ -222,76 +230,83 @@ public class Order {
 						winModal.destroy();
 					}
 				});
-			
+
 				winModal.addItem(kosarEditForm);
 				winModal.addItem(buttonsLayout);
-				winModal.show();			
-	
+				winModal.show();
+
 			}
 		});
-	
+
 		kosarRemoveIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-	    	   	SC.ask(commonLabels.sure(), new BooleanCallback() {
-	 		    	   public void execute(Boolean value) {
-	 		    	      if (value != null && value) {		
-	 		    	    	    kosarRemoveIButton.setDisabled(true);
-	 		    	    		kosarGrid.removeSelectedData(); 
-	 		    	      }
-	 		    	   }
-	 	        	});	   	        		    					
+				SC.ask(commonLabels.sure(), new BooleanCallback() {
+					public void execute(Boolean value) {
+						if (value != null && value) {
+							kosarRemoveIButton.setDisabled(true);
+							kosarGrid.removeSelectedData();
+						}
+					}
+				});
 			}
 		});
-	
+
 		kosarGrid.addRecordClickHandler(new RecordClickHandler() {
 			public void onRecordClick(RecordClickEvent event) {
 				kosarRemoveIButton.setDisabled(false);
 			}
 		});
-			
-	    kosarGrid.addDataArrivedHandler(new DataArrivedHandler() {
-			public void onDataArrived(DataArrivedEvent event) {
-				if (kosarGrid.getRecordList().getLength() > 0) kosarCommitIButton.setDisabled(false);
-				else kosarCommitIButton.setDisabled(true);
-			}	
-		});	    
-	
-		kosarCommitIButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-	    	   	SC.ask(commonLabels.sure(), new BooleanCallback() {
-	 		    	   public void execute(Boolean value) {
-	 		    	      if (value != null && value) {			 		    	    	  
-	 		    	    	   kosarRemoveIButton.setDisabled(true);
-	 		    	    	   kosarCommitIButton.setDisabled(true);	 		    	    	   
-	 		    	    	   DisplayRequest.startRequest();
-	 		    	    	   dekorTrade99Service.commitKosar(UserInfo.userId,
-	 		    	    			   new AsyncCallback<String>() {
-	    									public void onFailure(Throwable caught) {
-	    										DisplayRequest.serverResponse();
-	    										if (caught instanceof SQLExceptionSer)
-	    											SC.warn(commonLabels.server_sqlerror()
-	    													+ " : " + caught.getMessage());
-	    										else
-	    											SC.warn(commonLabels.server_error());
-	    									}
 
-	    									public void onSuccess(String result) {
-	    										DisplayRequest.serverResponse();
-	    										kosarGrid.setData(new ListGridRecord[]{});
-	    										SC.say(result + " " + orderLabels.veglegesitve());
-	    									}
-	    								});
-	 		    					
-	 		    	      }
-	 		    	   }
-	 	        	});	   	        		    					
+		kosarGrid.addDataArrivedHandler(new DataArrivedHandler() {
+			public void onDataArrived(DataArrivedEvent event) {
+				if (kosarGrid.getRecordList().getLength() > 0)
+					kosarCommitIButton.setDisabled(false);
+				else
+					kosarCommitIButton.setDisabled(true);
 			}
 		});
-	    
-		
+
+		kosarCommitIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				SC.ask(commonLabels.sure(), new BooleanCallback() {
+					public void execute(Boolean value) {
+						if (value != null && value) {
+							kosarRemoveIButton.setDisabled(true);
+							kosarCommitIButton.setDisabled(true);
+							DisplayRequest.startRequest();
+							dekorTrade99Service.commitKosar(UserInfo.userId,
+									new AsyncCallback<String>() {
+										public void onFailure(Throwable caught) {
+											DisplayRequest.serverResponse();
+											if (caught instanceof SQLExceptionSer)
+												SC.warn(commonLabels
+														.server_sqlerror()
+														+ " : "
+														+ caught.getMessage());
+											else
+												SC.warn(commonLabels
+														.server_error());
+										}
+
+										public void onSuccess(String result) {
+											DisplayRequest.serverResponse();
+											kosarGrid
+													.setData(new ListGridRecord[] {});
+											SC.say(result
+													+ " "
+													+ orderLabels
+															.veglegesitve());
+										}
+									});
+
+						}
+					}
+				});
+			}
+		});
+
 		return middleLayout;
 
 	}
-	
-	
+
 }

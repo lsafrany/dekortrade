@@ -7,20 +7,20 @@ import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable
 public class Rendelt {
-	
+
 	@Persistent
 	private String rovidnev;
 
 	@Persistent
 	private String rendeles;
-	
+
 	@Persistent
 	private Date datum;
-	
+
 	@Persistent
 	private String statusz;
 
-	public Rendelt(String rovidnev,String rendeles, Date datum, String statusz) {
+	public Rendelt(String rovidnev, String rendeles, Date datum, String statusz) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.datum = datum;
@@ -58,6 +58,5 @@ public class Rendelt {
 	public void setStatusz(String statusz) {
 		this.statusz = statusz;
 	}
-	
-}
 
+}

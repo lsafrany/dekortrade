@@ -46,7 +46,8 @@ public class Ctorzs {
 
 	public Ctorzs(String cikkszam, String megnevezes, BigDecimal ar,
 			Integer kiskarton, Integer darab, BigDecimal terfogat, String jel,
-			BigDecimal bsuly, BigDecimal nsuly, Integer kepek, Boolean szinkron, Boolean torolt) {
+			BigDecimal bsuly, BigDecimal nsuly, Integer kepek,
+			Boolean szinkron, Boolean torolt) {
 		this.cikkszam = cikkszam;
 		this.megnevezes = megnevezes;
 		this.ar = ar;
@@ -60,7 +61,7 @@ public class Ctorzs {
 		this.szinkron = szinkron;
 		this.torolt = torolt;
 	}
-	
+
 	public String getCikkszam() {
 		return cikkszam;
 	}
@@ -147,6 +148,14 @@ public class Ctorzs {
 
 	public void setTorolt(Boolean torolt) {
 		this.torolt = torolt;
+	}
+
+	public Boolean getSzinkron() {
+		return szinkron;
+	}
+
+	public void setSzinkron(Boolean szinkron) {
+		this.szinkron = szinkron;
 	}
 
 }

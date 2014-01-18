@@ -45,8 +45,8 @@ public class RendeltDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getRendelt(
-				new AsyncCallback<ArrayList<RendeltSer>>() {
+		dekorTradeService
+				.getRendelt(new AsyncCallback<ArrayList<RendeltSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
 							response.setAttribute(

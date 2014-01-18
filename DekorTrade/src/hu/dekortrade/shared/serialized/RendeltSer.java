@@ -3,13 +3,13 @@ package hu.dekortrade.shared.serialized;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class RendeltSer implements IsSerializable {
-	
+
 	private String rovidnev;
 
 	private String rendeles;
-	
+
 	private String datum;
-	
+
 	public String getRovidnev() {
 		return rovidnev;
 	}
@@ -35,4 +35,3 @@ public class RendeltSer implements IsSerializable {
 	}
 
 }
-

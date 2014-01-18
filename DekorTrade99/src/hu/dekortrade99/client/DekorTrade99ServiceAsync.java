@@ -31,15 +31,19 @@ public interface DekorTrade99ServiceAsync {
 	void getRendelt(String rovidnev,
 			AsyncCallback<ArrayList<RendeltSer>> asyncCallback);
 
-	void getRendeltcikk(String rovidnev,String rendeles,
+	void getRendeltcikk(String rovidnev, String rendeles,
 			AsyncCallback<ArrayList<RendeltcikkSer>> asyncCallback);
 
-	void addKosar(KosarSer kosarSer, AsyncCallback<KosarSer> callback) throws IllegalArgumentException;
+	void addKosar(KosarSer kosarSer, AsyncCallback<KosarSer> callback)
+			throws IllegalArgumentException;
 
-	void removeKosar(KosarSer kosarSer, AsyncCallback<KosarSer> callback) throws IllegalArgumentException;
+	void removeKosar(KosarSer kosarSer, AsyncCallback<KosarSer> callback)
+			throws IllegalArgumentException;
 
-	void updateKosar(KosarSer kosarSer, AsyncCallback<KosarSer> callback) throws IllegalArgumentException;
+	void updateKosar(KosarSer kosarSer, AsyncCallback<KosarSer> callback)
+			throws IllegalArgumentException;
 
-	void commitKosar(String userid, AsyncCallback<String> callback) throws IllegalArgumentException;
+	void commitKosar(String userid, AsyncCallback<String> callback)
+			throws IllegalArgumentException;
 
 }

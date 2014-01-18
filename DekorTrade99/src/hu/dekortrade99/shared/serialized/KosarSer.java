@@ -33,5 +33,5 @@ public class KosarSer implements IsSerializable {
 	public void setExportkarton(Integer exportkarton) {
 		this.exportkarton = exportkarton;
 	}
-	
+
 }

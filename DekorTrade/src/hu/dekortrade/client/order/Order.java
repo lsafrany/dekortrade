@@ -33,14 +33,14 @@ public class Order {
 
 	public Canvas get() {
 		DisplayRequest.counterInit();
-		
+
 		final HLayout middleLayout = new HLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
-		
+
 		VLayout rendeltLayout = new VLayout();
 		rendeltLayout.setDefaultLayoutAlign(Alignment.CENTER);
-				
+
 		final RendeltDataSource rendeltDataSource = new RendeltDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
@@ -72,7 +72,7 @@ public class Order {
 				}
 			}
 		});
-		
+
 		final ListGrid rendeltGrid = new ListGrid();
 		rendeltGrid.setTitle(orderLabels.rendeles());
 		rendeltGrid.setWidth("70%");
@@ -86,16 +86,17 @@ public class Order {
 		ListGridField rovidnevGridField = new ListGridField(
 				OrderConstants.RENDELT_ROVIDNEV);
 		rovidnevGridField.setWidth("30%");
-		
+
 		ListGridField rendelesGridField = new ListGridField(
 				OrderConstants.RENDELT_RENDELES);
-	
+
 		ListGridField datumGridField = new ListGridField(
 				OrderConstants.RENDELT_DATUM);
 		datumGridField.setWidth("20%");
-		
-		rendeltGrid.setFields(rovidnevGridField, rendelesGridField, datumGridField);
-		
+
+		rendeltGrid.setFields(rovidnevGridField, rendelesGridField,
+				datumGridField);
+
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -105,13 +106,13 @@ public class Order {
 		IButton frissitIButton = new IButton(orderLabels.frissit());
 
 		buttonsLayout.addMember(frissitIButton);
-		
+
 		rendeltLayout.addMember(rendeltGrid);
 		rendeltLayout.addMember(buttonsLayout);
-		
+
 		VLayout rendeltcikkLayout = new VLayout();
 		rendeltcikkLayout.setDefaultLayoutAlign(Alignment.CENTER);
-		
+
 		final RendeltcikkDataSource rendeltcikkDataSource = new RendeltcikkDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
@@ -143,7 +144,7 @@ public class Order {
 				}
 			}
 		});
-		
+
 		final ListGrid rendeltcikkGrid = new ListGrid();
 		rendeltcikkGrid.setTitle(orderLabels.rendeltcikk());
 		rendeltcikkGrid.setWidth("50%");
@@ -155,35 +156,41 @@ public class Order {
 
 		ListGridField cikkszamGridField = new ListGridField(
 				OrderConstants.RENDELTCIKK_CIKKSZAM);
-	
+
 		ListGridField exportkartonGridField = new ListGridField(
 				OrderConstants.RENDELTCIKK_EXPORTKARTON);
 		exportkartonGridField.setWidth("30%");
-		
+
 		rendeltcikkGrid.setFields(cikkszamGridField, exportkartonGridField);
 
 		rendeltcikkLayout.addMember(rendeltcikkGrid);
-		
+
 		middleLayout.addMember(rendeltLayout);
 		middleLayout.addMember(rendeltcikkLayout);
-		
-		frissitIButton.addClickHandler(new ClickHandler() {  
-	    	public void onClick(ClickEvent event) {	    		
-	    		rendeltGrid.invalidateCache();
-	    		rendeltGrid.fetchData();
-	    		rendeltcikkGrid.setData(new ListGridRecord[]{});
-  	    	}	
-        });         	    	    	 
 
-		rendeltGrid.addRecordClickHandler(new RecordClickHandler() {   
-            public void onRecordClick(RecordClickEvent event) {
-            	Criteria criteria = new Criteria();
-            	criteria.setAttribute(OrderConstants.RENDELTCIKK_ROVIDNEV, rendeltGrid.getSelectedRecord().getAttribute(OrderConstants.RENDELT_ROVIDNEV));         
-            	criteria.setAttribute(OrderConstants.RENDELTCIKK_RENDELES, rendeltGrid.getSelectedRecord().getAttribute(OrderConstants.RENDELT_RENDELES));
-            	rendeltcikkGrid.fetchData(criteria);
-            }
-        });   
-	
+		frissitIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				rendeltGrid.invalidateCache();
+				rendeltGrid.fetchData();
+				rendeltcikkGrid.setData(new ListGridRecord[] {});
+			}
+		});
+
+		rendeltGrid.addRecordClickHandler(new RecordClickHandler() {
+			public void onRecordClick(RecordClickEvent event) {
+				Criteria criteria = new Criteria();
+				criteria.setAttribute(
+						OrderConstants.RENDELTCIKK_ROVIDNEV,
+						rendeltGrid.getSelectedRecord().getAttribute(
+								OrderConstants.RENDELT_ROVIDNEV));
+				criteria.setAttribute(
+						OrderConstants.RENDELTCIKK_RENDELES,
+						rendeltGrid.getSelectedRecord().getAttribute(
+								OrderConstants.RENDELT_RENDELES));
+				rendeltcikkGrid.fetchData(criteria);
+			}
+		});
+
 		return middleLayout;
 
 	}

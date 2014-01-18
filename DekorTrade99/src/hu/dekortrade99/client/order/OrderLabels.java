@@ -7,14 +7,17 @@ public interface OrderLabels extends Constants {
 	String order();
 
 	String kosar_rovidnev();
+
 	String kosar_cikkszam();
+
 	String kosar_exportkarton();
-	
+
 	String rendeles();
-	
+
 	String torles();
-	
+
 	String veglegesites();
+
 	String veglegesitve();
-	
+
 }

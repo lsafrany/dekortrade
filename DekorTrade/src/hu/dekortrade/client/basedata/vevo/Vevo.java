@@ -2,41 +2,54 @@ package hu.dekortrade.client.basedata.vevo;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.CommonLabels;
+import hu.dekortrade.client.DekorTradeService;
+import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.data.DSCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class Vevo {
 
-	private VevoLabels vevoLabels = GWT
-			.create(VevoLabels.class);
+	private final DekorTradeServiceAsync dekorTradeService = GWT
+			.create(DekorTradeService.class);
 
-	private CommonLabels commonLabels = GWT
-			.create(CommonLabels.class);
-	
+	private VevoLabels vevoLabels = GWT.create(VevoLabels.class);
+
+	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
+
 	public Canvas get() {
 		DisplayRequest.counterInit();
-						
+
 		HLayout middleLayout = new HLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
 
 		VLayout vevoLayout = new VLayout();
 		vevoLayout.setDefaultLayoutAlign(Alignment.CENTER);
-		
+
 		final VevoDataSource vevoDataSource = new VevoDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
@@ -68,7 +81,7 @@ public class Vevo {
 				}
 			}
 		});
-		
+
 		final ListGrid vevoGrid = new ListGrid();
 		vevoGrid.setTitle(vevoLabels.vevok());
 		vevoGrid.setWidth("70%");
@@ -82,15 +95,13 @@ public class Vevo {
 		ListGridField rovidnevGridField = new ListGridField(
 				VevoConstants.VEVO_ROVIDNEV);
 		rovidnevGridField.setWidth("10%");
-		
-		ListGridField nevGridField = new ListGridField(
-				VevoConstants.VEVO_NEV);
+
+		ListGridField nevGridField = new ListGridField(VevoConstants.VEVO_NEV);
 		nevGridField.setWidth("20%");
 
-		ListGridField cimGridField = new ListGridField(
-				VevoConstants.VEVO_CIM);
+		ListGridField cimGridField = new ListGridField(VevoConstants.VEVO_CIM);
 		cimGridField.setWidth("30%");
-		
+
 		ListGridField elerhetosegGridField = new ListGridField(
 				VevoConstants.VEVO_ELERHETOSEG);
 
@@ -98,53 +109,194 @@ public class Vevo {
 				VevoConstants.VEVO_INTERNET);
 		internetGridField.setWidth("10%");
 
-		vevoGrid.setFields(rovidnevGridField, nevGridField, cimGridField, elerhetosegGridField, internetGridField);
-	
+		vevoGrid.setFields(rovidnevGridField, nevGridField, cimGridField,
+				elerhetosegGridField, internetGridField);
+
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setHeight("3%");
 		buttonsLayout.setWidth("70%");
-		
+
 		HLayout addButtonLayout = new HLayout();
 		addButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		IButton addButton = new IButton(commonLabels.add());
 		addButtonLayout.setAlign(Alignment.CENTER);
 		addButtonLayout.addMember(addButton);
-			
+
 		HLayout modifyButtonLayout = new HLayout();
-		modifyButtonLayout
-				.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		modifyButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		modifyButtonLayout.setAlign(Alignment.CENTER);
 		final IButton modifyButton = new IButton(commonLabels.modify());
 		modifyButton.disable();
 		modifyButtonLayout.addMember(modifyButton);
 
 		HLayout jelszoButtonLayout = new HLayout();
-		jelszoButtonLayout
-				.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		jelszoButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		jelszoButtonLayout.setAlign(Alignment.CENTER);
 		final IButton jelszoButton = new IButton(vevoLabels.jelszo());
 		jelszoButton.disable();
 		jelszoButtonLayout.addMember(jelszoButton);
-		
+
 		HLayout deleteButtonLayout = new HLayout();
-		deleteButtonLayout
-				.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		deleteButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		deleteButtonLayout.setAlign(Alignment.CENTER);
 		final IButton deleteButton = new IButton(commonLabels.delete());
 		deleteButton.disable();
 		deleteButtonLayout.addMember(deleteButton);
-		
+
 		buttonsLayout.addMember(addButtonLayout);
 		buttonsLayout.addMember(modifyButtonLayout);
 		buttonsLayout.addMember(jelszoButtonLayout);
 		buttonsLayout.addMember(deleteButtonLayout);
-			
+
 		vevoLayout.addMember(vevoGrid);
 		vevoLayout.addMember(buttonsLayout);
-		
+
 		middleLayout.addMember(vevoLayout);
-		
+
+		vevoGrid.addRecordClickHandler(new RecordClickHandler() {
+			public void onRecordClick(RecordClickEvent event) {
+				modifyButton.setDisabled(false);
+				deleteButton.setDisabled(false);
+				if (vevoGrid.getSelectedRecord().getAttributeAsBoolean(
+						VevoConstants.VEVO_INTERNET))
+					jelszoButton.setDisabled(false);
+				else
+					jelszoButton.setDisabled(true);
+			}
+		});
+
+		addButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				vevoEdit(vevoDataSource, vevoGrid, Boolean.TRUE);
+			}
+		});
+
+		modifyButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				vevoEdit(vevoDataSource, vevoGrid, Boolean.FALSE);
+			}
+		});
+
+		jelszoButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				SC.ask(commonLabels.sure(), new BooleanCallback() {
+					public void execute(Boolean value) {
+						if (value != null && value) {
+							jelszoButton.setDisabled(true);
+							DisplayRequest.startRequest();
+							dekorTradeService.setVevoJelszo(
+									vevoGrid.getSelectedRecord().getAttribute(
+											VevoConstants.VEVO_ROVIDNEV),
+									new AsyncCallback<String>() {
+										public void onFailure(Throwable caught) {
+											DisplayRequest.serverResponse();
+											if (caught instanceof SQLExceptionSer)
+												SC.warn(commonLabels
+														.server_sqlerror()
+														+ " : "
+														+ caught.getMessage());
+											else
+												SC.warn(commonLabels
+														.server_error());
+											jelszoButton.setDisabled(false);
+										}
+
+										public void onSuccess(String result) {
+											DisplayRequest.serverResponse();
+											SC.say(result);
+											jelszoButton.setDisabled(false);
+										}
+									});
+
+						}
+					}
+				});
+
+			}
+		});
+
+		deleteButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				SC.ask(commonLabels.sure(), new BooleanCallback() {
+					public void execute(Boolean value) {
+						if (value != null && value) {
+							vevoGrid.removeSelectedData();
+							modifyButton.setDisabled(true);
+							jelszoButton.setDisabled(true);
+							deleteButton.setDisabled(true);
+						}
+					}
+				});
+
+			}
+		});
+
 		return middleLayout;
 
 	}
+
+	void vevoEdit(VevoDataSource dataSource, ListGrid listGrid, boolean uj) {
+
+		final Window winModal = new Window();
+		winModal.setWidth(600);
+		winModal.setHeight(200);
+		winModal.setTitle(vevoLabels.vevo());
+		winModal.setShowMinimizeButton(false);
+		winModal.setShowCloseButton(false);
+		winModal.setIsModal(true);
+		winModal.setShowModalMask(true);
+		winModal.centerInPage();
+
+		final DynamicForm editForm = new DynamicForm();
+		editForm.setNumCols(2);
+		editForm.setColWidths("15%", "*");
+		editForm.setDataSource(dataSource);
+		editForm.setUseAllDataSourceFields(true);
+
+		if (uj)
+			editForm.editNewRecord();
+		else
+			editForm.editSelectedData(listGrid);
+
+		HLayout buttonsLayout = new HLayout();
+		buttonsLayout.setAlign(Alignment.CENTER);
+		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		buttonsLayout.setWidth("100%");
+
+		HLayout saveLayout = new HLayout();
+		saveLayout.setAlign(Alignment.CENTER);
+		saveLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		IButton saveIButton = new IButton(commonLabels.save());
+		saveIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				editForm.saveData(new DSCallback() {
+					public void execute(DSResponse response, Object rawData,
+							DSRequest request) {
+						if (response.getStatus() == DSResponse.STATUS_SUCCESS)
+							winModal.destroy();
+					}
+				});
+			}
+		});
+		saveLayout.addMember(saveIButton);
+		buttonsLayout.addMember(saveLayout);
+
+		HLayout cancelLayout = new HLayout();
+		cancelLayout.setAlign(Alignment.CENTER);
+		cancelLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		IButton cancelIButton = new IButton(commonLabels.cancel());
+		cancelIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				winModal.destroy();
+			}
+		});
+		cancelLayout.addMember(cancelIButton);
+		buttonsLayout.addMember(cancelLayout);
+
+		winModal.addItem(editForm);
+		winModal.addItem(buttonsLayout);
+		winModal.show();
+
+	}
+
 }

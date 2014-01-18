@@ -5,7 +5,7 @@ import com.google.gwt.i18n.client.Constants;
 public interface DekorTradeLabels extends Constants {
 
 	String version();
-	
+
 	String login_login();
 
 	String login_usedId();
@@ -29,7 +29,7 @@ public interface DekorTradeLabels extends Constants {
 	String menu_system();
 
 	String menu_basedata();
-	
+
 	String menu_order();
-	
+
 }

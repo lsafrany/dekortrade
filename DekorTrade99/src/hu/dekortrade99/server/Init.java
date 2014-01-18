@@ -48,7 +48,7 @@ public class Init extends HttpServlet {
 			final InputStream inputStream = Init.class
 					.getResourceAsStream("CTORZS.csv");
 			final InputStreamReader inputStreamReader = new InputStreamReader(
-					inputStream,"UTF-8");
+					inputStream, "UTF-8");
 			final BufferedReader bufferedReader = new BufferedReader(
 					inputStreamReader);
 
@@ -69,18 +69,20 @@ public class Init extends HttpServlet {
 			}
 
 			out.append("<h1>" + counter + "</h1>");
-			
+
 			Query vevoQuery = pm.newQuery(Vevo.class);
 			vevoQuery.deletePersistentAll();
-	
+
 			out.append("<h1>Floradekor</h1>");
 			out.append("<h1>Floratrade</h1>");
-			
-			Vevo vevo1 = new Vevo("Floradekor",Constants.INIT_PASSWORD,"Flora Dekor",false);
-			Vevo vevo2= new Vevo("Floratrade",Constants.INIT_PASSWORD,"Flora Trade Kft",false);
+
+			Vevo vevo1 = new Vevo("Floradekor", Constants.INIT_PASSWORD,
+					"Flora Dekor", false);
+			Vevo vevo2 = new Vevo("Floratrade", Constants.INIT_PASSWORD,
+					"Flora Trade Kft", false);
 			pm.makePersistent(vevo1);
 			pm.makePersistent(vevo2);
-			
+
 		} finally {
 			pm.close();
 		}

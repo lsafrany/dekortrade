@@ -42,7 +42,8 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 				orderLabels.rendelt_cikkszam());
 		addField(field);
 
-		field = new DataSourceTextField(OrderConstants.RENDELTCIKK_EXPORTKARTON,
+		field = new DataSourceTextField(
+				OrderConstants.RENDELTCIKK_EXPORTKARTON,
 				orderLabels.rendelt_exportkarton());
 		addField(field);
 
@@ -55,7 +56,7 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 				request.getCriteria().getAttributeAsString(
 						OrderConstants.RENDELTCIKK_ROVIDNEV),
 				request.getCriteria().getAttributeAsString(
-						OrderConstants.RENDELTCIKK_RENDELES),						
+						OrderConstants.RENDELTCIKK_RENDELES),
 				new AsyncCallback<ArrayList<RendeltcikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -105,7 +106,8 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 		to.setAttribute(OrderConstants.RENDELTCIKK_ROVIDNEV, from.getRovidnev());
 		to.setAttribute(OrderConstants.RENDELTCIKK_RENDELES, from.getRendeles());
 		to.setAttribute(OrderConstants.RENDELTCIKK_CIKKSZAM, from.getCikkszam());
-		to.setAttribute(OrderConstants.RENDELTCIKK_EXPORTKARTON, from.getExportkarton());
+		to.setAttribute(OrderConstants.RENDELTCIKK_EXPORTKARTON,
+				from.getExportkarton());
 	}
 
 }

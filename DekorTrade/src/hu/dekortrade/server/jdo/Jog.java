@@ -7,14 +7,14 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
 public class Jog implements IsSerializable {
-	
+
 	@Persistent
 	private String rovidnev;
 
 	@Persistent
 	private String nev;
 
-	public Jog(String rovidnev,String nev) {
+	public Jog(String rovidnev, String nev) {
 		this.rovidnev = rovidnev;
 		this.nev = nev;
 	}
@@ -36,4 +36,3 @@ public class Jog implements IsSerializable {
 	}
 
 }
-

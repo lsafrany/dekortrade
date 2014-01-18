@@ -7,12 +7,14 @@ import hu.dekortrade.shared.Constants;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.Criteria;
+import com.smartgwt.client.data.DSCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
@@ -41,19 +43,19 @@ public class Ctorzs {
 	private int page = 0;
 
 	private String cikkszam = "";
-	
-	public Canvas get(final IButton addIButton) {
+
+	public Canvas get(final IButton extIButton) {
 
 		DisplayRequest.counterInit();
-		
+
 		HLayout middleLayout = new HLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
-	
+
 		VLayout ctorzsLayout = new VLayout();
 		ctorzsLayout.setStyleName("middle");
 		ctorzsLayout.setWidth("1200px");
-		
+
 		HLayout ctorzsFormLayout = new HLayout();
 		ctorzsFormLayout.setHeight("3%");
 		ctorzsFormLayout.setAlign(Alignment.CENTER);
@@ -63,7 +65,7 @@ public class Ctorzs {
 		ctorzsForm.setNumCols(4);
 		ctorzsForm.setColWidths("10%", "25%", "10%", "*");
 
-		final TextItem cikkszamItem = new TextItem();	
+		final TextItem cikkszamItem = new TextItem();
 		cikkszamItem.setTitle(ctorzsLabels.ctorzs_cikkszam());
 		cikkszamItem.setLength(15);
 
@@ -196,40 +198,46 @@ public class Ctorzs {
 		prevnextLayout.addMember(previousIButton);
 		prevnextLayout.addMember(pageLabel);
 		prevnextLayout.addMember(nextIButton);
-		
+
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 
 		buttonsLayout.setHeight("3%");
 		buttonsLayout.setWidth("100%");
-		
+
 		HLayout addButtonLayout = new HLayout();
 		addButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		IButton addButton = new IButton(commonLabels.add());
 		addButtonLayout.setAlign(Alignment.CENTER);
 		addButtonLayout.addMember(addButton);
-			
+
 		HLayout modifyButtonLayout = new HLayout();
-		modifyButtonLayout
-				.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		modifyButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		modifyButtonLayout.setAlign(Alignment.CENTER);
 		final IButton modifyButton = new IButton(commonLabels.modify());
 		modifyButton.disable();
 		modifyButtonLayout.addMember(modifyButton);
 
+		HLayout loadButtonLayout = new HLayout();
+		loadButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		loadButtonLayout.setAlign(Alignment.CENTER);
+		final IButton loadButton = new IButton(ctorzsLabels.kepfeltoltes());
+		loadButton.disable();
+		loadButtonLayout.addMember(loadButton);
+
 		HLayout deleteButtonLayout = new HLayout();
-		deleteButtonLayout
-				.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		deleteButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		deleteButtonLayout.setAlign(Alignment.CENTER);
 		final IButton deleteButton = new IButton(commonLabels.delete());
 		deleteButton.disable();
 		deleteButtonLayout.addMember(deleteButton);
-		
+
 		buttonsLayout.addMember(addButtonLayout);
 		buttonsLayout.addMember(modifyButtonLayout);
+		buttonsLayout.addMember(loadButtonLayout);
 		buttonsLayout.addMember(deleteButtonLayout);
-		
+
 		ctorzsLayout.addMember(ctorzsFormLayout);
 		ctorzsLayout.addMember(ctorzsGridLayout);
 		ctorzsLayout.addMember(prevnextLayout);
@@ -250,7 +258,13 @@ public class Ctorzs {
 				previousIButton.setDisabled(true);
 				nextIButton.setDisabled(true);
 				kepekIButton.setDisabled(true);
-				if (addIButton != null) addIButton.setDisabled(true);  
+
+				modifyButton.setDisabled(true);
+				loadButton.setDisabled(true);
+				deleteButton.setDisabled(true);
+
+				if (extIButton != null)
+					extIButton.setDisabled(true);
 				pageLabel.setContents("");
 			}
 		});
@@ -270,7 +284,13 @@ public class Ctorzs {
 				previousIButton.setDisabled(true);
 				nextIButton.setDisabled(true);
 				kepekIButton.setDisabled(true);
-				if (addIButton != null) addIButton.setDisabled(true); 
+
+				modifyButton.setDisabled(true);
+				loadButton.setDisabled(true);
+				deleteButton.setDisabled(true);
+
+				if (extIButton != null)
+					extIButton.setDisabled(true);
 				pageLabel.setContents("");
 			}
 		});
@@ -290,7 +310,13 @@ public class Ctorzs {
 				previousIButton.setDisabled(true);
 				nextIButton.setDisabled(true);
 				kepekIButton.setDisabled(true);
-				if (addIButton != null) addIButton.setDisabled(true); 
+
+				modifyButton.setDisabled(true);
+				loadButton.setDisabled(true);
+				deleteButton.setDisabled(true);
+
+				if (extIButton != null)
+					extIButton.setDisabled(true);
 				pageLabel.setContents("");
 			}
 		});
@@ -325,10 +351,13 @@ public class Ctorzs {
 		ctorzsGrid.addRecordClickHandler(new RecordClickHandler() {
 			public void onRecordClick(RecordClickEvent event) {
 				kepekIButton.setDisabled(false);
-				if (addIButton != null) {
+				modifyButton.setDisabled(false);
+				loadButton.setDisabled(false);
+				deleteButton.setDisabled(false);
+				if (extIButton != null) {
 					cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
 							CtorzsConstants.CTORZS_CIKKSZAM);
-					addIButton.setDisabled(false); 
+					extIButton.setDisabled(false);
 				}
 			}
 		});
@@ -354,8 +383,36 @@ public class Ctorzs {
 			}
 		});
 
+		addButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ctorzsEdit(ctorzsDataSource, ctorzsGrid, Boolean.TRUE);
+			}
+		});
+
+		modifyButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ctorzsEdit(ctorzsDataSource, ctorzsGrid, Boolean.FALSE);
+			}
+		});
+
+		deleteButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				SC.ask(commonLabels.sure(), new BooleanCallback() {
+					public void execute(Boolean value) {
+						if (value != null && value) {
+							ctorzsGrid.removeSelectedData();
+							modifyButton.setDisabled(true);
+							loadButton.setDisabled(true);
+							deleteButton.setDisabled(true);
+						}
+					}
+				});
+
+			}
+		});
+
 		middleLayout.addMember(ctorzsLayout);
-		
+
 		return middleLayout;
 
 	}
@@ -363,6 +420,69 @@ public class Ctorzs {
 	public String getCikkszam() {
 		return cikkszam;
 	}
-	
-	
+
+	void ctorzsEdit(CtorzsDataSource dataSource, ListGrid listGrid, boolean uj) {
+
+		final Window winModal = new Window();
+		winModal.setWidth(600);
+		winModal.setHeight(350);
+		winModal.setTitle(ctorzsLabels.cikk());
+		winModal.setShowMinimizeButton(false);
+		winModal.setShowCloseButton(false);
+		winModal.setIsModal(true);
+		winModal.setShowModalMask(true);
+		winModal.centerInPage();
+
+		final DynamicForm editForm = new DynamicForm();
+		editForm.setNumCols(2);
+		editForm.setColWidths("15%", "*");
+		editForm.setDataSource(dataSource);
+		editForm.setUseAllDataSourceFields(true);
+
+		if (uj)
+			editForm.editNewRecord();
+		else
+			editForm.editSelectedData(listGrid);
+
+		HLayout buttonsLayout = new HLayout();
+		buttonsLayout.setAlign(Alignment.CENTER);
+		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		buttonsLayout.setWidth("100%");
+
+		HLayout saveLayout = new HLayout();
+		saveLayout.setAlign(Alignment.CENTER);
+		saveLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		IButton saveIButton = new IButton(commonLabels.save());
+		saveIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				editForm.saveData(new DSCallback() {
+					public void execute(DSResponse response, Object rawData,
+							DSRequest request) {
+						if (response.getStatus() == DSResponse.STATUS_SUCCESS)
+							winModal.destroy();
+					}
+				});
+			}
+		});
+		saveLayout.addMember(saveIButton);
+		buttonsLayout.addMember(saveLayout);
+
+		HLayout cancelLayout = new HLayout();
+		cancelLayout.setAlign(Alignment.CENTER);
+		cancelLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		IButton cancelIButton = new IButton(commonLabels.cancel());
+		cancelIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				winModal.destroy();
+			}
+		});
+		cancelLayout.addMember(cancelIButton);
+		buttonsLayout.addMember(cancelLayout);
+
+		winModal.addItem(editForm);
+		winModal.addItem(buttonsLayout);
+		winModal.show();
+
+	}
+
 }

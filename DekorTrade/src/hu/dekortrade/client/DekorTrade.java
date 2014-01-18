@@ -63,9 +63,8 @@ public class DekorTrade implements EntryPoint {
 	private DekorTradeLabels dekorTradeLabels = GWT
 			.create(DekorTradeLabels.class);
 
-	private CommonLabels commonLabels = GWT
-			.create(CommonLabels.class);
-			 
+	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
+
 	private final Label statusLabel = new Label();
 
 	private final HLayout topLayoutRight = new HLayout();
@@ -106,9 +105,9 @@ public class DekorTrade implements EntryPoint {
 
 		topLayoutMiddleTop.setHeight("50%");
 		topLayoutMiddleTop.setAlign(Alignment.CENTER);
-		
+
 		Label titleLabel = new Label();
-		titleLabel.setContents("<h1>DekorTrade</h1>");  
+		titleLabel.setContents("<h1>DekorTrade</h1>");
 		titleLabel.setAlign(Alignment.CENTER);
 		titleLabel.setWidth("100%");
 		topLayoutMiddleTop.addMember(titleLabel);
@@ -117,9 +116,9 @@ public class DekorTrade implements EntryPoint {
 		topLayoutMiddleBottom.setHeight("50%");
 
 		topLayoutMiddle.addMember(topLayoutMiddleTop);
-		
+
 		Label versionLabel = new Label();
-		versionLabel.setContents(dekorTradeLabels.version() + " : 0.1"); 
+		versionLabel.setContents(dekorTradeLabels.version() + " : 0.1");
 		versionLabel.setStyleName("version_label");
 		versionLabel.setAlign(Alignment.CENTER);
 		versionLabel.setWidth("100%");
@@ -139,11 +138,11 @@ public class DekorTrade implements EntryPoint {
 		middleLayout.setWidth("100%");
 		middleLayout.setHeight("75%");
 		middleLayout.setStyleName("middle");
-		
+
 		HLayout bottomLayout = new HLayout();
 		bottomLayout.setWidth("100%");
 		bottomLayout.setHeight("30px");
-		
+
 		HLayout bottomLayoutLeft = new HLayout();
 		bottomLayoutLeft.setStyleName("bottom");
 		bottomLayoutLeft.setHeight("100%");
@@ -217,21 +216,27 @@ public class DekorTrade implements EntryPoint {
 		final IButton loginButtonItem = new IButton(
 				dekorTradeLabels.login_login());
 		loginButtonItem.setDisabled(true);
-		
+
 		final CheckboxItem passwordCheckboxItem = new CheckboxItem();
 		passwordCheckboxItem.setTitle(dekorTradeLabels.newPassword());
 
 		userIdItem.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
-				if ((userIdItem.getValueAsString() != null) && (passwordItem.getValueAsString() !=null)) loginButtonItem.setDisabled(false);
-				else loginButtonItem.setDisabled(true);
+				if ((userIdItem.getValueAsString() != null)
+						&& (passwordItem.getValueAsString() != null))
+					loginButtonItem.setDisabled(false);
+				else
+					loginButtonItem.setDisabled(true);
 			}
 		});
 
 		passwordItem.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
-				if ((userIdItem.getValueAsString() != null) && (passwordItem.getValueAsString() != null)) loginButtonItem.setDisabled(false);
-				else loginButtonItem.setDisabled(true);								
+				if ((userIdItem.getValueAsString() != null)
+						&& (passwordItem.getValueAsString() != null))
+					loginButtonItem.setDisabled(false);
+				else
+					loginButtonItem.setDisabled(true);
 			}
 		});
 
@@ -239,7 +244,8 @@ public class DekorTrade implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				if ((userIdItem.getValue() != null)
 						&& (passwordItem.getValue()) != null) {
-					if ((passwordCheckboxItem.getValue() == null) || !passwordCheckboxItem.getValueAsBoolean()) 
+					if ((passwordCheckboxItem.getValue() == null)
+							|| !passwordCheckboxItem.getValueAsBoolean())
 						getUser(userIdItem.getValue().toString(), passwordItem
 								.getValue().toString(), null);
 					else
@@ -251,49 +257,53 @@ public class DekorTrade implements EntryPoint {
 		});
 
 		userIdItem.addKeyPressHandler(new KeyPressHandler() {
-			public void onKeyPress(KeyPressEvent event) {							
-				if(event.getKeyName() != null) {
-					if(event.getKeyName() != null) {
+			public void onKeyPress(KeyPressEvent event) {
+				if (event.getKeyName() != null) {
+					if (event.getKeyName() != null) {
 						String keyName = event.getKeyName();
-						if(keyName.equals("Enter")) {							
+						if (keyName.equals("Enter")) {
 							if ((userIdItem.getValue() != null)
 									&& (passwordItem.getValue()) != null) {
 								if (passwordCheckboxItem.getValue() == null)
-									getUser(userIdItem.getValue().toString(), passwordItem
-											.getValue().toString(), null);
+									getUser(userIdItem.getValue().toString(),
+											passwordItem.getValue().toString(),
+											null);
 								else
-									getUser(userIdItem.getValue().toString(), passwordItem
-											.getValue().toString(), passwordCheckboxItem
-											.getValue().toString());
-							}														
-						}						
+									getUser(userIdItem.getValue().toString(),
+											passwordItem.getValue().toString(),
+											passwordCheckboxItem.getValue()
+													.toString());
+							}
+						}
 					}
-				}				
+				}
 			}
 		});
 
 		passwordItem.addKeyPressHandler(new KeyPressHandler() {
-			public void onKeyPress(KeyPressEvent event) {							
-				if(event.getKeyName() != null) {
-					if(event.getKeyName() != null) {
+			public void onKeyPress(KeyPressEvent event) {
+				if (event.getKeyName() != null) {
+					if (event.getKeyName() != null) {
 						String keyName = event.getKeyName();
-						if(keyName.equals("Enter")) {
+						if (keyName.equals("Enter")) {
 							if ((userIdItem.getValue() != null)
 									&& (passwordItem.getValue()) != null) {
 								if (passwordCheckboxItem.getValue() == null)
-									getUser(userIdItem.getValue().toString(), passwordItem
-											.getValue().toString(), null);
+									getUser(userIdItem.getValue().toString(),
+											passwordItem.getValue().toString(),
+											null);
 								else
-									getUser(userIdItem.getValue().toString(), passwordItem
-											.getValue().toString(), passwordCheckboxItem
-											.getValue().toString());
-							}																				
-						}						
+									getUser(userIdItem.getValue().toString(),
+											passwordItem.getValue().toString(),
+											passwordCheckboxItem.getValue()
+													.toString());
+							}
+						}
 					}
-				}				
+				}
 			}
-		});		
-		
+		});
+
 		form.setFields(userIdItem, passwordItem, passwordCheckboxItem);
 		HLayout hLayout = new HLayout();
 		hLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -305,8 +315,7 @@ public class DekorTrade implements EntryPoint {
 	private HLayout getLogout(String name) {
 		topLayoutRight.removeMembers(topLayoutRight.getMembers());
 		Label nameLabel = new Label(name);
-		IButton logoutButtonItem = new IButton(
-				dekorTradeLabels.logout_logout());
+		IButton logoutButtonItem = new IButton(dekorTradeLabels.logout_logout());
 
 		logoutButtonItem.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -352,35 +361,38 @@ public class DekorTrade implements EntryPoint {
 
 						UserInfo.userId = userSer.getUserId();
 
-						if ((password != null) && (password.equals(Constants.INIT_PASSWORD))) {
+						if ((password != null)
+								&& (password.equals(Constants.INIT_PASSWORD))) {
 							topLayoutRight.addMember(getPassword(userSer
 									.getName()));
-						}
-						else {
-							if ((passwordSetting == null) || ((password != null) && (!password.equals(Constants.INIT_PASSWORD))))
+						} else {
+							if ((passwordSetting == null)
+									|| ((password != null) && (!password
+											.equals(Constants.INIT_PASSWORD))))
 								topLayoutRight.addMember(getLogout(userSer
-									.getName()));
+										.getName()));
 							else
 								topLayoutRight.addMember(getPassword(userSer
-									.getName()));
+										.getName()));
 						}
-						
+
 						middleLayout.removeMembers(middleLayout.getMembers());
-						
+
 						final TabSet tabSet = new TabSet();
 						tabSet.setTabBarPosition(Side.TOP);
 						tabSet.setTabBarAlign(Side.LEFT);
 						tabSet.setWidth100();
 						tabSet.setHeight100();
 						middleLayout.addMember(tabSet);
-											
+
 						for (int i = 0; i < userSer.getTabList().size(); i++) {
 
 							if (userSer.getTabList().get(i).getName()
 									.equals(Constants.MENU_SYSTEM)) {
-								UserInfo.orderID = userSer
-										.getTabList().get(i).getId();
-								final Tab tab = new Tab(dekorTradeLabels.menu_system());
+								UserInfo.orderID = userSer.getTabList().get(i)
+										.getId();
+								final Tab tab = new Tab(dekorTradeLabels
+										.menu_system());
 								tabSet.addTab(tab);
 								final System system = new System();
 
@@ -401,12 +413,13 @@ public class DekorTrade implements EntryPoint {
 
 								});
 							}
-						
+
 							if (userSer.getTabList().get(i).getName()
 									.equals(Constants.MENU_BASEDATA)) {
-								UserInfo.orderID = userSer
-										.getTabList().get(i).getId();
-								final Tab tab = new Tab(dekorTradeLabels.menu_basedata());
+								UserInfo.orderID = userSer.getTabList().get(i)
+										.getId();
+								final Tab tab = new Tab(dekorTradeLabels
+										.menu_basedata());
 								tabSet.addTab(tab);
 								final Basedata basedata = new Basedata();
 
@@ -430,9 +443,10 @@ public class DekorTrade implements EntryPoint {
 
 							if (userSer.getTabList().get(i).getName()
 									.equals(Constants.MENU_ORDER)) {
-								UserInfo.orderID = userSer
-										.getTabList().get(i).getId();
-								final Tab tab = new Tab(dekorTradeLabels.menu_order());
+								UserInfo.orderID = userSer.getTabList().get(i)
+										.getId();
+								final Tab tab = new Tab(dekorTradeLabels
+										.menu_order());
 								tabSet.addTab(tab);
 								final Order order = new Order();
 
@@ -453,9 +467,7 @@ public class DekorTrade implements EntryPoint {
 
 								});
 							}
-							
-							
-							
+
 						}
 					}
 				});
@@ -484,8 +496,7 @@ public class DekorTrade implements EntryPoint {
 
 		MatchesFieldValidator matchesValidator = new MatchesFieldValidator();
 		matchesValidator.setOtherField("password");
-		matchesValidator
-				.setErrorMessage(dekorTradeLabels.password_error1());
+		matchesValidator.setErrorMessage(dekorTradeLabels.password_error1());
 
 		CustomValidator passwordValidator = new CustomValidator() {
 			@Override
@@ -498,28 +509,33 @@ public class DekorTrade implements EntryPoint {
 				return true;
 			}
 		};
-		passwordValidator.setErrorMessage(dekorTradeLabels
-				.password_error2());
+		passwordValidator.setErrorMessage(dekorTradeLabels.password_error2());
 		passwordItem2.setValidators(passwordValidator, matchesValidator);
 
 		form.setFields(passwordItem, passwordItem2);
 		final IButton changeButtonItem = new IButton(
 				dekorTradeLabels.password_change());
 		changeButtonItem.setDisabled(true);
-		
+
 		passwordItem.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
-				if ((passwordItem.getValueAsString() != null) && (passwordItem2.getValueAsString() !=null)) changeButtonItem.setDisabled(false);
-				else changeButtonItem.setDisabled(true);
+				if ((passwordItem.getValueAsString() != null)
+						&& (passwordItem2.getValueAsString() != null))
+					changeButtonItem.setDisabled(false);
+				else
+					changeButtonItem.setDisabled(true);
 			}
 		});
 
 		passwordItem2.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
-				if ((passwordItem.getValueAsString() != null) && (passwordItem2.getValueAsString() !=null)) changeButtonItem.setDisabled(false);
-				else changeButtonItem.setDisabled(true);
+				if ((passwordItem.getValueAsString() != null)
+						&& (passwordItem2.getValueAsString() != null))
+					changeButtonItem.setDisabled(false);
+				else
+					changeButtonItem.setDisabled(true);
 			}
-		});		
+		});
 
 		topLayoutRight.addMember(form);
 		topLayoutRight.addMember(changeButtonItem);
@@ -528,92 +544,101 @@ public class DekorTrade implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				if (form.validate(false)) {
 					DisplayRequest.startRequest();
-					dekorTradeService.setPassword(UserInfo.userId,
-						passwordItem.getValue().toString(),
-						new AsyncCallback<String>() {
-							public void onFailure(Throwable caught) {
-								DisplayRequest.serverResponse();
-								if (caught instanceof SQLExceptionSer)
-									SC.warn(commonLabels.server_sqlerror()
-											+ " : " + caught.getMessage());
-								else
-									SC.warn(commonLabels.server_error());
-							}
+					dekorTradeService.setPassword(UserInfo.userId, passwordItem
+							.getValue().toString(),
+							new AsyncCallback<String>() {
+								public void onFailure(Throwable caught) {
+									DisplayRequest.serverResponse();
+									if (caught instanceof SQLExceptionSer)
+										SC.warn(commonLabels.server_sqlerror()
+												+ " : " + caught.getMessage());
+									else
+										SC.warn(commonLabels.server_error());
+								}
 
-							public void onSuccess(String result) {
-								DisplayRequest.serverResponse();
-								topLayoutRight.addMember(getLogout(name));
-							}
-						});
+								public void onSuccess(String result) {
+									DisplayRequest.serverResponse();
+									topLayoutRight.addMember(getLogout(name));
+								}
+							});
 				}
 			}
 		});
-		
+
 		passwordItem.addKeyPressHandler(new KeyPressHandler() {
-			public void onKeyPress(KeyPressEvent event) {							
-				if(event.getKeyName() != null) {
-					if(event.getKeyName() != null) {
+			public void onKeyPress(KeyPressEvent event) {
+				if (event.getKeyName() != null) {
+					if (event.getKeyName() != null) {
 						String keyName = event.getKeyName();
-						if(keyName.equals("Enter")) {
+						if (keyName.equals("Enter")) {
 							if (form.validate(false)) {
 								DisplayRequest.startRequest();
 								dekorTradeService.setPassword(UserInfo.userId,
-									passwordItem.getValue().toString(),
-									new AsyncCallback<String>() {
-										public void onFailure(Throwable caught) {
-											DisplayRequest.serverResponse();
-											if (caught instanceof SQLExceptionSer)
-												SC.warn(commonLabels.server_sqlerror()
-														+ " : " + caught.getMessage());
-											else
-												SC.warn(commonLabels.server_error());
-										}
+										passwordItem.getValue().toString(),
+										new AsyncCallback<String>() {
+											public void onFailure(
+													Throwable caught) {
+												DisplayRequest.serverResponse();
+												if (caught instanceof SQLExceptionSer)
+													SC.warn(commonLabels
+															.server_sqlerror()
+															+ " : "
+															+ caught.getMessage());
+												else
+													SC.warn(commonLabels
+															.server_error());
+											}
 
-										public void onSuccess(String result) {
-											DisplayRequest.serverResponse();
-											topLayoutRight.addMember(getLogout(name));
-										}
-									});
-							}													
-						}						
+											public void onSuccess(String result) {
+												DisplayRequest.serverResponse();
+												topLayoutRight
+														.addMember(getLogout(name));
+											}
+										});
+							}
+						}
 					}
-				}				
+				}
 			}
-		});		
-				
+		});
+
 		passwordItem2.addKeyPressHandler(new KeyPressHandler() {
-			public void onKeyPress(KeyPressEvent event) {							
-				if(event.getKeyName() != null) {
-					if(event.getKeyName() != null) {
+			public void onKeyPress(KeyPressEvent event) {
+				if (event.getKeyName() != null) {
+					if (event.getKeyName() != null) {
 						String keyName = event.getKeyName();
-						if(keyName.equals("Enter")) {							
+						if (keyName.equals("Enter")) {
 							if (form.validate(false)) {
 								DisplayRequest.startRequest();
 								dekorTradeService.setPassword(UserInfo.userId,
-									passwordItem.getValue().toString(),
-									new AsyncCallback<String>() {
-										public void onFailure(Throwable caught) {
-											DisplayRequest.serverResponse();
-											if (caught instanceof SQLExceptionSer)
-												SC.warn(commonLabels.server_sqlerror()
-														+ " : " + caught.getMessage());
-											else
-												SC.warn(commonLabels.server_error());
-										}
+										passwordItem.getValue().toString(),
+										new AsyncCallback<String>() {
+											public void onFailure(
+													Throwable caught) {
+												DisplayRequest.serverResponse();
+												if (caught instanceof SQLExceptionSer)
+													SC.warn(commonLabels
+															.server_sqlerror()
+															+ " : "
+															+ caught.getMessage());
+												else
+													SC.warn(commonLabels
+															.server_error());
+											}
 
-										public void onSuccess(String result) {
-											DisplayRequest.serverResponse();
-											topLayoutRight.addMember(getLogout(name));
-										}
-									});
-							}																											
-						}						
+											public void onSuccess(String result) {
+												DisplayRequest.serverResponse();
+												topLayoutRight
+														.addMember(getLogout(name));
+											}
+										});
+							}
+						}
 					}
-				}				
+				}
 			}
-		});		
-		
-		
+		});
+
 		HLayout hLayout = new HLayout();
 		hLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		hLayout.addMember(form);

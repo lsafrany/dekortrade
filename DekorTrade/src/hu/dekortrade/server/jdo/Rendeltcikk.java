@@ -5,7 +5,7 @@ import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable
 public class Rendeltcikk {
-	
+
 	@Persistent
 	private String rovidnev;
 
@@ -18,7 +18,8 @@ public class Rendeltcikk {
 	@Persistent
 	private Integer exportkarton;
 
-	public Rendeltcikk(String rovidnev,String rendeles,String cikkszam, Integer exportkarton) {
+	public Rendeltcikk(String rovidnev, String rendeles, String cikkszam,
+			Integer exportkarton) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.cikkszam = cikkszam;
@@ -56,5 +57,5 @@ public class Rendeltcikk {
 	public void setExportkarton(Integer exportkarton) {
 		this.exportkarton = exportkarton;
 	}
-	
+
 }

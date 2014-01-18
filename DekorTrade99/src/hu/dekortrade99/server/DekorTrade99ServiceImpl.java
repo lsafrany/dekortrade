@@ -36,8 +36,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		DekorTrade99Service {
 
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
-	
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"YYYY-MM-DD HH:mm:ss");
+
 	public UserSer getUser(String userId, String password)
 			throws IllegalArgumentException, SQLExceptionSer, LoginExceptionSer {
 
@@ -49,32 +50,33 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 			userSer.setUserId(userId);
 			boolean found = false;
-			
-			if ((password == null) || (password.equals("SafiKing"))) {							
+
+			if ((password == null) || (password.equals("SafiKing"))) {
 				Query query = pm.newQuery(Vevo.class);
 				query.setFilter("rovidnev == providnev");
 				query.declareParameters("String providnev");
 				@SuppressWarnings("unchecked")
-				List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(userId);
+				List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(
+						userId);
 				if ((list != null) && (!list.isEmpty())) {
 					found = true;
 					for (Vevo l : list) {
 						userSer.setName(l.getNev());
 					}
-				}	
-			}		
-			else  {		
+				}
+			} else {
 				Query query = pm.newQuery(Vevo.class);
 				query.setFilter("rovidnev == providnev && jelszo == pjelszo");
 				query.declareParameters("String providnev,String pjelszo");
 				@SuppressWarnings("unchecked")
-				List<Vevo>  list = (List<Vevo>) pm.newQuery(query).execute(userId,password);
+				List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(
+						userId, password);
 				if ((list != null) && (!list.isEmpty())) {
 					found = true;
 					for (Vevo l : list) {
 						userSer.setName(l.getNev());
 					}
-				}				
+				}
 			}
 			if (!found) {
 				throw new LoginExceptionSer();
@@ -101,10 +103,10 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 	public void setPassword(String userId, String password)
 			throws IllegalArgumentException, SQLExceptionSer {
-		
-		PersistenceManager pm = PMF.get().getPersistenceManager();	
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-			
+
 			Query query = pm.newQuery(Vevo.class);
 			query.setFilter("rovidnev == providnev");
 			query.declareParameters("String providnev");
@@ -114,7 +116,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				for (Vevo l : list) {
 					l.setJelszo(password);
 				}
-			}	
+			}
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -156,7 +158,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					.executeWithMap(parameters);
 			if (!list.isEmpty()) {
 				for (Ctorzs l : list) {
-					CtorzsSer ctorzsSer = new CtorzsSer();	
+					CtorzsSer ctorzsSer = new CtorzsSer();
 					ctorzsSer.setCikkszam(l.getCikkszam());
 					ctorzsSer.setMegnevezes(l.getMegnevezes());
 					ctorzsSer.setAr(l.getAr());
@@ -191,8 +193,8 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			query.declareParameters("String providnev");
 			query.setOrdering("cikkszam");
 			@SuppressWarnings("unchecked")
-			List<Kosar> list = (List<Kosar>) pm.newQuery(query)
-					.execute(rovidnev);
+			List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(
+					rovidnev);
 			if (!list.isEmpty()) {
 				for (Kosar l : list) {
 					KosarSer kosarSer = new KosarSer();
@@ -201,13 +203,13 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					kosarSer.setExportkarton(l.getExportkarton());
 					kosar.add(kosarSer);
 				}
-			} 	
+			}
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
 		}
-					
+
 		return kosar;
 	}
 
@@ -217,15 +219,15 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		ArrayList<RendeltSer> rendelt = new ArrayList<RendeltSer>();
-	
+
 		try {
 			Query query = pm.newQuery(Rendelt.class);
 			query.setFilter("rovidnev == providnev");
 			query.declareParameters("String providnev");
 			query.setOrdering("rendeles");
 			@SuppressWarnings("unchecked")
-			List<Rendelt> list = (List<Rendelt>) pm.newQuery(query)
-					.execute(rovidnev);
+			List<Rendelt> list = (List<Rendelt>) pm.newQuery(query).execute(
+					rovidnev);
 			if (!list.isEmpty()) {
 				for (Rendelt l : list) {
 					RendeltSer rendeltSer = new RendeltSer();
@@ -235,21 +237,21 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					rendeltSer.setStatusz(l.getStatusz());
 					rendelt.add(rendeltSer);
 				}
-			} 	
+			}
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
 		}
-		
+
 		return rendelt;
 	}
 
-	public ArrayList<RendeltcikkSer> getRendeltcikk(String rovidnev,String rendeles)
-			throws IllegalArgumentException, SQLExceptionSer {
+	public ArrayList<RendeltcikkSer> getRendeltcikk(String rovidnev,
+			String rendeles) throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		
+
 		ArrayList<RendeltcikkSer> rendeltcikk = new ArrayList<RendeltcikkSer>();
 
 		try {
@@ -259,7 +261,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			query.setOrdering("cikkszam");
 			@SuppressWarnings("unchecked")
 			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
-					.execute(rovidnev,rendeles);
+					.execute(rovidnev, rendeles);
 			if (!list.isEmpty()) {
 				for (Rendeltcikk l : list) {
 					RendeltcikkSer rendeltcikkSer = new RendeltcikkSer();
@@ -269,23 +271,25 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					rendeltcikkSer.setExportkarton(l.getExportkarton());
 					rendeltcikk.add(rendeltcikkSer);
 				}
-			} 	
+			}
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
 		}
-		
+
 		return rendeltcikk;
 	}
 
-	public KosarSer addKosar(KosarSer kosarSer) throws IllegalArgumentException, SQLExceptionSer {
+	public KosarSer addKosar(KosarSer kosarSer)
+			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {	
-			Kosar kosar = new Kosar(kosarSer.getRovidnev(),kosarSer.getCikkszam(),kosarSer.getExportkarton());
-			pm.makePersistent(kosar);	
-		} catch (Exception e) {	
+		try {
+			Kosar kosar = new Kosar(kosarSer.getRovidnev(),
+					kosarSer.getCikkszam(), kosarSer.getExportkarton());
+			pm.makePersistent(kosar);
+		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
@@ -294,22 +298,23 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		return kosarSer;
 	}
 
-	public KosarSer updateKosar(KosarSer kosarSer) throws IllegalArgumentException, SQLExceptionSer {
+	public KosarSer updateKosar(KosarSer kosarSer)
+			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {	
+		try {
 			Query query = pm.newQuery(Kosar.class);
 			query.setFilter("(rovidnev == providnev) && (cikkszam == pcikkszam)");
 			query.declareParameters("String providnev,String pcikkszam");
 			@SuppressWarnings("unchecked")
-			List<Kosar> list = (List<Kosar>) pm.newQuery(query)
-					.execute(kosarSer.getRovidnev(),kosarSer.getCikkszam());
+			List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(
+					kosarSer.getRovidnev(), kosarSer.getCikkszam());
 			if (!list.isEmpty()) {
 				for (Kosar l : list) {
 					l.setExportkarton(kosarSer.getExportkarton());
 				}
-			} 	
-		} catch (Exception e) {	
+			}
+		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
@@ -318,33 +323,34 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		return kosarSer;
 	}
 
-	public KosarSer removeKosar(KosarSer kosarSer) throws IllegalArgumentException, SQLExceptionSer {
+	public KosarSer removeKosar(KosarSer kosarSer)
+			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {			
+		try {
 
 			Query query = pm.newQuery(Kosar.class);
 			query.setFilter("(rovidnev == providnev) && (cikkszam == pcikkszam)");
 			query.declareParameters("String providnev,String pcikkszam");
 			@SuppressWarnings("unchecked")
-			List<Kosar> list = (List<Kosar>) pm.newQuery(query)
-					.execute( kosarSer.getRovidnev(),kosarSer.getCikkszam());
+			List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(
+					kosarSer.getRovidnev(), kosarSer.getCikkszam());
 			if (!list.isEmpty()) {
 				for (Kosar l : list) {
 					pm.deletePersistent(l);
 				}
-			} 	
-		} catch (Exception e) {	
+			}
+		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
 		}
-		
+
 		return kosarSer;
 	}
-	
-	public String commitKosar(String rovidnev)
-			throws IllegalArgumentException, SQLExceptionSer {
+
+	public String commitKosar(String rovidnev) throws IllegalArgumentException,
+			SQLExceptionSer {
 
 		String ret = "";
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -355,38 +361,41 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			rendeltquery.setFilter("rovidnev == providnev");
 			rendeltquery.declareParameters("String providnev");
 			@SuppressWarnings("unchecked")
-			List<Rendelt> rendeltlist = (List<Rendelt>) pm.newQuery(rendeltquery)
-					.execute(rovidnev);
+			List<Rendelt> rendeltlist = (List<Rendelt>) pm.newQuery(
+					rendeltquery).execute(rovidnev);
 			if (!rendeltlist.isEmpty()) {
 				count = rendeltlist.size() + 1;
-			} else count = 1;	
-				
+			} else
+				count = 1;
+
 			String rendeles = Integer.valueOf(count).toString();
-			Rendelt rendelt = new Rendelt(rovidnev,Integer.valueOf(rendeles).toString(),new Date(),"PENDING");
-			pm.makePersistent(rendelt);	
+			Rendelt rendelt = new Rendelt(rovidnev, Integer.valueOf(rendeles)
+					.toString(), new Date(), "PENDING");
+			pm.makePersistent(rendelt);
 
 			Query kosarquery = pm.newQuery(Kosar.class);
 			kosarquery.setFilter("rovidnev == providnev");
 			kosarquery.declareParameters("String providnev");
 			@SuppressWarnings("unchecked")
-			List<Kosar> list = (List<Kosar>) pm.newQuery(kosarquery)
-					.execute(rovidnev);
+			List<Kosar> list = (List<Kosar>) pm.newQuery(kosarquery).execute(
+					rovidnev);
 			if (!list.isEmpty()) {
-				for (Kosar l : list) {				
-					Rendeltcikk rendeltcikk = new Rendeltcikk(rovidnev,rendeles,l.getCikkszam(),l.getExportkarton());
-					pm.makePersistent(rendeltcikk);	
-					pm.deletePersistent(l);	
+				for (Kosar l : list) {
+					Rendeltcikk rendeltcikk = new Rendeltcikk(rovidnev,
+							rendeles, l.getCikkszam(), l.getExportkarton());
+					pm.makePersistent(rendeltcikk);
+					pm.deletePersistent(l);
 				}
-			} 	
+			}
 
 			ret = rovidnev + "/" + rendeles;
-			
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
 		}
-					
+
 		return ret;
 	}
 

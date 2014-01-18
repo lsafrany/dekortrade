@@ -15,7 +15,7 @@ public class Kosar {
 	@Persistent
 	private Integer exportkarton;
 
-	public Kosar(String rovidnev,String cikkszam, Integer exportkarton) {
+	public Kosar(String rovidnev, String cikkszam, Integer exportkarton) {
 		this.rovidnev = rovidnev;
 		this.cikkszam = cikkszam;
 		this.exportkarton = exportkarton;
@@ -44,5 +44,5 @@ public class Kosar {
 	public void setExportkarton(Integer exportkarton) {
 		this.exportkarton = exportkarton;
 	}
-	
+
 }

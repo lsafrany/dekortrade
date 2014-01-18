@@ -44,7 +44,7 @@ public class Init extends HttpServlet {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-			
+
 			int counter = 0;
 
 			Query ctorzsQuery = pm.newQuery(Ctorzs.class);
@@ -53,7 +53,7 @@ public class Init extends HttpServlet {
 			final InputStream inputStream = Init.class
 					.getResourceAsStream("CTORZS.csv");
 			final InputStreamReader inputStreamReader = new InputStreamReader(
-					inputStream,"UTF-8");
+					inputStream, "UTF-8");
 			final BufferedReader bufferedReader = new BufferedReader(
 					inputStreamReader);
 
@@ -72,7 +72,7 @@ public class Init extends HttpServlet {
 				pm.makePersistent(ctorzs);
 				counter++;
 			}
-			
+
 			out.append("<h1>" + counter + "</h1>");
 
 			Query felhasznaloQuery = pm.newQuery(Felhasznalo.class);
@@ -85,38 +85,59 @@ public class Init extends HttpServlet {
 			vevoQuery.deletePersistentAll();
 
 			out.append("<h1>Felhasználók</h1>");
-			
-			Felhasznalo felhasznalo1 = new Felhasznalo("Szilvi","Naszály Szilvia",Constants.INIT_PASSWORD,Boolean.FALSE);
-			Felhasznalo felhasznalo2 = new Felhasznalo("Csabi","Sántha Csaba",Constants.INIT_PASSWORD,Boolean.FALSE);
-			Felhasznalo felhasznalo3 = new Felhasznalo("Tamás","Koperniczky Tamás",Constants.INIT_PASSWORD,Boolean.FALSE);
-			
+
+			Felhasznalo felhasznalo1 = new Felhasznalo("Szilvi",
+					"Naszály Szilvia", Constants.MENU_ORDER,
+					Constants.INIT_PASSWORD, Boolean.FALSE);
+			Felhasznalo felhasznalo2 = new Felhasznalo("Csabi", "Sántha Csaba",
+					Constants.MENU_SYSTEM, Constants.INIT_PASSWORD,
+					Boolean.FALSE);
+			Felhasznalo felhasznalo3 = new Felhasznalo("Tamás",
+					"Koperniczky Tamás", Constants.MENU_BASEDATA,
+					Constants.INIT_PASSWORD, Boolean.FALSE);
+
 			pm.makePersistent(felhasznalo1);
 			pm.makePersistent(felhasznalo2);
 			pm.makePersistent(felhasznalo3);
-			
-			Jog jog1 = new Jog("Csabi", Constants.MENU_SYSTEM);
-			Jog jog2 = new Jog("Csabi", Constants.MENU_BASEDATA);
-			Jog jog3 = new Jog("Csabi", Constants.MENU_ORDER);
-			
-			pm.makePersistent(jog1);
-			pm.makePersistent(jog2);
-			pm.makePersistent(jog3);			
-			
-			out.append("<h1>Szállítók</h1>");
-			
-			Szallito szallito = new Szallito("1","CHAMP HANNA LIMITED","WAH MOU FACTORY BUILDING 5TH FL.","0085223061083",Boolean.FALSE);												
-			pm.makePersistent(szallito);			
-			
-			out.append("<h1>Vevők</h1>");
-			
-			Vevo vevo1 = new Vevo("Floradekor","Flora Dekor","24413 Palics Nikola Tesla 7.","",Boolean.TRUE,Boolean.FALSE,Boolean.FALSE);
-			Vevo vevo2 = new Vevo("Floratrade","Flora Trade Kft","","",Boolean.TRUE,Boolean.FALSE,Boolean.FALSE);
-			Vevo vevo3 = new Vevo("Berendi","S.C. Berendi S.R.L.","Satu Mare ROMĆNIA","",Boolean.FALSE,Boolean.FALSE,Boolean.FALSE);												
 
-			pm.makePersistent(vevo1);			
-			pm.makePersistent(vevo2);	
-			pm.makePersistent(vevo3);	
-			
+			Jog jog1 = new Jog("Szilvi", Constants.MENU_ORDER);
+
+			Jog jog2 = new Jog("Csabi", Constants.MENU_SYSTEM);
+			Jog jog3 = new Jog("Csabi", Constants.MENU_BASEDATA);
+			Jog jog4 = new Jog("Csabi", Constants.MENU_ORDER);
+
+			Jog jog5 = new Jog("Tamás", Constants.MENU_BASEDATA);
+
+			pm.makePersistent(jog1);
+
+			pm.makePersistent(jog2);
+			pm.makePersistent(jog3);
+			pm.makePersistent(jog4);
+
+			pm.makePersistent(jog5);
+
+			out.append("<h1>Szállítók</h1>");
+
+			Szallito szallito = new Szallito("1", "CHAMP HANNA LIMITED",
+					"WAH MOU FACTORY BUILDING 5TH FL.", "0085223061083",
+					Boolean.FALSE);
+			pm.makePersistent(szallito);
+
+			out.append("<h1>Vevők</h1>");
+
+			Vevo vevo1 = new Vevo("Floradekor", "Flora Dekor",
+					"24413 Palics Nikola Tesla 7.", "", Boolean.TRUE,
+					Boolean.FALSE, Boolean.FALSE);
+			Vevo vevo2 = new Vevo("Floratrade", "Flora Trade Kft", "", "",
+					Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
+			Vevo vevo3 = new Vevo("Berendi", "S.C. Berendi S.R.L.",
+					"Satu Mare ROMĆNIA", "", Boolean.FALSE, Boolean.FALSE,
+					Boolean.FALSE);
+
+			pm.makePersistent(vevo1);
+			pm.makePersistent(vevo2);
+			pm.makePersistent(vevo3);
+
 		} finally {
 			pm.close();
 		}

@@ -41,7 +41,7 @@ public class Ctorzs {
 	private int page = 0;
 
 	private String cikkszam = "";
-	
+
 	public Canvas get(final IButton addIButton) {
 
 		DisplayRequest.counterInit();
@@ -58,7 +58,7 @@ public class Ctorzs {
 		ctorzsForm.setNumCols(4);
 		ctorzsForm.setColWidths("10%", "25%", "10%", "*");
 
-		final TextItem cikkszamItem = new TextItem();	
+		final TextItem cikkszamItem = new TextItem();
 		cikkszamItem.setTitle(ctorzsLabels.ctorzs_cikkszam());
 		cikkszamItem.setLength(15);
 
@@ -210,7 +210,8 @@ public class Ctorzs {
 				previousIButton.setDisabled(true);
 				nextIButton.setDisabled(true);
 				kepekIButton.setDisabled(true);
-				if (addIButton != null) addIButton.setDisabled(true);  
+				if (addIButton != null)
+					addIButton.setDisabled(true);
 				pageLabel.setContents("");
 			}
 		});
@@ -230,7 +231,8 @@ public class Ctorzs {
 				previousIButton.setDisabled(true);
 				nextIButton.setDisabled(true);
 				kepekIButton.setDisabled(true);
-				if (addIButton != null) addIButton.setDisabled(true); 
+				if (addIButton != null)
+					addIButton.setDisabled(true);
 				pageLabel.setContents("");
 			}
 		});
@@ -250,7 +252,8 @@ public class Ctorzs {
 				previousIButton.setDisabled(true);
 				nextIButton.setDisabled(true);
 				kepekIButton.setDisabled(true);
-				if (addIButton != null) addIButton.setDisabled(true); 
+				if (addIButton != null)
+					addIButton.setDisabled(true);
 				pageLabel.setContents("");
 			}
 		});
@@ -288,7 +291,7 @@ public class Ctorzs {
 				if (addIButton != null) {
 					cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
 							CtorzsConstants.CTORZS_CIKKSZAM);
-					addIButton.setDisabled(false); 
+					addIButton.setDisabled(false);
 				}
 			}
 		});
@@ -321,6 +324,5 @@ public class Ctorzs {
 	public String getCikkszam() {
 		return cikkszam;
 	}
-	
-	
+
 }

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class CtorzsSer implements IsSerializable {
-  
+
 	private String cikkszam;
 
 	private String megnevezes;
@@ -25,7 +25,7 @@ public class CtorzsSer implements IsSerializable {
 	private BigDecimal nsuly;
 
 	private Integer kepek;
-	
+
 	public String getCikkszam() {
 		return cikkszam;
 	}

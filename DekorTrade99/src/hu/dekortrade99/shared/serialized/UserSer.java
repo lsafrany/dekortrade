@@ -13,7 +13,7 @@ public class UserSer implements IsSerializable {
 	private ArrayList<TabPageSer> tabList = new ArrayList<TabPageSer>();
 
 	private int defultTab = 0;
-	
+
 	public String getUserId() {
 		return userId;
 	}

@@ -15,14 +15,14 @@ public class ArchiveConstants {
 	public static final String RENDELTCIKK_EXPORTKARTON = "rendeltcikk_exportkarton";
 
 	private static LinkedHashMap<String, String> statusz = null;
-	
+
 	public static LinkedHashMap<String, String> getStatusz() {
 		if (statusz == null) {
 			statusz = new LinkedHashMap<String, String>();
-		    statusz.put("PENDING","Elküldött");
-	   		statusz.put("PROCESSED","Feldolgozott");
+			statusz.put("PENDING", "Elküldött");
+			statusz.put("PROCESSED", "Feldolgozott");
 		}
-			
+
 		return statusz;
 	}
 

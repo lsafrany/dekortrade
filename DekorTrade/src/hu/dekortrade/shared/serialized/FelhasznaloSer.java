@@ -3,11 +3,13 @@ package hu.dekortrade.shared.serialized;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class FelhasznaloSer implements IsSerializable {
-	
+
 	private String rovidnev;
 
 	private String nev;
-	
+
+	private String menu;
+
 	public String getRovidnev() {
 		return rovidnev;
 	}
@@ -24,5 +26,12 @@ public class FelhasznaloSer implements IsSerializable {
 		this.nev = nev;
 	}
 
-}
+	public String getMenu() {
+		return menu;
+	}
 
+	public void setMenu(String menu) {
+		this.menu = menu;
+	}
+
+}

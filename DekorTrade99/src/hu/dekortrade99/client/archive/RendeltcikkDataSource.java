@@ -42,7 +42,8 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 				archiveLabels.rendelt_cikkszam());
 		addField(field);
 
-		field = new DataSourceTextField(ArchiveConstants.RENDELTCIKK_EXPORTKARTON,
+		field = new DataSourceTextField(
+				ArchiveConstants.RENDELTCIKK_EXPORTKARTON,
 				archiveLabels.rendelt_exportkarton());
 		addField(field);
 
@@ -55,7 +56,7 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 				request.getCriteria().getAttributeAsString(
 						ArchiveConstants.RENDELTCIKK_ROVIDNEV),
 				request.getCriteria().getAttributeAsString(
-						ArchiveConstants.RENDELTCIKK_RENDELES),						
+						ArchiveConstants.RENDELTCIKK_RENDELES),
 				new AsyncCallback<ArrayList<RendeltcikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -102,10 +103,14 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(RendeltcikkSer from, ListGridRecord to) {
-		to.setAttribute(ArchiveConstants.RENDELTCIKK_ROVIDNEV, from.getRovidnev());
-		to.setAttribute(ArchiveConstants.RENDELTCIKK_RENDELES, from.getRendeles());
-		to.setAttribute(ArchiveConstants.RENDELTCIKK_CIKKSZAM, from.getCikkszam());
-		to.setAttribute(ArchiveConstants.RENDELTCIKK_EXPORTKARTON, from.getExportkarton());
+		to.setAttribute(ArchiveConstants.RENDELTCIKK_ROVIDNEV,
+				from.getRovidnev());
+		to.setAttribute(ArchiveConstants.RENDELTCIKK_RENDELES,
+				from.getRendeles());
+		to.setAttribute(ArchiveConstants.RENDELTCIKK_CIKKSZAM,
+				from.getCikkszam());
+		to.setAttribute(ArchiveConstants.RENDELTCIKK_EXPORTKARTON,
+				from.getExportkarton());
 	}
 
 }

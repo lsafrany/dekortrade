@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
 public class Vevo implements IsSerializable {
-	
+
 	@Persistent
 	private String rovidnev;
 
@@ -29,9 +29,10 @@ public class Vevo implements IsSerializable {
 	@Persistent
 	private Boolean torolt;
 
-	public Vevo(String rovidnev,String nev,String cim,String elerhetoseg,Boolean internet,Boolean szinkron,Boolean torolt) {
+	public Vevo(String rovidnev, String nev, String cim, String elerhetoseg,
+			Boolean internet, Boolean szinkron, Boolean torolt) {
 		this.rovidnev = rovidnev;
-		this.nev = nev;		
+		this.nev = nev;
 		this.cim = cim;
 		this.elerhetoseg = elerhetoseg;
 		this.internet = internet;
@@ -78,7 +79,7 @@ public class Vevo implements IsSerializable {
 	public void setInternet(Boolean internet) {
 		this.internet = internet;
 	}
-	
+
 	public Boolean getSzinkron() {
 		return szinkron;
 	}
@@ -96,4 +97,3 @@ public class Vevo implements IsSerializable {
 	}
 
 }
-

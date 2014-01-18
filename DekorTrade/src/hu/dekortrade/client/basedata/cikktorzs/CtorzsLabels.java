@@ -26,4 +26,8 @@ public interface CtorzsLabels extends Constants {
 
 	String ctorzs_kepek();
 
+	String cikk();
+
+	String kepfeltoltes();
+
 }
