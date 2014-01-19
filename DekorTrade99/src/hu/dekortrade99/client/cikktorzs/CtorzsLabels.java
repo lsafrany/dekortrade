@@ -6,24 +6,24 @@ public interface CtorzsLabels extends Constants {
 
 	String ctorzs();
 
-	String ctorzs_cikkszam();
+	String cikk_cikkszam();
 
-	String ctorzs_megnevezes();
+	String cikk_megnevezes();
 
-	String ctorzs_ar();
+	String cikk_ar();
 
-	String ctorzs_kiskarton();
+	String cikk_kiskarton();
 
-	String ctorzs_darab();
+	String cikk_darab();
 
-	String ctorzs_terfogat();
+	String cikk_terfogat();
 
-	String ctorzs_jel();
+	String cikk_jel();
 
-	String ctorzs_bsuly();
+	String cikk_bsuly();
 
-	String ctorzs_nsuly();
+	String cikk_nsuly();
 
-	String ctorzs_kepek();
+	String cikk_kepek();
 
 }

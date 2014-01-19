@@ -2,21 +2,19 @@
 
 package hu.dekortrade.server;
 
+import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Felhasznalo;
 import hu.dekortrade.server.jdo.Jog;
 import hu.dekortrade.server.jdo.PMF;
 import hu.dekortrade.server.jdo.Szallito;
 import hu.dekortrade.server.jdo.Vevo;
 import hu.dekortrade.shared.Constants;
-import hu.dekortrade.server.Init;
-import hu.dekortrade.server.jdo.Ctorzs;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -47,8 +45,8 @@ public class Init extends HttpServlet {
 
 			int counter = 0;
 
-			Query ctorzsQuery = pm.newQuery(Ctorzs.class);
-			ctorzsQuery.deletePersistentAll();
+			Query cikkQuery = pm.newQuery(Cikk.class);
+			cikkQuery.deletePersistentAll();
 
 			final InputStream inputStream = Init.class
 					.getResourceAsStream("CTORZS.csv");
@@ -64,12 +62,12 @@ public class Init extends HttpServlet {
 				fields[5] = fields[5].replaceAll(",", ".");
 				fields[7] = fields[7].replaceAll(",", ".");
 				fields[8] = fields[8].replaceAll(",", ".");
-				Ctorzs ctorzs = new Ctorzs(fields[0], fields[1],
-						new BigDecimal(fields[2]), new Integer(fields[3]),
-						new Integer(fields[4]), new BigDecimal(fields[5]),
-						fields[6], new BigDecimal(fields[7]), new BigDecimal(
+				Cikk cikk = new Cikk(fields[0], fields[1],
+						new Float(fields[2]), new Integer(fields[3]),
+						new Integer(fields[4]), new Float(fields[5]),
+						fields[6], new Float(fields[7]), new Float(
 								fields[8]), 0, Boolean.FALSE, Boolean.FALSE);
-				pm.makePersistent(ctorzs);
+				pm.makePersistent(cikk);
 				counter++;
 			}
 

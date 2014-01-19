@@ -2,7 +2,7 @@
 
 package hu.dekortrade99.server;
 
-import hu.dekortrade99.server.jdo.Ctorzs;
+import hu.dekortrade99.server.jdo.Cikk;
 import hu.dekortrade99.server.jdo.PMF;
 import hu.dekortrade99.server.jdo.Vevo;
 import hu.dekortrade99.shared.Constants;
@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -42,8 +41,8 @@ public class Init extends HttpServlet {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
-			Query ctorzsQuery = pm.newQuery(Ctorzs.class);
-			ctorzsQuery.deletePersistentAll();
+			Query cikkQuery = pm.newQuery(Cikk.class);
+			cikkQuery.deletePersistentAll();
 
 			final InputStream inputStream = Init.class
 					.getResourceAsStream("CTORZS.csv");
@@ -59,10 +58,10 @@ public class Init extends HttpServlet {
 				fields[5] = fields[5].replaceAll(",", ".");
 				fields[7] = fields[7].replaceAll(",", ".");
 				fields[8] = fields[8].replaceAll(",", ".");
-				Ctorzs ctorzs = new Ctorzs(fields[0], fields[1],
-						new BigDecimal(fields[2]), new Integer(fields[3]),
-						new Integer(fields[4]), new BigDecimal(fields[5]),
-						fields[6], new BigDecimal(fields[7]), new BigDecimal(
+				Cikk ctorzs = new Cikk(fields[0], fields[1],
+						new Float(fields[2]), new Integer(fields[3]),
+						new Integer(fields[4]), new Float(fields[5]),
+						fields[6], new Float(fields[7]), new Float(
 								fields[8]), 0, Boolean.FALSE);
 				pm.makePersistent(ctorzs);
 				counter++;

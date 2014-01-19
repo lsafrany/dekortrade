@@ -1,14 +1,14 @@
 package hu.dekortrade99.server;
 
 import hu.dekortrade99.client.DekorTrade99Service;
-import hu.dekortrade99.server.jdo.Ctorzs;
+import hu.dekortrade99.server.jdo.Cikk;
 import hu.dekortrade99.server.jdo.Kosar;
 import hu.dekortrade99.server.jdo.PMF;
 import hu.dekortrade99.server.jdo.Rendelt;
 import hu.dekortrade99.server.jdo.Rendeltcikk;
 import hu.dekortrade99.server.jdo.Vevo;
 import hu.dekortrade99.shared.Constants;
-import hu.dekortrade99.shared.serialized.CtorzsSer;
+import hu.dekortrade99.shared.serialized.CikkSer;
 import hu.dekortrade99.shared.serialized.KosarSer;
 import hu.dekortrade99.shared.serialized.LoginExceptionSer;
 import hu.dekortrade99.shared.serialized.RendeltSer;
@@ -124,12 +124,12 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		}
 	}
 
-	public ArrayList<CtorzsSer> getCtorzs(int page, String cikkszam, String jel)
+	public ArrayList<CikkSer> getCikk(int page, String cikkszam, String jel)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
-		ArrayList<CtorzsSer> ctorzs = new ArrayList<CtorzsSer>();
+		ArrayList<CikkSer> cikk = new ArrayList<CikkSer>();
 		try {
 			Map<String, String> parameters = new HashMap<String, String>();
 			String filter = "this.torolt == false";
@@ -147,28 +147,28 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				parameters.put("pjel", jel);
 			}
 
-			Query query = pm.newQuery(Ctorzs.class);
+			Query query = pm.newQuery(Cikk.class);
 			query.declareParameters(params);
 			query.setFilter(filter);
 			query.setOrdering("cikkszam");
 			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
 					* Constants.FETCH_SIZE);
 			@SuppressWarnings("unchecked")
-			List<Ctorzs> list = (List<Ctorzs>) pm.newQuery(query)
+			List<Cikk> list = (List<Cikk>) pm.newQuery(query)
 					.executeWithMap(parameters);
 			if (!list.isEmpty()) {
-				for (Ctorzs l : list) {
-					CtorzsSer ctorzsSer = new CtorzsSer();
-					ctorzsSer.setCikkszam(l.getCikkszam());
-					ctorzsSer.setMegnevezes(l.getMegnevezes());
-					ctorzsSer.setAr(l.getAr());
-					ctorzsSer.setKiskarton(l.getKiskarton());
-					ctorzsSer.setDarab(l.getDarab());
-					ctorzsSer.setTerfogat(l.getTerfogat());
-					ctorzsSer.setJel(l.getJel());
-					ctorzsSer.setBsuly(l.getBsuly());
-					ctorzsSer.setNsuly(l.getNsuly());
-					ctorzs.add(ctorzsSer);
+				for (Cikk l : list) {
+					CikkSer cikkSer = new CikkSer();
+					cikkSer.setCikkszam(l.getCikkszam());
+					cikkSer.setMegnevezes(l.getMegnevezes());
+					cikkSer.setAr(l.getAr());
+					cikkSer.setKiskarton(l.getKiskarton());
+					cikkSer.setDarab(l.getDarab());
+					cikkSer.setTerfogat(l.getTerfogat());
+					cikkSer.setJel(l.getJel());
+					cikkSer.setBsuly(l.getBsuly());
+					cikkSer.setNsuly(l.getNsuly());
+					cikk.add(cikkSer);
 				}
 			}
 		} catch (Exception e) {
@@ -177,7 +177,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return ctorzs;
+		return cikk;
 	}
 
 	public ArrayList<KosarSer> getKosar(String rovidnev)

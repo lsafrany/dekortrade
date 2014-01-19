@@ -1,6 +1,6 @@
 package hu.dekortrade.client;
 
-import hu.dekortrade.shared.serialized.CtorzsSer;
+import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
@@ -63,16 +63,16 @@ public interface DekorTradeServiceAsync {
 
 	void removeVevo(VevoSer vevoSer, AsyncCallback<VevoSer> asyncCallback);
 
-	void getCtorzs(int page, String cikkszam, String jel,
-			AsyncCallback<List<CtorzsSer>> asyncCallback);
+	void getCikk(int page, String cikkszam, String jel,
+			AsyncCallback<List<CikkSer>> asyncCallback);
 
-	void addCtorzs(CtorzsSer ctorzsSer, AsyncCallback<CtorzsSer> asyncCallback);
+	void addCikk(CikkSer cikkSer, AsyncCallback<CikkSer> asyncCallback);
 
-	void updateCtorzs(CtorzsSer ctorzsSer,
-			AsyncCallback<CtorzsSer> asyncCallback);
+	void updateCikk(CikkSer cikkSer,
+			AsyncCallback<CikkSer> asyncCallback);
 
-	void removeCtorzs(CtorzsSer ctorzsSer,
-			AsyncCallback<CtorzsSer> asyncCallback);
+	void removeCikk(CikkSer ctorzsSer,
+			AsyncCallback<CikkSer> asyncCallback);
 
 	void getRendelt(AsyncCallback<ArrayList<RendeltSer>> asyncCallback);
 

@@ -4,10 +4,9 @@ import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
-import hu.dekortrade.shared.serialized.CtorzsSer;
+import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -47,62 +46,62 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(CtorzsConstants.CTORZS_CIKKSZAM,
-				ctorzsLabels.ctorzs_cikkszam());
+		field = new DataSourceTextField(CtorzsConstants.CIKK_CIKKSZAM,
+				ctorzsLabels.cikk_cikkszam());
 		field.setPrimaryKey(true);
 		field.setLength(30);
 		addField(field);
 
-		field = new DataSourceTextField(CtorzsConstants.CTORZS_MEGNEVEZES,
-				ctorzsLabels.ctorzs_megnevezes());
+		field = new DataSourceTextField(CtorzsConstants.CIKK_MEGNEVEZES,
+				ctorzsLabels.cikk_megnevezes());
 		field.setLength(60);
 		field.setEditorProperties(textItem);
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CTORZS_AR,
-				ctorzsLabels.ctorzs_ar());
+		field = new DataSourceFloatField(CtorzsConstants.CIKK_AR,
+				ctorzsLabels.cikk_ar());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceIntegerField(CtorzsConstants.CTORZS_KISKARTON,
-				ctorzsLabels.ctorzs_kiskarton());
+		field = new DataSourceIntegerField(CtorzsConstants.CIKK_KISKARTON,
+				ctorzsLabels.cikk_kiskarton());
 		field.setLength(10);
 		field.setValidators(isIntegerValidator);
 		addField(field);
 
-		field = new DataSourceIntegerField(CtorzsConstants.CTORZS_DARAB,
-				ctorzsLabels.ctorzs_darab());
+		field = new DataSourceIntegerField(CtorzsConstants.CIKK_DARAB,
+				ctorzsLabels.cikk_darab());
 		field.setLength(10);
 		field.setValidators(isIntegerValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CTORZS_TERFOGAT,
-				ctorzsLabels.ctorzs_terfogat());
+		field = new DataSourceFloatField(CtorzsConstants.CIKK_TERFOGAT,
+				ctorzsLabels.cikk_terfogat());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceTextField(CtorzsConstants.CTORZS_JEL,
-				ctorzsLabels.ctorzs_jel());
+		field = new DataSourceTextField(CtorzsConstants.CIKK_JEL,
+				ctorzsLabels.cikk_jel());
 		field.setEditorProperties(selectItem);
 		field.setValueMap(ClientConstants.getJelek());
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CTORZS_BSULY,
-				ctorzsLabels.ctorzs_bsuly());
+		field = new DataSourceFloatField(CtorzsConstants.CIKK_BSULY,
+				ctorzsLabels.cikk_bsuly());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CTORZS_NSULY,
-				ctorzsLabels.ctorzs_nsuly());
+		field = new DataSourceFloatField(CtorzsConstants.CIKK_NSULY,
+				ctorzsLabels.cikk_nsuly());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CTORZS_KEPEK,
-				ctorzsLabels.ctorzs_kepek());
+		field = new DataSourceFloatField(CtorzsConstants.CIKK_KEPEK,
+				ctorzsLabels.cikk_kepek());
 		field.setHidden(true);
 		addField(field);
 
@@ -111,14 +110,14 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getCtorzs(
+		dekorTradeService.getCikk(
 				request.getCriteria().getAttributeAsInt(
 						CtorzsConstants.CTORZS_PAGE),
 				request.getCriteria().getAttributeAsString(
-						CtorzsConstants.CTORZS_CIKKSZAM),
+						CtorzsConstants.CIKK_CIKKSZAM),
 				request.getCriteria().getAttributeAsString(
-						CtorzsConstants.CTORZS_JEL),
-				new AsyncCallback<List<CtorzsSer>>() {
+						CtorzsConstants.CIKK_JEL),
+				new AsyncCallback<List<CikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
 							response.setAttribute(
@@ -131,7 +130,7 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 						processResponse(requestId, response);
 					}
 
-					public void onSuccess(List<CtorzsSer> result) {
+					public void onSuccess(List<CikkSer> result) {
 						ListGridRecord[] list = new ListGridRecord[result
 								.size()];
 						for (int i = 0; i < result.size(); i++) {
@@ -154,9 +153,9 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 
 		JavaScriptObject data = request.getData();
 		ListGridRecord rec = new ListGridRecord(data);
-		CtorzsSer ctorzsSer = new CtorzsSer();
-		copyValues(rec, ctorzsSer);
-		dekorTradeService.addCtorzs(ctorzsSer, new AsyncCallback<CtorzsSer>() {
+		CikkSer cikkSer = new CikkSer();
+		copyValues(rec, cikkSer);
+		dekorTradeService.addCikk(cikkSer, new AsyncCallback<CikkSer>() {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof SQLExceptionSer)
 					response.setAttribute(ClientConstants.SERVER_SQLERROR,
@@ -168,7 +167,7 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 				processResponse(requestId, response);
 			}
 
-			public void onSuccess(CtorzsSer result) {
+			public void onSuccess(CikkSer result) {
 				ListGridRecord[] list = new ListGridRecord[1];
 				ListGridRecord newRec = new ListGridRecord();
 				copyValues(result, newRec);
@@ -185,10 +184,10 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 			final DSRequest request, final DSResponse response) {
 
 		ListGridRecord rec = getEditedRecord(request);
-		CtorzsSer ctorzsSer = new CtorzsSer();
-		copyValues(rec, ctorzsSer);
-		dekorTradeService.updateCtorzs(ctorzsSer,
-				new AsyncCallback<CtorzsSer>() {
+		CikkSer cikkSer = new CikkSer();
+		copyValues(rec, cikkSer);
+		dekorTradeService.updateCikk(cikkSer,
+				new AsyncCallback<CikkSer>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
 							response.setAttribute(
@@ -201,7 +200,7 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 						processResponse(requestId, response);
 					}
 
-					public void onSuccess(CtorzsSer result) {
+					public void onSuccess(CikkSer result) {
 						ListGridRecord[] list = new ListGridRecord[1];
 						ListGridRecord updRec = new ListGridRecord();
 						copyValues(result, updRec);
@@ -219,10 +218,10 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 
 		JavaScriptObject data = request.getData();
 		final ListGridRecord rec = new ListGridRecord(data);
-		CtorzsSer ctorzsSer = new CtorzsSer();
-		copyValues(rec, ctorzsSer);
-		dekorTradeService.removeCtorzs(ctorzsSer,
-				new AsyncCallback<CtorzsSer>() {
+		CikkSer cikkSer = new CikkSer();
+		copyValues(rec, cikkSer);
+		dekorTradeService.removeCikk(cikkSer,
+				new AsyncCallback<CikkSer>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
 							response.setAttribute(
@@ -235,7 +234,7 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 						processResponse(requestId, response);
 					}
 
-					public void onSuccess(CtorzsSer result) {
+					public void onSuccess(CikkSer result) {
 						ListGridRecord[] list = new ListGridRecord[1];
 						// We do not receive removed record from server.
 						// Return record from request.
@@ -249,36 +248,35 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 
 	}
 
-	private static void copyValues(CtorzsSer from, ListGridRecord to) {
-		to.setAttribute(CtorzsConstants.CTORZS_CIKKSZAM, from.getCikkszam());
-		to.setAttribute(CtorzsConstants.CTORZS_MEGNEVEZES, from.getMegnevezes());
-		to.setAttribute(CtorzsConstants.CTORZS_AR, from.getAr());
-		to.setAttribute(CtorzsConstants.CTORZS_KISKARTON, from.getKiskarton());
-		to.setAttribute(CtorzsConstants.CTORZS_DARAB, from.getDarab());
-		to.setAttribute(CtorzsConstants.CTORZS_TERFOGAT, from.getTerfogat());
-		to.setAttribute(CtorzsConstants.CTORZS_JEL, from.getJel());
-		to.setAttribute(CtorzsConstants.CTORZS_BSULY, from.getBsuly());
-		to.setAttribute(CtorzsConstants.CTORZS_NSULY, from.getNsuly());
-		to.setAttribute(CtorzsConstants.CTORZS_KEPEK, from.getKepek());
+	private static void copyValues(CikkSer from, ListGridRecord to) {
+		to.setAttribute(CtorzsConstants.CIKK_CIKKSZAM, from.getCikkszam());
+		to.setAttribute(CtorzsConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
+		to.setAttribute(CtorzsConstants.CIKK_AR, from.getAr());
+		to.setAttribute(CtorzsConstants.CIKK_KISKARTON, from.getKiskarton());
+		to.setAttribute(CtorzsConstants.CIKK_DARAB, from.getDarab());
+		to.setAttribute(CtorzsConstants.CIKK_TERFOGAT, from.getTerfogat());
+		to.setAttribute(CtorzsConstants.CIKK_JEL, from.getJel());
+		to.setAttribute(CtorzsConstants.CIKK_BSULY, from.getBsuly());
+		to.setAttribute(CtorzsConstants.CIKK_NSULY, from.getNsuly());
+		to.setAttribute(CtorzsConstants.CIKK_KEPEK, from.getKepek());
 	}
 
-	private static void copyValues(ListGridRecord from, CtorzsSer to) {
+	private static void copyValues(ListGridRecord from, CikkSer to) {
 		to.setCikkszam(from
-				.getAttributeAsString(CtorzsConstants.CTORZS_CIKKSZAM));
+				.getAttributeAsString(CtorzsConstants.CIKK_CIKKSZAM));
 		to.setMegnevezes(from
-				.getAttributeAsString(CtorzsConstants.CTORZS_MEGNEVEZES));
-		to.setAr(new BigDecimal(from
-				.getAttributeAsDouble(CtorzsConstants.CTORZS_AR)));
+				.getAttributeAsString(CtorzsConstants.CIKK_MEGNEVEZES));
+		to.setAr(from.getAttributeAsFloat(CtorzsConstants.CIKK_AR));
 		to.setKiskarton(from
-				.getAttributeAsInt(CtorzsConstants.CTORZS_KISKARTON));
-		to.setDarab(from.getAttributeAsInt(CtorzsConstants.CTORZS_DARAB));
-		to.setTerfogat(new BigDecimal(from
-				.getAttributeAsDouble(CtorzsConstants.CTORZS_TERFOGAT)));
-		to.setJel(from.getAttributeAsString(CtorzsConstants.CTORZS_JEL));
-		to.setBsuly(new BigDecimal(from
-				.getAttributeAsDouble(CtorzsConstants.CTORZS_BSULY)));
-		to.setNsuly(new BigDecimal(from
-				.getAttributeAsDouble(CtorzsConstants.CTORZS_NSULY)));
+				.getAttributeAsInt(CtorzsConstants.CIKK_KISKARTON));
+		to.setDarab(from.getAttributeAsInt(CtorzsConstants.CIKK_DARAB));
+		to.setTerfogat(from
+				.getAttributeAsFloat(CtorzsConstants.CIKK_TERFOGAT));
+		to.setJel(from.getAttributeAsString(CtorzsConstants.CIKK_JEL));
+		to.setBsuly(from
+				.getAttributeAsFloat(CtorzsConstants.CIKK_BSULY));
+		to.setNsuly(from
+				.getAttributeAsFloat(CtorzsConstants.CIKK_NSULY));
 	}
 
 	private ListGridRecord getEditedRecord(DSRequest request) {

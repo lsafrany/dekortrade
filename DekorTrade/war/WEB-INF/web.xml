@@ -10,6 +10,11 @@
     <servlet-name>initServlet</servlet-name>
     <servlet-class>hu.dekortrade.server.Init</servlet-class>
   </servlet>
+
+  <servlet>
+    <servlet-name>uploadServlet</servlet-name>
+    <servlet-class>hu.dekortrade.server.Upload</servlet-class>
+  </servlet>
   
   <servlet>
     <servlet-name>serviceServlet</servlet-name>
@@ -19,6 +24,11 @@
   <servlet-mapping>
     <servlet-name>initServlet</servlet-name>
     <url-pattern>/dekortrade/init</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>serviceServlet</servlet-name>
+    <url-pattern>/dekortrade/upload</url-pattern>
   </servlet-mapping>
     
   <servlet-mapping>

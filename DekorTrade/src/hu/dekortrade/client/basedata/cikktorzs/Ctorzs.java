@@ -13,6 +13,8 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.Encoding;
+import com.smartgwt.client.types.FormMethod;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -25,6 +27,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.UploadItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
@@ -66,12 +69,12 @@ public class Ctorzs {
 		ctorzsForm.setColWidths("10%", "25%", "10%", "*");
 
 		final TextItem cikkszamItem = new TextItem();
-		cikkszamItem.setTitle(ctorzsLabels.ctorzs_cikkszam());
+		cikkszamItem.setTitle(ctorzsLabels.cikk_cikkszam());
 		cikkszamItem.setLength(15);
 
 		final SelectItem jelSelectItem = new SelectItem();
 		jelSelectItem.setWidth("250");
-		jelSelectItem.setTitle(ctorzsLabels.ctorzs_jel());
+		jelSelectItem.setTitle(ctorzsLabels.cikk_jel());
 		jelSelectItem.setValueMap(ClientConstants.getJelek());
 
 		ctorzsForm.setFields(cikkszamItem, jelSelectItem);
@@ -79,7 +82,7 @@ public class Ctorzs {
 		final IButton szuresIButton = new IButton(commonLabels.filter());
 		szuresIButton.setDisabled(true);
 
-		final IButton kepekIButton = new IButton(ctorzsLabels.ctorzs_kepek());
+		final IButton kepekIButton = new IButton(ctorzsLabels.cikk_kepek());
 		kepekIButton.setDisabled(true);
 
 		ctorzsFormLayout.addMember(ctorzsForm);
@@ -132,44 +135,44 @@ public class Ctorzs {
 		ctorzsGrid.setDataSource(ctorzsDataSource);
 		Criteria criteria = new Criteria();
 		criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
-		criteria.setAttribute(CtorzsConstants.CTORZS_CIKKSZAM,
+		criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 				cikkszamItem.getValueAsString());
-		criteria.setAttribute(CtorzsConstants.CTORZS_JEL,
+		criteria.setAttribute(CtorzsConstants.CIKK_JEL,
 				jelSelectItem.getValueAsString());
 		ctorzsGrid.fetchData(criteria);
 
 		ListGridField cikkszamGridField = new ListGridField(
-				CtorzsConstants.CTORZS_CIKKSZAM);
+				CtorzsConstants.CIKK_CIKKSZAM);
 		cikkszamGridField.setWidth("15%");
 
 		ListGridField megnevezesGridField = new ListGridField(
-				CtorzsConstants.CTORZS_MEGNEVEZES);
+				CtorzsConstants.CIKK_MEGNEVEZES);
 
-		ListGridField arGridField = new ListGridField(CtorzsConstants.CTORZS_AR);
+		ListGridField arGridField = new ListGridField(CtorzsConstants.CIKK_AR);
 		arGridField.setWidth("8%");
 
 		ListGridField kiskartonGridField = new ListGridField(
-				CtorzsConstants.CTORZS_KISKARTON);
+				CtorzsConstants.CIKK_KISKARTON);
 		kiskartonGridField.setWidth("8%");
 
 		ListGridField darabGridField = new ListGridField(
-				CtorzsConstants.CTORZS_DARAB);
+				CtorzsConstants.CIKK_DARAB);
 		darabGridField.setWidth("8%");
 
 		ListGridField terfogatGridField = new ListGridField(
-				CtorzsConstants.CTORZS_TERFOGAT);
+				CtorzsConstants.CIKK_TERFOGAT);
 		terfogatGridField.setWidth("8%");
 
 		ListGridField jelGridField = new ListGridField(
-				CtorzsConstants.CTORZS_JEL);
+				CtorzsConstants.CIKK_JEL);
 		jelGridField.setWidth("18%");
 
 		ListGridField bsulyGridField = new ListGridField(
-				CtorzsConstants.CTORZS_BSULY);
+				CtorzsConstants.CIKK_BSULY);
 		bsulyGridField.setWidth("8%");
 
 		ListGridField nsulyGridField = new ListGridField(
-				CtorzsConstants.CTORZS_NSULY);
+				CtorzsConstants.CIKK_NSULY);
 		nsulyGridField.setWidth("8%");
 
 		ctorzsGrid
@@ -224,8 +227,8 @@ public class Ctorzs {
 		loadButtonLayout.setAlign(Alignment.CENTER);
 		final IButton loadButton = new IButton(ctorzsLabels.kepfeltoltes());
 		loadButton.disable();
-		loadButtonLayout.addMember(loadButton);
-
+		loadButtonLayout.addMember(loadButton);		
+		
 		HLayout deleteButtonLayout = new HLayout();
 		deleteButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		deleteButtonLayout.setAlign(Alignment.CENTER);
@@ -249,9 +252,9 @@ public class Ctorzs {
 				Criteria criteria = new Criteria();
 				page = 0;
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
-				criteria.setAttribute(CtorzsConstants.CTORZS_CIKKSZAM,
+				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CTORZS_JEL,
+				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
 						jelSelectItem.getValueAsString());
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
@@ -275,9 +278,9 @@ public class Ctorzs {
 				Criteria criteria = new Criteria();
 				page = page - 1;
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
-				criteria.setAttribute(CtorzsConstants.CTORZS_CIKKSZAM,
+				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CTORZS_JEL,
+				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
 						jelSelectItem.getValueAsString());
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
@@ -301,9 +304,9 @@ public class Ctorzs {
 				Criteria criteria = new Criteria();
 				page = page + 1;
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
-				criteria.setAttribute(CtorzsConstants.CTORZS_CIKKSZAM,
+				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CTORZS_JEL,
+				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
 						jelSelectItem.getValueAsString());
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
@@ -356,7 +359,7 @@ public class Ctorzs {
 				deleteButton.setDisabled(false);
 				if (extIButton != null) {
 					cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
-							CtorzsConstants.CTORZS_CIKKSZAM);
+							CtorzsConstants.CIKK_CIKKSZAM);
 					extIButton.setDisabled(false);
 				}
 			}
@@ -369,10 +372,10 @@ public class Ctorzs {
 				winModal.setWidth(800);
 				winModal.setHeight(800);
 				winModal.setTitle(ctorzsGrid.getSelectedRecord().getAttribute(
-						CtorzsConstants.CTORZS_CIKKSZAM)
+						CtorzsConstants.CIKK_CIKKSZAM)
 						+ " - "
 						+ ctorzsGrid.getSelectedRecord().getAttribute(
-								CtorzsConstants.CTORZS_MEGNEVEZES));
+								CtorzsConstants.CIKK_MEGNEVEZES));
 				winModal.setShowMinimizeButton(false);
 				winModal.setIsModal(true);
 				winModal.setShowModalMask(true);
@@ -410,7 +413,14 @@ public class Ctorzs {
 
 			}
 		});
-
+		
+		loadButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				upload(ctorzsGrid.getSelectedRecord().getAttribute(
+						CtorzsConstants.CIKK_CIKKSZAM));
+			}
+		});
+		
 		middleLayout.addMember(ctorzsLayout);
 
 		return middleLayout;
@@ -441,9 +451,11 @@ public class Ctorzs {
 
 		if (uj)
 			editForm.editNewRecord();
-		else
+		else {
+			editForm.getField(CtorzsConstants.CIKK_CIKKSZAM).setCanEdit(false);		
 			editForm.editSelectedData(listGrid);
-
+		}
+		
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -481,6 +493,78 @@ public class Ctorzs {
 
 		winModal.addItem(editForm);
 		winModal.addItem(buttonsLayout);
+		winModal.show();
+
+	}
+
+	void upload(String cikkszam) {
+
+		final Window winModal = new Window();
+		winModal.setWidth(600);
+		winModal.setHeight(150);
+		winModal.setTitle(ctorzsLabels.kepfeltoltes());
+		winModal.setShowMinimizeButton(false);
+		winModal.setShowCloseButton(false);
+		winModal.setIsModal(true);
+		winModal.setShowModalMask(true);
+		winModal.centerInPage();
+				
+		final DynamicForm uploadForm = new DynamicForm();
+		uploadForm.setEncoding(Encoding.MULTIPART);
+		uploadForm.setMethod(FormMethod.POST);
+		uploadForm.setWidth100();
+		uploadForm.setNumCols(2);
+		uploadForm.setColWidths("20%", "*");
+		
+		uploadForm.setAction(GWT.getModuleBaseURL() + "upload?cikkszam=" + cikkszam);
+		
+		UploadItem uploadItem = new UploadItem();
+		uploadItem.setWidth(300);
+		uploadItem.setName("kep");
+		uploadItem.setTitle(cikkszam);
+		uploadItem.setRequired(true);
+
+		uploadForm.setFields(uploadItem);
+		
+		final HLayout formButtonsLayout = new HLayout();
+		formButtonsLayout.setWidth100();
+
+		HLayout saveLayout = new HLayout();
+		saveLayout.setAlign(Alignment.CENTER);
+		saveLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		IButton saveIButton = new IButton(commonLabels.save());
+			
+		saveIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				uploadForm.submitForm(); 
+			}
+		});
+		
+		HLayout cancelLayout = new HLayout();
+		cancelLayout.setAlign(Alignment.CENTER);
+		cancelLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		IButton cancelIButton = new IButton(commonLabels.cancel());
+		
+		cancelIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				winModal.destroy();
+			}
+		});
+
+		saveLayout.addMember(saveIButton);
+		cancelLayout.addMember(cancelIButton);
+		formButtonsLayout.addMember(saveLayout);
+		formButtonsLayout.addMember(cancelLayout);
+	
+		final Label label = new Label();
+		label.setWidth100();
+		label.setHeight("50");
+		label.setAlign(Alignment.CENTER);
+		
+		winModal.addItem(uploadForm);			
+		winModal.addItem(formButtonsLayout);	
+		winModal.addItem(label);		
+		
 		winModal.show();
 
 	}

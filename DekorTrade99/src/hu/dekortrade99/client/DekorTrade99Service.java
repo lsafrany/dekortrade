@@ -2,7 +2,7 @@ package hu.dekortrade99.client;
 
 import java.util.ArrayList;
 
-import hu.dekortrade99.shared.serialized.CtorzsSer;
+import hu.dekortrade99.shared.serialized.CikkSer;
 import hu.dekortrade99.shared.serialized.KosarSer;
 import hu.dekortrade99.shared.serialized.LoginExceptionSer;
 import hu.dekortrade99.shared.serialized.RendeltSer;
@@ -25,7 +25,7 @@ public interface DekorTrade99Service extends RemoteService {
 	void setPassword(String user, String password)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	ArrayList<CtorzsSer> getCtorzs(int page, String cikkszam, String jel)
+	ArrayList<CikkSer> getCikk(int page, String cikkszam, String jel)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	ArrayList<KosarSer> getKosar(String rovidnev)

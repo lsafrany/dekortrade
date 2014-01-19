@@ -193,9 +193,9 @@ public class Szallito {
 		editForm.setDataSource(dataSource);
 		editForm.setUseAllDataSourceFields(true);
 
-		if (uj)
-			editForm.editNewRecord();
-		else
+		if (uj) 
+			editForm.editNewRecord();			
+		else 
 			editForm.editSelectedData(listGrid);
 
 		HLayout buttonsLayout = new HLayout();

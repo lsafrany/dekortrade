@@ -1,12 +1,10 @@
 package hu.dekortrade99.server.jdo;
 
-import java.math.BigDecimal;
-
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable
-public class Ctorzs {
+public class Cikk {
 
 	@Persistent
 	private String cikkszam;
@@ -15,7 +13,7 @@ public class Ctorzs {
 	private String megnevezes;
 
 	@Persistent
-	private BigDecimal ar;
+	private Float ar;
 
 	@Persistent
 	private Integer kiskarton;
@@ -24,16 +22,16 @@ public class Ctorzs {
 	private Integer darab;
 
 	@Persistent
-	private BigDecimal terfogat;
+	private Float terfogat;
 
 	@Persistent
 	private String jel;
 
 	@Persistent
-	private BigDecimal bsuly;
+	private Float bsuly;
 
 	@Persistent
-	private BigDecimal nsuly;
+	private Float nsuly;
 
 	@Persistent
 	private Integer kepek;
@@ -41,9 +39,9 @@ public class Ctorzs {
 	@Persistent
 	private Boolean torolt;
 
-	public Ctorzs(String cikkszam, String megnevezes, BigDecimal ar,
-			Integer kiskarton, Integer darab, BigDecimal terfogat, String jel,
-			BigDecimal bsuly, BigDecimal nsuly, Integer kepek, Boolean torolt) {
+	public Cikk(String cikkszam, String megnevezes, Float ar,
+			Integer kiskarton, Integer darab, Float terfogat, String jel,
+			Float bsuly, Float nsuly, Integer kepek, Boolean torolt) {
 		this.cikkszam = cikkszam;
 		this.megnevezes = megnevezes;
 		this.ar = ar;
@@ -73,11 +71,11 @@ public class Ctorzs {
 		this.megnevezes = megnevezes;
 	}
 
-	public BigDecimal getAr() {
+	public Float getAr() {
 		return ar;
 	}
 
-	public void setAr(BigDecimal ar) {
+	public void setAr(Float ar) {
 		this.ar = ar;
 	}
 
@@ -97,11 +95,11 @@ public class Ctorzs {
 		this.darab = darab;
 	}
 
-	public BigDecimal getTerfogat() {
+	public Float getTerfogat() {
 		return terfogat;
 	}
 
-	public void setTerfogat(BigDecimal terfogat) {
+	public void setTerfogat(Float terfogat) {
 		this.terfogat = terfogat;
 	}
 
@@ -113,19 +111,19 @@ public class Ctorzs {
 		this.jel = jel;
 	}
 
-	public BigDecimal getBsuly() {
+	public Float getBsuly() {
 		return bsuly;
 	}
 
-	public void setBsuly(BigDecimal bsuly) {
+	public void setBsuly(Float bsuly) {
 		this.bsuly = bsuly;
 	}
 
-	public BigDecimal getNsuly() {
+	public Float getNsuly() {
 		return nsuly;
 	}
 
-	public void setNsuly(BigDecimal nsuly) {
+	public void setNsuly(Float nsuly) {
 		this.nsuly = nsuly;
 	}
 

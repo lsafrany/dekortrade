@@ -1,6 +1,6 @@
 package hu.dekortrade.client;
 
-import hu.dekortrade.shared.serialized.CtorzsSer;
+import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
@@ -76,16 +76,16 @@ public interface DekorTradeService extends RemoteService {
 
 	List<VevoSer> getVevo() throws Exception, SQLExceptionSer;
 
-	List<CtorzsSer> getCtorzs(int page, String cikkszam, String jel)
+	List<CikkSer> getCikk(int page, String cikkszam, String jel)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	CtorzsSer addCtorzs(CtorzsSer ctorzsSer) throws IllegalArgumentException,
+	CikkSer addCikk(CikkSer cikkSer) throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	CtorzsSer updateCtorzs(CtorzsSer ctorzsSer)
+	CikkSer updateCikk(CikkSer cikkSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	CtorzsSer removeCtorzs(CtorzsSer ctorzsSer)
+	CikkSer removeCikk(CikkSer ctorzsSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	ArrayList<RendeltSer> getRendelt() throws IllegalArgumentException,

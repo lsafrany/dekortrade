@@ -1,7 +1,7 @@
 package hu.dekortrade.server;
 
 import hu.dekortrade.client.DekorTradeService;
-import hu.dekortrade.server.jdo.Ctorzs;
+import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Felhasznalo;
 import hu.dekortrade.server.jdo.Jog;
 import hu.dekortrade.server.jdo.PMF;
@@ -10,7 +10,7 @@ import hu.dekortrade.server.jdo.Rendeltcikk;
 import hu.dekortrade.server.jdo.Szallito;
 import hu.dekortrade.server.jdo.Vevo;
 import hu.dekortrade.shared.Constants;
-import hu.dekortrade.shared.serialized.CtorzsSer;
+import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
@@ -606,12 +606,12 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return szallitoSer;
 	}
 
-	public List<CtorzsSer> getCtorzs(int page, String cikkszam, String jel)
+	public List<CikkSer> getCikk(int page, String cikkszam, String jel)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
-		ArrayList<CtorzsSer> ctorzs = new ArrayList<CtorzsSer>();
+		ArrayList<CikkSer> cikk = new ArrayList<CikkSer>();
 		try {
 			Map<String, String> parameters = new HashMap<String, String>();
 			String filter = "this.torolt == false";
@@ -629,28 +629,28 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				parameters.put("pjel", jel);
 			}
 
-			Query query = pm.newQuery(Ctorzs.class);
+			Query query = pm.newQuery(Cikk.class);
 			query.declareParameters(params);
 			query.setFilter(filter);
 			query.setOrdering("cikkszam");
 			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
 					* Constants.FETCH_SIZE);
 			@SuppressWarnings("unchecked")
-			List<Ctorzs> list = (List<Ctorzs>) pm.newQuery(query)
+			List<Cikk> list = (List<Cikk>) pm.newQuery(query)
 					.executeWithMap(parameters);
 			if (!list.isEmpty()) {
-				for (Ctorzs l : list) {
-					CtorzsSer ctorzsSer = new CtorzsSer();
-					ctorzsSer.setCikkszam(l.getCikkszam());
-					ctorzsSer.setMegnevezes(l.getMegnevezes());
-					ctorzsSer.setAr(l.getAr());
-					ctorzsSer.setKiskarton(l.getKiskarton());
-					ctorzsSer.setDarab(l.getDarab());
-					ctorzsSer.setTerfogat(l.getTerfogat());
-					ctorzsSer.setJel(l.getJel());
-					ctorzsSer.setBsuly(l.getBsuly());
-					ctorzsSer.setNsuly(l.getNsuly());
-					ctorzs.add(ctorzsSer);
+				for (Cikk l : list) {
+					CikkSer cikkSer = new CikkSer();
+					cikkSer.setCikkszam(l.getCikkszam());
+					cikkSer.setMegnevezes(l.getMegnevezes());
+					cikkSer.setAr(l.getAr());
+					cikkSer.setKiskarton(l.getKiskarton());
+					cikkSer.setDarab(l.getDarab());
+					cikkSer.setTerfogat(l.getTerfogat());
+					cikkSer.setJel(l.getJel());
+					cikkSer.setBsuly(l.getBsuly());
+					cikkSer.setNsuly(l.getNsuly());
+					cikk.add(cikkSer);
 				}
 			}
 		} catch (Exception e) {
@@ -659,31 +659,31 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return ctorzs;
+		return cikk;
 	}
 
-	public CtorzsSer addCtorzs(CtorzsSer ctorzsSer)
+	public CikkSer addCikk(CikkSer cikkSer)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
-			Query query = pm.newQuery(Ctorzs.class);
+			Query query = pm.newQuery(Cikk.class);
 			query.setFilter("this.cikkszam == pcikkszam");
 			query.declareParameters("String pcikkszam");
 			@SuppressWarnings("unchecked")
-			List<Ctorzs> list = (List<Ctorzs>) pm.newQuery(query).execute(
-					ctorzsSer.getCikkszam());
+			List<Cikk> list = (List<Cikk>) pm.newQuery(query).execute(
+					cikkSer.getCikkszam());
 			if ((list != null) && (!list.isEmpty())) {
 				throw new Exception("Létező cikkszám !");
 			} else {
-				Ctorzs ctorzs = new Ctorzs(ctorzsSer.getCikkszam(),
-						ctorzsSer.getMegnevezes(), ctorzsSer.getAr(),
-						ctorzsSer.getKiskarton(), ctorzsSer.getDarab(),
-						ctorzsSer.getTerfogat(), ctorzsSer.getJel(),
-						ctorzsSer.getBsuly(), ctorzsSer.getNsuly(),
+				Cikk cikk = new Cikk(cikkSer.getCikkszam(),
+						cikkSer.getMegnevezes(), cikkSer.getAr(),
+						cikkSer.getKiskarton(), cikkSer.getDarab(),
+						cikkSer.getTerfogat(), cikkSer.getJel(),
+						cikkSer.getBsuly(), cikkSer.getNsuly(),
 						new Integer(0), Boolean.FALSE, Boolean.FALSE);
-				pm.makePersistent(ctorzs);
+				pm.makePersistent(cikk);
 			}
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
@@ -691,31 +691,31 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return ctorzsSer;
+		return cikkSer;
 	}
 
-	public CtorzsSer updateCtorzs(CtorzsSer ctorzsSer)
+	public CikkSer updateCikk(CikkSer cikkSer)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
-			Query query = pm.newQuery(Ctorzs.class);
+			Query query = pm.newQuery(Cikk.class);
 			query.setFilter("this.cikkszam == pcikkszam");
 			query.declareParameters("String pcikkszam");
 			@SuppressWarnings("unchecked")
-			List<Ctorzs> list = (List<Ctorzs>) pm.newQuery(query).execute(
-					ctorzsSer.getCikkszam());
+			List<Cikk> list = (List<Cikk>) pm.newQuery(query).execute(
+					cikkSer.getCikkszam());
 			if ((list != null) && (!list.isEmpty())) {
-				for (Ctorzs l : list) {
-					l.setMegnevezes(ctorzsSer.getMegnevezes());
-					l.setAr(ctorzsSer.getAr());
-					l.setKiskarton(ctorzsSer.getKiskarton());
-					l.setDarab(ctorzsSer.getDarab());
-					l.setTerfogat(ctorzsSer.getTerfogat());
-					l.setJel(ctorzsSer.getJel());
-					l.setBsuly(ctorzsSer.getBsuly());
-					l.setNsuly(ctorzsSer.getNsuly());
+				for (Cikk l : list) {
+					l.setMegnevezes(cikkSer.getMegnevezes());
+					l.setAr(cikkSer.getAr());
+					l.setKiskarton(cikkSer.getKiskarton());
+					l.setDarab(cikkSer.getDarab());
+					l.setTerfogat(cikkSer.getTerfogat());
+					l.setJel(cikkSer.getJel());
+					l.setBsuly(cikkSer.getBsuly());
+					l.setNsuly(cikkSer.getNsuly());
 
 					l.setSzinkron(Boolean.FALSE);
 				}
@@ -727,23 +727,23 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return ctorzsSer;
+		return cikkSer;
 	}
 
-	public CtorzsSer removeCtorzs(CtorzsSer ctorzsSer)
+	public CikkSer removeCikk(CikkSer cikkSer)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
-			Query query = pm.newQuery(Ctorzs.class);
+			Query query = pm.newQuery(Cikk.class);
 			query.setFilter("this.cikkszam == pcikkszam");
 			query.declareParameters("String pcikkszam");
 			@SuppressWarnings("unchecked")
-			List<Ctorzs> list = (List<Ctorzs>) pm.newQuery(query).execute(
-					ctorzsSer.getCikkszam());
+			List<Cikk> list = (List<Cikk>) pm.newQuery(query).execute(
+					cikkSer.getCikkszam());
 			if ((list != null) && (!list.isEmpty())) {
-				for (Ctorzs l : list) {
+				for (Cikk l : list) {
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
@@ -754,7 +754,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return ctorzsSer;
+		return cikkSer;
 	}
 
 	public ArrayList<RendeltSer> getRendelt() throws IllegalArgumentException,

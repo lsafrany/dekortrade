@@ -32,7 +32,7 @@ public class VevoDataSource extends GwtRpcDataSource {
 
 		TextItem textItem = new TextItem();
 		textItem.setWidth("400");
-
+		
 		DataSourceField field;
 
 		field = new DataSourceTextField(VevoConstants.VEVO_ROVIDNEV,

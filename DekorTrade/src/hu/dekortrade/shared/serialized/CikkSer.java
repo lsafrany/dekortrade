@@ -1,28 +1,26 @@
 package hu.dekortrade.shared.serialized;
 
-import java.math.BigDecimal;
-
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class CtorzsSer implements IsSerializable {
+public class CikkSer implements IsSerializable {
 
 	private String cikkszam;
 
 	private String megnevezes;
 
-	private BigDecimal ar;
+	private Float ar;
 
 	private Integer kiskarton;
 
 	private Integer darab;
 
-	private BigDecimal terfogat;
+	private Float terfogat;
 
 	private String jel;
 
-	private BigDecimal bsuly;
+	private Float bsuly;
 
-	private BigDecimal nsuly;
+	private Float nsuly;
 
 	private Integer kepek;
 
@@ -42,11 +40,11 @@ public class CtorzsSer implements IsSerializable {
 		this.megnevezes = megnevezes;
 	}
 
-	public BigDecimal getAr() {
+	public Float getAr() {
 		return ar;
 	}
 
-	public void setAr(BigDecimal ar) {
+	public void setAr(Float ar) {
 		this.ar = ar;
 	}
 
@@ -66,11 +64,11 @@ public class CtorzsSer implements IsSerializable {
 		this.darab = darab;
 	}
 
-	public BigDecimal getTerfogat() {
+	public Float getTerfogat() {
 		return terfogat;
 	}
 
-	public void setTerfogat(BigDecimal terfogat) {
+	public void setTerfogat(Float terfogat) {
 		this.terfogat = terfogat;
 	}
 
@@ -82,19 +80,19 @@ public class CtorzsSer implements IsSerializable {
 		this.jel = jel;
 	}
 
-	public BigDecimal getBsuly() {
+	public Float getBsuly() {
 		return bsuly;
 	}
 
-	public void setBsuly(BigDecimal bsuly) {
+	public void setBsuly(Float bsuly) {
 		this.bsuly = bsuly;
 	}
 
-	public BigDecimal getNsuly() {
+	public Float getNsuly() {
 		return nsuly;
 	}
 
-	public void setNsuly(BigDecimal nsuly) {
+	public void setNsuly(Float nsuly) {
 		this.nsuly = nsuly;
 	}
 
@@ -105,5 +103,5 @@ public class CtorzsSer implements IsSerializable {
 	public void setKepek(Integer kepek) {
 		this.kepek = kepek;
 	}
-
+	
 }

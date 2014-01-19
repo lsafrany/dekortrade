@@ -255,9 +255,11 @@ public class Vevo {
 
 		if (uj)
 			editForm.editNewRecord();
-		else
+		else {
+			editForm.getField(VevoConstants.VEVO_ROVIDNEV).setCanEdit(false);			
 			editForm.editSelectedData(listGrid);
-
+		}	
+			
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);

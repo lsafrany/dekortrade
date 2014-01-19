@@ -367,9 +367,11 @@ public class Felhasznalo {
 
 		if (uj)
 			editForm.editNewRecord();
-		else
+		else {
+			editForm.getField(SystemConstants.FELHASZNALO_ROVIDNEV).setCanEdit(false);			
 			editForm.editSelectedData(listGrid);
-
+		}
+		
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);

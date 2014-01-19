@@ -2,7 +2,7 @@ package hu.dekortrade99.client;
 
 import java.util.ArrayList;
 
-import hu.dekortrade99.shared.serialized.CtorzsSer;
+import hu.dekortrade99.shared.serialized.CikkSer;
 import hu.dekortrade99.shared.serialized.KosarSer;
 import hu.dekortrade99.shared.serialized.RendeltSer;
 import hu.dekortrade99.shared.serialized.RendeltcikkSer;
@@ -22,8 +22,8 @@ public interface DekorTrade99ServiceAsync {
 			@SuppressWarnings("rawtypes") AsyncCallback callback)
 			throws IllegalArgumentException;
 
-	void getCtorzs(int page, String cikkszam, String jel,
-			AsyncCallback<ArrayList<CtorzsSer>> asyncCallback);
+	void getCikk(int page, String cikkszam, String jel,
+			AsyncCallback<ArrayList<CikkSer>> asyncCallback);
 
 	void getKosar(String rovidnev,
 			AsyncCallback<ArrayList<KosarSer>> asyncCallback);
