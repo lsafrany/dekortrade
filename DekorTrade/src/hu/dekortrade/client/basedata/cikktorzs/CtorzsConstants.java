@@ -15,5 +15,6 @@ public class CtorzsConstants {
 	public static final String CIKK_NSULY = "ctorzs_nsuly";
 	public static final String CIKK_KEPEK = "ctorzs_kepek";
 
-	
+	public static final String KEP_SORSZAM = "kep_sorszam";
+	public static final String KEP_KEP = "kep_kep";
 }

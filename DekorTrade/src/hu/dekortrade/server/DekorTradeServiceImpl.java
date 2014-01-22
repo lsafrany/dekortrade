@@ -4,6 +4,7 @@ import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Felhasznalo;
 import hu.dekortrade.server.jdo.Jog;
+import hu.dekortrade.server.jdo.Kep;
 import hu.dekortrade.server.jdo.PMF;
 import hu.dekortrade.server.jdo.Rendelt;
 import hu.dekortrade.server.jdo.Rendeltcikk;
@@ -19,6 +20,7 @@ import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.SzallitoSer;
 import hu.dekortrade.shared.serialized.TabPageSer;
+import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoSer;
 
@@ -30,6 +32,8 @@ import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -481,6 +485,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					vevoSer.getRovidnev());
 			if ((list != null) && (!list.isEmpty())) {
 				for (Vevo l : list) {
+					l.setSzinkron(Boolean.FALSE);
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
@@ -650,6 +655,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					cikkSer.setJel(l.getJel());
 					cikkSer.setBsuly(l.getBsuly());
 					cikkSer.setNsuly(l.getNsuly());
+					cikkSer.setKepek(l.getKepek());
 					cikk.add(cikkSer);
 				}
 			}
@@ -716,7 +722,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setJel(cikkSer.getJel());
 					l.setBsuly(cikkSer.getBsuly());
 					l.setNsuly(cikkSer.getNsuly());
-
+					l.setKepek(cikkSer.getKepek());
 					l.setSzinkron(Boolean.FALSE);
 				}
 			}
@@ -744,6 +750,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					cikkSer.getCikkszam());
 			if ((list != null) && (!list.isEmpty())) {
 				for (Cikk l : list) {
+					l.setSzinkron(Boolean.FALSE);
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
@@ -838,4 +845,63 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return ret;
 	}
 
+	public String initUploadFileStatus() throws IllegalArgumentException {
+		
+		HttpServletRequest request = this.getThreadLocalRequest();
+		HttpSession session = request.getSession();
+
+		session.removeAttribute(ServerConstants.FILE);
+		session.removeAttribute(ServerConstants.FILE_ERROR);
+		session.setAttribute(ServerConstants.FILE,new  Integer(0));
+	
+		return "OK";
+	}
+
+	public UploadSer getUploadFileStatus() throws IllegalArgumentException {
+		UploadSer uploadSer = new UploadSer();
+				
+		HttpServletRequest request = this.getThreadLocalRequest();
+		HttpSession session = request.getSession();
+
+		uploadSer.setStatus(Constants.LOADING);
+		if (session.getAttribute(ServerConstants.FILE) == null) {
+			if (session.getAttribute(ServerConstants.FILE_ERROR) == null) {
+				uploadSer.setStatus(Constants.LOADED); 	 
+			}
+			else  {
+				uploadSer.setStatus(Constants.ERROR);
+				uploadSer.setError((String)session.getAttribute(ServerConstants.FILE_ERROR));
+			}
+		}
+		
+		return uploadSer;
+	}
+
+	public ArrayList<String> getKepsorszam(String cikkszam) throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<String> kepsorszam = new ArrayList<String>();
+
+		try {
+			Query query = pm.newQuery(Kep.class);
+			query.setFilter("cikkszam == pcikkszam && torolt == false");
+			query.declareParameters("String pcikkszam");
+			@SuppressWarnings("unchecked")
+			List<Kep> list = (List<Kep>) pm.newQuery(query)
+					.execute(cikkszam);
+			if (!list.isEmpty()) {
+				for (Kep l : list) {
+					kepsorszam.add(new Integer(l.getSorszam()).toString());
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return kepsorszam;
+	}
+	
 }

@@ -26,7 +26,7 @@
   <inherits name="com.smartgwt.SmartGwt"/>
   <inherits name="com.smartclient.theme.simplicity.SimplicityResources" />
   <inherits name="com.smartclient.theme.simplicity.Simplicity" /> 
- 
+
   <!-- Specify the app entry point class.                         -->
   <entry-point class='hu.dekortrade.client.DekorTrade'/>
 

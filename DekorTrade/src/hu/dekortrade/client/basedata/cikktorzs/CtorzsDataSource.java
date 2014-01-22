@@ -100,9 +100,9 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CIKK_KEPEK,
+		field = new DataSourceIntegerField(CtorzsConstants.CIKK_KEPEK,
 				ctorzsLabels.cikk_kepek());
-		field.setHidden(true);
+		field.setCanEdit(false);
 		addField(field);
 
 	}
@@ -277,6 +277,8 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 				.getAttributeAsFloat(CtorzsConstants.CIKK_BSULY));
 		to.setNsuly(from
 				.getAttributeAsFloat(CtorzsConstants.CIKK_NSULY));
+		to.setKepek(from
+				.getAttributeAsInt(CtorzsConstants.CIKK_KEPEK));	
 	}
 
 	private ListGridRecord getEditedRecord(DSRequest request) {

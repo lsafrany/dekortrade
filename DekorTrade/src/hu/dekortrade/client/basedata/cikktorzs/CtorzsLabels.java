@@ -30,4 +30,17 @@ public interface CtorzsLabels extends Constants {
 
 	String kepfeltoltes();
 
+	String toltes();
+	
+	String idotullepes();
+
+	String tolteshiba();
+
+	String jpg();
+	
+	String tulnagyfile();
+
+	String kepsorszam();
+	
+	String kep();
 }

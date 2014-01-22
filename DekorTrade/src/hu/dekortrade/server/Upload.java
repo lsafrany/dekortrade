@@ -1,64 +1,83 @@
-// http://127.0.0.1:8888/dekortrade/upload
 
 package hu.dekortrade.server;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Iterator;
+import hu.dekortrade.server.jdo.Kep;
+import hu.dekortrade.server.jdo.PMF;
+import hu.dekortrade.shared.Constants;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
+
+import com.google.appengine.api.datastore.Blob;
 
 @SuppressWarnings("serial")
 public class Upload extends HttpServlet {
-	
-    @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
-        throws ServletException, IOException {
 
-    	FileItem file = null;	   
-	    boolean isMultipart = ServletFileUpload.isMultipartContent(req);  
-	    if (isMultipart) {    
-	    	FileItemFactory factory = new DiskFileItemFactory();
-	    	ServletFileUpload upload = new ServletFileUpload(factory);   
-	    	try {
-	    		
-				@SuppressWarnings("rawtypes")
-				Iterator i = upload.parseRequest(req).iterator();
-	    		while (i.hasNext()) {		    		   
-	    			FileItem f = (FileItem)i.next();
-	    			if (!f.isFormField()) {
-	    				file = f;
-	    			}
-	    		}		    		
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-	    		String fileName = file.getName();
-	    		if (fileName.contains("/"))	fileName = fileName.substring(fileName.lastIndexOf("/")+1);
-	    		else if (fileName.contains("\\")) fileName = fileName.substring(fileName.lastIndexOf("\\")+1);
-    		
-	    	} catch (FileUploadException e) {  
-	    		System.out.println("FileUploadException" + e);            
-	    	}		               
-		    }		    
-	
-		res.setHeader("cache-control", "no-cache");
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		
-		PrintWriter out = res.getWriter();
-		out.append("<html>");
-		out.append("<head>");
-		out.append("</head>");
-		out.append("<body>");
-		out.append("</body>");
-		out.append("</html>");			
-	        
-    }
-}
+		HttpSession session = request.getSession();
+	
+		PersistenceManager pm = PMF.get().getPersistenceManager();
 
+		try {
+		 ServletFileUpload upload = new ServletFileUpload();
+		    FileItemIterator iter = upload.getItemIterator(request);
+		    FileItemStream imageItem = iter.next();
+		    InputStream imgStream = imageItem.openStream();
+
+		    // construct our entity objects
+		    Blob imageBlob = new Blob(IOUtils.toByteArray(imgStream));
+		    if (imageBlob.getBytes().length < 999999) {
+		    
+		    	String cikkszam = request.getParameter("cikkszam");		
+		    	
+				Query query = pm.newQuery(Kep.class);
+				query.setFilter("cikkszam == pcikkszam && torolt == false");
+				query.declareParameters("String pcikkszam");
+				@SuppressWarnings("unchecked")
+				List<Kep> list = (List<Kep>) pm.newQuery(query)
+						.execute(cikkszam);
+								
+			    Kep kep = new Kep(cikkszam, new Integer(list.size()+1).toString() ,imageBlob, Boolean.FALSE,Boolean.FALSE);
+			    pm.makePersistent(kep);
+			    			    
+				session.removeAttribute(ServerConstants.FILE);
+				session.removeAttribute(ServerConstants.FILE_ERROR);		
+		    }
+		    else  {
+				session.removeAttribute(ServerConstants.FILE);
+				session.setAttribute(ServerConstants.FILE_ERROR,Constants.FILE_SIZE_ERROR);
+		    }
+		    response.setContentType("text/plain");
+		    response.getOutputStream().write("OK!".getBytes());
+
+		} catch (Exception e) {
+			session.removeAttribute(ServerConstants.FILE);
+			session.setAttribute(ServerConstants.FILE_ERROR,Constants.FILE_SAVE_ERROR);
+			throw new ServletException();			
+		} finally {
+		    pm.close();
+		}
+		
+	}
+}

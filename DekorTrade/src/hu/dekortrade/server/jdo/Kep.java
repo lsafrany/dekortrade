@@ -3,49 +3,74 @@ package hu.dekortrade.server.jdo;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.google.appengine.api.datastore.Blob;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
 public class Kep implements IsSerializable {
 
 	@Persistent
-	private String rovidnev;
+	private String cikkszam;
 
 	@Persistent
-	private String nev;
+	private String sorszam;
+	
+	@Persistent
+	private Blob blob;
 
 	@Persistent
-	private String blobkey;
-	
-	public Kep(String rovidnev, String nev,String blobkey) {
-		this.rovidnev = rovidnev;
-		this.nev = nev;
-		this.blobkey = blobkey;
+	private Boolean szinkron;
+
+	@Persistent
+	private Boolean torolt;
+
+	public Kep(String cikkszam, String sorszam, Blob blob, Boolean szinkron, Boolean torolt) {
+		this.cikkszam = cikkszam;
+		this.sorszam = sorszam;
+		this.blob = blob;
+		this.szinkron = szinkron;
+		this.torolt = torolt;
 	}
 
-	public String getRovidnev() {
-		return rovidnev;
+	public String getCikkszam() {
+		return cikkszam;
 	}
 
-	public void setRovidnev(String rovidnev) {
-		this.rovidnev = rovidnev;
+	public void setCikkszam(String cikkszam) {
+		this.cikkszam = cikkszam;
 	}
 
-	public String getNev() {
-		return nev;
+	public String getSorszam() {
+		return sorszam;
 	}
 
-	public void setNev(String nev) {
-		this.nev = nev;
+	public void setSorszam(String sorszam) {
+		this.sorszam = sorszam;
 	}
 
-	public String getBlobkey() {
-		return blobkey;
+	public Blob getBlob() {
+		return blob;
 	}
 
-	public void setBlobkey(String blobkey) {
-		this.blobkey = blobkey;
+	public void setBlob(Blob blob) {
+		this.blob = blob;
 	}
-	
+
+	public Boolean getSzinkron() {
+		return szinkron;
+	}
+
+	public void setSzinkron(Boolean szinkron) {
+		this.szinkron = szinkron;
+	}
+
+	public Boolean getTorolt() {
+		return torolt;
+	}
+
+	public void setTorolt(Boolean torolt) {
+		this.torolt = torolt;
+	}
+
 }
 
