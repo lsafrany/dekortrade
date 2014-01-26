@@ -285,7 +285,7 @@ public class Felhasznalo {
 														String result) {
 													DisplayRequest
 															.serverResponse();
-													SC.say(result);
+													SC.say(result + " : " + commonLabels.alapjeszo());
 													jelszoButton
 															.setDisabled(false);
 												}

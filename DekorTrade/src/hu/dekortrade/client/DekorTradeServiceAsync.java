@@ -6,6 +6,7 @@ import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SzallitoSer;
+import hu.dekortrade.shared.serialized.SzinkronSer;
 import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoSer;
@@ -80,12 +81,12 @@ public interface DekorTradeServiceAsync {
 	void getRendeltcikk(String rovidnev, String rendeles,
 			AsyncCallback<ArrayList<RendeltcikkSer>> asyncCallback);
 
-	void szinkron(AsyncCallback<String> callback);
+	void szinkron(AsyncCallback<SzinkronSer> callback);
 
 	void initUploadFileStatus(AsyncCallback<String> callback) throws IllegalArgumentException;
 
 	void getUploadFileStatus(AsyncCallback<UploadSer> callback) throws IllegalArgumentException;
 
-	void getKepsorszam(String cikkszam,AsyncCallback<ArrayList<String>> asyncCallback);
+	void getKep(String cikkszam,AsyncCallback<ArrayList<String>> asyncCallback);
 
 }

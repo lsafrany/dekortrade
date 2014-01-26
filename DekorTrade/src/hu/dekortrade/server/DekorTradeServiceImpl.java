@@ -19,6 +19,7 @@ import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.SzallitoSer;
+import hu.dekortrade.shared.serialized.SzinkronSer;
 import hu.dekortrade.shared.serialized.TabPageSer;
 import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
@@ -34,8 +35,12 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 /**
  * The server side implementation of the RPC service.
@@ -266,7 +271,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return rovidnev + " - alapjelszó beállítva !";
+		return rovidnev;
 	}
 
 	public FelhasznaloSer removeFelhasznalo(FelhasznaloSer felhasznaloSer)
@@ -467,8 +472,21 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 	public String setVevoJelszo(String rovidnev)
 			throws IllegalArgumentException, SQLExceptionSer {
+	
+		Client vevoclient = Client.create();
 
-		return rovidnev + " - alapjelszó beállítva !";
+		WebResource vevowebResource = vevoclient.resource(ServerConstants.URI);
+
+		ClientResponse vevoresponse = vevowebResource.path("syncron")
+				.queryParam("akcio", "vevojelszo").queryParam("rovidnev", rovidnev).accept(MediaType.TEXT_PLAIN)
+				.get(ClientResponse.class);
+
+		// display response
+		String output = vevoresponse.getEntity(String.class);
+		System.out.println("Output from Server .... ");
+		System.out.println(output + "\n");
+
+		return rovidnev;
 	}
 
 	public VevoSer removeVevo(VevoSer vevoSer) throws IllegalArgumentException,
@@ -827,22 +845,17 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return rendeltcikk;
 	}
 
-	public String szinkron() throws IllegalArgumentException, SQLExceptionSer {
+	public SzinkronSer szinkron() throws IllegalArgumentException, SQLExceptionSer {
 
-		String ret = "";
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-
+		SzinkronObject szinkronObject = new SzinkronObject();
+		SzinkronSer szinkronSer = new SzinkronSer();
 		try {
-
-			ret = "Szinkron";
-
+			szinkronSer = szinkronObject.feldolgozas();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
-		} finally {
-			pm.close();
 		}
 
-		return ret;
+		return szinkronSer;
 	}
 
 	public String initUploadFileStatus() throws IllegalArgumentException {
@@ -877,7 +890,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return uploadSer;
 	}
 
-	public ArrayList<String> getKepsorszam(String cikkszam) throws IllegalArgumentException, SQLExceptionSer {
+	public ArrayList<String> getKep(String cikkszam) throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 

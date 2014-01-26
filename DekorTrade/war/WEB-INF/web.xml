@@ -40,7 +40,7 @@
     <servlet-name>downloadServlet</servlet-name>
     <url-pattern>/dekortrade/download</url-pattern>
   </servlet-mapping>
-  
+
   <servlet-mapping>
     <servlet-name>serviceServlet</servlet-name>
     <url-pattern>/dekortrade/service</url-pattern>

@@ -49,4 +49,6 @@ public interface DekorTrade99Service extends RemoteService {
 	String commitKosar(String rovidnev) throws IllegalArgumentException,
 			SQLExceptionSer;
 
+	ArrayList<String> getKep(String cikkszam) throws IllegalArgumentException,SQLExceptionSer;
+
 }

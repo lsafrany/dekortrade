@@ -70,7 +70,6 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_KEPEK,
 				ctorzsLabels.cikk_kepek());
-		field.setHidden(true);
 		addField(field);
 
 	}

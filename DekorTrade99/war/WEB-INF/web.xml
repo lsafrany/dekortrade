@@ -10,7 +10,17 @@
     <servlet-name>initServlet</servlet-name>
     <servlet-class>hu.dekortrade99.server.Init</servlet-class>
   </servlet>
-  
+   
+  <servlet>
+    <servlet-name>syncronServlet</servlet-name>
+    <servlet-class>hu.dekortrade99.server.Syncron</servlet-class>
+  </servlet>
+ 
+  <servlet>
+    <servlet-name>downloadServlet</servlet-name>
+    <servlet-class>hu.dekortrade99.server.Download</servlet-class>
+  </servlet>
+   
   <servlet>
     <servlet-name>serviceServlet</servlet-name>
     <servlet-class>hu.dekortrade99.server.DekorTrade99ServiceImpl</servlet-class>
@@ -19,6 +29,16 @@
   <servlet-mapping>
     <servlet-name>initServlet</servlet-name>
     <url-pattern>/dekortrade99/init</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+    <servlet-name>syncronServlet</servlet-name>
+    <url-pattern>/dekortrade99/syncron</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+    <servlet-name>syncronServlet</servlet-name>
+    <url-pattern>/dekortrade99/download</url-pattern>
   </servlet-mapping>
     
   <servlet-mapping>

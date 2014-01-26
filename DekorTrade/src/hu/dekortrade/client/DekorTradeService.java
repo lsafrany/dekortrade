@@ -8,6 +8,7 @@ import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.SzallitoSer;
+import hu.dekortrade.shared.serialized.SzinkronSer;
 import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoSer;
@@ -95,12 +96,12 @@ public interface DekorTradeService extends RemoteService {
 	ArrayList<RendeltcikkSer> getRendeltcikk(String rovidnev, String rendeles)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String szinkron() throws IllegalArgumentException, SQLExceptionSer;
+	SzinkronSer szinkron() throws IllegalArgumentException, SQLExceptionSer;
 
 	String initUploadFileStatus() throws IllegalArgumentException;
 	
 	UploadSer getUploadFileStatus() throws IllegalArgumentException;
 
-	ArrayList<String> getKepsorszam(String cikkszam) throws IllegalArgumentException,SQLExceptionSer;
+	ArrayList<String> getKep(String cikkszam) throws IllegalArgumentException,SQLExceptionSer;
 
 }

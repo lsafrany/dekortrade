@@ -1,5 +1,7 @@
 package hu.dekortrade99.client.cikktorzs;
 
+import hu.dekortrade99.client.cikktorzs.CtorzsConstants;
+import hu.dekortrade99.client.cikktorzs.KepDataSource;
 import hu.dekortrade99.client.ClientConstants;
 import hu.dekortrade99.client.CommonLabels;
 import hu.dekortrade99.client.DisplayRequest;
@@ -31,6 +33,8 @@ import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tile.TileGrid;
+import com.smartgwt.client.widgets.viewer.DetailViewerField;
 
 public class Ctorzs {
 
@@ -138,7 +142,7 @@ public class Ctorzs {
 				CtorzsConstants.CIKK_MEGNEVEZES);
 
 		ListGridField arGridField = new ListGridField(CtorzsConstants.CIKK_AR);
-		arGridField.setWidth("8%");
+		arGridField.setWidth("5%");
 
 		ListGridField kiskartonGridField = new ListGridField(
 				CtorzsConstants.CIKK_KISKARTON);
@@ -146,11 +150,11 @@ public class Ctorzs {
 
 		ListGridField darabGridField = new ListGridField(
 				CtorzsConstants.CIKK_DARAB);
-		darabGridField.setWidth("8%");
+		darabGridField.setWidth("5%");
 
 		ListGridField terfogatGridField = new ListGridField(
 				CtorzsConstants.CIKK_TERFOGAT);
-		terfogatGridField.setWidth("8%");
+		terfogatGridField.setWidth("5%");
 
 		ListGridField jelGridField = new ListGridField(
 				CtorzsConstants.CIKK_JEL);
@@ -158,16 +162,20 @@ public class Ctorzs {
 
 		ListGridField bsulyGridField = new ListGridField(
 				CtorzsConstants.CIKK_BSULY);
-		bsulyGridField.setWidth("8%");
+		bsulyGridField.setWidth("5%");
 
 		ListGridField nsulyGridField = new ListGridField(
 				CtorzsConstants.CIKK_NSULY);
-		nsulyGridField.setWidth("8%");
+		nsulyGridField.setWidth("5%");
+
+		ListGridField kepekGridField = new ListGridField(
+				CtorzsConstants.CIKK_KEPEK);
+		kepekGridField.setWidth("5%");
 
 		ctorzsGrid
 				.setFields(cikkszamGridField, megnevezesGridField, arGridField,
 						kiskartonGridField, darabGridField, terfogatGridField,
-						jelGridField, bsulyGridField, nsulyGridField);
+						jelGridField, bsulyGridField, nsulyGridField, kepekGridField);
 
 		ctorzsGridLayout.addMember(ctorzsGrid);
 
@@ -293,17 +301,22 @@ public class Ctorzs {
 							CtorzsConstants.CIKK_CIKKSZAM);
 					addIButton.setDisabled(false);
 				}
+
+				if (ctorzsGrid.getSelectedRecord().getAttributeAsInt(CtorzsConstants.CIKK_KEPEK) > 0)
+					kepekIButton.setDisabled(false);
+				else 
+					kepekIButton.setDisabled(true);
+
 			}
 		});
 
 		kepekIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-
-				final Window winModal = new Window();
+								
+				Window winModal = new Window();
 				winModal.setWidth(800);
 				winModal.setHeight(800);
-				winModal.setTitle(ctorzsGrid.getSelectedRecord().getAttribute(
-						CtorzsConstants.CIKK_CIKKSZAM)
+				winModal.setTitle(cikkszam
 						+ " - "
 						+ ctorzsGrid.getSelectedRecord().getAttribute(
 								CtorzsConstants.CIKK_MEGNEVEZES));
@@ -311,9 +324,60 @@ public class Ctorzs {
 				winModal.setIsModal(true);
 				winModal.setShowModalMask(true);
 				winModal.centerInPage();
+				
+				final KepDataSource kepDataSource = new KepDataSource() {
 
-				winModal.show();
+					protected Object transformRequest(DSRequest dsRequest) {
+						DisplayRequest.startRequest();
+						dsRequest.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
+								cikkszam);
+						return super.transformRequest(dsRequest);
+					}
 
+					protected void transformResponse(DSResponse response,
+							DSRequest request, Object data) {
+						DisplayRequest.serverResponse();
+						super.transformResponse(response, request, data);
+					}
+				};
+
+				kepDataSource.addHandleErrorHandler(new HandleErrorHandler() {
+					public void onHandleError(ErrorEvent event) {
+
+						if (event.getResponse().getStatus() == DSResponse.STATUS_FAILURE) {
+							if (event.getResponse().getAttribute(
+									ClientConstants.SERVER_ERROR) != null)
+								SC.warn(commonLabels.server_error());
+							else if (event.getResponse().getAttribute(
+									ClientConstants.SERVER_SQLERROR) != null)
+								SC.warn(commonLabels.server_sqlerror()
+										+ " : "
+										+ event.getResponse().getAttribute(
+												ClientConstants.SERVER_SQLERROR));
+							event.cancel();
+						}
+					}
+				});
+
+				final TileGrid tileGrid = new TileGrid();  
+				tileGrid.setHeight(750);
+			    tileGrid.setWidth(750);
+			    tileGrid.setTileWidth(700);
+		        tileGrid.setTileHeight(500);  
+		        tileGrid.setID("boundList");  
+		        tileGrid.setShowAllRecords(true);  
+		        tileGrid.setDataSource(kepDataSource);  
+		        tileGrid.setAutoFetchData(true);  
+			  				
+				DetailViewerField pictureField = new DetailViewerField(CtorzsConstants.KEP_KEP);  			
+			    pictureField.setImageWidth(650);
+			    pictureField.setImageHeight(450);
+
+				tileGrid.setFields(pictureField);
+				
+				winModal.addItem(tileGrid);
+				
+				winModal.show();							
 			}
 		});
 

@@ -1,5 +1,6 @@
 package hu.dekortrade99.server;
 
+import hu.dekortrade99.server.jdo.Kep;
 import hu.dekortrade99.client.DekorTrade99Service;
 import hu.dekortrade99.server.jdo.Cikk;
 import hu.dekortrade99.server.jdo.Kosar;
@@ -168,6 +169,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					cikkSer.setJel(l.getJel());
 					cikkSer.setBsuly(l.getBsuly());
 					cikkSer.setNsuly(l.getNsuly());
+					cikkSer.setKepek(l.getKepek());
 					cikk.add(cikkSer);
 				}
 			}
@@ -399,4 +401,32 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		return ret;
 	}
 
+	public ArrayList<String> getKep(String cikkszam) throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<String> kepsorszam = new ArrayList<String>();
+
+		try {
+			Query query = pm.newQuery(Kep.class);
+			query.setFilter("cikkszam == pcikkszam && torolt == false");
+			query.declareParameters("String pcikkszam");
+			@SuppressWarnings("unchecked")
+			List<Kep> list = (List<Kep>) pm.newQuery(query)
+					.execute(cikkszam);
+			if (!list.isEmpty()) {
+				for (Kep l : list) {
+					kepsorszam.add(new Integer(l.getSorszam()).toString());
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return kepsorszam;
+	}
+
+	
 }

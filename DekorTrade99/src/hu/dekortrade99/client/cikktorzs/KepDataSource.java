@@ -1,10 +1,10 @@
-package hu.dekortrade.client.basedata.cikktorzs;
+package hu.dekortrade99.client.cikktorzs;
 
-import hu.dekortrade.client.ClientConstants;
-import hu.dekortrade.client.DekorTradeService;
-import hu.dekortrade.client.DekorTradeServiceAsync;
-import hu.dekortrade.client.GwtRpcDataSource;
-import hu.dekortrade.shared.serialized.SQLExceptionSer;
+import hu.dekortrade99.client.ClientConstants;
+import hu.dekortrade99.client.DekorTrade99Service;
+import hu.dekortrade99.client.DekorTrade99ServiceAsync;
+import hu.dekortrade99.client.GwtRpcDataSource;
+import hu.dekortrade99.shared.serialized.SQLExceptionSer;
 
 import java.util.ArrayList;
 
@@ -19,8 +19,8 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class KepDataSource extends GwtRpcDataSource {
 
-	private final DekorTradeServiceAsync dekorTradeService = GWT
-			.create(DekorTradeService.class);
+	private final DekorTrade99ServiceAsync dekorTrade99Service = GWT
+			.create(DekorTrade99Service.class);
 
 	private CtorzsLabels ctozsLabels = GWT.create(CtorzsLabels.class);
 
@@ -43,10 +43,10 @@ public class KepDataSource extends GwtRpcDataSource {
 
 	@Override
 	protected void executeFetch(final String requestId,
-		final DSRequest request, final DSResponse response) {
-		cikkszam =  request.getAttributeAsString(
+			final DSRequest request, final DSResponse response) {
+			cikkszam =  request.getAttributeAsString(
 					CtorzsConstants.CIKK_CIKKSZAM);
-		dekorTradeService.getKep(cikkszam
+			dekorTrade99Service.getKep(cikkszam
 					,new AsyncCallback<ArrayList<String>>() {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof SQLExceptionSer)

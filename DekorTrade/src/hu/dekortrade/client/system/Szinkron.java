@@ -5,6 +5,7 @@ import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
+import hu.dekortrade.shared.serialized.SzinkronSer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -47,7 +48,7 @@ public class Szinkron {
 							szinkronIButton.setDisabled(true);
 							DisplayRequest.startRequest();
 							dekorTradeService
-									.szinkron(new AsyncCallback<String>() {
+									.szinkron(new AsyncCallback<SzinkronSer>() {
 										public void onFailure(Throwable caught) {
 											DisplayRequest.serverResponse();
 											if (caught instanceof SQLExceptionSer)
@@ -61,9 +62,13 @@ public class Szinkron {
 											szinkronIButton.setDisabled(false);
 										}
 
-										public void onSuccess(String result) {
+										public void onSuccess(SzinkronSer result) {
 											DisplayRequest.serverResponse();
-											SC.say(result);
+											SC.say(
+												systemLabels.feltoltottvevo() + " " + result.getUploadvevo() + "\n" +
+												systemLabels.feltoltottcikk() + " " + result.getUploadcikk() + "\n" +
+												systemLabels.feltoltottkep() + " " + result.getUploadkep() + "\n" +
+												systemLabels.letoltottrendeles() + " " + result.getDownloadrendelt());
 											szinkronIButton.setDisabled(false);
 										}
 									});

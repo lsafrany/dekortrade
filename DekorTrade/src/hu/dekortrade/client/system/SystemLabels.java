@@ -28,4 +28,11 @@ public interface SystemLabels extends Constants {
 
 	String jog();
 
+	String feltoltottvevo();	
+	
+	String feltoltottcikk();
+	
+	String feltoltottkep();	
+	
+	String letoltottrendeles();	
 }
