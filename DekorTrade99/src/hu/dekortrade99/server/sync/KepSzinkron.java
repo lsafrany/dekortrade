@@ -13,6 +13,10 @@ public class KepSzinkron implements IsSerializable {
 
 	private Boolean torolt;
 
+	public KepSzinkron() {
+			
+	}
+
 	public KepSzinkron(String cikkszam, String sorszam, Blob blob, Boolean torolt) {
 		this.cikkszam = cikkszam;
 		this.sorszam = sorszam;

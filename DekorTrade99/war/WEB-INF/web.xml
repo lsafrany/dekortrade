@@ -37,7 +37,7 @@
   </servlet-mapping>
  
   <servlet-mapping>
-    <servlet-name>syncronServlet</servlet-name>
+    <servlet-name>downloadServlet</servlet-name>
     <url-pattern>/dekortrade99/download</url-pattern>
   </servlet-mapping>
     

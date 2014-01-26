@@ -118,6 +118,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					l.setJelszo(password);
 				}
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -291,6 +292,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			Kosar kosar = new Kosar(kosarSer.getRovidnev(),
 					kosarSer.getCikkszam(), kosarSer.getExportkarton());
 			pm.makePersistent(kosar);
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -316,6 +318,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					l.setExportkarton(kosarSer.getExportkarton());
 				}
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -342,6 +345,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					pm.deletePersistent(l);
 				}
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -358,6 +362,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		try {
+			pm.currentTransaction().begin();
 			int count = 0;
 			Query rendeltquery = pm.newQuery(Rendelt.class);
 			rendeltquery.setFilter("rovidnev == providnev");
@@ -390,9 +395,11 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 
+			pm.currentTransaction().commit();
 			ret = rovidnev + "/" + rendeles;
 
 		} catch (Exception e) {
+			pm.currentTransaction().rollback();
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
