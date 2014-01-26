@@ -10,6 +10,10 @@ public class VevoSzinkron implements IsSerializable {
 
 	private Boolean torolt;
 
+	public VevoSzinkron() {
+		
+	}
+
 	public VevoSzinkron(String rovidnev, String nev, Boolean torolt) {
 		this.rovidnev = rovidnev;
 		this.nev = nev;

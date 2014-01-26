@@ -111,7 +111,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			userSer.getTabList().add(tabPageSer3);
 
 			userSer.setDefultTab(1);
-
+			pm.flush();
 		} finally {
 			pm.close();
 		}
@@ -136,6 +136,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setJelszo(password);
 				}
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -153,6 +154,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			Query query = pm.newQuery(Felhasznalo.class);
 			query.setFilter("this.torolt == false");
+			query.setOrdering("rovidnev");
 			@SuppressWarnings("unchecked")
 			List<Felhasznalo> list = (List<Felhasznalo>) pm.newQuery(query)
 					.execute();
@@ -198,6 +200,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						felhasznaloSer.getMenu());
 				pm.makePersistent(jog);
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -237,7 +240,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setMenu(felhasznaloSer.getMenu());
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -264,7 +267,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setJelszo(Constants.INIT_PASSWORD);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -291,7 +294,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -323,7 +326,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				Jog jog = new Jog(rovidnev, jogSer.getNev());
 				pm.makePersistent(jog);
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -369,6 +372,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					}
 				}
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -388,6 +392,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			Query query = pm.newQuery(Vevo.class);
 			query.setFilter("this.torolt == false");
+			query.setOrdering("rovidnev");
 			@SuppressWarnings("unchecked")
 			List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute();
 			if ((list != null) && (!list.isEmpty())) {
@@ -401,6 +406,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					Vevok.add(VevoSer);
 				}
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -430,6 +436,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						Boolean.FALSE, Boolean.FALSE, Boolean.FALSE);
 				pm.makePersistent(vevo);
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -460,7 +467,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setSzinkron(Boolean.FALSE);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -507,7 +514,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -540,6 +547,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					szallitok.add(szallitoSer);
 				}
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -563,7 +571,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					.toString(), szallitoSer.getNev(), szallitoSer.getCim(),
 					szallitoSer.getElerhetoseg(), Boolean.FALSE);
 			pm.makePersistent(szallito);
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -592,7 +600,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setElerhetoseg(szallitoSer.getElerhetoseg());
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -619,7 +627,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -709,6 +717,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						new Integer(0), Boolean.FALSE, Boolean.FALSE);
 				pm.makePersistent(cikk);
 			}
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -744,7 +753,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setSzinkron(Boolean.FALSE);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -772,7 +781,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {

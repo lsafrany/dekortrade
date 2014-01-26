@@ -24,6 +24,10 @@ public class CikkSzinkron {
 
 	private Boolean torolt;
 	
+	public CikkSzinkron() {
+		
+	}
+	
 	public CikkSzinkron(String cikkszam, String megnevezes, Float ar,
 			Integer kiskarton, Integer darab, Float terfogat, String jel,
 			Float bsuly, Float nsuly, Integer kepek, Boolean torolt) {

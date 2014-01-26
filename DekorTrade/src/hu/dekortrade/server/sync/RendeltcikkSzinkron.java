@@ -10,6 +10,10 @@ public class RendeltcikkSzinkron {
 
 	private Integer exportkarton;
 
+	public RendeltcikkSzinkron() {
+		
+	}
+
 	public RendeltcikkSzinkron(String rovidnev, String rendeles, String cikkszam,
 			Integer exportkarton) {
 		this.rovidnev = rovidnev;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+	<cron>
+		<url>/dekortrade/syncron</url>
+		<description>Syncron data to dekortrade99</description>
+		<schedule>every day 23:30</schedule>
+		<timezone>Europe/Budapest</timezone>
+	</cron>
+</cronentries>

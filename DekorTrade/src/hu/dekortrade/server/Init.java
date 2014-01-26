@@ -6,6 +6,8 @@ import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Felhasznalo;
 import hu.dekortrade.server.jdo.Jog;
 import hu.dekortrade.server.jdo.PMF;
+import hu.dekortrade.server.jdo.Rendelt;
+import hu.dekortrade.server.jdo.Rendeltcikk;
 import hu.dekortrade.server.jdo.Szallito;
 import hu.dekortrade.server.jdo.Vevo;
 import hu.dekortrade.shared.Constants;
@@ -73,6 +75,9 @@ public class Init extends HttpServlet {
 
 			out.append("<h1>" + counter + "</h1>");
 
+			Query kepQuery = pm.newQuery(Kep.class);
+			kepQuery.deletePersistentAll();
+
 			Query felhasznaloQuery = pm.newQuery(Felhasznalo.class);
 			felhasznaloQuery.deletePersistentAll();
 
@@ -136,6 +141,13 @@ public class Init extends HttpServlet {
 			pm.makePersistent(vevo2);
 			pm.makePersistent(vevo3);
 
+			Query rendeltQuery = pm.newQuery(Rendelt.class);
+			rendeltQuery.deletePersistentAll();
+
+			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
+			rendeltcikkQuery.deletePersistentAll();
+			
+			pm.flush();
 		} finally {
 			pm.close();
 		}

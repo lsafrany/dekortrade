@@ -65,9 +65,9 @@ public class Szinkron {
 										public void onSuccess(SzinkronSer result) {
 											DisplayRequest.serverResponse();
 											SC.say(
-												systemLabels.feltoltottvevo() + " " + result.getUploadvevo() + "\n" +
-												systemLabels.feltoltottcikk() + " " + result.getUploadcikk() + "\n" +
-												systemLabels.feltoltottkep() + " " + result.getUploadkep() + "\n" +
+												systemLabels.feltoltottvevo() + " " + result.getUploadvevo() + " " +
+												systemLabels.feltoltottcikk() + " " + result.getUploadcikk() + " " +
+												systemLabels.feltoltottkep() + " " + result.getUploadkep() + " " +
 												systemLabels.letoltottrendeles() + " " + result.getDownloadrendelt());
 											szinkronIButton.setDisabled(false);
 										}

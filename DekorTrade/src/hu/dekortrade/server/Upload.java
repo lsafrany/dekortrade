@@ -40,7 +40,7 @@ public class Upload extends HttpServlet {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		try {
-		 ServletFileUpload upload = new ServletFileUpload();
+			ServletFileUpload upload = new ServletFileUpload();
 		    FileItemIterator iter = upload.getItemIterator(request);
 		    FileItemStream imageItem = iter.next();
 		    InputStream imgStream = imageItem.openStream();
@@ -60,7 +60,7 @@ public class Upload extends HttpServlet {
 								
 			    Kep kep = new Kep(cikkszam, new Integer(list.size()+1).toString() ,imageBlob, Boolean.FALSE,Boolean.FALSE);
 			    pm.makePersistent(kep);
-			    			    
+			    pm.flush();			    
 				session.removeAttribute(ServerConstants.FILE);
 				session.removeAttribute(ServerConstants.FILE_ERROR);		
 		    }

@@ -20,6 +20,11 @@
     <servlet-name>downloadServlet</servlet-name>
     <servlet-class>hu.dekortrade.server.Download</servlet-class>
   </servlet>
+ 
+  <servlet>
+    <servlet-name>syncronServlet</servlet-name>
+    <servlet-class>hu.dekortrade.server.Syncron</servlet-class>
+  </servlet>
   
   <servlet>
     <servlet-name>serviceServlet</servlet-name>
@@ -39,6 +44,11 @@
   <servlet-mapping>
     <servlet-name>downloadServlet</servlet-name>
     <url-pattern>/dekortrade/download</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>syncronServlet</servlet-name>
+    <url-pattern>/dekortrade/syncron</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

@@ -15,9 +15,11 @@ import hu.dekortrade.shared.serialized.SzinkronSer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -28,18 +30,27 @@ import com.sun.jersey.api.client.WebResource;
 
 public class SzinkronObject {
 
-	private String uri = "http://127.0.0.1:8888/dekortrade99";
+//	private String uri = "http://192.168.0.17:8888/dekortrade99";
+	
+	private String uri = "http://dekortrade99kft.appspot.com/dekortrade99";
+		
+	private static final Logger log = Logger.getLogger(SzinkronObject.class.getName());
 
+	private int timeOut = 25000;
+	
 	SzinkronSer feldolgozas() throws Exception {
 
 		SzinkronSer szinkronSer = new SzinkronSer();
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
+//		Transaction tx = pm.currentTransaction();
 		try {
 
+			log.info("vevo");
+//			tx.begin();
 			Query vevoquery = pm.newQuery(Vevo.class);
 			vevoquery.setFilter("this.szinkron == false");
-			vevoquery.setRange(1, 50);
+			vevoquery.setRange(0, 50);
 			@SuppressWarnings("unchecked")
 			List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery).execute();
 			List<VevoSzinkron> vevolistszinkron = new ArrayList<VevoSzinkron>();
@@ -59,12 +70,13 @@ public class SzinkronObject {
 						.writeValueAsString(vevolistszinkron);
 
 				Client vevoclient = Client.create();
+				vevoclient.setConnectTimeout(timeOut);
 
 				WebResource vevowebResource = vevoclient.resource(uri);
 
 				ClientResponse vevoresponse = vevowebResource.path("syncron")
-						.queryParam("table", "vevo").accept("application/json")
-						.type("application/json")
+						.queryParam("tabla", "vevo").accept("application/json")
+						.type("application/json; charset=utf-8")
 						.post(ClientResponse.class, vevoJSON);
 
 				// check response status code
@@ -75,14 +87,16 @@ public class SzinkronObject {
 
 				// display response
 				String output = vevoresponse.getEntity(String.class);
-				System.out.println("Output from Server .... ");
-				System.out.println(output + "\n");
+				System.out.println(output);
 
 			}
-
+//			tx.commit();
+			
+			log.info("cikk");
+//			tx.begin();
 			Query cikkquery = pm.newQuery(Cikk.class);
 			cikkquery.setFilter("this.szinkron == false");
-			cikkquery.setRange(1, 50);
+			cikkquery.setRange(0, 100);
 			@SuppressWarnings("unchecked")
 			List<Cikk> cikklist = (List<Cikk>) pm.newQuery(cikkquery).execute();
 			List<CikkSzinkron> cikklistszinkron = new ArrayList<CikkSzinkron>();
@@ -105,12 +119,13 @@ public class SzinkronObject {
 						.writeValueAsString(cikklistszinkron);
 
 				Client cikkclient = Client.create();
+				cikkclient.setConnectTimeout(timeOut);
 
 				WebResource cikkwebResource = cikkclient.resource(uri);
 
 				ClientResponse cikkresponse = cikkwebResource.path("syncron")
-						.queryParam("table", "cikk").accept("application/json")
-						.type("application/json")
+						.queryParam("tabla", "cikk").accept("application/json")
+						.type("application/json; charset=utf-8")
 						.post(ClientResponse.class, cikkJSON);
 
 				// check response status code
@@ -121,14 +136,16 @@ public class SzinkronObject {
 
 				// display response
 				String output = cikkresponse.getEntity(String.class);
-				System.out.println("Output from Server .... ");
-				System.out.println(output + "\n");
+				System.out.println(output);
 				
 			}
-
+//			tx.commit();
+			
+			log.info("kep");
+//			tx.begin();
 			Query kepquery = pm.newQuery(Kep.class);
-			vevoquery.setFilter("this.szinkron == false");
-			vevoquery.setRange(1, 50);
+			kepquery.setFilter("this.szinkron == false");
+			kepquery.setRange(0, 10);
 			@SuppressWarnings("unchecked")
 			List<Kep> keplist = (List<Kep>) pm.newQuery(kepquery).execute();
 			List<KepSzinkron> keplistszinkron = new ArrayList<KepSzinkron>();
@@ -144,14 +161,15 @@ public class SzinkronObject {
 
 				ObjectMapper kepmapper = new ObjectMapper();
 
-				String kepJSON = kepmapper.writeValueAsString(vevolistszinkron);
+				String kepJSON = kepmapper.writeValueAsString(keplistszinkron);
 
 				Client kepclient = Client.create();
+				kepclient.setConnectTimeout(timeOut);
 
 				WebResource kepwebResource = kepclient.resource(uri);
 
 				ClientResponse kepresponse = kepwebResource.path("syncron")
-						.queryParam("table", "kep").accept("application/json")
+						.queryParam("tabla", "kep").accept("application/json")
 						.type("application/json")
 						.post(ClientResponse.class, kepJSON);
 
@@ -163,24 +181,27 @@ public class SzinkronObject {
 
 				// display response
 				String output = kepresponse.getEntity(String.class);
-				System.out.println("Output from Server .... ");
-				System.out.println(output + "\n");
+				System.out.println(output);
 
 			}
-					
+//			tx.commit();
+			
+			log.info("rendelt");
+//			tx.begin();
 			Client rendeltclient = Client.create();
+			rendeltclient.setConnectTimeout(timeOut);
 
 			WebResource rendeltwebResource = rendeltclient.resource(uri);
 
 			ClientResponse rendeltresponse = rendeltwebResource.path("syncron")
-					.queryParam("akcio", "rendel").type("application/json")
+					.queryParam("akcio", "rendelt").type(MediaType.TEXT_PLAIN)
 					.get(ClientResponse.class);
 
 			if (rendeltresponse.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ rendeltresponse.getStatus());
 			}
-
+		
 			String rendeltoutput = rendeltresponse.getEntity(String.class);
 
 			ObjectMapper rendeltmapper = new ObjectMapper();
@@ -189,6 +210,7 @@ public class SzinkronObject {
 					new TypeReference<List<RendeltSzinkron>>() {
 					});
 
+			log.info("rendelt - " + rendeltSzinkronList.size());
 			
 			for (int i = 0; i < rendeltSzinkronList.size(); i++) {
 				RendeltSzinkron rendeltSzinkron = rendeltSzinkronList.get(i);
@@ -197,7 +219,7 @@ public class SzinkronObject {
 				
 				List<RendeltcikkSzinkron> rendeltcikkSzinkroList = rendeltSzinkron.getRendeltCikkszam();
 				
-				for (int j = 0; i < rendeltcikkSzinkroList.size(); j++) {
+				for (int j = 0; j < rendeltcikkSzinkroList.size(); j++) {
 					RendeltcikkSzinkron rendeltcikkSzinkron = rendeltcikkSzinkroList.get(j);
 					Rendeltcikk rendeltcikk = new Rendeltcikk(rendeltcikkSzinkron.getRovidnev(),rendeltcikkSzinkron.getRendeles(),rendeltcikkSzinkron.getCikkszam(),rendeltcikkSzinkron.getExportkarton());
 					pm.makePersistent(rendeltcikk);
@@ -205,8 +227,9 @@ public class SzinkronObject {
 			}
 			
 			szinkronSer.setDownloadrendelt(rendeltSzinkronList.size());
-			
+//			tx.commit();
 		} catch (Exception e) {
+//			tx.rollback();
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();

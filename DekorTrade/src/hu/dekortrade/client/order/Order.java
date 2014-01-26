@@ -75,7 +75,7 @@ public class Order {
 
 		final ListGrid rendeltGrid = new ListGrid();
 		rendeltGrid.setTitle(orderLabels.rendeles());
-		rendeltGrid.setWidth("70%");
+		rendeltGrid.setWidth("60%");
 		rendeltGrid.setShowHeaderContextMenu(false);
 		rendeltGrid.setShowHeaderMenuButton(false);
 		rendeltGrid.setCanSort(false);
@@ -92,7 +92,7 @@ public class Order {
 
 		ListGridField datumGridField = new ListGridField(
 				OrderConstants.RENDELT_DATUM);
-		datumGridField.setWidth("20%");
+		datumGridField.setWidth("35%");
 
 		rendeltGrid.setFields(rovidnevGridField, rendelesGridField,
 				datumGridField);
