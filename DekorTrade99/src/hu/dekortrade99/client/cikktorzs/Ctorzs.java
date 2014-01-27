@@ -191,7 +191,7 @@ public class Ctorzs {
 		final Label pageLabel = new Label();
 		pageLabel.setContents("");
 		pageLabel.setAlign(Alignment.CENTER);
-		pageLabel.setWidth("50px");
+		pageLabel.setWidth("100px");
 
 		final IButton nextIButton = new IButton("&gt;&gt;");
 
