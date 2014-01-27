@@ -39,12 +39,14 @@ public class VevoDataSource extends GwtRpcDataSource {
 				vevoLabels.vevo_rovidnev());
 		field.setPrimaryKey(true);
 		field.setLength(20);
+		field.setRequired(true);
 		addField(field);
 
 		field = new DataSourceTextField(VevoConstants.VEVO_NEV,
 				vevoLabels.vevo_nev());
 		field.setLength(60);
 		field.setEditorProperties(textItem);
+		field.setRequired(true);
 		addField(field);
 
 		field = new DataSourceTextField(VevoConstants.VEVO_CIM,

@@ -39,17 +39,20 @@ public class FelhasznaloDataSource extends GwtRpcDataSource {
 				systemLabels.felhasznalo_rovidnev());
 		field.setPrimaryKey(true);
 		field.setLength(20);
+		field.setRequired(true);
 		addField(field);
 
 		field = new DataSourceTextField(SystemConstants.FELHASZNALO_NEV,
 				systemLabels.felhasznalo_nev());
 		field.setLength(40);
 		field.setEditorProperties(textItem);
+		field.setRequired(true);
 		addField(field);
 
 		field = new DataSourceEnumField(SystemConstants.FELHASZNALO_MENU,
 				systemLabels.felhasznalo_menu());
 		field.setValueMap(SystemConstants.getMenuk());
+		field.setRequired(true);
 		addField(field);
 
 	}

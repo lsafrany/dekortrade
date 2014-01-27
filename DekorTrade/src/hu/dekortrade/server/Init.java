@@ -81,6 +81,9 @@ public class Init extends HttpServlet {
 			Query felhasznaloQuery = pm.newQuery(Felhasznalo.class);
 			felhasznaloQuery.deletePersistentAll();
 
+			Query jogQuery = pm.newQuery(Jog.class);
+			jogQuery.deletePersistentAll();
+
 			Query szallitoQuery = pm.newQuery(Szallito.class);
 			szallitoQuery.deletePersistentAll();
 

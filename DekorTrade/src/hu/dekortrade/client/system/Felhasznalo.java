@@ -347,7 +347,7 @@ public class Felhasznalo {
 	}
 
 	void felhasznaloEdit(FelhasznaloDataSource dataSource,
-			final ListGrid listGrid, final ListGrid jogGrid, boolean uj) {
+			final ListGrid listGrid, final ListGrid jogGrid, final boolean uj) {
 
 		final Window winModal = new Window();
 		winModal.setWidth(400);
@@ -387,14 +387,19 @@ public class Felhasznalo {
 					public void execute(DSResponse response, Object rawData,
 							DSRequest request) {
 						if (response.getStatus() == DSResponse.STATUS_SUCCESS) {
+							if (uj) {
+								jogGrid.setData(new ListGridRecord[] {});								
+							}
+							else {
+								Criteria criteria = new Criteria();
+								criteria.setAttribute(
+										SystemConstants.FELHASZNALO_ROVIDNEV,
+										listGrid.getSelectedRecord()
+												.getAttribute(
+														SystemConstants.FELHASZNALO_ROVIDNEV));
+								jogGrid.fetchData(criteria);							
+							}
 							winModal.destroy();
-							Criteria criteria = new Criteria();
-							criteria.setAttribute(
-									SystemConstants.FELHASZNALO_ROVIDNEV,
-									listGrid.getSelectedRecord()
-											.getAttribute(
-													SystemConstants.FELHASZNALO_ROVIDNEV));
-							jogGrid.fetchData(criteria);
 						}
 					}
 				});

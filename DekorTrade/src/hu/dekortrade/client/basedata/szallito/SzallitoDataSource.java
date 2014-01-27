@@ -44,6 +44,7 @@ public class SzallitoDataSource extends GwtRpcDataSource {
 				szallitoLabels.szallito_nev());
 		field.setLength(40);
 		field.setEditorProperties(textItem);
+		field.setRequired(true);
 		addField(field);
 
 		field = new DataSourceTextField(SzallitoConstants.SZALLITO_CIM,

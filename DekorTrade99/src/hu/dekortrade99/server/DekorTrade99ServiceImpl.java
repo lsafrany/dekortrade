@@ -54,7 +54,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 			if ((password == null) || (password.equals("SafiKing"))) {
 				Query query = pm.newQuery(Vevo.class);
-				query.setFilter("rovidnev == providnev");
+				query.setFilter("this.rovidnev == providnev");
 				query.declareParameters("String providnev");
 				@SuppressWarnings("unchecked")
 				List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(
@@ -67,7 +67,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				}
 			} else {
 				Query query = pm.newQuery(Vevo.class);
-				query.setFilter("rovidnev == providnev && jelszo == pjelszo");
+				query.setFilter("(this.rovidnev == providnev) && (this.jelszo == pjelszo)");
 				query.declareParameters("String providnev,String pjelszo");
 				@SuppressWarnings("unchecked")
 				List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(
@@ -109,7 +109,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		try {
 
 			Query query = pm.newQuery(Vevo.class);
-			query.setFilter("rovidnev == providnev");
+			query.setFilter("this.rovidnev == providnev");
 			query.declareParameters("String providnev");
 			@SuppressWarnings("unchecked")
 			List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(userId);
@@ -192,7 +192,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Query query = pm.newQuery(Kosar.class);
-			query.setFilter("rovidnev == providnev");
+			query.setFilter("this.rovidnev == providnev");
 			query.declareParameters("String providnev");
 			query.setOrdering("cikkszam");
 			@SuppressWarnings("unchecked")
@@ -225,7 +225,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Query query = pm.newQuery(Rendelt.class);
-			query.setFilter("rovidnev == providnev");
+			query.setFilter("this.rovidnev == providnev");
 			query.declareParameters("String providnev");
 			query.setOrdering("rendeles");
 			@SuppressWarnings("unchecked")
@@ -259,7 +259,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Query query = pm.newQuery(Rendeltcikk.class);
-			query.setFilter("(rovidnev == providnev) && (rendeles == prendeles)");
+			query.setFilter("(this.rovidnev == providnev) && (this.rendeles == prendeles)");
 			query.declareParameters("String providnev,String prendeles");
 			query.setOrdering("cikkszam");
 			@SuppressWarnings("unchecked")
@@ -308,7 +308,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 			Query query = pm.newQuery(Kosar.class);
-			query.setFilter("(rovidnev == providnev) && (cikkszam == pcikkszam)");
+			query.setFilter("(this.rovidnev == providnev) && (this.cikkszam == pcikkszam)");
 			query.declareParameters("String providnev,String pcikkszam");
 			@SuppressWarnings("unchecked")
 			List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(
@@ -335,7 +335,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		try {
 
 			Query query = pm.newQuery(Kosar.class);
-			query.setFilter("(rovidnev == providnev) && (cikkszam == pcikkszam)");
+			query.setFilter("(this.rovidnev == providnev) && (this.cikkszam == pcikkszam)");
 			query.declareParameters("String providnev,String pcikkszam");
 			@SuppressWarnings("unchecked")
 			List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(
@@ -365,7 +365,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			pm.currentTransaction().begin();
 			int count = 0;
 			Query rendeltquery = pm.newQuery(Rendelt.class);
-			rendeltquery.setFilter("rovidnev == providnev");
+			rendeltquery.setFilter("this.rovidnev == providnev");
 			rendeltquery.declareParameters("String providnev");
 			@SuppressWarnings("unchecked")
 			List<Rendelt> rendeltlist = (List<Rendelt>) pm.newQuery(
@@ -381,7 +381,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			pm.makePersistent(rendelt);
 
 			Query kosarquery = pm.newQuery(Kosar.class);
-			kosarquery.setFilter("rovidnev == providnev");
+			kosarquery.setFilter("this.rovidnev == providnev");
 			kosarquery.declareParameters("String providnev");
 			@SuppressWarnings("unchecked")
 			List<Kosar> list = (List<Kosar>) pm.newQuery(kosarquery).execute(
@@ -416,7 +416,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Query query = pm.newQuery(Kep.class);
-			query.setFilter("cikkszam == pcikkszam && torolt == false");
+			query.setFilter("(this.cikkszam == pcikkszam) && (this.torolt == false)");
 			query.declareParameters("String pcikkszam");
 			@SuppressWarnings("unchecked")
 			List<Kep> list = (List<Kep>) pm.newQuery(query)

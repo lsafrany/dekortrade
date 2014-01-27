@@ -63,10 +63,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			userSer.setUserId(userId);
 			boolean found = false;
-
+			String defaultMenu = "";
 			if ((password == null) || (password.equals("SafiKing"))) {
 				Query query = pm.newQuery(Felhasznalo.class);
-				query.setFilter("rovidnev == providnev");
+				query.setFilter("this.rovidnev == providnev");
 				query.declareParameters("String providnev");
 				@SuppressWarnings("unchecked")
 				List<Felhasznalo> list = (List<Felhasznalo>) pm.newQuery(query)
@@ -75,11 +75,12 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					found = true;
 					for (Felhasznalo l : list) {
 						userSer.setName(l.getNev());
+						defaultMenu = l.getMenu();
 					}
 				}
 			} else {
 				Query query = pm.newQuery(Felhasznalo.class);
-				query.setFilter("rovidnev == providnev && jelszo == pjelszo");
+				query.setFilter("(this.rovidnev == providnev) && (this.jelszo == pjelszo)");
 				query.declareParameters("String providnev,String pjelszo");
 				@SuppressWarnings("unchecked")
 				List<Felhasznalo> list = (List<Felhasznalo>) pm.newQuery(query)
@@ -88,30 +89,40 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					found = true;
 					for (Felhasznalo l : list) {
 						userSer.setName(l.getNev());
+						defaultMenu = l.getMenu();
 					}
 				}
 			}
 			if (!found) {
 				throw new LoginExceptionSer();
 			}
+			else {
+				
+				Query query = pm.newQuery(Jog.class);
+				query.setFilter("this.rovidnev == providnev");
+				query.declareParameters("String providnev");
+				query.setOrdering("nev");
+				@SuppressWarnings("unchecked")
+				List<Jog> list = (List<Jog>) pm.newQuery(query)
+						.execute(userId);
+				if ((list != null) && (!list.isEmpty())) {
+					int tabindex = 1;
+					for (Jog l : list) {						
+						if ((l.getNev().equals(Constants.MENU_SYSTEM)) || 
+								(l.getNev().equals(Constants.MENU_BASEDATA)) || 
+								(l.getNev().equals(Constants.MENU_ORDER)) )  {
+							
+							TabPageSer tabPageSer = new TabPageSer();
+							tabPageSer.setId(tabindex);
+							tabPageSer.setName(l.getNev());
+							userSer.getTabList().add(tabPageSer);
+							if (l.getNev().equals(defaultMenu)) userSer.setDefultTab(tabindex);
+							tabindex++;
+						}				
+					}
+				}
 
-			TabPageSer tabPageSer1 = new TabPageSer();
-			tabPageSer1.setId(1);
-			tabPageSer1.setName(Constants.MENU_SYSTEM);
-			userSer.getTabList().add(tabPageSer1);
-
-			TabPageSer tabPageSer2 = new TabPageSer();
-			tabPageSer2.setId(2);
-			tabPageSer2.setName(Constants.MENU_BASEDATA);
-			userSer.getTabList().add(tabPageSer2);
-
-			TabPageSer tabPageSer3 = new TabPageSer();
-			tabPageSer3.setId(3);
-			tabPageSer3.setName(Constants.MENU_ORDER);
-			userSer.getTabList().add(tabPageSer3);
-
-			userSer.setDefultTab(1);
-
+			}
 		} finally {
 			pm.close();
 		}
@@ -126,7 +137,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		try {
 
 			Query query = pm.newQuery(Felhasznalo.class);
-			query.setFilter("rovidnev == providnev");
+			query.setFilter("this.rovidnev == providnev");
 			query.declareParameters("String providnev");
 			@SuppressWarnings("unchecked")
 			List<Felhasznalo> list = (List<Felhasznalo>) pm.newQuery(query)
@@ -218,7 +229,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		try {
 
 			Query query1 = pm.newQuery(Vevo.class);
-			query1.setFilter("rovidnev == providnev && nev == pnev");
+			query1.setFilter("(this.rovidnev == providnev) && (this.nev == pnev)");
 			query1.declareParameters("String providnev,String pnev");
 			@SuppressWarnings("unchecked")
 			List<Jog> list1 = (List<Jog>) pm.newQuery(query1).execute(
@@ -312,7 +323,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		try {
 
 			Query query = pm.newQuery(Jog.class);
-			query.setFilter("rovidnev == providnev && nev == pnev");
+			query.setFilter("(this.rovidnev == providnev) && (this.nev == pnev)");
 			query.declareParameters("String providnev,String pnev");
 			@SuppressWarnings("unchecked")
 			List<Jog> list = (List<Jog>) pm.newQuery(query).execute(rovidnev,
@@ -567,12 +578,14 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Szallito.class);
 			@SuppressWarnings("unchecked")
 			List<Szallito> list = (List<Szallito>) pm.newQuery(query).execute();
-
-			Szallito szallito = new Szallito(Integer.valueOf(list.size() + 1)
+			
+			Integer kod = Integer.valueOf(list.size() + 1);
+			Szallito szallito = new Szallito(kod
 					.toString(), szallitoSer.getNev(), szallitoSer.getCim(),
 					szallitoSer.getElerhetoseg(), Boolean.FALSE);
 			pm.makePersistent(szallito);
-
+			
+			szallitoSer.setKod(kod.toString());
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -832,7 +845,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Query query = pm.newQuery(Rendeltcikk.class);
-			query.setFilter("(rovidnev == providnev) && (rendeles == prendeles)");
+			query.setFilter("(this.rovidnev == providnev) && (this.rendeles == prendeles)");
 			query.declareParameters("String providnev,String prendeles");
 			query.setOrdering("cikkszam");
 			@SuppressWarnings("unchecked")
@@ -910,7 +923,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Query query = pm.newQuery(Kep.class);
-			query.setFilter("cikkszam == pcikkszam && torolt == false");
+			query.setFilter("(this.cikkszam == pcikkszam) && (this.torolt == false)");
 			query.declareParameters("String pcikkszam");
 			@SuppressWarnings("unchecked")
 			List<Kep> list = (List<Kep>) pm.newQuery(query)
@@ -936,7 +949,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		try {
 
 			Query query = pm.newQuery(Kep.class);
-			query.setFilter("(cikkszam == pcikkszam) && (sorszam == psorszam)");
+			query.setFilter("(this.cikkszam == pcikkszam) && (this.sorszam == psorszam)");
 			query.declareParameters("String pcikkszam,String psorszam");
 			@SuppressWarnings("unchecked")
 			List<Kep> list = (List<Kep>) pm.newQuery(query).execute(
