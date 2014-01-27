@@ -59,6 +59,8 @@ public class Ctorzs {
 
 	private String cikkszam = "";
 
+	private String sorszam = "";
+	
 	public Canvas get(final IButton extIButton) {
 
 		DisplayRequest.counterInit();
@@ -389,9 +391,9 @@ public class Ctorzs {
 
 		kepekIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-								
+					
 				Window winModal = new Window();
-				winModal.setWidth(800);
+				winModal.setWidth(900);
 				winModal.setHeight(800);
 				winModal.setTitle(cikkszam
 						+ " - "
@@ -402,12 +404,18 @@ public class Ctorzs {
 				winModal.setShowModalMask(true);
 				winModal.centerInPage();
 				
+				HLayout layout = new HLayout();
+				layout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+				layout.setAlign(Alignment.CENTER);
+				
 				final KepDataSource kepDataSource = new KepDataSource() {
 
 					protected Object transformRequest(DSRequest dsRequest) {
 						DisplayRequest.startRequest();
 						dsRequest.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 								cikkszam);
+						dsRequest.setAttribute(CtorzsConstants.KEP_SORSZAM,
+								sorszam);
 						return super.transformRequest(dsRequest);
 					}
 
@@ -451,9 +459,45 @@ public class Ctorzs {
 			    pictureField.setImageHeight(450);
 
 				tileGrid.setFields(pictureField);
+								
+				HLayout tiledeleteButtonLayout = new HLayout();
+				tiledeleteButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+				tiledeleteButtonLayout.setAlign(Alignment.CENTER);
+				final IButton tiledeleteButton = new IButton(commonLabels.delete());
+				tiledeleteButton.disable();
+				tiledeleteButtonLayout.addMember(tiledeleteButton);
+
+				layout.addMember(tileGrid);
+				layout.addMember(tiledeleteButtonLayout);
 				
-				winModal.addItem(tileGrid);
+				winModal.addItem(layout);
 				
+				tileGrid.addRecordClickHandler(new com.smartgwt.client.widgets.tile.events.RecordClickHandler() {
+						
+					public void onRecordClick(
+							com.smartgwt.client.widgets.tile.events.RecordClickEvent event) {
+						tiledeleteButton.setDisabled(false);
+					}
+				});
+				
+				tiledeleteButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						SC.ask(commonLabels.sure(), new BooleanCallback() {
+							public void execute(Boolean value) {
+								if (value != null && value) {
+									sorszam = tileGrid.getSelectedRecord().getAttribute(CtorzsConstants.KEP_SORSZAM);
+									tileGrid.removeSelectedData();
+									tiledeleteButton.setDisabled(true);
+									int kepek = ctorzsGrid.getSelectedRecord().getAttributeAsInt(CtorzsConstants.CIKK_KEPEK);
+									if (kepek > 0) kepek--;
+									ctorzsGrid.getSelectedRecord().setAttribute(CtorzsConstants.CIKK_KEPEK, kepek);
+									ctorzsGrid.markForRedraw();
+								}
+							}
+						});
+					}
+				});
+								
 				winModal.show();							
 			}
 		});

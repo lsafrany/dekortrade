@@ -60,7 +60,7 @@ public class Upload extends HttpServlet {
 								
 			    Kep kep = new Kep(cikkszam, new Integer(list.size()+1).toString() ,imageBlob, Boolean.FALSE,Boolean.FALSE);
 			    pm.makePersistent(kep);
-			    pm.flush();			    
+
 				session.removeAttribute(ServerConstants.FILE);
 				session.removeAttribute(ServerConstants.FILE_ERROR);		
 		    }

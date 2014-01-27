@@ -111,7 +111,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			userSer.getTabList().add(tabPageSer3);
 
 			userSer.setDefultTab(1);
-			pm.flush();
+
 		} finally {
 			pm.close();
 		}
@@ -136,7 +136,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setJelszo(password);
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -167,6 +167,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					felhasznalok.add(felhasznaloSer);
 				}
 			}
+			
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -200,7 +201,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						felhasznaloSer.getMenu());
 				pm.makePersistent(jog);
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -240,7 +241,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setMenu(felhasznaloSer.getMenu());
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -267,7 +268,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setJelszo(Constants.INIT_PASSWORD);
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -294,7 +295,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -326,7 +327,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				Jog jog = new Jog(rovidnev, jogSer.getNev());
 				pm.makePersistent(jog);
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -372,7 +373,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					}
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -406,7 +407,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					Vevok.add(VevoSer);
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -436,7 +437,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						Boolean.FALSE, Boolean.FALSE, Boolean.FALSE);
 				pm.makePersistent(vevo);
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -467,7 +468,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setSzinkron(Boolean.FALSE);
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -514,7 +515,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-			pm.flush();
+	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -547,7 +548,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					szallitok.add(szallitoSer);
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -571,7 +572,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					.toString(), szallitoSer.getNev(), szallitoSer.getCim(),
 					szallitoSer.getElerhetoseg(), Boolean.FALSE);
 			pm.makePersistent(szallito);
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -600,7 +601,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setElerhetoseg(szallitoSer.getElerhetoseg());
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -627,7 +628,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-			pm.flush();
+	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -717,7 +718,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						new Integer(0), Boolean.FALSE, Boolean.FALSE);
 				pm.makePersistent(cikk);
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -751,9 +752,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setNsuly(cikkSer.getNsuly());
 					l.setKepek(cikkSer.getKepek());
 					l.setSzinkron(Boolean.FALSE);
+					
 				}
 			}
-			pm.flush();
+			
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -781,7 +783,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-			pm.flush();
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -811,6 +813,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					rendelt.add(rendeltSer);
 				}
 			}
+			
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -925,5 +928,50 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 		return kepsorszam;
 	}
+	
+	public String removeKep(String cikkszam, String sorszam)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+
+			Query query = pm.newQuery(Kep.class);
+			query.setFilter("(cikkszam == pcikkszam) && (sorszam == psorszam)");
+			query.declareParameters("String pcikkszam,String psorszam");
+			@SuppressWarnings("unchecked")
+			List<Kep> list = (List<Kep>) pm.newQuery(query).execute(
+					cikkszam,sorszam);
+			if ((list != null) && (!list.isEmpty())) {
+				for (Kep l : list) {
+					l.setSzinkron(Boolean.FALSE);
+					l.setTorolt(Boolean.TRUE);
+				}
+			}
+		
+			Query query1 = pm.newQuery(Cikk.class);
+			query1.setFilter("cikkszam == pcikkszam");
+			query1.declareParameters("String pcikkszam");
+			@SuppressWarnings("unchecked")
+			List<Cikk> list1 = (List<Cikk>) pm.newQuery(query1).execute(
+					cikkszam);
+			if ((list1 != null) && (!list1.isEmpty())) {
+				for (Cikk l1 : list1) {
+					int kep = l1.getKepek();
+					if (kep > 0) {
+						kep--;
+						l1.setKepek(kep);
+					}
+				}
+			}
+		
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return "OK";
+	}
+
 	
 }

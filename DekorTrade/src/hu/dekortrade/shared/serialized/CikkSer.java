@@ -8,19 +8,19 @@ public class CikkSer implements IsSerializable {
 
 	private String megnevezes;
 
-	private Float ar;
+	private Double ar;
 
 	private Integer kiskarton;
 
 	private Integer darab;
 
-	private Float terfogat;
+	private Double terfogat;
 
 	private String jel;
 
-	private Float bsuly;
+	private Double bsuly;
 
-	private Float nsuly;
+	private Double nsuly;
 
 	private Integer kepek;
 
@@ -40,11 +40,11 @@ public class CikkSer implements IsSerializable {
 		this.megnevezes = megnevezes;
 	}
 
-	public Float getAr() {
+	public Double getAr() {
 		return ar;
 	}
 
-	public void setAr(Float ar) {
+	public void setAr(Double ar) {
 		this.ar = ar;
 	}
 
@@ -64,11 +64,11 @@ public class CikkSer implements IsSerializable {
 		this.darab = darab;
 	}
 
-	public Float getTerfogat() {
+	public Double getTerfogat() {
 		return terfogat;
 	}
 
-	public void setTerfogat(Float terfogat) {
+	public void setTerfogat(Double terfogat) {
 		this.terfogat = terfogat;
 	}
 
@@ -80,19 +80,19 @@ public class CikkSer implements IsSerializable {
 		this.jel = jel;
 	}
 
-	public Float getBsuly() {
+	public Double getBsuly() {
 		return bsuly;
 	}
 
-	public void setBsuly(Float bsuly) {
+	public void setBsuly(Double bsuly) {
 		this.bsuly = bsuly;
 	}
 
-	public Float getNsuly() {
+	public Double getNsuly() {
 		return nsuly;
 	}
 
-	public void setNsuly(Float nsuly) {
+	public void setNsuly(Double nsuly) {
 		this.nsuly = nsuly;
 	}
 
@@ -103,5 +103,5 @@ public class CikkSer implements IsSerializable {
 	public void setKepek(Integer kepek) {
 		this.kepek = kepek;
 	}
-	
+
 }

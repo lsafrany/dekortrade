@@ -266,17 +266,17 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 				.getAttributeAsString(CtorzsConstants.CIKK_CIKKSZAM));
 		to.setMegnevezes(from
 				.getAttributeAsString(CtorzsConstants.CIKK_MEGNEVEZES));
-		to.setAr(from.getAttributeAsFloat(CtorzsConstants.CIKK_AR));
+		to.setAr(from.getAttributeAsDouble(CtorzsConstants.CIKK_AR));
 		to.setKiskarton(from
 				.getAttributeAsInt(CtorzsConstants.CIKK_KISKARTON));
 		to.setDarab(from.getAttributeAsInt(CtorzsConstants.CIKK_DARAB));
 		to.setTerfogat(from
-				.getAttributeAsFloat(CtorzsConstants.CIKK_TERFOGAT));
+				.getAttributeAsDouble(CtorzsConstants.CIKK_TERFOGAT));
 		to.setJel(from.getAttributeAsString(CtorzsConstants.CIKK_JEL));
 		to.setBsuly(from
-				.getAttributeAsFloat(CtorzsConstants.CIKK_BSULY));
+				.getAttributeAsDouble(CtorzsConstants.CIKK_BSULY));
 		to.setNsuly(from
-				.getAttributeAsFloat(CtorzsConstants.CIKK_NSULY));
+				.getAttributeAsDouble(CtorzsConstants.CIKK_NSULY));
 		to.setKepek(from
 				.getAttributeAsInt(CtorzsConstants.CIKK_KEPEK));	
 	}

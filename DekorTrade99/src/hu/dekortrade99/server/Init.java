@@ -64,7 +64,6 @@ public class Init extends HttpServlet {
 			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
 			rendeltcikkQuery.deletePersistentAll();
 	
-			pm.flush();
 		} finally {
 			pm.close();
 		}

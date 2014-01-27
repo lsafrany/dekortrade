@@ -89,4 +89,6 @@ public interface DekorTradeServiceAsync {
 
 	void getKep(String cikkszam,AsyncCallback<ArrayList<String>> asyncCallback);
 
+	void removeKep(String cikkszam,String sorszam,AsyncCallback<String> asyncCallback);
+
 }

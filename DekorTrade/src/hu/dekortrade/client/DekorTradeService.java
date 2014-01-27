@@ -104,4 +104,7 @@ public interface DekorTradeService extends RemoteService {
 
 	ArrayList<String> getKep(String cikkszam) throws IllegalArgumentException,SQLExceptionSer;
 
+	String removeKep(String cikkszam, String rorszam)
+			throws IllegalArgumentException, SQLExceptionSer;
+
 }

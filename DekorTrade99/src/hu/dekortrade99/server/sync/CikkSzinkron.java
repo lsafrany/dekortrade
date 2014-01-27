@@ -6,19 +6,19 @@ public class CikkSzinkron {
 
 	private String megnevezes;
 
-	private Float ar;
+	private Double ar;
 
 	private Integer kiskarton;
 
 	private Integer darab;
 
-	private Float terfogat;
+	private Double terfogat;
 
 	private String jel;
 
-	private Float bsuly;
+	private Double bsuly;
 
-	private Float nsuly;
+	private Double nsuly;
 
 	private Integer kepek;
 
@@ -27,9 +27,9 @@ public class CikkSzinkron {
 	public CikkSzinkron () {
 	}
 	  
-	public CikkSzinkron(String cikkszam, String megnevezes, Float ar,
-			Integer kiskarton, Integer darab, Float terfogat, String jel,
-			Float bsuly, Float nsuly, Integer kepek, Boolean torolt) {
+	public CikkSzinkron(String cikkszam, String megnevezes, Double ar,
+			Integer kiskarton, Integer darab, Double terfogat, String jel,
+			Double bsuly, Double nsuly, Integer kepek, Boolean torolt) {
 		this.cikkszam = cikkszam;
 		this.megnevezes = megnevezes;
 		this.ar = ar;
@@ -59,11 +59,11 @@ public class CikkSzinkron {
 		this.megnevezes = megnevezes;
 	}
 
-	public Float getAr() {
+	public Double getAr() {
 		return ar;
 	}
 
-	public void setAr(Float ar) {
+	public void setAr(Double ar) {
 		this.ar = ar;
 	}
 
@@ -83,11 +83,11 @@ public class CikkSzinkron {
 		this.darab = darab;
 	}
 
-	public Float getTerfogat() {
+	public Double getTerfogat() {
 		return terfogat;
 	}
 
-	public void setTerfogat(Float terfogat) {
+	public void setTerfogat(Double terfogat) {
 		this.terfogat = terfogat;
 	}
 
@@ -99,19 +99,19 @@ public class CikkSzinkron {
 		this.jel = jel;
 	}
 
-	public Float getBsuly() {
+	public Double getBsuly() {
 		return bsuly;
 	}
 
-	public void setBsuly(Float bsuly) {
+	public void setBsuly(Double bsuly) {
 		this.bsuly = bsuly;
 	}
 
-	public Float getNsuly() {
+	public Double getNsuly() {
 		return nsuly;
 	}
 
-	public void setNsuly(Float nsuly) {
+	public void setNsuly(Double nsuly) {
 		this.nsuly = nsuly;
 	}
 

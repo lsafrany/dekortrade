@@ -65,9 +65,9 @@ public class Init extends HttpServlet {
 				fields[7] = fields[7].replaceAll(",", ".");
 				fields[8] = fields[8].replaceAll(",", ".");
 				Cikk cikk = new Cikk(fields[0], fields[1],
-						new Float(fields[2]), new Integer(fields[3]),
-						new Integer(fields[4]), new Float(fields[5]),
-						fields[6], new Float(fields[7]), new Float(
+						new Double(fields[2]), new Integer(fields[3]),
+						new Integer(fields[4]), new Double(fields[5]),
+						fields[6], new Double(fields[7]), new Double(
 								fields[8]), 0, Boolean.FALSE, Boolean.FALSE);
 				pm.makePersistent(cikk);
 				counter++;
@@ -147,7 +147,7 @@ public class Init extends HttpServlet {
 			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
 			rendeltcikkQuery.deletePersistentAll();
 			
-			pm.flush();
+			
 		} finally {
 			pm.close();
 		}

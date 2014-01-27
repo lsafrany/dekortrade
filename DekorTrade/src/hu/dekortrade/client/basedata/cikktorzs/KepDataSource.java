@@ -9,6 +9,7 @@ import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
@@ -25,6 +26,8 @@ public class KepDataSource extends GwtRpcDataSource {
 	private CtorzsLabels ctozsLabels = GWT.create(CtorzsLabels.class);
 
 	private static String cikkszam = "";
+	
+	private static String sorszam = "";
 
 	public KepDataSource() {
 
@@ -91,6 +94,41 @@ public class KepDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeRemove(final String requestId,
 			final DSRequest request, final DSResponse response) {
+
+		JavaScriptObject data = request.getData();
+		final ListGridRecord rec = new ListGridRecord(data);
+
+		cikkszam =  request.getAttributeAsString(
+				CtorzsConstants.CIKK_CIKKSZAM);
+
+		sorszam =  request.getAttributeAsString(
+				CtorzsConstants.KEP_SORSZAM);
+
+		dekorTradeService.removeKep(cikkszam,sorszam,
+				new AsyncCallback<String>() {
+					public void onFailure(Throwable caught) {
+						if (caught instanceof SQLExceptionSer)
+							response.setAttribute(
+									ClientConstants.SERVER_SQLERROR,
+									caught.getMessage());
+						else
+							response.setAttribute(ClientConstants.SERVER_ERROR,
+									ClientConstants.SERVER_ERROR);
+						response.setStatus(DSResponse.STATUS_FAILURE);
+						processResponse(requestId, response);
+					}
+
+					public void onSuccess(String result) {
+						ListGridRecord[] list = new ListGridRecord[1];
+						// We do not receive removed record from server.
+						// Return record from request.
+						setLastId(null);
+						list[0] = rec;
+						response.setData(list);
+						processResponse(requestId, response);
+					}
+
+				});
 
 	}
 

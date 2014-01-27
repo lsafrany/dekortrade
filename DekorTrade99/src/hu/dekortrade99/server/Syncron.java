@@ -65,7 +65,6 @@ public class Syncron extends HttpServlet {
 						l.setJelszo(Constants.INIT_PASSWORD);
 					}
 				}
-				pm.flush();
 				out.println("vevojelszo - OK");
 			} catch (Exception e) {
 				log.info(e.getMessage());
