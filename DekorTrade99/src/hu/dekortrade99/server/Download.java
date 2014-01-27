@@ -31,7 +31,7 @@ public class Download extends HttpServlet {
 				
 		try {
 			Query query = pm.newQuery(Kep.class);
-			query.setFilter("cikkszam == pcikkszam && sorszam == psorszam");
+			query.setFilter("(this.cikkszam == pcikkszam) && (this.sorszam == psorszam)");
 			query.declareParameters("String pcikkszam,String psorszam");
 			@SuppressWarnings("unchecked")
 			List<Kep> list = (List<Kep>) pm.newQuery(query)

@@ -449,7 +449,6 @@ public class Ctorzs {
 			    tileGrid.setWidth(750);
 			    tileGrid.setTileWidth(700);
 		        tileGrid.setTileHeight(500);  
-		        tileGrid.setID("boundList");  
 		        tileGrid.setShowAllRecords(true);  
 		        tileGrid.setDataSource(kepDataSource);  
 		        tileGrid.setAutoFetchData(true);  

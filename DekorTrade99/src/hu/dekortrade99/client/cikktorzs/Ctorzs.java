@@ -297,10 +297,11 @@ public class Ctorzs {
 			public void onRecordClick(RecordClickEvent event) {
 				kepekIButton.setDisabled(false);
 				if (addIButton != null) {
-					cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
-							CtorzsConstants.CIKK_CIKKSZAM);
 					addIButton.setDisabled(false);
 				}
+
+				cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
+						CtorzsConstants.CIKK_CIKKSZAM);
 
 				if (ctorzsGrid.getSelectedRecord().getAttributeAsInt(CtorzsConstants.CIKK_KEPEK) > 0)
 					kepekIButton.setDisabled(false);
@@ -364,7 +365,6 @@ public class Ctorzs {
 			    tileGrid.setWidth(750);
 			    tileGrid.setTileWidth(700);
 		        tileGrid.setTileHeight(500);  
-		        tileGrid.setID("boundList");  
 		        tileGrid.setShowAllRecords(true);  
 		        tileGrid.setDataSource(kepDataSource);  
 		        tileGrid.setAutoFetchData(true);  
