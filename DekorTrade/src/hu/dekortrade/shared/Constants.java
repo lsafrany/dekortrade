@@ -16,4 +16,5 @@ public class Constants {
 
 	public static final String FILE_SAVE_ERROR = "file_save_error";
 	public static final String FILE_SIZE_ERROR = "file_size_error";
+	public static final String EXISTSID = "existsid";
 }

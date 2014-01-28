@@ -201,7 +201,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			List<Felhasznalo> list = (List<Felhasznalo>) pm.newQuery(query)
 					.execute(felhasznaloSer.getRovidnev());
 			if ((list != null) && (!list.isEmpty())) {
-				throw new Exception("Létező rövidnév !");
+				throw new Exception(Constants.EXISTSID);
 			} else {
 				Felhasznalo felhasznalo = new Felhasznalo(
 						felhasznaloSer.getRovidnev(), felhasznaloSer.getNev(),
@@ -441,7 +441,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(
 					vevoSer.getRovidnev());
 			if ((list != null) && (!list.isEmpty())) {
-				throw new Exception("Létező rövidnév !");
+				throw new Exception(Constants.EXISTSID);
 			} else {
 				Vevo vevo = new Vevo(vevoSer.getRovidnev(), vevoSer.getNev(),
 						vevoSer.getCim(), vevoSer.getElerhetoseg(),
@@ -721,7 +721,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			List<Cikk> list = (List<Cikk>) pm.newQuery(query).execute(
 					cikkSer.getCikkszam());
 			if ((list != null) && (!list.isEmpty())) {
-				throw new Exception("Létező cikkszám !");
+				throw new Exception(Constants.EXISTSID);
 			} else {
 				Cikk cikk = new Cikk(cikkSer.getCikkszam(),
 						cikkSer.getMegnevezes(), cikkSer.getAr(),
@@ -881,6 +881,41 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		}
 
 		return szinkronSer;
+	}
+
+	public String teljesszinkron() throws IllegalArgumentException, SQLExceptionSer {
+
+		String output = "";
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			
+			Query rendeltQuery = pm.newQuery(Rendelt.class);
+			rendeltQuery.deletePersistentAll();
+
+			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
+			rendeltcikkQuery.deletePersistentAll();
+			
+			Client client = Client.create();
+			client.setConnectTimeout(ServerConstants.TIMEOUT);
+
+			WebResource webResource = client.resource(ServerConstants.URI);
+
+			ClientResponse response = webResource.path("syncron")
+					.queryParam("akcio", "szinkron").type(MediaType.TEXT_PLAIN)
+					.get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+		
+			output = response.getEntity(String.class);
+			
+		} finally {
+			pm.close();
+		}		
+	
+		return output;
 	}
 
 	public String initUploadFileStatus() throws IllegalArgumentException {

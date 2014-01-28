@@ -29,14 +29,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class SzinkronObject {
-
-//	private String uri = "http://192.168.0.17:8888/dekortrade99";
-	
-	private String uri = "http://dekortrade99kft.appspot.com/dekortrade99";
 		
 	private static final Logger log = Logger.getLogger(SzinkronObject.class.getName());
-
-	private int timeOut = 25000;
 	
 	SzinkronSer feldolgozas() throws Exception {
 
@@ -70,9 +64,9 @@ public class SzinkronObject {
 						.writeValueAsString(vevolistszinkron);
 
 				Client vevoclient = Client.create();
-				vevoclient.setConnectTimeout(timeOut);
+				vevoclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-				WebResource vevowebResource = vevoclient.resource(uri);
+				WebResource vevowebResource = vevoclient.resource(ServerConstants.URI);
 
 				ClientResponse vevoresponse = vevowebResource.path("syncron")
 						.queryParam("tabla", "vevo").accept("application/json")
@@ -119,9 +113,9 @@ public class SzinkronObject {
 						.writeValueAsString(cikklistszinkron);
 
 				Client cikkclient = Client.create();
-				cikkclient.setConnectTimeout(timeOut);
+				cikkclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-				WebResource cikkwebResource = cikkclient.resource(uri);
+				WebResource cikkwebResource = cikkclient.resource(ServerConstants.URI);
 
 				ClientResponse cikkresponse = cikkwebResource.path("syncron")
 						.queryParam("tabla", "cikk").accept("application/json")
@@ -164,9 +158,9 @@ public class SzinkronObject {
 				String kepJSON = kepmapper.writeValueAsString(keplistszinkron);
 
 				Client kepclient = Client.create();
-				kepclient.setConnectTimeout(timeOut);
+				kepclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-				WebResource kepwebResource = kepclient.resource(uri);
+				WebResource kepwebResource = kepclient.resource(ServerConstants.URI);
 
 				ClientResponse kepresponse = kepwebResource.path("syncron")
 						.queryParam("tabla", "kep").accept("application/json")
@@ -189,9 +183,9 @@ public class SzinkronObject {
 			log.info("rendelt");
 //			tx.begin();
 			Client rendeltclient = Client.create();
-			rendeltclient.setConnectTimeout(timeOut);
+			rendeltclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-			WebResource rendeltwebResource = rendeltclient.resource(uri);
+			WebResource rendeltwebResource = rendeltclient.resource(ServerConstants.URI);
 
 			ClientResponse rendeltresponse = rendeltwebResource.path("syncron")
 					.queryParam("akcio", "rendelt").type(MediaType.TEXT_PLAIN)

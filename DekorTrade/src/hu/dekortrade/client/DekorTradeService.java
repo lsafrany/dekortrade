@@ -98,6 +98,8 @@ public interface DekorTradeService extends RemoteService {
 
 	SzinkronSer szinkron() throws IllegalArgumentException, SQLExceptionSer;
 
+	String teljesszinkron() throws IllegalArgumentException, SQLExceptionSer;
+
 	String initUploadFileStatus() throws IllegalArgumentException;
 	
 	UploadSer getUploadFileStatus() throws IllegalArgumentException;

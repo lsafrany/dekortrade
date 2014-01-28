@@ -128,6 +128,37 @@ public class Syncron extends HttpServlet {
 			}			
 		}
 		
+		if (akcio.equals("szinkron")) {
+			
+			log.info("szinkron");
+								
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			try {
+
+				Query vevoQuery = pm.newQuery(Vevo.class);
+				vevoQuery.deletePersistentAll();
+				
+				Query cikkQuery = pm.newQuery(Cikk.class);
+				cikkQuery.deletePersistentAll();
+				
+				Query kepQuery = pm.newQuery(Kep.class);
+				kepQuery.deletePersistentAll();
+								
+				Query rendeltQuery = pm.newQuery(Rendelt.class);
+				rendeltQuery.deletePersistentAll();
+
+				Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
+				rendeltcikkQuery.deletePersistentAll();
+
+				out.println("szinkron - OK");
+			} catch (Exception e) {
+				log.info(e.getMessage());
+				out.println("szinkron - ERROR");
+			} finally {
+				pm.close();
+			}			
+		}		
+		
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

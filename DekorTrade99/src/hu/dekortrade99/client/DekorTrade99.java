@@ -47,7 +47,7 @@ import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
  */
 public class DekorTrade99 implements EntryPoint {
 	/**
-	 * Create a remote service proxy to talk to the server-side ManagementTool
+	 * Create a remote service proxy to talk to the server-side DekorTrade99
 	 * service.
 	 */
 	private final DekorTrade99ServiceAsync dekorTrade99Service = GWT
@@ -72,7 +72,7 @@ public class DekorTrade99 implements EntryPoint {
 	public void onModuleLoad() {
 
 		VLayout mainLayout = new VLayout();
-		mainLayout.setTitle("ManagementTool");
+		mainLayout.setTitle("DekorTrade99");
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 

@@ -21,7 +21,11 @@ public interface SystemLabels extends Constants {
 	String jog_jog();
 
 	String szinkron();
+	
+	String teljesszinkron();
 
+	String teljesszinksonok();
+	
 	String felhasznalo();
 
 	String jelszo();

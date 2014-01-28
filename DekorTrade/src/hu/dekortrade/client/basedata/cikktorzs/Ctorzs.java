@@ -131,10 +131,15 @@ public class Ctorzs {
 						SC.warn(commonLabels.server_error());
 					else if (event.getResponse().getAttribute(
 							ClientConstants.SERVER_SQLERROR) != null)
-						SC.warn(commonLabels.server_sqlerror()
-								+ " : "
-								+ event.getResponse().getAttribute(
-										ClientConstants.SERVER_SQLERROR));
+						if (event.getResponse().getAttribute(
+								ClientConstants.SERVER_SQLERROR).equals(Constants.EXISTSID)) {
+							SC.warn(commonLabels.letezoid());							
+						} else {
+							SC.warn(commonLabels.server_sqlerror()
+									+ " : "
+									+ event.getResponse().getAttribute(
+											ClientConstants.SERVER_SQLERROR));							
+						}
 					event.cancel();
 				}
 			}

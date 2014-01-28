@@ -18,6 +18,7 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 public class Szinkron {
 
@@ -30,16 +31,31 @@ public class Szinkron {
 
 	public Canvas get() {
 		DisplayRequest.counterInit();
-
-		HLayout middleLayout = new HLayout();
+				
+		VLayout middleLayout = new VLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		middleLayout.setStyleName("middle");
-
+		
+		HLayout szinkronLayout = new HLayout();
+		szinkronLayout.setAlign(Alignment.CENTER);
+		szinkronLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		szinkronLayout.setStyleName("middle");	
 		final IButton szinkronIButton = new IButton(systemLabels.szinkron());
+		szinkronLayout.addMember(szinkronIButton);
 
-		middleLayout.addMember(szinkronIButton);
-
+		HLayout teljesszinkronLayout = new HLayout();
+		teljesszinkronLayout.setAlign(Alignment.CENTER);
+		teljesszinkronLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		teljesszinkronLayout.setStyleName("middle");	
+		final IButton teljesszinkronIButton = new IButton(systemLabels.teljesszinkron());
+		teljesszinkronIButton.setWidth(330);
+		teljesszinkronIButton.setWrap(true);
+		teljesszinkronLayout.addMember(teljesszinkronIButton);
+		
+		middleLayout.addMember(szinkronLayout);
+		middleLayout.addMember(teljesszinkronLayout);
+		
 		szinkronIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				SC.ask(commonLabels.sure(), new BooleanCallback() {
@@ -78,7 +94,42 @@ public class Szinkron {
 				});
 			}
 		});
+			
+		teljesszinkronIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				SC.ask(commonLabels.sure(), new BooleanCallback() {
+					public void execute(Boolean value) {
+						if (value != null && value) {
+							teljesszinkronIButton.setDisabled(true);
+							DisplayRequest.startRequest();
+							dekorTradeService
+									.teljesszinkron(new AsyncCallback<String>() {
+										public void onFailure(Throwable caught) {
+											DisplayRequest.serverResponse();
+											if (caught instanceof SQLExceptionSer)
+												SC.warn(commonLabels
+														.server_sqlerror()
+														+ " : "
+														+ caught.getMessage());
+											else
+												SC.warn(commonLabels
+														.server_error());
+											teljesszinkronIButton.setDisabled(false);
+										}
 
+										public void onSuccess(String result) {
+											DisplayRequest.serverResponse();
+											SC.say(systemLabels.teljesszinksonok());
+											teljesszinkronIButton.setDisabled(false);
+										}
+									});
+
+						}
+					}
+				});
+			}
+		});
+				
 		return middleLayout;
 
 	}

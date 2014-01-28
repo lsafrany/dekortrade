@@ -27,4 +27,7 @@ public interface CommonLabels extends Constants {
 	String save();
 	
 	String alapjeszo();
+	
+	String letezoid();
+	
 }

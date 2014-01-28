@@ -51,7 +51,7 @@ public class Ctorzs {
 		DisplayRequest.counterInit();
 		VLayout ctorzsLayout = new VLayout();
 		ctorzsLayout.setStyleName("middle");
-		ctorzsLayout.setWidth("1100px");
+		ctorzsLayout.setWidth("1000px");
 
 		HLayout ctorzsFormLayout = new HLayout();
 		ctorzsFormLayout.setHeight("3%");

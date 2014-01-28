@@ -83,6 +83,8 @@ public interface DekorTradeServiceAsync {
 
 	void szinkron(AsyncCallback<SzinkronSer> callback);
 
+	void teljesszinkron(AsyncCallback<String> callback);
+
 	void initUploadFileStatus(AsyncCallback<String> callback) throws IllegalArgumentException;
 
 	void getUploadFileStatus(AsyncCallback<UploadSer> callback) throws IllegalArgumentException;

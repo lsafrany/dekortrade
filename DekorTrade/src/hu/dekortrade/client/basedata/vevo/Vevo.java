@@ -5,6 +5,7 @@ import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
 import com.google.gwt.core.client.GWT;
@@ -73,10 +74,15 @@ public class Vevo {
 						SC.warn(commonLabels.server_error());
 					else if (event.getResponse().getAttribute(
 							ClientConstants.SERVER_SQLERROR) != null)
-						SC.warn(commonLabels.server_sqlerror()
-								+ " : "
-								+ event.getResponse().getAttribute(
-										ClientConstants.SERVER_SQLERROR));
+						if (event.getResponse().getAttribute(
+								ClientConstants.SERVER_SQLERROR).equals(Constants.EXISTSID)) {
+							SC.warn(commonLabels.letezoid());							
+						} else {
+							SC.warn(commonLabels.server_sqlerror()
+									+ " : "
+									+ event.getResponse().getAttribute(
+											ClientConstants.SERVER_SQLERROR));							
+						}
 					event.cancel();
 				}
 			}
