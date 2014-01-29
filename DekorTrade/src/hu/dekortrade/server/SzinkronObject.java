@@ -43,7 +43,7 @@ public class SzinkronObject {
 			log.info("vevo");
 //			tx.begin();
 			Query vevoquery = pm.newQuery(Vevo.class);
-			vevoquery.setFilter("this.szinkron == false");
+			vevoquery.setFilter("(this.szinkron == false) && (internet == true)");
 			vevoquery.setRange(0, 50);
 			@SuppressWarnings("unchecked")
 			List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery).execute();

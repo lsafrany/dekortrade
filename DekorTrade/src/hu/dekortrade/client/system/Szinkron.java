@@ -49,8 +49,7 @@ public class Szinkron {
 		teljesszinkronLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		teljesszinkronLayout.setStyleName("middle");	
 		final IButton teljesszinkronIButton = new IButton(systemLabels.teljesszinkron());
-		teljesszinkronIButton.setWidth(330);
-		teljesszinkronIButton.setWrap(true);
+		teljesszinkronIButton.setWidth(200);
 		teljesszinkronLayout.addMember(teljesszinkronIButton);
 		
 		middleLayout.addMember(szinkronLayout);
@@ -97,7 +96,7 @@ public class Szinkron {
 			
 		teljesszinkronIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				SC.ask(commonLabels.sure(), new BooleanCallback() {
+				SC.ask(systemLabels.teljesszinkronask() + " "  + commonLabels.sure(), new BooleanCallback() {
 					public void execute(Boolean value) {
 						if (value != null && value) {
 							teljesszinkronIButton.setDisabled(true);

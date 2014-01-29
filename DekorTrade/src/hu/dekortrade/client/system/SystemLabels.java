@@ -24,6 +24,8 @@ public interface SystemLabels extends Constants {
 	
 	String teljesszinkron();
 
+	String teljesszinkronask();
+	
 	String teljesszinksonok();
 	
 	String felhasznalo();
