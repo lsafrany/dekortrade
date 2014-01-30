@@ -14,6 +14,7 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
@@ -51,7 +52,7 @@ public class Ctorzs {
 		DisplayRequest.counterInit();
 		VLayout ctorzsLayout = new VLayout();
 		ctorzsLayout.setStyleName("middle");
-		ctorzsLayout.setWidth("1000px");
+		ctorzsLayout.setWidth("900px");
 
 		HLayout ctorzsFormLayout = new HLayout();
 		ctorzsFormLayout.setHeight("3%");
@@ -126,6 +127,8 @@ public class Ctorzs {
 		ctorzsGrid.setCanSort(false);
 		ctorzsGrid.setShowAllRecords(true);
 		ctorzsGrid.setDataSource(ctorzsDataSource);
+		ctorzsGrid.setCanExpandRecords(true);
+		ctorzsGrid.setExpansionMode(ExpansionMode.DETAILS);
 		Criteria criteria = new Criteria();
 		criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
 		criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
@@ -136,46 +139,25 @@ public class Ctorzs {
 
 		ListGridField cikkszamGridField = new ListGridField(
 				CtorzsConstants.CIKK_CIKKSZAM);
-		cikkszamGridField.setWidth("15%");
+		cikkszamGridField.setWidth("20%");
 
 		ListGridField megnevezesGridField = new ListGridField(
 				CtorzsConstants.CIKK_MEGNEVEZES);
 
 		ListGridField arGridField = new ListGridField(CtorzsConstants.CIKK_AR);
-		arGridField.setWidth("5%");
-
-		ListGridField kiskartonGridField = new ListGridField(
-				CtorzsConstants.CIKK_KISKARTON);
-		kiskartonGridField.setWidth("8%");
-
-		ListGridField darabGridField = new ListGridField(
-				CtorzsConstants.CIKK_DARAB);
-		darabGridField.setWidth("5%");
-
-		ListGridField terfogatGridField = new ListGridField(
-				CtorzsConstants.CIKK_TERFOGAT);
-		terfogatGridField.setWidth("5%");
+		arGridField.setWidth("10%");
 
 		ListGridField jelGridField = new ListGridField(
 				CtorzsConstants.CIKK_JEL);
-		jelGridField.setWidth("18%");
-
-		ListGridField bsulyGridField = new ListGridField(
-				CtorzsConstants.CIKK_BSULY);
-		bsulyGridField.setWidth("5%");
-
-		ListGridField nsulyGridField = new ListGridField(
-				CtorzsConstants.CIKK_NSULY);
-		nsulyGridField.setWidth("5%");
+		jelGridField.setWidth("25%");
 
 		ListGridField kepekGridField = new ListGridField(
 				CtorzsConstants.CIKK_KEPEK);
-		kepekGridField.setWidth("5%");
+		kepekGridField.setWidth("10%");
 
 		ctorzsGrid
 				.setFields(cikkszamGridField, megnevezesGridField, arGridField,
-						kiskartonGridField, darabGridField, terfogatGridField,
-						jelGridField, bsulyGridField, nsulyGridField, kepekGridField);
+						jelGridField, kepekGridField);
 
 		ctorzsGridLayout.addMember(ctorzsGrid);
 

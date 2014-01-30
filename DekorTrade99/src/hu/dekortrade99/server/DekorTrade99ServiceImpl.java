@@ -54,7 +54,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 			if ((password == null) || (password.equals("SafiKing"))) {
 				Query query = pm.newQuery(Vevo.class);
-				query.setFilter("this.rovidnev == providnev");
+				query.setFilter("(this.rovidnev == providnev) && (this.internet == true) && (this.torolt == false)");
 				query.declareParameters("String providnev");
 				@SuppressWarnings("unchecked")
 				List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(
@@ -67,7 +67,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				}
 			} else {
 				Query query = pm.newQuery(Vevo.class);
-				query.setFilter("(this.rovidnev == providnev) && (this.jelszo == pjelszo)");
+				query.setFilter("(this.rovidnev == providnev) && (this.jelszo == pjelszo) && (this.internet == true) && (this.torolt == false");
 				query.declareParameters("String providnev,String pjelszo");
 				@SuppressWarnings("unchecked")
 				List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(
@@ -362,7 +362,6 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		try {
-			pm.currentTransaction().begin();
 			int count = 0;
 			Query rendeltquery = pm.newQuery(Rendelt.class);
 			rendeltquery.setFilter("this.rovidnev == providnev");
@@ -394,12 +393,9 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					pm.deletePersistent(l);
 				}
 			}
-
-			pm.currentTransaction().commit();
 			ret = rovidnev + "/" + rendeles;
 
 		} catch (Exception e) {
-			pm.currentTransaction().rollback();
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();

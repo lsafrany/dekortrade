@@ -16,12 +16,16 @@ public class Vevo {
 	private String nev;
 
 	@Persistent
+	private Boolean internet;
+	
+	@Persistent
 	private Boolean torolt;
 
-	public Vevo(String rovidnev, String jelszo, String nev, Boolean torolt) {
+	public Vevo(String rovidnev, String jelszo, String nev, Boolean internet, Boolean torolt) {
 		this.rovidnev = rovidnev;
 		this.jelszo = jelszo;
 		this.nev = nev;
+		this.internet = internet;
 		this.torolt = false;
 	}
 
@@ -47,6 +51,14 @@ public class Vevo {
 
 	public void setNev(String nev) {
 		this.nev = nev;
+	}
+	
+	public Boolean getInternet() {
+		return internet;
+	}
+
+	public void setInternet(Boolean internet) {
+		this.internet = internet;
 	}
 
 	public Boolean getTorolt() {

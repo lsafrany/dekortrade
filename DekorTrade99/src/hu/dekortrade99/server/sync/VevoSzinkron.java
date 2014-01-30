@@ -8,15 +8,18 @@ public class VevoSzinkron implements IsSerializable {
 
 	private String nev;
 
+	private Boolean internet;
+	
 	private Boolean torolt;
 
 	public VevoSzinkron() {
 		
 	}
 			
-	public VevoSzinkron(String rovidnev, String nev, Boolean torolt) {
+	public VevoSzinkron(String rovidnev, String nev, Boolean internet,Boolean torolt) {
 		this.rovidnev = rovidnev;
 		this.nev = nev;
+		this.internet = internet;
 		this.torolt = torolt;
 	}
 
@@ -34,6 +37,14 @@ public class VevoSzinkron implements IsSerializable {
 
 	public void setNev(String nev) {
 		this.nev = nev;
+	}
+		
+	public Boolean getInternet() {
+		return internet;
+	}
+
+	public void setInternet(Boolean internet) {
+		this.internet = internet;
 	}
 
 	public Boolean getTorolt() {

@@ -211,7 +211,7 @@ public class Syncron extends HttpServlet {
 								l1.setTorolt(l.getTorolt());
 							}
 						} else {
-							Vevo vevo = new Vevo(l.getRovidnev(),Constants.INIT_PASSWORD,l.getNev(),l.getTorolt());
+							Vevo vevo = new Vevo(l.getRovidnev(),Constants.INIT_PASSWORD,l.getNev(),l.getInternet(),l.getTorolt());
 							pm.makePersistent(vevo);
 						}
 					}

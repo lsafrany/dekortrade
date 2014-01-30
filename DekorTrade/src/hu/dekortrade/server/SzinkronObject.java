@@ -51,7 +51,7 @@ public class SzinkronObject {
 			if ((vevolist != null) && (!vevolist.isEmpty())) {
 				for (Vevo l : vevolist) {
 					VevoSzinkron vevoSzinkron = new VevoSzinkron(
-							l.getRovidnev(), l.getNev(), l.getTorolt());
+							l.getRovidnev(), l.getNev(), l.getInternet(),l.getTorolt());
 					vevolistszinkron.add(vevoSzinkron);
 					l.setSzinkron(Boolean.TRUE);
 				}
