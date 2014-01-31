@@ -67,7 +67,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				}
 			} else {
 				Query query = pm.newQuery(Vevo.class);
-				query.setFilter("(this.rovidnev == providnev) && (this.jelszo == pjelszo) && (this.internet == true) && (this.torolt == false");
+				query.setFilter("(this.rovidnev == providnev) && (this.jelszo == pjelszo) && (this.internet == true) && (this.torolt == false)");
 				query.declareParameters("String providnev,String pjelszo");
 				@SuppressWarnings("unchecked")
 				List<Vevo> list = (List<Vevo>) pm.newQuery(query).execute(

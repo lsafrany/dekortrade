@@ -43,7 +43,7 @@ public class SzinkronObject {
 			log.info("vevo");
 //			tx.begin();
 			Query vevoquery = pm.newQuery(Vevo.class);
-			vevoquery.setFilter("(this.szinkron == false) && (internet == true)");
+			vevoquery.setFilter("this.szinkron == false");
 			vevoquery.setRange(0, 50);
 			@SuppressWarnings("unchecked")
 			List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery).execute();
@@ -56,7 +56,7 @@ public class SzinkronObject {
 					l.setSzinkron(Boolean.TRUE);
 				}
 
-				szinkronSer.setUploadcikk(vevolistszinkron.size());
+				szinkronSer.setUploadvevo(vevolistszinkron.size());
 
 				ObjectMapper vevomapper = new ObjectMapper();
 

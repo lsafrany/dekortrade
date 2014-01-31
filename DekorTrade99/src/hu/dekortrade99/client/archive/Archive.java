@@ -76,7 +76,7 @@ public class Archive {
 
 		final ListGrid rendeltGrid = new ListGrid();
 		rendeltGrid.setTitle(archiveLabels.rendeles());
-		rendeltGrid.setWidth("50%");
+		rendeltGrid.setWidth("70%");
 		rendeltGrid.setShowHeaderContextMenu(false);
 		rendeltGrid.setShowHeaderMenuButton(false);
 		rendeltGrid.setCanSort(false);

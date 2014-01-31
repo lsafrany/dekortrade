@@ -18,7 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 @SuppressWarnings("serial")
 public class Init extends HttpServlet {
 
@@ -53,12 +52,12 @@ public class Init extends HttpServlet {
 			
 			Query vevoQuery = pm.newQuery(Vevo.class);
 			vevoQuery.deletePersistentAll();
-			
+
 			out.append("<h1>Rendelt</h1>");
 			
 			Query rendeltQuery = pm.newQuery(Rendelt.class);
 			rendeltQuery.deletePersistentAll();
-
+						
 			out.append("<h1>Rendeltcikk</h1>");
 			
 			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
