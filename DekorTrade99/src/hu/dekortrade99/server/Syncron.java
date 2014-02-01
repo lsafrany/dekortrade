@@ -212,6 +212,7 @@ public class Syncron extends HttpServlet {
 							for (Vevo l1 : list1) {
 								l1.setNev(l.getNev());
 								l1.setTorolt(l.getTorolt());
+								l1.setInternet(l.getInternet());
 							}
 						} else {
 							Vevo vevo = new Vevo(l.getRovidnev(),Constants.INIT_PASSWORD,l.getNev(),l.getInternet(),l.getTorolt());

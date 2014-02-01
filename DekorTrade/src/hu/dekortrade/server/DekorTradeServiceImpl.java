@@ -889,6 +889,33 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 			
+			Query cikkQuery = pm.newQuery(Cikk.class);
+			@SuppressWarnings("unchecked")
+			List<Cikk> cikklist = (List<Cikk>) pm.newQuery(cikkQuery).execute();
+			if ((cikklist != null) && (!cikklist.isEmpty())) {
+				for (Cikk l : cikklist) {
+					l.setSzinkron(Boolean.FALSE);
+				}
+			}
+	
+			Query kepQuery = pm.newQuery(Kep.class);
+			@SuppressWarnings("unchecked")
+			List<Kep> keplist = (List<Kep>) pm.newQuery(kepQuery).execute();
+			if ((keplist != null) && (!keplist.isEmpty())) {
+				for (Kep l : keplist) {
+					l.setSzinkron(Boolean.FALSE);
+				}
+			}
+
+			Query vevoQuery = pm.newQuery(Vevo.class);
+			@SuppressWarnings("unchecked")
+			List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoQuery).execute();
+			if ((vevolist != null) && (!vevolist.isEmpty())) {
+				for (Vevo l : vevolist) {
+					l.setSzinkron(Boolean.FALSE);
+				}
+			}
+
 			Query rendeltQuery = pm.newQuery(Rendelt.class);
 			rendeltQuery.deletePersistentAll();
 
