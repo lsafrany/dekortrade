@@ -144,12 +144,15 @@ public class Syncron extends HttpServlet {
 				Query kepQuery = pm.newQuery(Kep.class);
 				kepQuery.deletePersistentAll();
 								
-				Query rendeltQuery = pm.newQuery(Rendelt.class);
-				rendeltQuery.deletePersistentAll();
-
-				Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
-				rendeltcikkQuery.deletePersistentAll();
-
+				Query query = pm.newQuery(Rendelt.class);
+				@SuppressWarnings("unchecked")
+				List<Rendelt> list = (List<Rendelt>) pm.newQuery(query).execute();
+				if ((list != null) && (!list.isEmpty())) {
+					for (Rendelt l : list) {
+						l.setStatusz("PENDING");
+					}
+				}
+					
 				out.println("szinkron - OK");
 			} catch (Exception e) {
 				log.info(e.getMessage());
