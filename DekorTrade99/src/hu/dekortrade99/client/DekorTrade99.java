@@ -20,6 +20,8 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.Side;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
@@ -173,7 +175,7 @@ public class DekorTrade99 implements EntryPoint {
 			UserInfo.userId = (Cookies.getCookie(ClientConstants.COOKIE));
 		if (UserInfo.userId.equals("")) {
 			topLayoutRight.addMember(getLogin());
-			middleLayout.addMember(ctorzs.get(null));
+			middleLayout.addMember(info());
 		} else
 			getUser(UserInfo.userId, null, null);
 
@@ -320,7 +322,7 @@ public class DekorTrade99 implements EntryPoint {
 				Cookies.removeCookie(ClientConstants.COOKIE);
 				topLayoutRight.addMember(getLogin());
 				middleLayout.removeMembers(middleLayout.getMembers());
-				middleLayout.addMember(ctorzs.get(null));
+				middleLayout.addMember(info());
 				UserInfo.clearValues();
 			}
 		});
@@ -621,4 +623,84 @@ public class DekorTrade99 implements EntryPoint {
 		return hLayout;
 	}
 
+	public Canvas info() {
+
+		VLayout infoLayout = new VLayout();
+		infoLayout.setStyleName("middle");
+	
+		VLayout maintextLayout = new VLayout();
+		maintextLayout.setAlign(Alignment.CENTER);
+		maintextLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		maintextLayout.setHeight("10%"); 
+
+		Label label1 = new Label();
+		label1.setAlign(Alignment.CENTER);
+		label1.setStyleName("header1");
+		label1.setContents(dekorTrade99Labels.info1());  
+
+		Label label2 = new Label();
+		label2.setAlign(Alignment.CENTER);
+		label2.setStyleName("header2");
+		label2.setContents(dekorTrade99Labels.info2());  
+	
+		maintextLayout.addMember(label1);
+		maintextLayout.addMember(label2);
+
+		HLayout subLayout = new HLayout();
+		subLayout.setAlign(Alignment.CENTER);
+		subLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		subLayout.setHeight("50%"); 
+
+		VLayout textLayout = new VLayout();
+		textLayout.setAlign(Alignment.CENTER);
+		textLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+
+		Label label3 = new Label();
+		label3.setAlign(Alignment.CENTER);
+		label3.setStyleName("header3");
+		label3.setContents(dekorTrade99Labels.info3());  
+
+		Label cim = new Label();
+		cim.setAlign(Alignment.CENTER);
+		cim.setStyleName("header3");
+		cim.setContents(dekorTrade99Labels.cim());  
+
+		Label telefon = new Label();
+		telefon.setAlign(Alignment.CENTER);
+		telefon.setStyleName("header3");
+		telefon.setContents(dekorTrade99Labels.telefon());  
+
+		Label fax = new Label();
+		fax.setAlign(Alignment.CENTER);
+		fax.setStyleName("header3");
+		fax.setContents(dekorTrade99Labels.fax());  
+
+		Label email = new Label();
+		email.setAlign(Alignment.CENTER);
+		email.setStyleName("header3");
+		email.setContents(dekorTrade99Labels.email());  
+
+// 		"<iframe width='300' height='200' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.hu/maps?f=d&amp;source=s_d&amp;saddr=&amp;daddr=47.376471,19.042032&amp;hl=hu&amp;geocode=&amp;sll=47.376529,19.041967&amp;sspn=0.008341,0.019205&amp;mra=mift&amp;mrsp=1&amp;sz=16&amp;ie=UTF8&amp;t=m&amp;ll=47.377662,19.044456&amp;spn=0.020342,0.036478&amp;z=14&amp;output=embed'></iframe>"
+		
+		textLayout.addMember(label3);
+		textLayout.addMember(cim);
+		textLayout.addMember(telefon);
+		textLayout.addMember(fax);
+		textLayout.addMember(email);		
+		
+		VLayout kepLayout = new VLayout();
+		kepLayout.setAlign(Alignment.CENTER);
+		kepLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		
+		Img buildingImg = new Img("epulet.jpg",350,192);
+		kepLayout.addMember(buildingImg);
+				
+		subLayout.addMember(textLayout);
+		subLayout.addMember(kepLayout);
+			
+		infoLayout.addMember(maintextLayout);
+		infoLayout.addMember(subLayout);
+		
+		return infoLayout;
+	}	
 }

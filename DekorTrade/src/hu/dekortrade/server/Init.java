@@ -3,6 +3,8 @@
 package hu.dekortrade.server;
 
 import hu.dekortrade.server.jdo.Cikk;
+import hu.dekortrade.server.jdo.Cikkaltipus;
+import hu.dekortrade.server.jdo.Cikkfotipus;
 import hu.dekortrade.server.jdo.Felhasznalo;
 import hu.dekortrade.server.jdo.Jog;
 import hu.dekortrade.server.jdo.PMF;
@@ -47,6 +49,32 @@ public class Init extends HttpServlet {
 
 			int counter = 0;
 
+			Query fotipusQuery = pm.newQuery(Cikkfotipus.class);
+			fotipusQuery.deletePersistentAll();
+
+			Cikkfotipus cikkfotipus1 = new Cikkfotipus("1","Selyemvurágok",Boolean.FALSE);
+			Cikkfotipus cikkfotipus2 = new Cikkfotipus("2","Karácsonyi dekor",Boolean.FALSE);
+			Cikkfotipus cikkfotipus3 = new Cikkfotipus("3","Húsvéti/tavaszi dekor",Boolean.FALSE);
+			
+			pm.makePersistent(cikkfotipus1);
+			pm.makePersistent(cikkfotipus2);
+			pm.makePersistent(cikkfotipus3);
+			
+			Query altipusQuery = pm.newQuery(Cikkaltipus.class);
+			altipusQuery.deletePersistentAll();
+			
+			Cikkaltipus cikkaltipus1 = new Cikkaltipus("1","1","Fejvirágok",Boolean.FALSE);
+			Cikkaltipus cikkaltipus2 = new Cikkaltipus("1","2","Szálasok",Boolean.FALSE);
+			Cikkaltipus cikkaltipus3 = new Cikkaltipus("1","3","Csokrok",Boolean.FALSE);
+			Cikkaltipus cikkaltipus4 = new Cikkaltipus("1","4","Futók",Boolean.FALSE);
+			Cikkaltipus cikkaltipus5 = new Cikkaltipus("1","5","Egyéb",Boolean.FALSE);
+				
+			pm.makePersistent(cikkaltipus1);
+			pm.makePersistent(cikkaltipus2);
+			pm.makePersistent(cikkaltipus3);		
+			pm.makePersistent(cikkaltipus4);	
+			pm.makePersistent(cikkaltipus5);	
+			
 			Query cikkQuery = pm.newQuery(Cikk.class);
 			cikkQuery.deletePersistentAll();
 
@@ -60,17 +88,19 @@ public class Init extends HttpServlet {
 			while (bufferedReader.ready()) {
 				String line = bufferedReader.readLine();
 				String[] fields = line.split(";");
-				fields[2] = fields[2].replaceAll(",", ".");
-				fields[5] = fields[5].replaceAll(",", ".");
-				fields[7] = fields[7].replaceAll(",", ".");
-				fields[8] = fields[8].replaceAll(",", ".");
-				Cikk cikk = new Cikk(fields[0], fields[1],
-						new Double(fields[2]), new Integer(fields[3]),
-						new Integer(fields[4]), new Double(fields[5]),
-						fields[6], new Double(fields[7]), new Double(
-								fields[8]), 0, Boolean.FALSE, Boolean.FALSE);
-				pm.makePersistent(cikk);
-				counter++;
+				if (fields.length > 4) {
+					fields[4] = fields[4].replaceAll(",", ".");
+					fields[7] = fields[7].replaceAll(",", ".");
+					fields[8] = fields[8].replaceAll(",", ".");
+					fields[9] = fields[9].replaceAll(",", ".");
+					Cikk cikk = new Cikk(fields[0], fields[1], fields[2], fields[3],
+							new Double(fields[4]), new Integer(fields[5]),
+							new Integer(fields[6]), new Double(fields[7]),
+							new Double(fields[8]), new Double(
+									fields[9]), 0, Boolean.FALSE, Boolean.FALSE);
+					pm.makePersistent(cikk);
+					counter++;				
+				}
 			}
 
 			out.append("<h1>" + counter + "</h1>");

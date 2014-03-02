@@ -7,7 +7,7 @@ import hu.dekortrade.client.GwtRpcDataSource;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -46,7 +46,7 @@ public class RendeltDataSource extends GwtRpcDataSource {
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
 		dekorTradeService
-				.getRendelt(new AsyncCallback<ArrayList<RendeltSer>>() {
+				.getRendelt(new AsyncCallback<List<RendeltSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
 							response.setAttribute(
@@ -59,7 +59,7 @@ public class RendeltDataSource extends GwtRpcDataSource {
 						processResponse(requestId, response);
 					}
 
-					public void onSuccess(ArrayList<RendeltSer> result) {
+					public void onSuccess(List<RendeltSer> result) {
 						ListGridRecord[] list = new ListGridRecord[result
 								.size()];
 						for (int i = 0; i < result.size(); i++) {

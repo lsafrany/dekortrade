@@ -7,7 +7,7 @@ import hu.dekortrade.client.GwtRpcDataSource;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -57,7 +57,7 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 						OrderConstants.RENDELTCIKK_ROVIDNEV),
 				request.getCriteria().getAttributeAsString(
 						OrderConstants.RENDELTCIKK_RENDELES),
-				new AsyncCallback<ArrayList<RendeltcikkSer>>() {
+				new AsyncCallback<List<RendeltcikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
 							response.setAttribute(
@@ -70,7 +70,7 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 						processResponse(requestId, response);
 					}
 
-					public void onSuccess(ArrayList<RendeltcikkSer> result) {
+					public void onSuccess(List<RendeltcikkSer> result) {
 						ListGridRecord[] list = new ListGridRecord[result
 								.size()];
 						for (int i = 0; i < result.size(); i++) {

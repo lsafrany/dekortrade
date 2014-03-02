@@ -7,6 +7,12 @@ import javax.jdo.annotations.Persistent;
 public class Cikk {
 
 	@Persistent
+	private String fotipus;
+
+	@Persistent
+	private String altipus;
+
+	@Persistent
 	private String cikkszam;
 
 	@Persistent
@@ -25,9 +31,6 @@ public class Cikk {
 	private Double terfogat;
 
 	@Persistent
-	private String jel;
-
-	@Persistent
 	private Double bsuly;
 
 	@Persistent
@@ -42,22 +45,39 @@ public class Cikk {
 	@Persistent
 	private Boolean torolt;
 
-	public Cikk(String cikkszam, String megnevezes, Double ar,
-			Integer kiskarton, Integer darab, Double terfogat, String jel,
+	public Cikk(String fotipus, String altipus, String cikkszam, String megnevezes, Double ar,
+			Integer kiskarton, Integer darab, Double terfogat,
 			Double bsuly, Double nsuly, Integer kepek,
 			Boolean szinkron, Boolean torolt) {
+		this.fotipus = fotipus;
+		this.altipus = altipus;
 		this.cikkszam = cikkszam;
 		this.megnevezes = megnevezes;
 		this.ar = ar;
 		this.kiskarton = kiskarton;
 		this.darab = darab;
 		this.terfogat = terfogat;
-		this.jel = jel;
 		this.bsuly = bsuly;
 		this.nsuly = nsuly;
 		this.kepek = kepek;
 		this.szinkron = szinkron;
 		this.torolt = torolt;
+	}
+		
+	public String getFotipus() {
+		return fotipus;
+	}
+
+	public void setFotipus(String fotipus) {
+		this.fotipus = fotipus;
+	}
+
+	public String getAltipus() {
+		return altipus;
+	}
+
+	public void setAltipus(String altipus) {
+		this.altipus = altipus;
 	}
 
 	public String getCikkszam() {
@@ -106,14 +126,6 @@ public class Cikk {
 
 	public void setTerfogat(Double terfogat) {
 		this.terfogat = terfogat;
-	}
-
-	public String getJel() {
-		return jel;
-	}
-
-	public void setJel(String jel) {
-		this.jel = jel;
 	}
 
 	public Double getBsuly() {

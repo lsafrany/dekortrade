@@ -10,6 +10,8 @@ public interface BasedataLabels extends Constants {
 
 	String vevok();
 
+	String cikktipusok();
+	
 	String cikkek();
 
 }

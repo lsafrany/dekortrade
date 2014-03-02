@@ -2,6 +2,8 @@ package hu.dekortrade.server;
 
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.server.jdo.Cikk;
+import hu.dekortrade.server.jdo.Cikkaltipus;
+import hu.dekortrade.server.jdo.Cikkfotipus;
 import hu.dekortrade.server.jdo.Felhasznalo;
 import hu.dekortrade.server.jdo.Jog;
 import hu.dekortrade.server.jdo.Kep;
@@ -11,7 +13,10 @@ import hu.dekortrade.server.jdo.Rendeltcikk;
 import hu.dekortrade.server.jdo.Szallito;
 import hu.dekortrade.server.jdo.Vevo;
 import hu.dekortrade.shared.Constants;
+import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.CikkSer;
+import hu.dekortrade.shared.serialized.CikkaltipusSer;
+import hu.dekortrade.shared.serialized.CikkfotipusSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
@@ -28,6 +33,7 @@ import hu.dekortrade.shared.serialized.VevoSer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,30 +101,29 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			}
 			if (!found) {
 				throw new LoginExceptionSer();
-			}
-			else {
-				
+			} else {
+
 				Query query = pm.newQuery(Jog.class);
 				query.setFilter("this.rovidnev == providnev");
 				query.declareParameters("String providnev");
 				query.setOrdering("nev");
 				@SuppressWarnings("unchecked")
-				List<Jog> list = (List<Jog>) pm.newQuery(query)
-						.execute(userId);
+				List<Jog> list = (List<Jog>) pm.newQuery(query).execute(userId);
 				if ((list != null) && (!list.isEmpty())) {
 					int tabindex = 1;
-					for (Jog l : list) {						
-						if ((l.getNev().equals(Constants.MENU_SYSTEM)) || 
-								(l.getNev().equals(Constants.MENU_BASEDATA)) || 
-								(l.getNev().equals(Constants.MENU_ORDER)) )  {
-							
+					for (Jog l : list) {
+						if ((l.getNev().equals(Constants.MENU_SYSTEM))
+								|| (l.getNev().equals(Constants.MENU_BASEDATA))
+								|| (l.getNev().equals(Constants.MENU_ORDER))) {
+
 							TabPageSer tabPageSer = new TabPageSer();
 							tabPageSer.setId(tabindex);
 							tabPageSer.setName(l.getNev());
 							userSer.getTabList().add(tabPageSer);
-							if (l.getNev().equals(defaultMenu)) userSer.setDefultTab(tabindex);
+							if (l.getNev().equals(defaultMenu))
+								userSer.setDefultTab(tabindex);
 							tabindex++;
-						}				
+						}
 					}
 				}
 
@@ -178,7 +183,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					felhasznalok.add(felhasznaloSer);
 				}
 			}
-			
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -491,13 +496,14 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 	public String setVevoJelszo(String rovidnev)
 			throws IllegalArgumentException, SQLExceptionSer {
-	
+
 		Client vevoclient = Client.create();
 
 		WebResource vevowebResource = vevoclient.resource(ServerConstants.URI);
 
 		ClientResponse vevoresponse = vevowebResource.path("syncron")
-				.queryParam("akcio", "vevojelszo").queryParam("rovidnev", rovidnev).accept(MediaType.TEXT_PLAIN)
+				.queryParam("akcio", "vevojelszo")
+				.queryParam("rovidnev", rovidnev).accept(MediaType.TEXT_PLAIN)
 				.get(ClientResponse.class);
 
 		// display response
@@ -526,7 +532,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-	
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -578,13 +584,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Szallito.class);
 			@SuppressWarnings("unchecked")
 			List<Szallito> list = (List<Szallito>) pm.newQuery(query).execute();
-			
+
 			Integer kod = Integer.valueOf(list.size() + 1);
-			Szallito szallito = new Szallito(kod
-					.toString(), szallitoSer.getNev(), szallitoSer.getCim(),
+			Szallito szallito = new Szallito(kod.toString(),
+					szallitoSer.getNev(), szallitoSer.getCim(),
 					szallitoSer.getElerhetoseg(), Boolean.FALSE);
 			pm.makePersistent(szallito);
-			
+
 			szallitoSer.setKod(kod.toString());
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
@@ -641,7 +647,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-	
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -651,7 +657,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return szallitoSer;
 	}
 
-	public List<CikkSer> getCikk(int page, String cikkszam, String jel)
+	public List<CikkSer> getCikk(int page, String fotipus, String altipus, String cikkszam)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -666,12 +672,20 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				params = params + "String pcikkszam";
 				parameters.put("pcikkszam", cikkszam);
 			}
-			if (jel != null) {
-				filter = filter + " && this.jel == pjel";
+			if (fotipus != null) {
+				filter = filter + " && this.fotipus == pfotipus";
 				if (!params.equals(""))
 					params = params + ",";
-				params = params + "String pjel";
-				parameters.put("pjel", jel);
+				params = params + "String pfotipus";
+				parameters.put("pfotipus", fotipus);
+			}
+
+			if (altipus != null) {
+				filter = filter + " && this.altipus == paltipus";
+				if (!params.equals(""))
+					params = params + ",";
+				params = params + "String paltipus";
+				parameters.put("paltipus", altipus);
 			}
 
 			Query query = pm.newQuery(Cikk.class);
@@ -681,18 +695,19 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
 					* Constants.FETCH_SIZE);
 			@SuppressWarnings("unchecked")
-			List<Cikk> list = (List<Cikk>) pm.newQuery(query)
-					.executeWithMap(parameters);
+			List<Cikk> list = (List<Cikk>) pm.newQuery(query).executeWithMap(
+					parameters);
 			if (!list.isEmpty()) {
 				for (Cikk l : list) {
 					CikkSer cikkSer = new CikkSer();
+					cikkSer.setFotipus(l.getFotipus());
+					cikkSer.setAltipus(l.getAltipus());
 					cikkSer.setCikkszam(l.getCikkszam());
 					cikkSer.setMegnevezes(l.getMegnevezes());
 					cikkSer.setAr(l.getAr());
 					cikkSer.setKiskarton(l.getKiskarton());
 					cikkSer.setDarab(l.getDarab());
 					cikkSer.setTerfogat(l.getTerfogat());
-					cikkSer.setJel(l.getJel());
 					cikkSer.setBsuly(l.getBsuly());
 					cikkSer.setNsuly(l.getNsuly());
 					cikkSer.setKepek(l.getKepek());
@@ -708,8 +723,8 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cikk;
 	}
 
-	public CikkSer addCikk(CikkSer cikkSer)
-			throws IllegalArgumentException, SQLExceptionSer {
+	public CikkSer addCikk(CikkSer cikkSer) throws IllegalArgumentException,
+			SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
@@ -723,12 +738,12 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if ((list != null) && (!list.isEmpty())) {
 				throw new Exception(Constants.EXISTSID);
 			} else {
-				Cikk cikk = new Cikk(cikkSer.getCikkszam(),
+				Cikk cikk = new Cikk(cikkSer.getFotipus(), cikkSer.getAltipus(), cikkSer.getCikkszam(),
 						cikkSer.getMegnevezes(), cikkSer.getAr(),
 						cikkSer.getKiskarton(), cikkSer.getDarab(),
-						cikkSer.getTerfogat(), cikkSer.getJel(),
-						cikkSer.getBsuly(), cikkSer.getNsuly(),
-						new Integer(0), Boolean.FALSE, Boolean.FALSE);
+						cikkSer.getTerfogat(),
+						cikkSer.getBsuly(), cikkSer.getNsuly(), new Integer(0),
+						Boolean.FALSE, Boolean.FALSE);
 				pm.makePersistent(cikk);
 			}
 
@@ -741,8 +756,8 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cikkSer;
 	}
 
-	public CikkSer updateCikk(CikkSer cikkSer)
-			throws IllegalArgumentException, SQLExceptionSer {
+	public CikkSer updateCikk(CikkSer cikkSer) throws IllegalArgumentException,
+			SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
@@ -755,20 +770,20 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					cikkSer.getCikkszam());
 			if ((list != null) && (!list.isEmpty())) {
 				for (Cikk l : list) {
+					l.setFotipus(cikkSer.getFotipus());
+					l.setAltipus(cikkSer.getAltipus());
 					l.setMegnevezes(cikkSer.getMegnevezes());
 					l.setAr(cikkSer.getAr());
 					l.setKiskarton(cikkSer.getKiskarton());
 					l.setDarab(cikkSer.getDarab());
 					l.setTerfogat(cikkSer.getTerfogat());
-					l.setJel(cikkSer.getJel());
 					l.setBsuly(cikkSer.getBsuly());
 					l.setNsuly(cikkSer.getNsuly());
 					l.setKepek(cikkSer.getKepek());
 					l.setSzinkron(Boolean.FALSE);
-					
 				}
 			}
-			
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -778,8 +793,8 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cikkSer;
 	}
 
-	public CikkSer removeCikk(CikkSer cikkSer)
-			throws IllegalArgumentException, SQLExceptionSer {
+	public CikkSer removeCikk(CikkSer cikkSer) throws IllegalArgumentException,
+			SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
@@ -806,7 +821,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cikkSer;
 	}
 
-	public ArrayList<RendeltSer> getRendelt() throws IllegalArgumentException,
+	public List<RendeltSer> getRendelt() throws IllegalArgumentException,
 			SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -826,7 +841,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					rendelt.add(rendeltSer);
 				}
 			}
-			
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -836,7 +851,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return rendelt;
 	}
 
-	public ArrayList<RendeltcikkSer> getRendeltcikk(String rovidnev,
+	public List<RendeltcikkSer> getRendeltcikk(String rovidnev,
 			String rendeles) throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -870,7 +885,8 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return rendeltcikk;
 	}
 
-	public SzinkronSer szinkron() throws IllegalArgumentException, SQLExceptionSer {
+	public SzinkronSer szinkron() throws IllegalArgumentException,
+			SQLExceptionSer {
 
 		SzinkronObject szinkronObject = new SzinkronObject();
 		SzinkronSer szinkronSer = new SzinkronSer();
@@ -883,12 +899,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return szinkronSer;
 	}
 
-	public String teljesszinkron() throws IllegalArgumentException, SQLExceptionSer {
+	public String teljesszinkron() throws IllegalArgumentException,
+			SQLExceptionSer {
 
 		String output = "";
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-			
+
 			Query cikkQuery = pm.newQuery(Cikk.class);
 			@SuppressWarnings("unchecked")
 			List<Cikk> cikklist = (List<Cikk>) pm.newQuery(cikkQuery).execute();
@@ -897,7 +914,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setSzinkron(Boolean.FALSE);
 				}
 			}
-	
+
 			Query kepQuery = pm.newQuery(Kep.class);
 			@SuppressWarnings("unchecked")
 			List<Kep> keplist = (List<Kep>) pm.newQuery(kepQuery).execute();
@@ -921,7 +938,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
 			rendeltcikkQuery.deletePersistentAll();
-			
+
 			Client client = Client.create();
 			client.setConnectTimeout(ServerConstants.TIMEOUT);
 
@@ -935,49 +952,50 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
-		
+
 			output = response.getEntity(String.class);
-			
+
 		} finally {
 			pm.close();
-		}		
-	
+		}
+
 		return output;
 	}
 
 	public String initUploadFileStatus() throws IllegalArgumentException {
-		
+
 		HttpServletRequest request = this.getThreadLocalRequest();
 		HttpSession session = request.getSession();
 
 		session.removeAttribute(ServerConstants.FILE);
 		session.removeAttribute(ServerConstants.FILE_ERROR);
-		session.setAttribute(ServerConstants.FILE,new  Integer(0));
-	
+		session.setAttribute(ServerConstants.FILE, new Integer(0));
+
 		return "OK";
 	}
 
 	public UploadSer getUploadFileStatus() throws IllegalArgumentException {
 		UploadSer uploadSer = new UploadSer();
-				
+
 		HttpServletRequest request = this.getThreadLocalRequest();
 		HttpSession session = request.getSession();
 
 		uploadSer.setStatus(Constants.LOADING);
 		if (session.getAttribute(ServerConstants.FILE) == null) {
 			if (session.getAttribute(ServerConstants.FILE_ERROR) == null) {
-				uploadSer.setStatus(Constants.LOADED); 	 
-			}
-			else  {
+				uploadSer.setStatus(Constants.LOADED);
+			} else {
 				uploadSer.setStatus(Constants.ERROR);
-				uploadSer.setError((String)session.getAttribute(ServerConstants.FILE_ERROR));
+				uploadSer.setError((String) session
+						.getAttribute(ServerConstants.FILE_ERROR));
 			}
 		}
-		
+
 		return uploadSer;
 	}
 
-	public ArrayList<String> getKep(String cikkszam) throws IllegalArgumentException, SQLExceptionSer {
+	public List<String> getKep(String cikkszam)
+			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
@@ -988,8 +1006,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			query.setFilter("(this.cikkszam == pcikkszam) && (this.torolt == false)");
 			query.declareParameters("String pcikkszam");
 			@SuppressWarnings("unchecked")
-			List<Kep> list = (List<Kep>) pm.newQuery(query)
-					.execute(cikkszam);
+			List<Kep> list = (List<Kep>) pm.newQuery(query).execute(cikkszam);
 			if (!list.isEmpty()) {
 				for (Kep l : list) {
 					kepsorszam.add(new Integer(l.getSorszam()).toString());
@@ -1003,7 +1020,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 		return kepsorszam;
 	}
-	
+
 	public String removeKep(String cikkszam, String sorszam)
 			throws IllegalArgumentException, SQLExceptionSer {
 
@@ -1014,15 +1031,15 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			query.setFilter("(this.cikkszam == pcikkszam) && (this.sorszam == psorszam)");
 			query.declareParameters("String pcikkszam,String psorszam");
 			@SuppressWarnings("unchecked")
-			List<Kep> list = (List<Kep>) pm.newQuery(query).execute(
-					cikkszam,sorszam);
+			List<Kep> list = (List<Kep>) pm.newQuery(query).execute(cikkszam,
+					sorszam);
 			if ((list != null) && (!list.isEmpty())) {
 				for (Kep l : list) {
 					l.setSzinkron(Boolean.FALSE);
 					l.setTorolt(Boolean.TRUE);
 				}
 			}
-		
+
 			Query query1 = pm.newQuery(Cikk.class);
 			query1.setFilter("cikkszam == pcikkszam");
 			query1.declareParameters("String pcikkszam");
@@ -1038,7 +1055,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					}
 				}
 			}
-		
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -1048,5 +1065,217 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return "OK";
 	}
 
-	
+	public List<CikkfotipusSer> getCikkfotipus()
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<CikkfotipusSer> cikkfotipus = new ArrayList<CikkfotipusSer>();
+
+		try {
+			Query query = pm.newQuery(Cikkfotipus.class);
+			@SuppressWarnings("unchecked")
+			List<Cikkfotipus> list = (List<Cikkfotipus>) pm.newQuery(query)
+					.execute();
+			if (!list.isEmpty()) {
+				for (Cikkfotipus l : list) {
+					CikkfotipusSer cikkfotipusSer = new CikkfotipusSer();
+					cikkfotipusSer.setKod(l.getKod());
+					cikkfotipusSer.setNev(l.getNev());
+					cikkfotipus.add(cikkfotipusSer);
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return cikkfotipus;
+	}
+
+	public CikkfotipusSer addCikkfotipus(CikkfotipusSer cikkfotipusSer)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+
+			Query query = pm.newQuery(Cikkfotipus.class);
+			@SuppressWarnings("unchecked")
+			List<Cikkfotipus> list = (List<Cikkfotipus>) pm.newQuery(query).execute();
+
+			Integer kod = Integer.valueOf(list.size() + 1);
+			Cikkfotipus cikkfotipus = new Cikkfotipus(kod.toString(),
+					cikkfotipusSer.getNev(),Boolean.FALSE);
+			pm.makePersistent(cikkfotipus);
+
+			cikkfotipusSer.setKod(kod.toString());
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return cikkfotipusSer;
+	}
+
+	public CikkfotipusSer updateCikkfotipus(CikkfotipusSer cikkfotipusSer)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+
+			Query query = pm.newQuery(Cikkfotipus.class);
+			query.setFilter("this.kod == pkod");
+			query.declareParameters("String pkod");
+			@SuppressWarnings("unchecked")
+			List<Cikkfotipus> list = (List<Cikkfotipus>) pm.newQuery(query).execute(
+					cikkfotipusSer.getKod());
+			if ((list != null) && (!list.isEmpty())) {
+				for (Cikkfotipus l : list) {
+					l.setNev(cikkfotipusSer.getNev());
+					l.setSzinkron(Boolean.FALSE);
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return cikkfotipusSer;
+	}
+
+	public List<CikkaltipusSer> getCikkaltipus(String fokod)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<CikkaltipusSer> cikkaltipus = new ArrayList<CikkaltipusSer>();
+
+		try {
+			Query query = pm.newQuery(Cikkaltipus.class);
+			query.setFilter("this.fokod == pfokod");
+			query.declareParameters("String pfokod");
+			@SuppressWarnings("unchecked")
+			List<Cikkaltipus> list = (List<Cikkaltipus>) pm.newQuery(query)
+					.execute(fokod);
+			if (!list.isEmpty()) {
+				for (Cikkaltipus l : list) {
+					CikkaltipusSer cikkaltipusSer = new CikkaltipusSer();
+					cikkaltipusSer.setFokod(l.getFokod());
+					cikkaltipusSer.setKod(l.getKod());
+					cikkaltipusSer.setNev(l.getNev());
+					cikkaltipus.add(cikkaltipusSer);
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return cikkaltipus;
+	}
+
+	public CikkaltipusSer addCikkaltipus(CikkaltipusSer cikkaltipusSer)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+
+			Query query = pm.newQuery(Cikkaltipus.class);
+			@SuppressWarnings("unchecked")
+			List<Cikkaltipus> list = (List<Cikkaltipus>) pm.newQuery(query).execute();
+
+			Integer kod = Integer.valueOf(list.size() + 1);
+			Cikkaltipus cikkaltipus = new Cikkaltipus(cikkaltipusSer.getFokod(),kod.toString(),
+					cikkaltipusSer.getNev(),Boolean.FALSE);
+			pm.makePersistent(cikkaltipus);
+
+			cikkaltipusSer.setKod(kod.toString());
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return cikkaltipusSer;
+	}
+
+	public CikkaltipusSer updateCikkaltipus(CikkaltipusSer cikkaltipusSer)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+
+			Query query = pm.newQuery(Cikkaltipus.class);
+			query.setFilter("(this.fokod == pfokod) && (this.kod == pkod)");
+			query.declareParameters("String pfokod,String pkod");
+			@SuppressWarnings("unchecked")
+			List<Cikkaltipus> list = (List<Cikkaltipus>) pm.newQuery(query).execute(
+					cikkaltipusSer.getFokod(),cikkaltipusSer.getKod());
+			if ((list != null) && (!list.isEmpty())) {
+				for (Cikkaltipus l : list) {
+					l.setNev(cikkaltipusSer.getNev());
+					l.setSzinkron(Boolean.FALSE);
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return cikkaltipusSer;
+	}
+
+	public CikkSelectsSer getCikkSelects()
+			throws IllegalArgumentException, SQLExceptionSer {
+		
+		CikkSelectsSer cikkSelectsSer = new CikkSelectsSer();
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		try {
+			Query query = pm.newQuery(Cikkfotipus.class);
+			@SuppressWarnings("unchecked")
+			List<Cikkfotipus> list = (List<Cikkfotipus>) pm.newQuery(query)
+					.execute();
+			if (!list.isEmpty()) {
+				for (Cikkfotipus l : list) {
+					cikkSelectsSer.getFotipus().put(l.getKod(), l.getNev());
+					
+					Query subquery = pm.newQuery(Cikkaltipus.class);
+					subquery.setFilter("this.fokod == pfokod");
+					subquery.declareParameters("String pfokod");
+					@SuppressWarnings("unchecked")
+					List<Cikkaltipus> sublist = (List<Cikkaltipus>) pm.newQuery(subquery)
+							.execute(l.getKod());
+					
+					if (!sublist.isEmpty()) {
+						LinkedHashMap<String, String> altipus = new LinkedHashMap<String, String>();
+						for (Cikkaltipus subl :sublist) {
+							altipus.put(subl.getKod(), subl.getNev());
+							cikkSelectsSer.getAltipus().put(subl.getKod(), subl.getNev());
+						}	
+						cikkSelectsSer.getTipus().put(l.getKod(),altipus);
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+		
+		
+		return cikkSelectsSer;
+	}
+
 }

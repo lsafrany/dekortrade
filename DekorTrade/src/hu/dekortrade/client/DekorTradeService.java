@@ -1,6 +1,9 @@
 package hu.dekortrade.client;
 
+import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.CikkSer;
+import hu.dekortrade.shared.serialized.CikkaltipusSer;
+import hu.dekortrade.shared.serialized.CikkfotipusSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
@@ -13,7 +16,6 @@ import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoSer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -78,22 +80,22 @@ public interface DekorTradeService extends RemoteService {
 
 	List<VevoSer> getVevo() throws Exception, SQLExceptionSer;
 
-	List<CikkSer> getCikk(int page, String cikkszam, String jel)
+	List<CikkSer> getCikk(int page, String fotipus, String altipus, String cikkszam)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	CikkSer addCikk(CikkSer cikkSer) throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	CikkSer updateCikk(CikkSer cikkSer)
-			throws IllegalArgumentException, SQLExceptionSer;
-
-	CikkSer removeCikk(CikkSer ctorzsSer)
-			throws IllegalArgumentException, SQLExceptionSer;
-
-	ArrayList<RendeltSer> getRendelt() throws IllegalArgumentException,
+	CikkSer updateCikk(CikkSer cikkSer) throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	ArrayList<RendeltcikkSer> getRendeltcikk(String rovidnev, String rendeles)
+	CikkSer removeCikk(CikkSer ctorzsSer) throws IllegalArgumentException,
+			SQLExceptionSer;
+
+	List<RendeltSer> getRendelt() throws IllegalArgumentException,
+			SQLExceptionSer;
+
+	List<RendeltcikkSer> getRendeltcikk(String rovidnev, String rendeles)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	SzinkronSer szinkron() throws IllegalArgumentException, SQLExceptionSer;
@@ -101,12 +103,33 @@ public interface DekorTradeService extends RemoteService {
 	String teljesszinkron() throws IllegalArgumentException, SQLExceptionSer;
 
 	String initUploadFileStatus() throws IllegalArgumentException;
-	
+
 	UploadSer getUploadFileStatus() throws IllegalArgumentException;
 
-	ArrayList<String> getKep(String cikkszam) throws IllegalArgumentException,SQLExceptionSer;
+	List<String> getKep(String cikkszam) throws IllegalArgumentException,
+			SQLExceptionSer;
 
 	String removeKep(String cikkszam, String rorszam)
 			throws IllegalArgumentException, SQLExceptionSer;
 
+	List<CikkfotipusSer> getCikkfotipus() throws IllegalArgumentException,
+			SQLExceptionSer;
+
+	CikkfotipusSer addCikkfotipus(CikkfotipusSer rcikkfotipusSe)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	CikkfotipusSer updateCikkfotipus(CikkfotipusSer cikkfotipusSer)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	List<CikkaltipusSer> getCikkaltipus(String fokod) throws IllegalArgumentException,
+			SQLExceptionSer;
+
+	CikkaltipusSer addCikkaltipus(CikkaltipusSer cikktipusSer)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	CikkaltipusSer updateCikkaltipus(CikkaltipusSer cikktipusSer)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	CikkSelectsSer getCikkSelects()
+			throws IllegalArgumentException, SQLExceptionSer;
 }

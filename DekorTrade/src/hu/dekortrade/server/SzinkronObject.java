@@ -96,10 +96,10 @@ public class SzinkronObject {
 			List<CikkSzinkron> cikklistszinkron = new ArrayList<CikkSzinkron>();
 			if ((cikklist != null) && (!cikklist.isEmpty())) {
 				for (Cikk l : cikklist) {
-					CikkSzinkron cikkSzinkron = new CikkSzinkron(
+					CikkSzinkron cikkSzinkron = new CikkSzinkron(l.getFotipus(),l.getAltipus(),
 							l.getCikkszam(), l.getMegnevezes(), l.getAr(),
 							l.getKiskarton(), l.getDarab(), l.getTerfogat(),
-							l.getJel(), l.getBsuly(), l.getNsuly(),
+							l.getBsuly(), l.getNsuly(),
 							l.getKepek(), l.getTorolt());
 					cikklistszinkron.add(cikkSzinkron);
 					l.setSzinkron(Boolean.TRUE);

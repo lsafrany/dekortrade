@@ -6,7 +6,7 @@ import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -50,7 +50,7 @@ public class KepDataSource extends GwtRpcDataSource {
 		cikkszam =  request.getAttributeAsString(
 					CtorzsConstants.CIKK_CIKKSZAM);
 		dekorTradeService.getKep(cikkszam
-					,new AsyncCallback<ArrayList<String>>() {
+					,new AsyncCallback<List<String>>() {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof SQLExceptionSer)
 					response.setAttribute(ClientConstants.SERVER_SQLERROR,
@@ -62,7 +62,7 @@ public class KepDataSource extends GwtRpcDataSource {
 				processResponse(requestId, response);
 			}
 
-			public void onSuccess(ArrayList<String> result) {
+			public void onSuccess(List<String> result) {
 				ListGridRecord[] list = new ListGridRecord[result.size()];
 				for (int i = 0; i < result.size(); i++) {
 					ListGridRecord record = new ListGridRecord();

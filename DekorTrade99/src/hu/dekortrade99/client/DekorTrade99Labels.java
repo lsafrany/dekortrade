@@ -30,4 +30,12 @@ public interface DekorTrade99Labels extends Constants {
 
 	String menu_archive();
 
+	String info1();
+	String info2();
+	String info3();
+	String cim();
+	String telefon();
+	String fax();
+	String email();
+	
 }

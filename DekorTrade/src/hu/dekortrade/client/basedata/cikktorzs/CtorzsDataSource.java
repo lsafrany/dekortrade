@@ -7,6 +7,7 @@ import hu.dekortrade.client.GwtRpcDataSource;
 import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -32,19 +33,35 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 
 	private CtorzsLabels ctorzsLabels = GWT.create(CtorzsLabels.class);
 
-	public CtorzsDataSource() {
+	public CtorzsDataSource(final LinkedHashMap<String, String> fotipus, final LinkedHashMap<String, String> altipus) {
 
 		TextItem textItem = new TextItem();
 		textItem.setWidth("400");
 
-		final SelectItem selectItem = new SelectItem();
-		selectItem.setValueMap(ClientConstants.getJelek());
-		selectItem.setWidth("200");
+		final SelectItem fotipusSelectItem = new SelectItem();
+		fotipusSelectItem.setValueMap(fotipus);
+		fotipusSelectItem.setWidth("200");
+
+		final SelectItem altipusSelectItem = new SelectItem();
+		altipusSelectItem.setValueMap(new LinkedHashMap<String, String>());
+		altipusSelectItem.setWidth("200");
 
 		IsFloatValidator isFloatValidator = new IsFloatValidator();
 		IsIntegerValidator isIntegerValidator = new IsIntegerValidator();
 
 		DataSourceField field;
+
+		field = new DataSourceTextField(CtorzsConstants.CIKK_FOTIPUS,
+				ctorzsLabels.cikk_fotipus());
+		field.setEditorProperties(fotipusSelectItem);
+		field.setValueMap(fotipus);
+		addField(field);
+
+		field = new DataSourceTextField(CtorzsConstants.CIKK_ALTIPUS,
+				ctorzsLabels.cikk_altipus());
+		field.setEditorProperties(altipusSelectItem);
+		field.setValueMap(altipus);
+		addField(field);
 
 		field = new DataSourceTextField(CtorzsConstants.CIKK_CIKKSZAM,
 				ctorzsLabels.cikk_cikkszam());
@@ -82,12 +99,6 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceTextField(CtorzsConstants.CIKK_JEL,
-				ctorzsLabels.cikk_jel());
-		field.setEditorProperties(selectItem);
-		field.setValueMap(ClientConstants.getJelek());
-		addField(field);
-
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_BSULY,
 				ctorzsLabels.cikk_bsuly());
 		field.setLength(10);
@@ -114,9 +125,11 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 				request.getCriteria().getAttributeAsInt(
 						CtorzsConstants.CTORZS_PAGE),
 				request.getCriteria().getAttributeAsString(
-						CtorzsConstants.CIKK_CIKKSZAM),
+						CtorzsConstants.CIKK_FOTIPUS),
 				request.getCriteria().getAttributeAsString(
-						CtorzsConstants.CIKK_JEL),
+								CtorzsConstants.CIKK_ALTIPUS),
+				request.getCriteria().getAttributeAsString(
+						CtorzsConstants.CIKK_CIKKSZAM),
 				new AsyncCallback<List<CikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -249,19 +262,22 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(CikkSer from, ListGridRecord to) {
+		to.setAttribute(CtorzsConstants.CIKK_FOTIPUS, from.getFotipus());
+		to.setAttribute(CtorzsConstants.CIKK_ALTIPUS, from.getAltipus());
 		to.setAttribute(CtorzsConstants.CIKK_CIKKSZAM, from.getCikkszam());
 		to.setAttribute(CtorzsConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
 		to.setAttribute(CtorzsConstants.CIKK_AR, from.getAr());
 		to.setAttribute(CtorzsConstants.CIKK_KISKARTON, from.getKiskarton());
 		to.setAttribute(CtorzsConstants.CIKK_DARAB, from.getDarab());
 		to.setAttribute(CtorzsConstants.CIKK_TERFOGAT, from.getTerfogat());
-		to.setAttribute(CtorzsConstants.CIKK_JEL, from.getJel());
 		to.setAttribute(CtorzsConstants.CIKK_BSULY, from.getBsuly());
 		to.setAttribute(CtorzsConstants.CIKK_NSULY, from.getNsuly());
 		to.setAttribute(CtorzsConstants.CIKK_KEPEK, from.getKepek());
 	}
 
 	private static void copyValues(ListGridRecord from, CikkSer to) {
+		to.setFotipus(from.getAttributeAsString(CtorzsConstants.CIKK_FOTIPUS));
+		to.setAltipus(from.getAttributeAsString(CtorzsConstants.CIKK_ALTIPUS));
 		to.setCikkszam(from
 				.getAttributeAsString(CtorzsConstants.CIKK_CIKKSZAM));
 		to.setMegnevezes(from
@@ -272,7 +288,6 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 		to.setDarab(from.getAttributeAsInt(CtorzsConstants.CIKK_DARAB));
 		to.setTerfogat(from
 				.getAttributeAsDouble(CtorzsConstants.CIKK_TERFOGAT));
-		to.setJel(from.getAttributeAsString(CtorzsConstants.CIKK_JEL));
 		to.setBsuly(from
 				.getAttributeAsDouble(CtorzsConstants.CIKK_BSULY));
 		to.setNsuly(from

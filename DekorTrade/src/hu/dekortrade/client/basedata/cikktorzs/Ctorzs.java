@@ -6,8 +6,11 @@ import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.shared.Constants;
+import hu.dekortrade.shared.serialized.CikkSelectsSer;
+import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.UploadSer;
 
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 import com.google.gwt.core.client.GWT;
@@ -36,6 +39,8 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.UploadItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
@@ -63,6 +68,43 @@ public class Ctorzs {
 	private String sorszam = "";
 	
 	public Canvas get(final IButton extIButton) {
+		DisplayRequest.counterInit();
+		
+		final HLayout middleLayout = new HLayout();
+		middleLayout.setAlign(Alignment.CENTER);
+		middleLayout.setStyleName("middle");
+
+		final VLayout loadLayout = new VLayout();
+		loadLayout.setAlign(Alignment.CENTER);
+
+		Label loadLabel = new Label(commonLabels.loading());
+		loadLabel.setAlign(Alignment.CENTER);
+		loadLayout.addMember(loadLabel);
+
+		middleLayout.addMember(loadLayout);
+
+		DisplayRequest.startRequest();
+		dekorTradeService.getCikkSelects(new AsyncCallback<CikkSelectsSer>() {
+			public void onFailure(Throwable caught) {
+				DisplayRequest.serverResponse();
+				if (caught instanceof SQLExceptionSer)
+					SC.warn(commonLabels.server_sqlerror() + " : "
+							+ caught.getMessage());
+				else
+					SC.warn(commonLabels.server_error());
+			}
+
+			public void onSuccess(final CikkSelectsSer result) {
+				DisplayRequest.serverResponse();	
+				middleLayout.removeMembers(middleLayout.getMembers());
+				middleLayout.addMember(process(extIButton,result));
+			}
+		});
+		return middleLayout;
+
+	}
+	
+	public Canvas process(final IButton extIButton,final CikkSelectsSer cikkSelectsSer) {
 
 		DisplayRequest.counterInit();
 
@@ -80,20 +122,26 @@ public class Ctorzs {
 		ctorzsFormLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 
 		final DynamicForm ctorzsForm = new DynamicForm();
-		ctorzsForm.setNumCols(4);
-		ctorzsForm.setColWidths("10%", "25%", "10%", "*");
+		ctorzsForm.setNumCols(6);
+		ctorzsForm.setColWidths("10%", "15%", "10%", "15%", "10%", "*");
+
+		final SelectItem fotipusSelectItem = new SelectItem();
+		fotipusSelectItem.setWidth("180");
+		fotipusSelectItem.setAllowEmptyValue(true);
+		fotipusSelectItem.setTitle(ctorzsLabels.cikk_fotipus());
+		fotipusSelectItem.setValueMap(cikkSelectsSer.getFotipus());
+
+		final SelectItem altipusSelectItem = new SelectItem();
+		altipusSelectItem.setWidth("180");
+		altipusSelectItem.setAllowEmptyValue(true);
+		altipusSelectItem.setTitle(ctorzsLabels.cikk_altipus());
+		altipusSelectItem.setValueMap(new LinkedHashMap<String, String>());
 
 		final TextItem cikkszamItem = new TextItem();
 		cikkszamItem.setTitle(ctorzsLabels.cikk_cikkszam());
 		cikkszamItem.setLength(15);
 
-		final SelectItem jelSelectItem = new SelectItem();
-		jelSelectItem.setWidth("250");
-		jelSelectItem.setAllowEmptyValue(true);
-		jelSelectItem.setTitle(ctorzsLabels.cikk_jel());
-		jelSelectItem.setValueMap(ClientConstants.getJelek());
-
-		ctorzsForm.setFields(cikkszamItem, jelSelectItem);
+		ctorzsForm.setFields(fotipusSelectItem, altipusSelectItem, cikkszamItem);
 
 		final IButton szuresIButton = new IButton(commonLabels.filter());
 		szuresIButton.setDisabled(true);
@@ -109,7 +157,7 @@ public class Ctorzs {
 		ctorzsGridLayout.setAlign(Alignment.CENTER);
 		ctorzsGridLayout.setHeight("75%");
 
-		final CtorzsDataSource ctorzsDataSource = new CtorzsDataSource() {
+		final CtorzsDataSource ctorzsDataSource = new CtorzsDataSource(cikkSelectsSer.getFotipus(),cikkSelectsSer.getAltipus()) {
 
 			protected Object transformRequest(DSRequest dsRequest) {
 				DisplayRequest.startRequest();
@@ -158,10 +206,12 @@ public class Ctorzs {
 		ctorzsGrid.setExpansionMode(ExpansionMode.DETAILS);
 		Criteria criteria = new Criteria();
 		criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
+		criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
+				fotipusSelectItem.getValueAsString());
+		criteria.setAttribute(CtorzsConstants.CIKK_ALTIPUS,
+				altipusSelectItem.getValueAsString());
 		criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 				cikkszamItem.getValueAsString());
-		criteria.setAttribute(CtorzsConstants.CIKK_JEL,
-				jelSelectItem.getValueAsString());
 		ctorzsGrid.fetchData(criteria);
 
 		ListGridField cikkszamGridField = new ListGridField(
@@ -170,21 +220,25 @@ public class Ctorzs {
 
 		ListGridField megnevezesGridField = new ListGridField(
 				CtorzsConstants.CIKK_MEGNEVEZES);
+		
+		ListGridField kiskartonGridField = new ListGridField(
+				CtorzsConstants.CIKK_KISKARTON);
+		kiskartonGridField.setWidth("15%");
+
+		ListGridField darabGridField = new ListGridField(
+				CtorzsConstants.CIKK_DARAB);
+		darabGridField.setWidth("15%");
 
 		ListGridField arGridField = new ListGridField(CtorzsConstants.CIKK_AR);
 		arGridField.setWidth("10%");
-
-		ListGridField jelGridField = new ListGridField(
-				CtorzsConstants.CIKK_JEL);
-		jelGridField.setWidth("25%");
 
 		ListGridField kepekGridField = new ListGridField(
 				CtorzsConstants.CIKK_KEPEK);
 		kepekGridField.setWidth("10%");
 
 		ctorzsGrid
-				.setFields(cikkszamGridField, megnevezesGridField, arGridField,
-						jelGridField, kepekGridField);
+				.setFields(cikkszamGridField, megnevezesGridField, arGridField, kiskartonGridField, darabGridField,
+						kepekGridField);
 
 		ctorzsGridLayout.addMember(ctorzsGrid);
 
@@ -258,10 +312,12 @@ public class Ctorzs {
 				Criteria criteria = new Criteria();
 				page = 0;
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
+				criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
+						fotipusSelectItem.getValueAsString());
+				criteria.setAttribute(CtorzsConstants.CIKK_ALTIPUS,
+						altipusSelectItem.getValueAsString());
 				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
-						jelSelectItem.getValueAsString());
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
 				previousIButton.setDisabled(true);
@@ -284,10 +340,12 @@ public class Ctorzs {
 				Criteria criteria = new Criteria();
 				page = page - 1;
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
+				criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
+						fotipusSelectItem.getValueAsString());
+				criteria.setAttribute(CtorzsConstants.CIKK_ALTIPUS,
+						altipusSelectItem.getValueAsString());
 				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
-						jelSelectItem.getValueAsString());
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
 				previousIButton.setDisabled(true);
@@ -310,10 +368,12 @@ public class Ctorzs {
 				Criteria criteria = new Criteria();
 				page = page + 1;
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
+				criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
+						fotipusSelectItem.getValueAsString());
+				criteria.setAttribute(CtorzsConstants.CIKK_ALTIPUS,
+						altipusSelectItem.getValueAsString());
 				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
-						jelSelectItem.getValueAsString());
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
 				previousIButton.setDisabled(true);
@@ -490,13 +550,13 @@ public class Ctorzs {
 
 		addButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ctorzsEdit(ctorzsDataSource, ctorzsGrid, Boolean.TRUE);
+				ctorzsEdit(ctorzsDataSource, ctorzsGrid, Boolean.TRUE, cikkSelectsSer);
 			}
 		});
 
 		modifyButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ctorzsEdit(ctorzsDataSource, ctorzsGrid, Boolean.FALSE);
+				ctorzsEdit(ctorzsDataSource, ctorzsGrid, Boolean.FALSE, cikkSelectsSer);
 			}
 		});
 
@@ -522,6 +582,15 @@ public class Ctorzs {
 			}
 		});
 		
+		fotipusSelectItem.addChangedHandler(new ChangedHandler() {
+			public void onChanged(ChangedEvent event) {
+				altipusSelectItem.clearValue();
+				LinkedHashMap<String, String> altipus = cikkSelectsSer.getTipus().get(event.getValue());
+				if (altipus == null) altipusSelectItem.setValueMap(new LinkedHashMap<String, String>());
+				else altipusSelectItem.setValueMap(altipus);
+			}
+		});
+		
 		middleLayout.addMember(ctorzsLayout);
 
 		return middleLayout;
@@ -532,7 +601,7 @@ public class Ctorzs {
 		return cikkszam;
 	}
 
-	void ctorzsEdit(CtorzsDataSource dataSource, ListGrid listGrid, boolean uj) {
+	void ctorzsEdit(final CtorzsDataSource dataSource, final ListGrid listGrid, boolean uj,final CikkSelectsSer cikkSelectsSer) {
 
 		final Window winModal = new Window();
 		winModal.setWidth(600);
@@ -550,12 +619,28 @@ public class Ctorzs {
 		editForm.setDataSource(dataSource);
 		editForm.setUseAllDataSourceFields(true);
 
-		if (uj)
+		if (uj)  {
 			editForm.editNewRecord();
+			editForm.getField(CtorzsConstants.CIKK_FOTIPUS).setDefaultValue("1");
+			editForm.getField(CtorzsConstants.CIKK_ALTIPUS).setDefaultValue("1");
+		}
 		else {
-			editForm.getField(CtorzsConstants.CIKK_CIKKSZAM).setCanEdit(false);		
+			editForm.getField(CtorzsConstants.CIKK_CIKKSZAM).setCanEdit(false);	
 			editForm.editSelectedData(listGrid);
 		}
+		
+		LinkedHashMap<String, String> altipus = cikkSelectsSer.getTipus().get(editForm.getField(CtorzsConstants.CIKK_FOTIPUS).getValue());
+		if (altipus == null) editForm.getField(CtorzsConstants.CIKK_ALTIPUS).setValueMap(new LinkedHashMap<String, String>());
+		else editForm.getField(CtorzsConstants.CIKK_ALTIPUS).setValueMap(altipus);		
+	
+		editForm.getField(CtorzsConstants.CIKK_FOTIPUS).addChangedHandler(new ChangedHandler() {
+			public void onChanged(ChangedEvent event) {
+				editForm.getField(CtorzsConstants.CIKK_ALTIPUS).clearValue();
+				LinkedHashMap<String, String> altipus = cikkSelectsSer.getTipus().get(event.getValue());
+				if (altipus == null) editForm.getField(CtorzsConstants.CIKK_ALTIPUS).setValueMap(new LinkedHashMap<String, String>());
+				else editForm.getField(CtorzsConstants.CIKK_ALTIPUS).setValueMap(altipus);
+			}
+		});
 		
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);

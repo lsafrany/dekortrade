@@ -1,6 +1,7 @@
 package hu.dekortrade.client.basedata;
 
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.client.basedata.cikktipus.Cikktipus;
 import hu.dekortrade.client.basedata.cikktorzs.Ctorzs;
 import hu.dekortrade.client.basedata.szallito.Szallito;
 import hu.dekortrade.client.basedata.vevo.Vevo;
@@ -39,6 +40,11 @@ public class Basedata {
 		Vevo vevo = new Vevo();
 		vevoTab.setPane(vevo.get());
 		tabSet.addTab(vevoTab);
+
+		final Tab cikktipusTab = new Tab(basedataLabels.cikktipusok());
+		Cikktipus cikktipus = new Cikktipus();
+		cikktipusTab.setPane(cikktipus.get());
+		tabSet.addTab(cikktipusTab);
 
 		final Tab ctorzsTab = new Tab(basedataLabels.cikkek());
 		Ctorzs ctorzs = new Ctorzs();

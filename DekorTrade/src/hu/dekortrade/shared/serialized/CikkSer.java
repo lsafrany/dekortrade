@@ -4,6 +4,10 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class CikkSer implements IsSerializable {
 
+	private String fotipus;
+	
+	private String altipus;
+	
 	private String cikkszam;
 
 	private String megnevezes;
@@ -16,13 +20,27 @@ public class CikkSer implements IsSerializable {
 
 	private Double terfogat;
 
-	private String jel;
-
 	private Double bsuly;
 
 	private Double nsuly;
 
 	private Integer kepek;
+
+	public String getFotipus() {
+		return fotipus;
+	}
+
+	public void setFotipus(String fotipus) {
+		this.fotipus = fotipus;
+	}
+
+	public String getAltipus() {
+		return altipus;
+	}
+
+	public void setAltipus(String altipus) {
+		this.altipus = altipus;
+	}
 
 	public String getCikkszam() {
 		return cikkszam;
@@ -70,14 +88,6 @@ public class CikkSer implements IsSerializable {
 
 	public void setTerfogat(Double terfogat) {
 		this.terfogat = terfogat;
-	}
-
-	public String getJel() {
-		return jel;
-	}
-
-	public void setJel(String jel) {
-		this.jel = jel;
 	}
 
 	public Double getBsuly() {

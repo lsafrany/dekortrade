@@ -17,6 +17,16 @@
   </servlet>
  
   <servlet>
+    <servlet-name>uploadfokodServlet</servlet-name>
+    <servlet-class>hu.dekortrade.server.Uploadfokod</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>uploadalkodServlet</servlet-name>
+    <servlet-class>hu.dekortrade.server.Uploadalkod</servlet-class>
+  </servlet>
+ 
+  <servlet>
     <servlet-name>downloadServlet</servlet-name>
     <servlet-class>hu.dekortrade.server.Download</servlet-class>
   </servlet>
@@ -39,6 +49,16 @@
   <servlet-mapping>
     <servlet-name>uploadServlet</servlet-name>
     <url-pattern>/dekortrade/upload</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+    <servlet-name>uploadfokodServlet</servlet-name>
+    <url-pattern>/dekortrade/uploadfokod</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>uploadalkodServlet</servlet-name>
+    <url-pattern>/dekortrade/uploadalkod</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
