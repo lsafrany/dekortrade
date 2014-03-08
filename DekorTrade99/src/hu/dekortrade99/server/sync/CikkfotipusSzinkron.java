@@ -1,4 +1,4 @@
-package hu.dekortrade.server.sync;
+package hu.dekortrade99.server.sync;
 
 import com.google.appengine.api.datastore.Blob;
 

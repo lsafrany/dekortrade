@@ -1,22 +1,30 @@
-package hu.dekortrade.server.sync;
+package hu.dekortrade99.server.jdo;
+
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Blob;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class CikkaltipusSzinkron  {
+@PersistenceCapable
+public class Cikkaltipus implements IsSerializable {
 
+	@Persistent
 	private String fokod;
-	
+
+	@Persistent
 	private String kod;
 
+	@Persistent
 	private String nev;
 
+	@Persistent
 	private Blob blob;
 	
-	public CikkaltipusSzinkron() {
-		
-	}
+	@Persistent
+	private Boolean szinkron;
 
-	public CikkaltipusSzinkron(String fokod, String kod, String nev, Blob blob) {
+	public Cikkaltipus(String fokod, String kod, String nev, Blob blob) {
 		this.fokod = fokod;
 		this.kod = kod;
 		this.nev = nev;
@@ -55,5 +63,12 @@ public class CikkaltipusSzinkron  {
 		this.blob = blob;
 	}
 
+	public Boolean getSzinkron() {
+		return szinkron;
+	}
+
+	public void setSzinkron(Boolean szinkron) {
+		this.szinkron = szinkron;
+	}
 	
 }

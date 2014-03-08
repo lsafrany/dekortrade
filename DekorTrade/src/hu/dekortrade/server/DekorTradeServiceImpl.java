@@ -1274,7 +1274,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 		
-		
 		return cikkSelectsSer;
 	}
 

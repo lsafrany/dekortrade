@@ -3,20 +3,10 @@ package hu.dekortrade.shared.serialized;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class CikkfotipusSer implements IsSerializable {
-
-	private String fokod;
 	
 	private String kod;
 
 	private String nev;
-
-	public String getFokod() {
-		return fokod;
-	}
-
-	public void setFokod(String fokod) {
-		this.fokod = fokod;
-	}
 
 	public String getKod() {
 		return kod;

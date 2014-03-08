@@ -3,12 +3,16 @@
 package hu.dekortrade99.server;
 
 import hu.dekortrade99.server.jdo.Cikk;
+import hu.dekortrade99.server.jdo.Cikkaltipus;
+import hu.dekortrade99.server.jdo.Cikkfotipus;
 import hu.dekortrade99.server.jdo.Kep;
 import hu.dekortrade99.server.jdo.PMF;
 import hu.dekortrade99.server.jdo.Rendelt;
 import hu.dekortrade99.server.jdo.Rendeltcikk;
 import hu.dekortrade99.server.jdo.Vevo;
 import hu.dekortrade99.server.sync.CikkSzinkron;
+import hu.dekortrade99.server.sync.CikkaltipusSzinkron;
+import hu.dekortrade99.server.sync.CikkfotipusSzinkron;
 import hu.dekortrade99.server.sync.KepSzinkron;
 import hu.dekortrade99.server.sync.RendeltSzinkron;
 import hu.dekortrade99.server.sync.RendeltcikkSzinkron;
@@ -138,6 +142,12 @@ public class Syncron extends HttpServlet {
 				Query vevoQuery = pm.newQuery(Vevo.class);
 				vevoQuery.deletePersistentAll();
 				
+				Query cikkfotipusQuery = pm.newQuery(Cikkfotipus.class);
+				cikkfotipusQuery.deletePersistentAll();
+
+				Query cikkaltipusQuery = pm.newQuery(Cikkaltipus.class);
+				cikkaltipusQuery.deletePersistentAll();
+
 				Query cikkQuery = pm.newQuery(Cikk.class);
 				cikkQuery.deletePersistentAll();
 				
@@ -234,6 +244,137 @@ public class Syncron extends HttpServlet {
 			
 			out.println("Vevo - OK");
 
+		} else if (tabla.equals("cikkfotipus")) {
+			
+			out.println("Cikkfotipus - START");
+
+			log.info("cikkfotipus");
+						
+			// 1. get received JSON data from request
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					request.getInputStream(),"UTF-8"));
+			String json = "";
+			if (br != null) {
+				json = br.readLine();
+			}
+
+			// 2. initiate jackson mapper
+			ObjectMapper mapper = new ObjectMapper();
+
+			// 3. Convert received JSON to Article
+			List<CikkfotipusSzinkron> list = mapper.readValue(json,
+					new TypeReference<List<CikkfotipusSzinkron>>() {
+					});
+			
+			if ((list != null) && (!list.isEmpty())) {
+
+				PersistenceManager pm = PMF.get().getPersistenceManager();
+//				Transaction tx = pm.currentTransaction();
+//				tx.begin();
+				try {
+					for (CikkfotipusSzinkron l : list) {
+
+						Query query = pm.newQuery(Cikkfotipus.class);
+						query.setFilter("this.kod == pkod");
+						query.declareParameters("String pkod");
+						@SuppressWarnings("unchecked")
+						List<Cikkfotipus> list1 = (List<Cikkfotipus>) pm.newQuery(query)
+								.execute(l.getKod());
+						if (!list1.isEmpty()) {
+							for (Cikkfotipus l1 : list1) {
+								l1.setNev(l.getNev());
+								l1.setBlob(l.getBlob());
+							}
+						} else {
+
+							Cikkfotipus cikkfotipus = new Cikkfotipus(
+									l.getKod(),
+									l.getNev(),
+									l.getBlob());
+							pm.makePersistent(cikkfotipus);			
+						}
+					}
+//					tx.commit();
+				} catch (Exception e) {
+//					tx.rollback();
+					log.info(e.getMessage());
+					out.println("Cikkfotipus - ERROR");
+				} finally {
+					pm.close();
+				}
+
+			}
+
+			log.info("cikkfotipus - " + list.size());
+			
+			out.println("Cikkfotips - OK");
+
+		} else if (tabla.equals("cikkaltipus")) {
+			
+			out.println("Cikkaltipus - START");
+
+			log.info("cikkaltipus");
+						
+			// 1. get received JSON data from request
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					request.getInputStream(),"UTF-8"));
+			String json = "";
+			if (br != null) {
+				json = br.readLine();
+			}
+
+			// 2. initiate jackson mapper
+			ObjectMapper mapper = new ObjectMapper();
+
+			// 3. Convert received JSON to Article
+			List<CikkaltipusSzinkron> list = mapper.readValue(json,
+					new TypeReference<List<CikkaltipusSzinkron>>() {
+					});
+			
+			if ((list != null) && (!list.isEmpty())) {
+
+				PersistenceManager pm = PMF.get().getPersistenceManager();
+//				Transaction tx = pm.currentTransaction();
+//				tx.begin();
+				try {
+					for (CikkaltipusSzinkron l : list) {
+
+						Query query = pm.newQuery(Cikkaltipus.class);
+						query.setFilter("fokod == pfokod && kod == pkod");
+						query.declareParameters("String pfokod,String pkod");
+						@SuppressWarnings("unchecked")
+						List<Cikkaltipus> list1 = (List<Cikkaltipus>) pm.newQuery(query)
+								.execute(l.getFokod(),l.getKod());
+						if (!list1.isEmpty()) {
+							for (Cikkaltipus l1 : list1) {
+								l1.setNev(l.getNev());
+								l1.setBlob(l.getBlob());
+							}
+						} else {
+
+							Cikkaltipus cikkaltipus = new Cikkaltipus(
+									l.getFokod(),
+									l.getKod(),
+									l.getNev(),
+									l.getBlob());
+							pm.makePersistent(cikkaltipus);			
+						}
+					}
+//					tx.commit();
+				} catch (Exception e) {
+//					tx.rollback();
+					log.info(e.getMessage());
+					out.println("Cikkaltipus - ERROR");
+				} finally {
+					pm.close();
+				}
+
+			}
+
+			log.info("cikkaltipus - " + list.size());
+			
+			out.println("Cikkaltips - OK");
+
 		} else if (tabla.equals("cikk")) {
 			
 			out.println("Cikk - START");
@@ -272,12 +413,13 @@ public class Syncron extends HttpServlet {
 								.execute(l.getCikkszam());
 						if (!list1.isEmpty()) {
 							for (Cikk l1 : list1) {
+								l1.setFotipus(l.getFotipus());
+								l1.setAltipus(l.getAltipus());
 								l1.setMegnevezes(l.getMegnevezes());
 								l1.setAr(l.getAr());
 								l1.setKiskarton(l.getKiskarton());
 								l1.setDarab(l.getDarab());
 								l1.setTerfogat(l.getTerfogat());
-								l1.setJel(l.getJel());
 								l1.setBsuly(l.getBsuly());
 								l1.setNsuly(l.getNsuly());
 								l1.setKepek(l.getKepek());
@@ -285,13 +427,15 @@ public class Syncron extends HttpServlet {
 							}
 						} else {
 
-							Cikk cikk = new Cikk(l.getCikkszam(),
+							Cikk cikk = new Cikk(
+									l.getFotipus(),
+									l.getAltipus(),
+									l.getCikkszam(),
 									l.getMegnevezes(),
 									l.getAr(),
 									l.getKiskarton(),
 									l.getDarab(),
 									l.getTerfogat(),
-									l.getJel(),
 									l.getBsuly(),
 									l.getNsuly(),
 									l.getKepek(),

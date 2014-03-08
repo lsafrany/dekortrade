@@ -6,6 +6,10 @@ public class SzinkronSer implements IsSerializable {
 
 	private int uploadvevo = 0;
 	
+	private int uploadcikkfotipus = 0;
+	
+	private int uploadcikkaltipus = 0;
+	
 	private int uploadcikk = 0;
 
 	private int uploadkep = 0;
@@ -18,6 +22,22 @@ public class SzinkronSer implements IsSerializable {
 
 	public void setUploadvevo(int uploadvevo) {
 		this.uploadvevo = uploadvevo;
+	}
+	
+	public int getUploadcikkfotipus() {
+		return uploadcikkfotipus;
+	}
+
+	public void setUploadcikkfotipus(int uploadcikkfotipus) {
+		this.uploadcikkfotipus = uploadcikkfotipus;
+	}
+
+	public int getUploadcikkaltipus() {
+		return uploadcikkaltipus;
+	}
+
+	public void setUploadcikkaltipus(int uploadcikkaltipus) {
+		this.uploadcikkaltipus = uploadcikkaltipus;
 	}
 
 	public int getUploadcikk() {

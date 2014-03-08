@@ -1,23 +1,34 @@
-package hu.dekortrade.server.sync;
+package hu.dekortrade99.server.sync;
 
 import com.google.appengine.api.datastore.Blob;
 
-public class CikkfotipusSzinkron  {
+public class CikkaltipusSzinkron  {
 
+	private String fokod;
+	
 	private String kod;
 
 	private String nev;
 
 	private Blob blob;
 	
-	public CikkfotipusSzinkron() {
+	public CikkaltipusSzinkron() {
 		
 	}
 
-	public CikkfotipusSzinkron(String kod, String nev, Blob blob) {
+	public CikkaltipusSzinkron(String fokod, String kod, String nev, Blob blob) {
+		this.fokod = fokod;
 		this.kod = kod;
 		this.nev = nev;
 		this.blob = blob;
+	}
+
+	public String getFokod() {
+		return fokod;
+	}
+
+	public void setFokod(String fokod) {
+		this.fokod = fokod;
 	}
 
 	public String getKod() {
@@ -43,5 +54,6 @@ public class CikkfotipusSzinkron  {
 	public void setBlob(Blob blob) {
 		this.blob = blob;
 	}
+
 	
 }

@@ -69,7 +69,7 @@ public class Ctorzs {
 
 		final SelectItem jelSelectItem = new SelectItem();
 		jelSelectItem.setWidth("250");
-		jelSelectItem.setTitle(ctorzsLabels.cikk_jel());
+		jelSelectItem.setTitle(ctorzsLabels.cikk_fotipus());
 		jelSelectItem.setValueMap(ClientConstants.getJelek());
 
 		ctorzsForm.setFields(cikkszamItem, jelSelectItem);
@@ -133,8 +133,10 @@ public class Ctorzs {
 		criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
 		criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 				cikkszamItem.getValueAsString());
-		criteria.setAttribute(CtorzsConstants.CIKK_JEL,
+		criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
 				jelSelectItem.getValueAsString());
+		criteria.setAttribute(CtorzsConstants.CIKK_ALTIPUS,
+				jelSelectItem.getValueAsString());		
 		ctorzsGrid.fetchData(criteria);
 
 		ListGridField cikkszamGridField = new ListGridField(
@@ -147,17 +149,13 @@ public class Ctorzs {
 		ListGridField arGridField = new ListGridField(CtorzsConstants.CIKK_AR);
 		arGridField.setWidth("10%");
 
-		ListGridField jelGridField = new ListGridField(
-				CtorzsConstants.CIKK_JEL);
-		jelGridField.setWidth("25%");
-
 		ListGridField kepekGridField = new ListGridField(
 				CtorzsConstants.CIKK_KEPEK);
 		kepekGridField.setWidth("10%");
 
 		ctorzsGrid
 				.setFields(cikkszamGridField, megnevezesGridField, arGridField,
-						jelGridField, kepekGridField);
+						kepekGridField);
 
 		ctorzsGridLayout.addMember(ctorzsGrid);
 
@@ -193,8 +191,10 @@ public class Ctorzs {
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
 				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
+				criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
 						jelSelectItem.getValueAsString());
+				criteria.setAttribute(CtorzsConstants.CIKK_ALTIPUS,
+						jelSelectItem.getValueAsString());				
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
 				previousIButton.setDisabled(true);
@@ -214,8 +214,10 @@ public class Ctorzs {
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
 				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
+				criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
 						jelSelectItem.getValueAsString());
+				criteria.setAttribute(CtorzsConstants.CIKK_ALTIPUS,
+						jelSelectItem.getValueAsString());				
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
 				previousIButton.setDisabled(true);
@@ -235,8 +237,10 @@ public class Ctorzs {
 				criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
 				criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 						cikkszamItem.getValueAsString());
-				criteria.setAttribute(CtorzsConstants.CIKK_JEL,
+				criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
 						jelSelectItem.getValueAsString());
+				criteria.setAttribute(CtorzsConstants.CIKK_ALTIPUS,
+						jelSelectItem.getValueAsString());				
 				ctorzsGrid.fetchData(criteria);
 				szuresIButton.setDisabled(true);
 				previousIButton.setDisabled(true);

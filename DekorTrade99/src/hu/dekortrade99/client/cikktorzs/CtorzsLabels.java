@@ -6,6 +6,10 @@ public interface CtorzsLabels extends Constants {
 
 	String ctorzs();
 
+	String cikk_fotipus();
+	
+	String cikk_altipus();
+	
 	String cikk_cikkszam();
 
 	String cikk_megnevezes();
@@ -17,8 +21,6 @@ public interface CtorzsLabels extends Constants {
 	String cikk_darab();
 
 	String cikk_terfogat();
-
-	String cikk_jel();
 
 	String cikk_bsuly();
 

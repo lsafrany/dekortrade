@@ -126,7 +126,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		}
 	}
 
-	public ArrayList<CikkSer> getCikk(int page, String cikkszam, String jel)
+	public ArrayList<CikkSer> getCikk(int page, String cikkszam, String fotipus, String altipus)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -141,12 +141,19 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				params = params + "String pcikkszam";
 				parameters.put("pcikkszam", cikkszam);
 			}
-			if (jel != null) {
-				filter = filter + " && this.jel == pjel";
+			if (fotipus != null) {
+				filter = filter + " && this.fotipus == pfotipus";
 				if (!params.equals(""))
 					params = params + ",";
-				params = params + "String pjel";
-				parameters.put("pjel", jel);
+				params = params + "String pfotipus";
+				parameters.put("pfotipus", fotipus);
+			}
+			if (altipus != null) {
+				filter = filter + " && this.altipus == paltipus";
+				if (!params.equals(""))
+					params = params + ",";
+				params = params + "String paltipus";
+				parameters.put("paltipus", altipus);
 			}
 
 			Query query = pm.newQuery(Cikk.class);
@@ -161,13 +168,14 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			if (!list.isEmpty()) {
 				for (Cikk l : list) {
 					CikkSer cikkSer = new CikkSer();
+					cikkSer.setFotipus(l.getFotipus());
+					cikkSer.setAltipus(l.getAltipus());
 					cikkSer.setCikkszam(l.getCikkszam());
 					cikkSer.setMegnevezes(l.getMegnevezes());
 					cikkSer.setAr(l.getAr());
 					cikkSer.setKiskarton(l.getKiskarton());
 					cikkSer.setDarab(l.getDarab());
 					cikkSer.setTerfogat(l.getTerfogat());
-					cikkSer.setJel(l.getJel());
 					cikkSer.setBsuly(l.getBsuly());
 					cikkSer.setNsuly(l.getNsuly());
 					cikkSer.setKepek(l.getKepek());

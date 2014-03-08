@@ -30,6 +30,14 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 
 		DataSourceField field;
 
+		field = new DataSourceTextField(CtorzsConstants.CIKK_FOTIPUS,
+				ctorzsLabels.cikk_fotipus());
+		addField(field);
+
+		field = new DataSourceTextField(CtorzsConstants.CIKK_ALTIPUS,
+				ctorzsLabels.cikk_altipus());
+		addField(field);
+
 		field = new DataSourceTextField(CtorzsConstants.CIKK_CIKKSZAM,
 				ctorzsLabels.cikk_cikkszam());
 		field.setPrimaryKey(true);
@@ -55,11 +63,6 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 				ctorzsLabels.cikk_terfogat());
 		addField(field);
 
-		field = new DataSourceTextField(CtorzsConstants.CIKK_JEL,
-				ctorzsLabels.cikk_jel());
-		field.setValueMap(ClientConstants.getJelek());
-		addField(field);
-
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_BSULY,
 				ctorzsLabels.cikk_bsuly());
 		addField(field);
@@ -83,7 +86,9 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 				request.getCriteria().getAttributeAsString(
 						CtorzsConstants.CIKK_CIKKSZAM),
 				request.getCriteria().getAttributeAsString(
-						CtorzsConstants.CIKK_JEL),
+						CtorzsConstants.CIKK_FOTIPUS),
+				request.getCriteria().getAttributeAsString(
+								CtorzsConstants.CIKK_ALTIPUS),
 				new AsyncCallback<ArrayList<CikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -130,13 +135,14 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(CikkSer from, ListGridRecord to) {
+		to.setAttribute(CtorzsConstants.CIKK_FOTIPUS, from.getFotipus());
+		to.setAttribute(CtorzsConstants.CIKK_ALTIPUS, from.getAltipus());
 		to.setAttribute(CtorzsConstants.CIKK_CIKKSZAM, from.getCikkszam());
 		to.setAttribute(CtorzsConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
 		to.setAttribute(CtorzsConstants.CIKK_AR, from.getAr());
 		to.setAttribute(CtorzsConstants.CIKK_KISKARTON, from.getKiskarton());
 		to.setAttribute(CtorzsConstants.CIKK_DARAB, from.getDarab());
 		to.setAttribute(CtorzsConstants.CIKK_TERFOGAT, from.getTerfogat());
-		to.setAttribute(CtorzsConstants.CIKK_JEL, from.getJel());
 		to.setAttribute(CtorzsConstants.CIKK_BSULY, from.getBsuly());
 		to.setAttribute(CtorzsConstants.CIKK_NSULY, from.getNsuly());
 		to.setAttribute(CtorzsConstants.CIKK_KEPEK, from.getKepek());

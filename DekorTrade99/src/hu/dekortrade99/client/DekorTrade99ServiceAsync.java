@@ -22,7 +22,7 @@ public interface DekorTrade99ServiceAsync {
 			@SuppressWarnings("rawtypes") AsyncCallback callback)
 			throws IllegalArgumentException;
 
-	void getCikk(int page, String cikkszam, String jel,
+	void getCikk(int page, String cikkszam, String fotipus, String altipus,
 			AsyncCallback<ArrayList<CikkSer>> asyncCallback);
 
 	void getKosar(String rovidnev,

@@ -1,11 +1,15 @@
 package hu.dekortrade.server;
 
 import hu.dekortrade.server.jdo.Cikk;
+import hu.dekortrade.server.jdo.Cikkaltipus;
+import hu.dekortrade.server.jdo.Cikkfotipus;
 import hu.dekortrade.server.jdo.PMF;
 import hu.dekortrade.server.jdo.Rendelt;
 import hu.dekortrade.server.jdo.Rendeltcikk;
 import hu.dekortrade.server.jdo.Vevo;
 import hu.dekortrade.server.sync.CikkSzinkron;
+import hu.dekortrade.server.sync.CikkaltipusSzinkron;
+import hu.dekortrade.server.sync.CikkfotipusSzinkron;
 import hu.dekortrade.server.sync.KepSzinkron;
 import hu.dekortrade.server.sync.RendeltSzinkron;
 import hu.dekortrade.server.sync.RendeltcikkSzinkron;
@@ -86,6 +90,94 @@ public class SzinkronObject {
 			}
 //			tx.commit();
 			
+			log.info("cikkfotipus");
+//			tx.begin();
+			Query cikkfotipusquery = pm.newQuery(Cikkfotipus.class);
+			cikkfotipusquery.setFilter("this.szinkron == false");
+			@SuppressWarnings("unchecked")
+			List<Cikkfotipus> cikkfotipuslist = (List<Cikkfotipus>) pm.newQuery(cikkfotipusquery).execute();
+			List<CikkfotipusSzinkron> cikkfotipuslistszinkron = new ArrayList<CikkfotipusSzinkron>();
+			if ((cikkfotipuslist != null) && (!cikkfotipuslist.isEmpty())) {
+				for (Cikkfotipus l : cikkfotipuslist) {
+					CikkfotipusSzinkron cikkfotipusSzinkron = new CikkfotipusSzinkron(l.getKod(),l.getNev(),l.getBlob());
+					cikkfotipuslistszinkron.add(cikkfotipusSzinkron);
+					l.setSzinkron(Boolean.TRUE);
+				}
+
+				szinkronSer.setUploadcikkfotipus(cikkfotipuslistszinkron.size());
+
+				ObjectMapper cikkfotipusmapper = new ObjectMapper();
+
+				String cikkfotipusJSON = cikkfotipusmapper
+						.writeValueAsString(cikkfotipuslistszinkron);
+
+				Client cikkfotipusclient = Client.create();
+				cikkfotipusclient.setConnectTimeout(ServerConstants.TIMEOUT);
+
+				WebResource cikkfotipuswebResource = cikkfotipusclient.resource(ServerConstants.URI);
+
+				ClientResponse cikkfotipusresponse = cikkfotipuswebResource.path("syncron")
+						.queryParam("tabla", "cikkfotipus").accept("application/json")
+						.type("application/json; charset=utf-8")
+						.post(ClientResponse.class, cikkfotipusJSON);
+
+				// check response status code
+				if (cikkfotipusresponse.getStatus() != 200) {
+					throw new RuntimeException("Failed : HTTP error code : "
+							+ cikkfotipusresponse.getStatus());
+				}
+
+				// display response
+				String output = cikkfotipusresponse.getEntity(String.class);
+				System.out.println(output);
+				
+			}
+//			tx.commit();
+		
+			log.info("cikkaltipus");
+//			tx.begin();
+			Query cikkaltipusquery = pm.newQuery(Cikkaltipus.class);
+			cikkaltipusquery.setFilter("this.szinkron == false");
+			@SuppressWarnings("unchecked")
+			List<Cikkaltipus> cikkaltipuslist = (List<Cikkaltipus>) pm.newQuery(cikkaltipusquery).execute();
+			List<CikkaltipusSzinkron> cikkaltipuslistszinkron = new ArrayList<CikkaltipusSzinkron>();
+			if ((cikkaltipuslist != null) && (!cikkaltipuslist.isEmpty())) {
+				for (Cikkaltipus l : cikkaltipuslist) {
+					CikkaltipusSzinkron cikkaltipusSzinkron = new CikkaltipusSzinkron(l.getFokod(),l.getKod(),l.getNev(),l.getBlob());
+					cikkaltipuslistszinkron.add(cikkaltipusSzinkron);
+					l.setSzinkron(Boolean.TRUE);
+				}
+
+				szinkronSer.setUploadcikkaltipus(cikkaltipuslistszinkron.size());
+
+				ObjectMapper cikkaltipusmapper = new ObjectMapper();
+
+				String cikkaltipusJSON = cikkaltipusmapper
+						.writeValueAsString(cikkaltipuslistszinkron);
+
+				Client cikkaltipusclient = Client.create();
+				cikkaltipusclient.setConnectTimeout(ServerConstants.TIMEOUT);
+
+				WebResource cikkaltipuswebResource = cikkaltipusclient.resource(ServerConstants.URI);
+
+				ClientResponse cikkaltipusresponse = cikkaltipuswebResource.path("syncron")
+						.queryParam("tabla", "cikkaltipus").accept("application/json")
+						.type("application/json; charset=utf-8")
+						.post(ClientResponse.class, cikkaltipusJSON);
+
+				// check response status code
+				if (cikkaltipusresponse.getStatus() != 200) {
+					throw new RuntimeException("Failed : HTTP error code : "
+							+ cikkaltipusresponse.getStatus());
+				}
+
+				// display response
+				String output = cikkaltipusresponse.getEntity(String.class);
+				System.out.println(output);
+				
+			}
+//			tx.commit();
+		
 			log.info("cikk");
 //			tx.begin();
 			Query cikkquery = pm.newQuery(Cikk.class);
@@ -134,7 +226,7 @@ public class SzinkronObject {
 				
 			}
 //			tx.commit();
-			
+				
 			log.info("kep");
 //			tx.begin();
 			Query kepquery = pm.newQuery(Kep.class);
