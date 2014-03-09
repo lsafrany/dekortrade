@@ -36,6 +36,10 @@ public interface SystemLabels extends Constants {
 
 	String feltoltottvevo();	
 	
+	String feltoltottcikkfotipus();
+	
+	String feltoltottcikkaltipus();
+	
 	String feltoltottcikk();
 	
 	String feltoltottkep();	

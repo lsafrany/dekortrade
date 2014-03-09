@@ -3,6 +3,8 @@ package hu.dekortrade99.server;
 import hu.dekortrade99.server.jdo.Kep;
 import hu.dekortrade99.client.DekorTrade99Service;
 import hu.dekortrade99.server.jdo.Cikk;
+import hu.dekortrade99.server.jdo.Cikkaltipus;
+import hu.dekortrade99.server.jdo.Cikkfotipus;
 import hu.dekortrade99.server.jdo.Kosar;
 import hu.dekortrade99.server.jdo.PMF;
 import hu.dekortrade99.server.jdo.Rendelt;
@@ -10,6 +12,8 @@ import hu.dekortrade99.server.jdo.Rendeltcikk;
 import hu.dekortrade99.server.jdo.Vevo;
 import hu.dekortrade99.shared.Constants;
 import hu.dekortrade99.shared.serialized.CikkSer;
+import hu.dekortrade99.shared.serialized.CikkaltipusSer;
+import hu.dekortrade99.shared.serialized.CikkfotipusSer;
 import hu.dekortrade99.shared.serialized.KosarSer;
 import hu.dekortrade99.shared.serialized.LoginExceptionSer;
 import hu.dekortrade99.shared.serialized.RendeltSer;
@@ -124,6 +128,65 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		} finally {
 			pm.close();
 		}
+	}
+
+	public ArrayList<CikkfotipusSer> getCikkfotipus()
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<CikkfotipusSer> cikkfotipusok = new ArrayList<CikkfotipusSer>();
+
+		try {
+			Query query = pm.newQuery(Cikkfotipus.class);
+			@SuppressWarnings("unchecked")
+			List<Cikkfotipus> list = (List<Cikkfotipus>) pm.newQuery(query).execute();
+			if (!list.isEmpty()) {
+				for (Cikkfotipus l : list) {
+					CikkfotipusSer cikkfotipusSer = new CikkfotipusSer();
+					cikkfotipusSer.setKod(l.getKod());
+					cikkfotipusSer.setNev(l.getNev());
+					cikkfotipusok.add(cikkfotipusSer);
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return cikkfotipusok;
+	}
+	
+	public ArrayList<CikkaltipusSer> getCikkaltipus(String fokod)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<CikkaltipusSer> cikkaltipusok = new ArrayList<CikkaltipusSer>();
+
+		try {
+			Query query = pm.newQuery(Cikkaltipus.class);
+			query.setFilter("this.fokod == pfokod");
+			query.declareParameters("String pfokod");
+			@SuppressWarnings("unchecked")
+			List<Cikkaltipus> list = (List<Cikkaltipus>) pm.newQuery(query).execute(fokod);
+			if (!list.isEmpty()) {
+				for (Cikkaltipus l : list) {
+					CikkaltipusSer cikkaltipusSer = new CikkaltipusSer();
+					cikkaltipusSer.setFokod(l.getFokod());
+					cikkaltipusSer.setKod(l.getKod());
+					cikkaltipusSer.setNev(l.getNev());
+					cikkaltipusok.add(cikkaltipusSer);
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return cikkaltipusok;
 	}
 
 	public ArrayList<CikkSer> getCikk(int page, String cikkszam, String fotipus, String altipus)

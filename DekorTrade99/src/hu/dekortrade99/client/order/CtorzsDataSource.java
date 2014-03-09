@@ -1,4 +1,4 @@
-package hu.dekortrade99.client.cikktorzs;
+package hu.dekortrade99.client.order;
 
 import hu.dekortrade99.client.ClientConstants;
 import hu.dekortrade99.client.DekorTrade99Service;
@@ -24,55 +24,55 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 	private final DekorTrade99ServiceAsync dekorTrade99Service = GWT
 			.create(DekorTrade99Service.class);
 
-	private CtorzsLabels ctorzsLabels = GWT.create(CtorzsLabels.class);
+	private OrderLabels orderLabels = GWT.create(OrderLabels.class);
 
 	public CtorzsDataSource() {
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(CtorzsConstants.CIKK_FOTIPUS,
-				ctorzsLabels.cikk_fotipus());
+		field = new DataSourceTextField(OrderConstants.CIKK_FOTIPUS,
+				orderLabels.cikk_fotipus());
 		addField(field);
 
-		field = new DataSourceTextField(CtorzsConstants.CIKK_ALTIPUS,
-				ctorzsLabels.cikk_altipus());
+		field = new DataSourceTextField(OrderConstants.CIKK_ALTIPUS,
+				orderLabels.cikk_altipus());
 		addField(field);
 
-		field = new DataSourceTextField(CtorzsConstants.CIKK_CIKKSZAM,
-				ctorzsLabels.cikk_cikkszam());
+		field = new DataSourceTextField(OrderConstants.CIKK_CIKKSZAM,
+				orderLabels.cikk_cikkszam());
 		field.setPrimaryKey(true);
 		addField(field);
 
-		field = new DataSourceTextField(CtorzsConstants.CIKK_MEGNEVEZES,
-				ctorzsLabels.cikk_megnevezes());
+		field = new DataSourceTextField(OrderConstants.CIKK_MEGNEVEZES,
+				orderLabels.cikk_megnevezes());
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CIKK_AR,
-				ctorzsLabels.cikk_ar());
+		field = new DataSourceFloatField(OrderConstants.CIKK_AR,
+				orderLabels.cikk_ar());
 		addField(field);
 
-		field = new DataSourceIntegerField(CtorzsConstants.CIKK_KISKARTON,
-				ctorzsLabels.cikk_kiskarton());
+		field = new DataSourceIntegerField(OrderConstants.CIKK_KISKARTON,
+				orderLabels.cikk_kiskarton());
 		addField(field);
 
-		field = new DataSourceIntegerField(CtorzsConstants.CIKK_DARAB,
-				ctorzsLabels.cikk_darab());
+		field = new DataSourceIntegerField(OrderConstants.CIKK_DARAB,
+				orderLabels.cikk_darab());
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CIKK_TERFOGAT,
-				ctorzsLabels.cikk_terfogat());
+		field = new DataSourceFloatField(OrderConstants.CIKK_TERFOGAT,
+				orderLabels.cikk_terfogat());
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CIKK_BSULY,
-				ctorzsLabels.cikk_bsuly());
+		field = new DataSourceFloatField(OrderConstants.CIKK_BSULY,
+				orderLabels.cikk_bsuly());
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CIKK_NSULY,
-				ctorzsLabels.cikk_nsuly());
+		field = new DataSourceFloatField(OrderConstants.CIKK_NSULY,
+				orderLabels.cikk_nsuly());
 		addField(field);
 
-		field = new DataSourceFloatField(CtorzsConstants.CIKK_KEPEK,
-				ctorzsLabels.cikk_kepek());
+		field = new DataSourceFloatField(OrderConstants.CIKK_KEPEK,
+				orderLabels.cikk_kepek());
 		addField(field);
 
 	}
@@ -82,13 +82,13 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 			final DSRequest request, final DSResponse response) {
 		dekorTrade99Service.getCikk(
 				request.getCriteria().getAttributeAsInt(
-						CtorzsConstants.CTORZS_PAGE),
+						OrderConstants.CTORZS_PAGE),
 				request.getCriteria().getAttributeAsString(
-						CtorzsConstants.CIKK_CIKKSZAM),
+						OrderConstants.CIKK_CIKKSZAM),
 				request.getCriteria().getAttributeAsString(
-						CtorzsConstants.CIKK_FOTIPUS),
+						OrderConstants.CIKK_FOTIPUS),
 				request.getCriteria().getAttributeAsString(
-								CtorzsConstants.CIKK_ALTIPUS),
+								OrderConstants.CIKK_ALTIPUS),
 				new AsyncCallback<ArrayList<CikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -135,17 +135,17 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(CikkSer from, ListGridRecord to) {
-		to.setAttribute(CtorzsConstants.CIKK_FOTIPUS, from.getFotipus());
-		to.setAttribute(CtorzsConstants.CIKK_ALTIPUS, from.getAltipus());
-		to.setAttribute(CtorzsConstants.CIKK_CIKKSZAM, from.getCikkszam());
-		to.setAttribute(CtorzsConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
-		to.setAttribute(CtorzsConstants.CIKK_AR, from.getAr());
-		to.setAttribute(CtorzsConstants.CIKK_KISKARTON, from.getKiskarton());
-		to.setAttribute(CtorzsConstants.CIKK_DARAB, from.getDarab());
-		to.setAttribute(CtorzsConstants.CIKK_TERFOGAT, from.getTerfogat());
-		to.setAttribute(CtorzsConstants.CIKK_BSULY, from.getBsuly());
-		to.setAttribute(CtorzsConstants.CIKK_NSULY, from.getNsuly());
-		to.setAttribute(CtorzsConstants.CIKK_KEPEK, from.getKepek());
+		to.setAttribute(OrderConstants.CIKK_FOTIPUS, from.getFotipus());
+		to.setAttribute(OrderConstants.CIKK_ALTIPUS, from.getAltipus());
+		to.setAttribute(OrderConstants.CIKK_CIKKSZAM, from.getCikkszam());
+		to.setAttribute(OrderConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
+		to.setAttribute(OrderConstants.CIKK_AR, from.getAr());
+		to.setAttribute(OrderConstants.CIKK_KISKARTON, from.getKiskarton());
+		to.setAttribute(OrderConstants.CIKK_DARAB, from.getDarab());
+		to.setAttribute(OrderConstants.CIKK_TERFOGAT, from.getTerfogat());
+		to.setAttribute(OrderConstants.CIKK_BSULY, from.getBsuly());
+		to.setAttribute(OrderConstants.CIKK_NSULY, from.getNsuly());
+		to.setAttribute(OrderConstants.CIKK_KEPEK, from.getKepek());
 	}
 
 }

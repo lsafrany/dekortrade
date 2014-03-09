@@ -18,9 +18,6 @@ public class Cikkfotipus implements IsSerializable {
 	@Persistent
 	private Blob blob;
 	
-	@Persistent
-	private Boolean szinkron;
-
 	public Cikkfotipus(String kod, String nev, Blob blob) {
 		this.kod = kod;
 		this.nev = nev;
@@ -49,14 +46,6 @@ public class Cikkfotipus implements IsSerializable {
 
 	public void setBlob(Blob blob) {
 		this.blob = blob;
-	}
-
-	public Boolean getSzinkron() {
-		return szinkron;
-	}
-
-	public void setSzinkron(Boolean szinkron) {
-		this.szinkron = szinkron;
 	}
 
 }

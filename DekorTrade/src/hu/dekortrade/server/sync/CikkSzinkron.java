@@ -35,6 +35,7 @@ public class CikkSzinkron {
 			Double bsuly, Double nsuly, Integer kepek, Boolean torolt) {
 		this.fotipus = fotipus;
 		this.altipus = altipus;
+		this.cikkszam = cikkszam;
 		this.megnevezes = megnevezes;
 		this.ar = ar;
 		this.kiskarton = kiskarton;

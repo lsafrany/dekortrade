@@ -21,9 +21,6 @@ public class Cikkaltipus implements IsSerializable {
 	@Persistent
 	private Blob blob;
 	
-	@Persistent
-	private Boolean szinkron;
-
 	public Cikkaltipus(String fokod, String kod, String nev, Blob blob) {
 		this.fokod = fokod;
 		this.kod = kod;
@@ -61,14 +58,6 @@ public class Cikkaltipus implements IsSerializable {
 
 	public void setBlob(Blob blob) {
 		this.blob = blob;
-	}
-
-	public Boolean getSzinkron() {
-		return szinkron;
-	}
-
-	public void setSzinkron(Boolean szinkron) {
-		this.szinkron = szinkron;
 	}
 	
 }

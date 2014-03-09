@@ -1,17 +1,4 @@
-<!-- Indices written at Sat, 1 Mar 2014 20:56:38 CET -->
+<!-- Indices written at Sun, 9 Mar 2014 19:29:40 CET -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 3 times in query history -->
-    <datastore-index kind="Cikk" ancestor="false" source="auto">
-        <property name="torolt" direction="asc"/>
-        <property name="cikkszam" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Kosar" ancestor="false" source="auto">
-        <property name="rovidnev" direction="asc"/>
-        <property name="cikkszam" direction="asc"/>
-    </datastore-index>
-
-</datastore-indexes>

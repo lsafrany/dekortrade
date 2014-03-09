@@ -138,7 +138,6 @@ public class Cikktipus {
 		
 		fotipusLayout.addMember(cikkfotipusGrid);
 		fotipusLayout.addMember(fobuttonsLayout);
-
 		
 		final VLayout fotipusKepLayout = new VLayout();
 		fotipusKepLayout.setWidth("20%");
@@ -271,10 +270,7 @@ public class Cikktipus {
 		
 		altipusKepLayout.addMember(altipusImgLayout);
 		altipusKepLayout.addMember(alkepbuttonsLayout);
-		
-		
-		
-		
+				
 		middleLayout.addMember(fotipusLayout);
 		middleLayout.addMember(fotipusKepLayout);
 		middleLayout.addMember(altipusLayout);
@@ -346,7 +342,6 @@ public class Cikktipus {
 								CikktipusConstants.CIKKALTIPUS_NEV),altipusImgLayout);
 			}
 		});
-
 		
 		return middleLayout;
 

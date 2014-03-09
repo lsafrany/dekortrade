@@ -1,7 +1,6 @@
 package hu.dekortrade99.client;
 
 import hu.dekortrade99.client.archive.Archive;
-import hu.dekortrade99.client.cikktorzs.Ctorzs;
 import hu.dekortrade99.client.order.Order;
 import hu.dekortrade99.shared.Constants;
 import hu.dekortrade99.shared.serialized.LoginExceptionSer;
@@ -64,8 +63,6 @@ public class DekorTrade99 implements EntryPoint {
 	private final HLayout topLayoutRight = new HLayout();
 	private final HLayout middleLayout = new HLayout();
 	private final HLayout topLayoutMiddleBottom = new HLayout();
-
-	final Ctorzs ctorzs = new Ctorzs();
 
 	/**
 	 * This is the entry point method.

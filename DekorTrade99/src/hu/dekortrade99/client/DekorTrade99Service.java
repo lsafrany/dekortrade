@@ -3,6 +3,8 @@ package hu.dekortrade99.client;
 import java.util.ArrayList;
 
 import hu.dekortrade99.shared.serialized.CikkSer;
+import hu.dekortrade99.shared.serialized.CikkaltipusSer;
+import hu.dekortrade99.shared.serialized.CikkfotipusSer;
 import hu.dekortrade99.shared.serialized.KosarSer;
 import hu.dekortrade99.shared.serialized.LoginExceptionSer;
 import hu.dekortrade99.shared.serialized.RendeltSer;
@@ -23,6 +25,12 @@ public interface DekorTrade99Service extends RemoteService {
 			throws IllegalArgumentException, SQLExceptionSer, LoginExceptionSer;
 
 	void setPassword(String user, String password)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	ArrayList<CikkfotipusSer> getCikkfotipus()
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	ArrayList<CikkaltipusSer> getCikkaltipus(String fokod)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	ArrayList<CikkSer> getCikk(int page, String cikkszam, String fotipus, String altipus)

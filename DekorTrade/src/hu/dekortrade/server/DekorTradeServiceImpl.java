@@ -905,6 +905,24 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		String output = "";
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
+		
+			Query cikkfotipusQuery = pm.newQuery(Cikkfotipus.class);
+			@SuppressWarnings("unchecked")
+			List<Cikkfotipus> cikkfotipuslist = (List<Cikkfotipus>) pm.newQuery(cikkfotipusQuery).execute();
+			if ((cikkfotipuslist != null) && (!cikkfotipuslist.isEmpty())) {
+				for (Cikkfotipus l : cikkfotipuslist) {
+					l.setSzinkron(Boolean.FALSE);
+				}
+			}
+
+			Query cikkaltipusQuery = pm.newQuery(Cikkaltipus.class);
+			@SuppressWarnings("unchecked")
+			List<Cikkaltipus> cikkaltipuslist = (List<Cikkaltipus>) pm.newQuery(cikkaltipusQuery).execute();
+			if ((cikkaltipuslist != null) && (!cikkaltipuslist.isEmpty())) {
+				for (Cikkaltipus l : cikkaltipuslist) {
+					l.setSzinkron(Boolean.FALSE);
+				}
+			}
 
 			Query cikkQuery = pm.newQuery(Cikk.class);
 			@SuppressWarnings("unchecked")

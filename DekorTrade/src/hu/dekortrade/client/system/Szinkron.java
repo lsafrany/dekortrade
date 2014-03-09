@@ -81,6 +81,8 @@ public class Szinkron {
 											DisplayRequest.serverResponse();
 											SC.say(
 												systemLabels.feltoltottvevo() + " " + result.getUploadvevo() + " " +
+												systemLabels.feltoltottcikkfotipus() + " " + result.getUploadcikkfotipus() + " " +
+												systemLabels.feltoltottcikkaltipus() + " " + result.getUploadcikkaltipus() + " " +
 												systemLabels.feltoltottcikk() + " " + result.getUploadcikk() + " " +
 												systemLabels.feltoltottkep() + " " + result.getUploadkep() + " " +
 												systemLabels.letoltottrendeles() + " " + result.getDownloadrendelt());

@@ -1,5 +1,7 @@
 package hu.dekortrade99.server;
 
+import hu.dekortrade99.server.jdo.Cikkaltipus;
+import hu.dekortrade99.server.jdo.Cikkfotipus;
 import hu.dekortrade99.server.jdo.Kep;
 import hu.dekortrade99.server.jdo.PMF;
 
@@ -25,29 +27,88 @@ public class Download extends HttpServlet {
 		
 		String cikkszam = request.getParameter("cikkszam");
 
-		String sorszam = request.getParameter("sorszam");
-		
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-				
-		try {
-			Query query = pm.newQuery(Kep.class);
-			query.setFilter("(this.cikkszam == pcikkszam) && (this.sorszam == psorszam)");
-			query.declareParameters("String pcikkszam,String psorszam");
-			@SuppressWarnings("unchecked")
-			List<Kep> list = (List<Kep>) pm.newQuery(query)
-					.execute(cikkszam,sorszam);
+		String cikkfotipus = request.getParameter("cikkfotipus");
 
-			if ((list != null) && (!list.isEmpty())) {
-				Blob image = list.get(0).getBlob();
-			    response.setContentType("image/jpeg");
-			    response.getOutputStream().write(image.getBytes());	
-			}
-			    
-		} catch (Exception e) {
-			throw new ServletException();	
-		} finally {
-			pm.close();
-		}		
+		String cikkaltipus = request.getParameter("cikkaltipus");
+		
+		if (cikkszam != null) {
+			String sorszam = request.getParameter("sorszam");
+			
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+					
+			try {
+				Query query = pm.newQuery(Kep.class);
+				query.setFilter("(this.cikkszam == pcikkszam) && (this.sorszam == psorszam)");
+				query.declareParameters("String pcikkszam,String psorszam");
+				@SuppressWarnings("unchecked")
+				List<Kep> list = (List<Kep>) pm.newQuery(query)
+						.execute(cikkszam,sorszam);
+	
+				if ((list != null) && (!list.isEmpty())) {
+					Blob image = list.get(0).getBlob();
+				    response.setContentType("image/jpeg");
+				    response.getOutputStream().write(image.getBytes());	
+				}
+				    
+			} catch (Exception e) {
+				throw new ServletException();	
+			} finally {
+				pm.close();
+			}	
+		} 
+		
+		if (cikkfotipus != null) {
+			
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+					
+			try {
+				Query query = pm.newQuery(Cikkfotipus.class);
+				query.setFilter("this.kod == pkod");
+				query.declareParameters("String pkod");
+				@SuppressWarnings("unchecked")
+				List<Cikkfotipus> list = (List<Cikkfotipus>) pm.newQuery(query)
+						.execute(cikkfotipus);
+	
+				if ((list != null) && (!list.isEmpty())) {
+					Blob image = list.get(0).getBlob();
+				    response.setContentType("image/jpeg");
+				    response.getOutputStream().write(image.getBytes());	
+				}
+				    
+			} catch (Exception e) {
+				throw new ServletException();	
+			} finally {
+				pm.close();
+			}				
+		}	
+		
+		if (cikkaltipus != null) {
+			
+			String kod = request.getParameter("kod");
+			
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+					
+			try {
+				Query query = pm.newQuery(Cikkaltipus.class);
+				query.setFilter("(this.fokod == pfokod) && (this.kod == pkod)");
+				query.declareParameters("String pfokod,String pkod");
+				@SuppressWarnings("unchecked")
+				List<Cikkaltipus> list = (List<Cikkaltipus>) pm.newQuery(query)
+						.execute(cikkaltipus,kod);
+	
+				if ((list != null) && (!list.isEmpty())) {
+					Blob image = list.get(0).getBlob();
+				    response.setContentType("image/jpeg");
+				    response.getOutputStream().write(image.getBytes());	
+				}
+				    
+			} catch (Exception e) {
+				throw new ServletException();	
+			} finally {
+				pm.close();
+			}	
+		} 
+
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

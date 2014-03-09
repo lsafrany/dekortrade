@@ -3,6 +3,8 @@ package hu.dekortrade99.client;
 import java.util.ArrayList;
 
 import hu.dekortrade99.shared.serialized.CikkSer;
+import hu.dekortrade99.shared.serialized.CikkaltipusSer;
+import hu.dekortrade99.shared.serialized.CikkfotipusSer;
 import hu.dekortrade99.shared.serialized.KosarSer;
 import hu.dekortrade99.shared.serialized.RendeltSer;
 import hu.dekortrade99.shared.serialized.RendeltcikkSer;
@@ -21,6 +23,10 @@ public interface DekorTrade99ServiceAsync {
 	void setPassword(String user, String password,
 			@SuppressWarnings("rawtypes") AsyncCallback callback)
 			throws IllegalArgumentException;
+
+	void getCikkfotipus(AsyncCallback<ArrayList<CikkfotipusSer>> asyncCallback);
+
+	void getCikkaltipus(String fokod,AsyncCallback<ArrayList<CikkaltipusSer>> asyncCallback);
 
 	void getCikk(int page, String cikkszam, String fotipus, String altipus,
 			AsyncCallback<ArrayList<CikkSer>> asyncCallback);
