@@ -10,11 +10,6 @@
     <servlet-name>initServlet</servlet-name>
     <servlet-class>hu.dekortrade99.server.Init</servlet-class>
   </servlet>
- 
-  <servlet>
-    <servlet-name>indexServlet</servlet-name>
-    <servlet-class>hu.dekortrade99.server.Index</servlet-class>
-  </servlet>
    
   <servlet>
     <servlet-name>syncronServlet</servlet-name>
@@ -35,12 +30,7 @@
     <servlet-name>initServlet</servlet-name>
     <url-pattern>/dekortrade99/init</url-pattern>
   </servlet-mapping>
- 
-  <servlet-mapping>
-    <servlet-name>indexServlet</servlet-name>
-    <url-pattern>index</url-pattern>
-  </servlet-mapping>
- 
+  
   <servlet-mapping>
     <servlet-name>syncronServlet</servlet-name>
     <url-pattern>/dekortrade99/syncron</url-pattern>
@@ -58,7 +48,7 @@
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>index</welcome-file>
+    <welcome-file>DekorTrade99.html</welcome-file>
   </welcome-file-list>
 
 </web-app>
