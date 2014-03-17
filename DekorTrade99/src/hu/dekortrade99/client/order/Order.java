@@ -6,10 +6,12 @@ import hu.dekortrade99.client.DekorTrade99Service;
 import hu.dekortrade99.client.DekorTrade99ServiceAsync;
 import hu.dekortrade99.client.DisplayRequest;
 import hu.dekortrade99.client.UserInfo;
+import hu.dekortrade99.shared.Constants;
 import hu.dekortrade99.shared.serialized.SQLExceptionSer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DSCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
@@ -26,17 +28,18 @@ import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.validator.IsIntegerValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
-import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
-import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
-import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
-import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tile.TileGrid;
+import com.smartgwt.client.widgets.tile.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.tile.events.DataArrivedHandler;
+import com.smartgwt.client.widgets.tile.events.RecordClickEvent;
+import com.smartgwt.client.widgets.tile.events.RecordClickHandler;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
 
 public class Order {
@@ -48,6 +51,8 @@ public class Order {
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
+	IButton kosarAddIButton = new IButton(orderLabels.rendeles());
+	
 	private int page = 0;
 
 	private String cikkszam = "";
@@ -128,7 +133,7 @@ public class Order {
 		buttons1Layout.setHeight("3%");
 		buttons1Layout.setWidth("100%");
 
-		IButton kosarAddIButton = new IButton(orderLabels.rendeles());
+//		IButton kosarAddIButton = new IButton(orderLabels.rendeles());
 		kosarAddIButton.setDisabled(true);
 
 		final Label emptyLabel = new Label();
@@ -263,14 +268,14 @@ public class Order {
 			}
 		});
 
-		kosarGrid.addRecordClickHandler(new RecordClickHandler() {
-			public void onRecordClick(RecordClickEvent event) {
+		kosarGrid.addRecordClickHandler(new com.smartgwt.client.widgets.grid.events.RecordClickHandler() {
+			public void onRecordClick(com.smartgwt.client.widgets.grid.events.RecordClickEvent event) {
 				kosarRemoveIButton.setDisabled(false);
 			}
 		});
 
-		kosarGrid.addDataArrivedHandler(new DataArrivedHandler() {
-			public void onDataArrived(DataArrivedEvent event) {
+		kosarGrid.addDataArrivedHandler(new com.smartgwt.client.widgets.grid.events.DataArrivedHandler() {
+			public void onDataArrived(com.smartgwt.client.widgets.grid.events.DataArrivedEvent event) {
 				if (kosarGrid.getRecordList().getLength() > 0)
 					kosarCommitIButton.setDisabled(false);
 				else
@@ -471,11 +476,103 @@ public class Order {
 		});
 		
 	}
-
 	
 	public void getCikk(final String fotipus, final String altipus) {
 
 		DisplayRequest.counterInit();
+
+		ctorzsLayout.removeMembers(ctorzsLayout.getMembers());	
+				
+		HLayout ctorzsFormLayout = new HLayout();
+		ctorzsFormLayout.setHeight("3%");
+		ctorzsFormLayout.setAlign(Alignment.CENTER);
+		ctorzsFormLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+
+		final DynamicForm ctorzsForm = new DynamicForm();
+		ctorzsForm.setNumCols(2);
+		ctorzsForm.setColWidths("30%", "*");
+
+		final TextItem cikkszamItem = new TextItem();
+		cikkszamItem.setTitle(orderLabels.cikk_cikkszam());
+		cikkszamItem.setLength(15);
+
+		ctorzsForm.setFields(cikkszamItem);
+
+		final Label szuresLabel = new Label();
+		szuresLabel.setContents("");
+		szuresLabel.setAlign(Alignment.CENTER);
+		szuresLabel.setWidth("50px");
+
+		final IButton szuresIButton = new IButton(commonLabels.filter());
+		szuresIButton.setDisabled(true);
+	
+		ctorzsFormLayout.addMember(ctorzsForm);
+		ctorzsFormLayout.addMember(szuresLabel);
+		ctorzsFormLayout.addMember(szuresIButton);
+
+		HLayout ctorzsGridLayout = new HLayout();
+		ctorzsGridLayout.setAlign(Alignment.CENTER);
+
+		final CtorzsDataSource ctorzsDataSource = new CtorzsDataSource() {
+
+			protected Object transformRequest(DSRequest dsRequest) {
+				DisplayRequest.startRequest();
+				return super.transformRequest(dsRequest);
+			}
+
+			protected void transformResponse(DSResponse response,
+					DSRequest request, Object data) {
+				DisplayRequest.serverResponse();
+				super.transformResponse(response, request, data);
+			}
+		};
+
+		ctorzsDataSource.addHandleErrorHandler(new HandleErrorHandler() {
+			public void onHandleError(ErrorEvent event) {
+
+				if (event.getResponse().getStatus() == DSResponse.STATUS_FAILURE) {
+					if (event.getResponse().getAttribute(
+							ClientConstants.SERVER_ERROR) != null)
+						SC.warn(commonLabels.server_error());
+					else if (event.getResponse().getAttribute(
+							ClientConstants.SERVER_SQLERROR) != null)
+						SC.warn(commonLabels.server_sqlerror()
+								+ " : "
+								+ event.getResponse().getAttribute(
+										ClientConstants.SERVER_SQLERROR));
+					event.cancel();
+				}
+			}
+		});
+					
+		final TileGrid ctorzsGrid = new TileGrid();  
+		ctorzsGrid.setTitle(orderLabels.ctorzs());
+		ctorzsGrid.setTileWidth(250);  
+		ctorzsGrid.setTileHeight(250);  
+		ctorzsGrid.setCanReorderTiles(true);  
+		ctorzsGrid.setShowAllRecords(true);  
+		ctorzsGrid.setDataSource(ctorzsDataSource);  
+		ctorzsGrid.setAnimateTileChange(true);  		  
+		Criteria criteria = new Criteria();
+		criteria.setAttribute(OrderConstants.CTORZS_PAGE, page);
+		criteria.setAttribute(OrderConstants.CIKK_CIKKSZAM,
+				cikkszamItem.getValueAsString());
+		criteria.setAttribute(OrderConstants.CIKK_FOTIPUS,
+				fotipus);
+		criteria.setAttribute(OrderConstants.CIKK_ALTIPUS,
+				altipus);		
+		
+		DetailViewerField pictureField = new DetailViewerField(OrderConstants.CIKK_KEP);  
+	    pictureField.setImageWidth(250);
+	    pictureField.setImageHeight(200);
+		
+		DetailViewerField cikkszamField = new DetailViewerField(OrderConstants.CIKK_CIKKSZAM);  	
+		DetailViewerField megnevezesField = new DetailViewerField(OrderConstants.CIKK_MEGNEVEZES);  	
+		
+		ctorzsGrid.setFields(pictureField,cikkszamField,megnevezesField);
+		ctorzsGrid.fetchData(criteria);		
+		
+		ctorzsGridLayout.addMember(ctorzsGrid);
 
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
@@ -484,18 +581,204 @@ public class Order {
 		buttonsLayout.setHeight("3%");
 		buttonsLayout.setWidth("100%");
 
-		final IButton backIButton = new IButton(commonLabels.back());
-		buttonsLayout.addMember(backIButton);
+		final IButton previousIButton = new IButton("&lt;&lt;");
+		previousIButton.setDisabled(true);
+		final Label pageLabel = new Label();
+		pageLabel.setContents("");
+		pageLabel.setAlign(Alignment.CENTER);
+		pageLabel.setWidth("100px");
 
-		ctorzsLayout.addMember(buttonsLayout);
+		final IButton nextIButton = new IButton("&gt;&gt;");
+
+		final Label emtpyLabel = new Label();
+		emtpyLabel.setContents("");
+		emtpyLabel.setAlign(Alignment.CENTER);
+		emtpyLabel.setWidth("100px");
 		
+		final IButton backIButton = new IButton(commonLabels.back());
+		
+		buttonsLayout.addMember(previousIButton);
+		buttonsLayout.addMember(pageLabel);
+		buttonsLayout.addMember(nextIButton);
+		buttonsLayout.addMember(emtpyLabel);
+		buttonsLayout.addMember(backIButton);
+		
+		ctorzsLayout.addMember(ctorzsFormLayout);
+		ctorzsLayout.addMember(ctorzsGridLayout);
+		ctorzsLayout.addMember(buttonsLayout);
+
 		backIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				ctorzsLayout.removeMembers(ctorzsLayout.getMembers());		
 				getAltipus(fotipus);	
 			}
 		});
+		
+		szuresIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ctorzsGrid.invalidateCache();
+				Criteria criteria = new Criteria();
+				page = 0;
+				criteria.setAttribute(OrderConstants.CTORZS_PAGE, page);
+				criteria.setAttribute(OrderConstants.CIKK_CIKKSZAM,
+						cikkszamItem.getValueAsString());
+				criteria.setAttribute(OrderConstants.CIKK_FOTIPUS,
+						fotipus);
+				criteria.setAttribute(OrderConstants.CIKK_ALTIPUS,
+						altipus);				
+				ctorzsGrid.fetchData(criteria);
+				szuresIButton.setDisabled(true);
+				previousIButton.setDisabled(true);
+				nextIButton.setDisabled(true);
+				kosarAddIButton.setDisabled(true);
+				pageLabel.setContents("");
+			}
+		});
 
+		previousIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ctorzsGrid.invalidateCache();
+				Criteria criteria = new Criteria();
+				page = page - 1;
+				criteria.setAttribute(OrderConstants.CTORZS_PAGE, page);
+				criteria.setAttribute(OrderConstants.CIKK_CIKKSZAM,
+						cikkszamItem.getValueAsString());
+				criteria.setAttribute(OrderConstants.CIKK_FOTIPUS,
+						fotipus);
+				criteria.setAttribute(OrderConstants.CIKK_ALTIPUS,
+						altipus);				
+				ctorzsGrid.fetchData(criteria);
+				szuresIButton.setDisabled(true);
+				previousIButton.setDisabled(true);
+				nextIButton.setDisabled(true);
+				kosarAddIButton.setDisabled(true);
+				pageLabel.setContents("");
+			}
+		});
+
+		nextIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ctorzsGrid.invalidateCache();
+				Criteria criteria = new Criteria();
+				page = page + 1;
+				criteria.setAttribute(OrderConstants.CTORZS_PAGE, page);
+				criteria.setAttribute(OrderConstants.CIKK_CIKKSZAM,
+						cikkszamItem.getValueAsString());
+				criteria.setAttribute(OrderConstants.CIKK_FOTIPUS,
+						fotipus);
+				criteria.setAttribute(OrderConstants.CIKK_ALTIPUS,
+						altipus);				
+				ctorzsGrid.fetchData(criteria);
+				szuresIButton.setDisabled(true);
+				previousIButton.setDisabled(true);
+				nextIButton.setDisabled(true);
+				kosarAddIButton.setDisabled(true);
+				pageLabel.setContents("");
+			}
+		});
+
+		ctorzsGrid.addDataArrivedHandler(new DataArrivedHandler() {
+			public void onDataArrived(DataArrivedEvent event) {
+
+				if (ctorzsGrid.getRecordList().getLength() == Constants.FETCH_SIZE) {
+					nextIButton.setDisabled(false);
+					pageLabel.setContents(Integer.valueOf(
+							(page * Constants.FETCH_SIZE) + 1).toString()
+							+ " - "
+							+ Integer
+									.valueOf((page + 1) * Constants.FETCH_SIZE)
+									.toString());
+				} else {
+					pageLabel.setContents(Integer.valueOf(
+							(page * Constants.FETCH_SIZE) + 1).toString()
+							+ " - "
+							+ Integer.valueOf(
+									(page * Constants.FETCH_SIZE)
+											+ ctorzsGrid.getRecordList().getLength())
+									.toString());
+				}
+				if (page > 0)
+					previousIButton.setDisabled(false);
+				szuresIButton.setDisabled(false);
+			}
+
+		});
+
+		ctorzsGrid.addRecordClickHandler(new RecordClickHandler() {
+			public void onRecordClick(RecordClickEvent event) {
+				kosarAddIButton.setDisabled(false);
+
+				cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
+						OrderConstants.CIKK_CIKKSZAM);
+
+				Window winModal = new Window();
+				winModal.setWidth(800);
+				winModal.setHeight(800);
+				winModal.setTitle(cikkszam
+						+ " - "
+						+ ctorzsGrid.getSelectedRecord().getAttribute(
+								OrderConstants.CIKK_MEGNEVEZES));
+				winModal.setShowMinimizeButton(false);
+				winModal.setIsModal(true);
+				winModal.setShowModalMask(true);
+				winModal.centerInPage();
+				
+				final KepDataSource kepDataSource = new KepDataSource() {
+
+					protected Object transformRequest(DSRequest dsRequest) {
+						DisplayRequest.startRequest();
+						dsRequest.setAttribute(OrderConstants.CIKK_CIKKSZAM,
+								cikkszam);
+						return super.transformRequest(dsRequest);
+					}
+
+					protected void transformResponse(DSResponse response,
+							DSRequest request, Object data) {
+						DisplayRequest.serverResponse();
+						super.transformResponse(response, request, data);
+					}
+				};
+
+				kepDataSource.addHandleErrorHandler(new HandleErrorHandler() {
+					public void onHandleError(ErrorEvent event) {
+
+						if (event.getResponse().getStatus() == DSResponse.STATUS_FAILURE) {
+							if (event.getResponse().getAttribute(
+									ClientConstants.SERVER_ERROR) != null)
+								SC.warn(commonLabels.server_error());
+							else if (event.getResponse().getAttribute(
+									ClientConstants.SERVER_SQLERROR) != null)
+								SC.warn(commonLabels.server_sqlerror()
+										+ " : "
+										+ event.getResponse().getAttribute(
+												ClientConstants.SERVER_SQLERROR));
+							event.cancel();
+						}
+					}
+				});
+
+				final TileGrid tileGrid = new TileGrid();  
+				tileGrid.setHeight(750);
+			    tileGrid.setWidth(750);
+			    tileGrid.setTileWidth(700);
+		        tileGrid.setTileHeight(500);  
+		        tileGrid.setShowAllRecords(true);  
+		        tileGrid.setDataSource(kepDataSource);  
+		        tileGrid.setAutoFetchData(true);  
+			  				
+				DetailViewerField pictureField = new DetailViewerField(OrderConstants.KEP_KEP);  			
+			    pictureField.setImageWidth(650);
+			    pictureField.setImageHeight(450);
+
+				tileGrid.setFields(pictureField);
+				
+				winModal.addItem(tileGrid);
+				
+				winModal.show();							
+
+			}
+		});
+		
 	}
 	
 	public String getCikkszam() {

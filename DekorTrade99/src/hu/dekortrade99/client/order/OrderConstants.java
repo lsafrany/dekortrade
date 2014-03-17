@@ -25,6 +25,8 @@ public class OrderConstants {
 	public static final String CIKK_NSULY = "cikk_nsuly";
 	public static final String CIKK_KEPEK = "cikk_kepek";
 
+	public static final String CIKK_KEP = "cikk_kep";
+	
 	public static final String KEP_SORSZAM = "kep_sorszam";
 	public static final String KEP_KEP = "kep_kep";
 

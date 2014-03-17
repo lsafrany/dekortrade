@@ -25,11 +25,38 @@ public class Download extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		String ctorzs = request.getParameter("ctorzs");
+				
 		String cikkszam = request.getParameter("cikkszam");
 
 		String cikkfotipus = request.getParameter("cikkfotipus");
 
 		String cikkaltipus = request.getParameter("cikkaltipus");
+		
+		if (ctorzs != null) {
+			
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+					
+			try {
+				Query query = pm.newQuery(Kep.class);
+				query.setFilter("this.cikkszam == pcikkszam");
+				query.declareParameters("String pcikkszam");
+				@SuppressWarnings("unchecked")
+				List<Kep> list = (List<Kep>) pm.newQuery(query)
+						.execute(ctorzs);
+	
+				if ((list != null) && (!list.isEmpty())) {
+					Blob image = list.get(0).getBlob();
+				    response.setContentType("image/jpeg");
+				    response.getOutputStream().write(image.getBytes());	
+				}
+				    
+			} catch (Exception e) {
+				throw new ServletException();	
+			} finally {
+				pm.close();
+			}	
+		} 
 		
 		if (cikkszam != null) {
 			String sorszam = request.getParameter("sorszam");
