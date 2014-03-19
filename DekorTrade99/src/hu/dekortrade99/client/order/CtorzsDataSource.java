@@ -142,13 +142,13 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 //		to.setAttribute(OrderConstants.CIKK_FOTIPUS, from.getFotipus());
 //		to.setAttribute(OrderConstants.CIKK_ALTIPUS, from.getAltipus());
 		to.setAttribute(OrderConstants.CIKK_CIKKSZAM, from.getCikkszam());
-		to.setAttribute(OrderConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
-//		to.setAttribute(OrderConstants.CIKK_AR, from.getAr());
-//		to.setAttribute(OrderConstants.CIKK_KISKARTON, from.getKiskarton());
-//		to.setAttribute(OrderConstants.CIKK_DARAB, from.getDarab());
-//		to.setAttribute(OrderConstants.CIKK_TERFOGAT, from.getTerfogat());
-//		to.setAttribute(OrderConstants.CIKK_BSULY, from.getBsuly());
-//		to.setAttribute(OrderConstants.CIKK_NSULY, from.getNsuly());
+//		to.setAttribute(OrderConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
+		to.setAttribute(OrderConstants.CIKK_AR, from.getAr());
+		to.setAttribute(OrderConstants.CIKK_KISKARTON, from.getKiskarton());
+		to.setAttribute(OrderConstants.CIKK_DARAB, from.getDarab());
+		to.setAttribute(OrderConstants.CIKK_TERFOGAT, from.getTerfogat());
+		to.setAttribute(OrderConstants.CIKK_BSULY, from.getBsuly());
+		to.setAttribute(OrderConstants.CIKK_NSULY, from.getNsuly());
 //		to.setAttribute(OrderConstants.CIKK_KEPEK, from.getKepek());
 		if (from.getKepek() > 0)
 			to.setAttribute(OrderConstants.CIKK_KEP, GWT.getModuleBaseURL()+ "download?ctorzs=" + from.getCikkszam());

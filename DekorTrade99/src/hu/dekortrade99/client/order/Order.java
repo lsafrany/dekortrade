@@ -15,6 +15,7 @@ import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DSCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
+import com.smartgwt.client.data.Record;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
@@ -40,6 +41,7 @@ import com.smartgwt.client.widgets.tile.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.tile.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.tile.events.RecordClickEvent;
 import com.smartgwt.client.widgets.tile.events.RecordClickHandler;
+import com.smartgwt.client.widgets.viewer.DetailFormatter;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
 
 public class Order {
@@ -489,8 +491,9 @@ public class Order {
 		ctorzsFormLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 
 		final DynamicForm ctorzsForm = new DynamicForm();
+		ctorzsForm.setWidth("60%");
 		ctorzsForm.setNumCols(2);
-		ctorzsForm.setColWidths("30%", "*");
+		ctorzsForm.setColWidths("50%", "*");
 
 		final TextItem cikkszamItem = new TextItem();
 		cikkszamItem.setTitle(orderLabels.cikk_cikkszam());
@@ -498,17 +501,13 @@ public class Order {
 
 		ctorzsForm.setFields(cikkszamItem);
 
-		final Label szuresLabel = new Label();
-		szuresLabel.setContents("");
-		szuresLabel.setAlign(Alignment.CENTER);
-		szuresLabel.setWidth("50px");
-
+		HLayout szuresIButtonLayout = new HLayout();	
 		final IButton szuresIButton = new IButton(commonLabels.filter());
 		szuresIButton.setDisabled(true);
+		szuresIButtonLayout.addMember(szuresIButton);
 	
 		ctorzsFormLayout.addMember(ctorzsForm);
-		ctorzsFormLayout.addMember(szuresLabel);
-		ctorzsFormLayout.addMember(szuresIButton);
+		ctorzsFormLayout.addMember(szuresIButtonLayout);
 
 		HLayout ctorzsGridLayout = new HLayout();
 		ctorzsGridLayout.setAlign(Alignment.CENTER);
@@ -547,8 +546,8 @@ public class Order {
 					
 		final TileGrid ctorzsGrid = new TileGrid();  
 		ctorzsGrid.setTitle(orderLabels.ctorzs());
-		ctorzsGrid.setTileWidth(250);  
-		ctorzsGrid.setTileHeight(250);  
+		ctorzsGrid.setTileWidth(200);  
+		ctorzsGrid.setTileHeight(240);  
 		ctorzsGrid.setCanReorderTiles(true);  
 		ctorzsGrid.setShowAllRecords(true);  
 		ctorzsGrid.setDataSource(ctorzsDataSource);  
@@ -563,13 +562,45 @@ public class Order {
 				altipus);		
 		
 		DetailViewerField pictureField = new DetailViewerField(OrderConstants.CIKK_KEP);  
-	    pictureField.setImageWidth(250);
-	    pictureField.setImageHeight(200);
+	    pictureField.setImageWidth(200);
+	    pictureField.setImageHeight(160);
 		
 		DetailViewerField cikkszamField = new DetailViewerField(OrderConstants.CIKK_CIKKSZAM);  	
-		DetailViewerField megnevezesField = new DetailViewerField(OrderConstants.CIKK_MEGNEVEZES);  	
+		cikkszamField.setDetailFormatter(new DetailFormatter() {  
+            public String format(Object value, Record record, DetailViewerField field) {  
+                return orderLabels.cikk_cikkszam() + " : " + value;  
+            }
+        });  
+		 
+		DetailViewerField arField = new DetailViewerField(OrderConstants.CIKK_AR);  	
+		arField.setDetailFormatter(new DetailFormatter() {  
+            public String format(Object value, Record record, DetailViewerField field) {  
+                return orderLabels.cikk_ar() + " : " + value;  
+            }
+        });  
+
+		DetailViewerField kiskartonField = new DetailViewerField(OrderConstants.CIKK_KISKARTON);  	
+		kiskartonField.setDetailFormatter(new DetailFormatter() {  
+            public String format(Object value, Record record, DetailViewerField field) {  
+                return orderLabels.cikk_kiskarton() + " : " + value;  
+            }
+        });  
+
+		DetailViewerField darabField = new DetailViewerField(OrderConstants.CIKK_DARAB); 
+		darabField.setDetailFormatter(new DetailFormatter() {  
+            public String format(Object value, Record record, DetailViewerField field) {  
+                return orderLabels.cikk_darab() + " : " + value;  
+            }
+        });  
+
+		DetailViewerField terfogatField = new DetailViewerField(OrderConstants.CIKK_TERFOGAT); 
+		terfogatField.setDetailFormatter(new DetailFormatter() {  
+            public String format(Object value, Record record, DetailViewerField field) {  
+                return orderLabels.cikk_terfogat() + " : " + value;  
+            }
+        });  
 		
-		ctorzsGrid.setFields(pictureField,cikkszamField,megnevezesField);
+		ctorzsGrid.setFields(pictureField,cikkszamField,arField,kiskartonField,darabField,terfogatField);
 		ctorzsGrid.fetchData(criteria);		
 		
 		ctorzsGridLayout.addMember(ctorzsGrid);
