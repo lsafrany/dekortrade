@@ -45,34 +45,31 @@ public class RendeltDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService
-				.getRendelt(new AsyncCallback<List<RendeltSer>>() {
-					public void onFailure(Throwable caught) {
-						if (caught instanceof SQLExceptionSer)
-							response.setAttribute(
-									ClientConstants.SERVER_SQLERROR,
-									caught.getMessage());
-						else
-							response.setAttribute(ClientConstants.SERVER_ERROR,
-									ClientConstants.SERVER_ERROR);
-						response.setStatus(DSResponse.STATUS_FAILURE);
-						processResponse(requestId, response);
-					}
+		dekorTradeService.getRendelt(new AsyncCallback<List<RendeltSer>>() {
+			public void onFailure(Throwable caught) {
+				if (caught instanceof SQLExceptionSer)
+					response.setAttribute(ClientConstants.SERVER_SQLERROR,
+							caught.getMessage());
+				else
+					response.setAttribute(ClientConstants.SERVER_ERROR,
+							ClientConstants.SERVER_ERROR);
+				response.setStatus(DSResponse.STATUS_FAILURE);
+				processResponse(requestId, response);
+			}
 
-					public void onSuccess(List<RendeltSer> result) {
-						ListGridRecord[] list = new ListGridRecord[result
-								.size()];
-						for (int i = 0; i < result.size(); i++) {
-							ListGridRecord record = new ListGridRecord();
-							copyValues(result.get(i), record);
-							list[i] = record;
-						}
-						setLastId(null);
-						response.setData(list);
-						processResponse(requestId, response);
-					}
+			public void onSuccess(List<RendeltSer> result) {
+				ListGridRecord[] list = new ListGridRecord[result.size()];
+				for (int i = 0; i < result.size(); i++) {
+					ListGridRecord record = new ListGridRecord();
+					copyValues(result.get(i), record);
+					list[i] = record;
+				}
+				setLastId(null);
+				response.setData(list);
+				processResponse(requestId, response);
+			}
 
-				});
+		});
 
 	}
 

@@ -4,10 +4,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Blob;
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
-public class Cikkfotipus implements IsSerializable {
+public class Cikkfotipus {
 
 	@Persistent
 	private String kod;
@@ -17,7 +16,7 @@ public class Cikkfotipus implements IsSerializable {
 
 	@Persistent
 	private Blob blob;
-	
+
 	@Persistent
 	private Boolean szinkron;
 

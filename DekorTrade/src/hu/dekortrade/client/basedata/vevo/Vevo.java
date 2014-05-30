@@ -74,14 +74,15 @@ public class Vevo {
 						SC.warn(commonLabels.server_error());
 					else if (event.getResponse().getAttribute(
 							ClientConstants.SERVER_SQLERROR) != null)
-						if (event.getResponse().getAttribute(
-								ClientConstants.SERVER_SQLERROR).equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());							
+						if (event.getResponse()
+								.getAttribute(ClientConstants.SERVER_SQLERROR)
+								.equals(Constants.EXISTSID)) {
+							SC.warn(commonLabels.letezoid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "
 									+ event.getResponse().getAttribute(
-											ClientConstants.SERVER_SQLERROR));							
+											ClientConstants.SERVER_SQLERROR));
 						}
 					event.cancel();
 				}
@@ -209,7 +210,8 @@ public class Vevo {
 
 										public void onSuccess(String result) {
 											DisplayRequest.serverResponse();
-											SC.say(result + " : " + commonLabels.alapjeszo());
+											SC.say(result + " : "
+													+ commonLabels.alapjeszo());
 											jelszoButton.setDisabled(false);
 										}
 									});
@@ -262,10 +264,10 @@ public class Vevo {
 		if (uj)
 			editForm.editNewRecord();
 		else {
-			editForm.getField(VevoConstants.VEVO_ROVIDNEV).setCanEdit(false);			
+			editForm.getField(VevoConstants.VEVO_ROVIDNEV).setCanEdit(false);
 			editForm.editSelectedData(listGrid);
-		}	
-			
+		}
+
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);

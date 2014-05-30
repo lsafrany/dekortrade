@@ -79,14 +79,15 @@ public class Felhasznalo {
 						SC.warn(commonLabels.server_error());
 					else if (event.getResponse().getAttribute(
 							ClientConstants.SERVER_SQLERROR) != null)
-						if (event.getResponse().getAttribute(
-								ClientConstants.SERVER_SQLERROR).equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());							
+						if (event.getResponse()
+								.getAttribute(ClientConstants.SERVER_SQLERROR)
+								.equals(Constants.EXISTSID)) {
+							SC.warn(commonLabels.letezoid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "
 									+ event.getResponse().getAttribute(
-											ClientConstants.SERVER_SQLERROR));							
+											ClientConstants.SERVER_SQLERROR));
 						}
 					event.cancel();
 				}
@@ -187,11 +188,11 @@ public class Felhasznalo {
 						SC.warn(commonLabels.server_error());
 					else if (event.getResponse().getAttribute(
 							ClientConstants.SERVER_SQLERROR) != null) {
-							SC.warn(commonLabels.server_sqlerror()
-									+ " : "
-									+ event.getResponse().getAttribute(
-											ClientConstants.SERVER_SQLERROR));							
-					}	
+						SC.warn(commonLabels.server_sqlerror()
+								+ " : "
+								+ event.getResponse().getAttribute(
+										ClientConstants.SERVER_SQLERROR));
+					}
 					event.cancel();
 				}
 			}
@@ -292,7 +293,10 @@ public class Felhasznalo {
 														String result) {
 													DisplayRequest
 															.serverResponse();
-													SC.say(result + " : " + commonLabels.alapjeszo());
+													SC.say(result
+															+ " : "
+															+ commonLabels
+																	.alapjeszo());
 													jelszoButton
 															.setDisabled(false);
 												}
@@ -375,10 +379,11 @@ public class Felhasznalo {
 		if (uj)
 			editForm.editNewRecord();
 		else {
-			editForm.getField(SystemConstants.FELHASZNALO_ROVIDNEV).setCanEdit(false);			
+			editForm.getField(SystemConstants.FELHASZNALO_ROVIDNEV).setCanEdit(
+					false);
 			editForm.editSelectedData(listGrid);
 		}
-		
+
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -395,16 +400,15 @@ public class Felhasznalo {
 							DSRequest request) {
 						if (response.getStatus() == DSResponse.STATUS_SUCCESS) {
 							if (uj) {
-								jogGrid.setData(new ListGridRecord[] {});								
-							}
-							else {
+								jogGrid.setData(new ListGridRecord[] {});
+							} else {
 								Criteria criteria = new Criteria();
 								criteria.setAttribute(
 										SystemConstants.FELHASZNALO_ROVIDNEV,
 										listGrid.getSelectedRecord()
 												.getAttribute(
 														SystemConstants.FELHASZNALO_ROVIDNEV));
-								jogGrid.fetchData(criteria);							
+								jogGrid.fetchData(criteria);
 							}
 							winModal.destroy();
 						}

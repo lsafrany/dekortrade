@@ -4,17 +4,16 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Blob;
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
-public class Kep implements IsSerializable {
+public class Kep {
 
 	@Persistent
 	private String cikkszam;
 
 	@Persistent
 	private String sorszam;
-	
+
 	@Persistent
 	private Blob blob;
 
@@ -24,7 +23,8 @@ public class Kep implements IsSerializable {
 	@Persistent
 	private Boolean torolt;
 
-	public Kep(String cikkszam, String sorszam, Blob blob, Boolean szinkron, Boolean torolt) {
+	public Kep(String cikkszam, String sorszam, Blob blob, Boolean szinkron,
+			Boolean torolt) {
 		this.cikkszam = cikkszam;
 		this.sorszam = sorszam;
 		this.blob = blob;
@@ -73,4 +73,3 @@ public class Kep implements IsSerializable {
 	}
 
 }
-

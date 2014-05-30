@@ -3,7 +3,7 @@ package hu.dekortrade.client.basedata;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.basedata.cikktipus.Cikktipus;
 import hu.dekortrade.client.basedata.cikktorzs.Ctorzs;
-import hu.dekortrade.client.basedata.szallito.Szallito;
+import hu.dekortrade.client.basedata.gyarto.Gyarto;
 import hu.dekortrade.client.basedata.vevo.Vevo;
 
 import com.google.gwt.core.client.GWT;
@@ -31,10 +31,10 @@ public class Basedata {
 		tabSet.setWidth100();
 		tabSet.setHeight100();
 
-		final Tab szallitoTab = new Tab(basedataLabels.szallitok());
-		Szallito szallito = new Szallito();
-		szallitoTab.setPane(szallito.get());
-		tabSet.addTab(szallitoTab);
+		final Tab gyartoTab = new Tab(basedataLabels.gyartok());
+		Gyarto gyarto = new Gyarto();
+		gyartoTab.setPane(gyarto.get());
+		tabSet.addTab(gyartoTab);
 
 		final Tab vevoTab = new Tab(basedataLabels.vevok());
 		Vevo vevo = new Vevo();

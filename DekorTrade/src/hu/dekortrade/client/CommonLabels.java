@@ -25,9 +25,9 @@ public interface CommonLabels extends Constants {
 	String delete();
 
 	String save();
-	
+
 	String alapjeszo();
-	
+
 	String letezoid();
-	
+
 }

@@ -4,10 +4,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Blob;
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
-public class Cikkaltipus implements IsSerializable {
+public class Cikkaltipus {
 
 	@Persistent
 	private String fokod;
@@ -20,7 +19,7 @@ public class Cikkaltipus implements IsSerializable {
 
 	@Persistent
 	private Blob blob;
-	
+
 	@Persistent
 	private Boolean szinkron;
 
@@ -30,7 +29,7 @@ public class Cikkaltipus implements IsSerializable {
 		this.nev = nev;
 		this.szinkron = szinkron;
 	}
-	
+
 	public String getFokod() {
 		return fokod;
 	}

@@ -5,7 +5,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class CikkaltipusSer implements IsSerializable {
 
 	private String fokod;
-	
+
 	private String kod;
 
 	private String nev;

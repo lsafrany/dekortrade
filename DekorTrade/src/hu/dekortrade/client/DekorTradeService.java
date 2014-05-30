@@ -5,12 +5,12 @@ import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
 import hu.dekortrade.shared.serialized.CikkfotipusSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
+import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
-import hu.dekortrade.shared.serialized.SzallitoSer;
 import hu.dekortrade.shared.serialized.SzinkronSer;
 import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
@@ -54,16 +54,16 @@ public interface DekorTradeService extends RemoteService {
 	List<JogSer> getJog(String rovidnev) throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	List<SzallitoSer> getSzallito() throws IllegalArgumentException,
+	List<GyartoSer> getGyarto() throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	SzallitoSer addSzallito(SzallitoSer szallitoSer)
+	GyartoSer addGyarto(GyartoSer szallitoSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	SzallitoSer updateSzallito(SzallitoSer szallitoSer)
+	GyartoSer updateGyarto(GyartoSer szallitoSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	SzallitoSer removeSzallito(SzallitoSer szallitoSer)
+	GyartoSer removeGyarto(GyartoSer szallitoSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	VevoSer addVevo(VevoSer vevoSer) throws IllegalArgumentException,
@@ -80,8 +80,8 @@ public interface DekorTradeService extends RemoteService {
 
 	List<VevoSer> getVevo() throws Exception, SQLExceptionSer;
 
-	List<CikkSer> getCikk(int page, String fotipus, String altipus, String cikkszam)
-			throws IllegalArgumentException, SQLExceptionSer;
+	List<CikkSer> getCikk(int page, String fotipus, String altipus,
+			String cikkszam) throws IllegalArgumentException, SQLExceptionSer;
 
 	CikkSer addCikk(CikkSer cikkSer) throws IllegalArgumentException,
 			SQLExceptionSer;
@@ -121,8 +121,8 @@ public interface DekorTradeService extends RemoteService {
 	CikkfotipusSer updateCikkfotipus(CikkfotipusSer cikkfotipusSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	List<CikkaltipusSer> getCikkaltipus(String fokod) throws IllegalArgumentException,
-			SQLExceptionSer;
+	List<CikkaltipusSer> getCikkaltipus(String fokod)
+			throws IllegalArgumentException, SQLExceptionSer;
 
 	CikkaltipusSer addCikkaltipus(CikkaltipusSer cikktipusSer)
 			throws IllegalArgumentException, SQLExceptionSer;
@@ -130,6 +130,6 @@ public interface DekorTradeService extends RemoteService {
 	CikkaltipusSer updateCikkaltipus(CikkaltipusSer cikktipusSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	CikkSelectsSer getCikkSelects()
-			throws IllegalArgumentException, SQLExceptionSer;
+	CikkSelectsSer getCikkSelects() throws IllegalArgumentException,
+			SQLExceptionSer;
 }

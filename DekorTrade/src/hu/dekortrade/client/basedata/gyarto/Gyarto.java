@@ -1,4 +1,4 @@
-package hu.dekortrade.client.basedata.szallito;
+package hu.dekortrade.client.basedata.gyarto;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.CommonLabels;
@@ -11,6 +11,7 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -27,9 +28,9 @@ import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class Szallito {
+public class Gyarto {
 
-	private SzallitoLabels szallitoLabels = GWT.create(SzallitoLabels.class);
+	private GyartoLabels gyartoLabels = GWT.create(GyartoLabels.class);
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
@@ -40,10 +41,10 @@ public class Szallito {
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
 
-		VLayout szallitoLayout = new VLayout();
-		szallitoLayout.setDefaultLayoutAlign(Alignment.CENTER);
+		VLayout gyartoLayout = new VLayout();
+		gyartoLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
-		final SzallitoDataSource szallitoDataSource = new SzallitoDataSource() {
+		final GyartoDataSource gyartoDataSource = new GyartoDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
 				DisplayRequest.startRequest();
@@ -57,7 +58,7 @@ public class Szallito {
 			}
 		};
 
-		szallitoDataSource.addHandleErrorHandler(new HandleErrorHandler() {
+		gyartoDataSource.addHandleErrorHandler(new HandleErrorHandler() {
 			public void onHandleError(ErrorEvent event) {
 
 				if (event.getResponse().getStatus() == DSResponse.STATUS_FAILURE) {
@@ -75,32 +76,34 @@ public class Szallito {
 			}
 		});
 
-		final ListGrid szallitoGrid = new ListGrid();
-		szallitoGrid.setTitle(szallitoLabels.szallitok());
-		szallitoGrid.setWidth("70%");
-		szallitoGrid.setShowHeaderContextMenu(false);
-		szallitoGrid.setShowHeaderMenuButton(false);
-		szallitoGrid.setCanSort(false);
-		szallitoGrid.setShowAllRecords(true);
-		szallitoGrid.setDataSource(szallitoDataSource);
-		szallitoGrid.setAutoFetchData(true);
+		final ListGrid gyartoGrid = new ListGrid();
+		gyartoGrid.setTitle(gyartoLabels.gyartok());
+		gyartoGrid.setWidth("70%");
+		gyartoGrid.setShowHeaderContextMenu(false);
+		gyartoGrid.setShowHeaderMenuButton(false);
+		gyartoGrid.setCanSort(false);
+		gyartoGrid.setShowAllRecords(true);
+		gyartoGrid.setDataSource(gyartoDataSource);
+		gyartoGrid.setAutoFetchData(true);
+		gyartoGrid.setCanExpandRecords(true);
+		gyartoGrid.setExpansionMode(ExpansionMode.DETAILS);
 
 		ListGridField kodGridField = new ListGridField(
-				SzallitoConstants.SZALLITO_KOD);
+				GyartoConstants.GYARTO_KOD);
 		kodGridField.setWidth("5%");
 
 		ListGridField nevGridField = new ListGridField(
-				SzallitoConstants.SZALLITO_NEV);
+				GyartoConstants.GYARTO_NEV);
 		nevGridField.setWidth("20%");
 
 		ListGridField cimGridField = new ListGridField(
-				SzallitoConstants.SZALLITO_CIM);
+				GyartoConstants.GYARTO_CIM);
 		cimGridField.setWidth("30%");
 
 		ListGridField elerhetosegGridField = new ListGridField(
-				SzallitoConstants.SZALLITO_ELERHETOSEG);
+				GyartoConstants.GYARTO_ELERHETOSEG);
 
-		szallitoGrid.setFields(kodGridField, nevGridField, cimGridField,
+		gyartoGrid.setFields(kodGridField, nevGridField, cimGridField,
 				elerhetosegGridField);
 
 		HLayout buttonsLayout = new HLayout();
@@ -131,12 +134,12 @@ public class Szallito {
 		buttonsLayout.addMember(modifyButtonLayout);
 		buttonsLayout.addMember(deleteButtonLayout);
 
-		szallitoLayout.addMember(szallitoGrid);
-		szallitoLayout.addMember(buttonsLayout);
+		gyartoLayout.addMember(gyartoGrid);
+		gyartoLayout.addMember(buttonsLayout);
 
-		middleLayout.addMember(szallitoLayout);
+		middleLayout.addMember(gyartoLayout);
 
-		szallitoGrid.addRecordClickHandler(new RecordClickHandler() {
+		gyartoGrid.addRecordClickHandler(new RecordClickHandler() {
 			public void onRecordClick(RecordClickEvent event) {
 				modifyButton.setDisabled(false);
 				deleteButton.setDisabled(false);
@@ -145,13 +148,13 @@ public class Szallito {
 
 		addButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				szallitoEdit(szallitoDataSource, szallitoGrid, Boolean.TRUE);
+				gyartoEdit(gyartoDataSource, gyartoGrid, Boolean.TRUE);
 			}
 		});
 
 		modifyButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				szallitoEdit(szallitoDataSource, szallitoGrid, Boolean.FALSE);
+				gyartoEdit(gyartoDataSource, gyartoGrid, Boolean.FALSE);
 			}
 		});
 
@@ -160,7 +163,7 @@ public class Szallito {
 				SC.ask(commonLabels.sure(), new BooleanCallback() {
 					public void execute(Boolean value) {
 						if (value != null && value) {
-							szallitoGrid.removeSelectedData();
+							gyartoGrid.removeSelectedData();
 							modifyButton.setDisabled(true);
 							deleteButton.setDisabled(true);
 						}
@@ -174,13 +177,13 @@ public class Szallito {
 
 	}
 
-	void szallitoEdit(SzallitoDataSource dataSource, ListGrid listGrid,
+	void gyartoEdit(GyartoDataSource dataSource, ListGrid listGrid,
 			boolean uj) {
 
 		final Window winModal = new Window();
-		winModal.setWidth(600);
-		winModal.setHeight(150);
-		winModal.setTitle(szallitoLabels.szallito());
+		winModal.setWidth(700);
+		winModal.setHeight(400);
+		winModal.setTitle(gyartoLabels.gyarto());
 		winModal.setShowMinimizeButton(false);
 		winModal.setShowCloseButton(false);
 		winModal.setIsModal(true);
@@ -193,9 +196,9 @@ public class Szallito {
 		editForm.setDataSource(dataSource);
 		editForm.setUseAllDataSourceFields(true);
 
-		if (uj) 
-			editForm.editNewRecord();			
-		else 
+		if (uj)
+			editForm.editNewRecord();
+		else
 			editForm.editSelectedData(listGrid);
 
 		HLayout buttonsLayout = new HLayout();

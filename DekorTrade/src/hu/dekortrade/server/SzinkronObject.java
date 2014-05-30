@@ -33,19 +33,20 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class SzinkronObject {
-		
-	private static final Logger log = Logger.getLogger(SzinkronObject.class.getName());
-	
+
+	private static final Logger log = Logger.getLogger(SzinkronObject.class
+			.getName());
+
 	SzinkronSer feldolgozas() throws Exception {
 
 		SzinkronSer szinkronSer = new SzinkronSer();
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-//		Transaction tx = pm.currentTransaction();
+		// Transaction tx = pm.currentTransaction();
 		try {
 
 			log.info("vevo");
-//			tx.begin();
+			// tx.begin();
 			Query vevoquery = pm.newQuery(Vevo.class);
 			vevoquery.setFilter("this.szinkron == false");
 			vevoquery.setRange(0, 50);
@@ -55,7 +56,8 @@ public class SzinkronObject {
 			if ((vevolist != null) && (!vevolist.isEmpty())) {
 				for (Vevo l : vevolist) {
 					VevoSzinkron vevoSzinkron = new VevoSzinkron(
-							l.getRovidnev(), l.getNev(), l.getInternet(),l.getTorolt());
+							l.getRovidnev(), l.getNev(), l.getInternet(),
+							l.getTorolt());
 					vevolistszinkron.add(vevoSzinkron);
 					l.setSzinkron(Boolean.TRUE);
 				}
@@ -70,7 +72,8 @@ public class SzinkronObject {
 				Client vevoclient = Client.create();
 				vevoclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-				WebResource vevowebResource = vevoclient.resource(ServerConstants.URI);
+				WebResource vevowebResource = vevoclient
+						.resource(ServerConstants.URI);
 
 				ClientResponse vevoresponse = vevowebResource.path("syncron")
 						.queryParam("tabla", "vevo").accept("application/json")
@@ -88,23 +91,26 @@ public class SzinkronObject {
 				System.out.println(output);
 
 			}
-//			tx.commit();
-			
+			// tx.commit();
+
 			log.info("cikkfotipus");
-//			tx.begin();
+			// tx.begin();
 			Query cikkfotipusquery = pm.newQuery(Cikkfotipus.class);
 			cikkfotipusquery.setFilter("this.szinkron == false");
 			@SuppressWarnings("unchecked")
-			List<Cikkfotipus> cikkfotipuslist = (List<Cikkfotipus>) pm.newQuery(cikkfotipusquery).execute();
+			List<Cikkfotipus> cikkfotipuslist = (List<Cikkfotipus>) pm
+					.newQuery(cikkfotipusquery).execute();
 			List<CikkfotipusSzinkron> cikkfotipuslistszinkron = new ArrayList<CikkfotipusSzinkron>();
 			if ((cikkfotipuslist != null) && (!cikkfotipuslist.isEmpty())) {
 				for (Cikkfotipus l : cikkfotipuslist) {
-					CikkfotipusSzinkron cikkfotipusSzinkron = new CikkfotipusSzinkron(l.getKod(),l.getNev(),l.getBlob());
+					CikkfotipusSzinkron cikkfotipusSzinkron = new CikkfotipusSzinkron(
+							l.getKod(), l.getNev(), l.getBlob());
 					cikkfotipuslistszinkron.add(cikkfotipusSzinkron);
 					l.setSzinkron(Boolean.TRUE);
 				}
 
-				szinkronSer.setUploadcikkfotipus(cikkfotipuslistszinkron.size());
+				szinkronSer
+						.setUploadcikkfotipus(cikkfotipuslistszinkron.size());
 
 				ObjectMapper cikkfotipusmapper = new ObjectMapper();
 
@@ -114,10 +120,12 @@ public class SzinkronObject {
 				Client cikkfotipusclient = Client.create();
 				cikkfotipusclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-				WebResource cikkfotipuswebResource = cikkfotipusclient.resource(ServerConstants.URI);
+				WebResource cikkfotipuswebResource = cikkfotipusclient
+						.resource(ServerConstants.URI);
 
-				ClientResponse cikkfotipusresponse = cikkfotipuswebResource.path("syncron")
-						.queryParam("tabla", "cikkfotipus").accept("application/json")
+				ClientResponse cikkfotipusresponse = cikkfotipuswebResource
+						.path("syncron").queryParam("tabla", "cikkfotipus")
+						.accept("application/json")
 						.type("application/json; charset=utf-8")
 						.post(ClientResponse.class, cikkfotipusJSON);
 
@@ -130,25 +138,28 @@ public class SzinkronObject {
 				// display response
 				String output = cikkfotipusresponse.getEntity(String.class);
 				System.out.println(output);
-				
+
 			}
-//			tx.commit();
-		
+			// tx.commit();
+
 			log.info("cikkaltipus");
-//			tx.begin();
+			// tx.begin();
 			Query cikkaltipusquery = pm.newQuery(Cikkaltipus.class);
 			cikkaltipusquery.setFilter("this.szinkron == false");
 			@SuppressWarnings("unchecked")
-			List<Cikkaltipus> cikkaltipuslist = (List<Cikkaltipus>) pm.newQuery(cikkaltipusquery).execute();
+			List<Cikkaltipus> cikkaltipuslist = (List<Cikkaltipus>) pm
+					.newQuery(cikkaltipusquery).execute();
 			List<CikkaltipusSzinkron> cikkaltipuslistszinkron = new ArrayList<CikkaltipusSzinkron>();
 			if ((cikkaltipuslist != null) && (!cikkaltipuslist.isEmpty())) {
 				for (Cikkaltipus l : cikkaltipuslist) {
-					CikkaltipusSzinkron cikkaltipusSzinkron = new CikkaltipusSzinkron(l.getFokod(),l.getKod(),l.getNev(),l.getBlob());
+					CikkaltipusSzinkron cikkaltipusSzinkron = new CikkaltipusSzinkron(
+							l.getFokod(), l.getKod(), l.getNev(), l.getBlob());
 					cikkaltipuslistszinkron.add(cikkaltipusSzinkron);
 					l.setSzinkron(Boolean.TRUE);
 				}
 
-				szinkronSer.setUploadcikkaltipus(cikkaltipuslistszinkron.size());
+				szinkronSer
+						.setUploadcikkaltipus(cikkaltipuslistszinkron.size());
 
 				ObjectMapper cikkaltipusmapper = new ObjectMapper();
 
@@ -158,10 +169,12 @@ public class SzinkronObject {
 				Client cikkaltipusclient = Client.create();
 				cikkaltipusclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-				WebResource cikkaltipuswebResource = cikkaltipusclient.resource(ServerConstants.URI);
+				WebResource cikkaltipuswebResource = cikkaltipusclient
+						.resource(ServerConstants.URI);
 
-				ClientResponse cikkaltipusresponse = cikkaltipuswebResource.path("syncron")
-						.queryParam("tabla", "cikkaltipus").accept("application/json")
+				ClientResponse cikkaltipusresponse = cikkaltipuswebResource
+						.path("syncron").queryParam("tabla", "cikkaltipus")
+						.accept("application/json")
 						.type("application/json; charset=utf-8")
 						.post(ClientResponse.class, cikkaltipusJSON);
 
@@ -174,12 +187,12 @@ public class SzinkronObject {
 				// display response
 				String output = cikkaltipusresponse.getEntity(String.class);
 				System.out.println(output);
-				
+
 			}
-//			tx.commit();
-		
+			// tx.commit();
+
 			log.info("cikk");
-//			tx.begin();
+			// tx.begin();
 			Query cikkquery = pm.newQuery(Cikk.class);
 			cikkquery.setFilter("this.szinkron == false");
 			cikkquery.setRange(0, 100);
@@ -188,11 +201,11 @@ public class SzinkronObject {
 			List<CikkSzinkron> cikklistszinkron = new ArrayList<CikkSzinkron>();
 			if ((cikklist != null) && (!cikklist.isEmpty())) {
 				for (Cikk l : cikklist) {
-					CikkSzinkron cikkSzinkron = new CikkSzinkron(l.getFotipus(),l.getAltipus(),
-							l.getCikkszam(), l.getMegnevezes(), l.getAr(),
-							l.getKiskarton(), l.getDarab(), l.getTerfogat(),
-							l.getBsuly(), l.getNsuly(),
-							l.getKepek(), l.getTorolt());
+					CikkSzinkron cikkSzinkron = new CikkSzinkron(
+							l.getFotipus(), l.getAltipus(), l.getCikkszam(),
+							l.getMegnevezes(), l.getAr(), l.getKiskarton(),
+							l.getDarab(), l.getTerfogat(), l.getBsuly(),
+							l.getNsuly(), l.getKepek(), l.getTorolt());
 					cikklistszinkron.add(cikkSzinkron);
 					l.setSzinkron(Boolean.TRUE);
 				}
@@ -207,7 +220,8 @@ public class SzinkronObject {
 				Client cikkclient = Client.create();
 				cikkclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-				WebResource cikkwebResource = cikkclient.resource(ServerConstants.URI);
+				WebResource cikkwebResource = cikkclient
+						.resource(ServerConstants.URI);
 
 				ClientResponse cikkresponse = cikkwebResource.path("syncron")
 						.queryParam("tabla", "cikk").accept("application/json")
@@ -223,12 +237,12 @@ public class SzinkronObject {
 				// display response
 				String output = cikkresponse.getEntity(String.class);
 				System.out.println(output);
-				
+
 			}
-//			tx.commit();
-				
+			// tx.commit();
+
 			log.info("kep");
-//			tx.begin();
+			// tx.begin();
 			Query kepquery = pm.newQuery(Kep.class);
 			kepquery.setFilter("this.szinkron == false");
 			kepquery.setRange(0, 10);
@@ -252,7 +266,8 @@ public class SzinkronObject {
 				Client kepclient = Client.create();
 				kepclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-				WebResource kepwebResource = kepclient.resource(ServerConstants.URI);
+				WebResource kepwebResource = kepclient
+						.resource(ServerConstants.URI);
 
 				ClientResponse kepresponse = kepwebResource.path("syncron")
 						.queryParam("tabla", "kep").accept("application/json")
@@ -270,14 +285,15 @@ public class SzinkronObject {
 				System.out.println(output);
 
 			}
-//			tx.commit();
-			
+			// tx.commit();
+
 			log.info("rendelt");
-//			tx.begin();
+			// tx.begin();
 			Client rendeltclient = Client.create();
 			rendeltclient.setConnectTimeout(ServerConstants.TIMEOUT);
 
-			WebResource rendeltwebResource = rendeltclient.resource(ServerConstants.URI);
+			WebResource rendeltwebResource = rendeltclient
+					.resource(ServerConstants.URI);
 
 			ClientResponse rendeltresponse = rendeltwebResource.path("syncron")
 					.queryParam("akcio", "rendelt").type(MediaType.TEXT_PLAIN)
@@ -287,35 +303,44 @@ public class SzinkronObject {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ rendeltresponse.getStatus());
 			}
-		
+
 			String rendeltoutput = rendeltresponse.getEntity(String.class);
 
 			ObjectMapper rendeltmapper = new ObjectMapper();
 
-			List<RendeltSzinkron> rendeltSzinkronList = rendeltmapper.readValue(rendeltoutput,
-					new TypeReference<List<RendeltSzinkron>>() {
-					});
+			List<RendeltSzinkron> rendeltSzinkronList = rendeltmapper
+					.readValue(rendeltoutput,
+							new TypeReference<List<RendeltSzinkron>>() {
+							});
 
 			log.info("rendelt - " + rendeltSzinkronList.size());
-			
+
 			for (int i = 0; i < rendeltSzinkronList.size(); i++) {
 				RendeltSzinkron rendeltSzinkron = rendeltSzinkronList.get(i);
-				Rendelt rendelt = new Rendelt(rendeltSzinkron.getRovidnev(),rendeltSzinkron.getRendeles(),rendeltSzinkron.getDatum());
+				Rendelt rendelt = new Rendelt(rendeltSzinkron.getRovidnev(),
+						rendeltSzinkron.getRendeles(),
+						rendeltSzinkron.getDatum());
 				pm.makePersistent(rendelt);
-				
-				List<RendeltcikkSzinkron> rendeltcikkSzinkroList = rendeltSzinkron.getRendeltCikkszam();
-				
+
+				List<RendeltcikkSzinkron> rendeltcikkSzinkroList = rendeltSzinkron
+						.getRendeltCikkszam();
+
 				for (int j = 0; j < rendeltcikkSzinkroList.size(); j++) {
-					RendeltcikkSzinkron rendeltcikkSzinkron = rendeltcikkSzinkroList.get(j);
-					Rendeltcikk rendeltcikk = new Rendeltcikk(rendeltcikkSzinkron.getRovidnev(),rendeltcikkSzinkron.getRendeles(),rendeltcikkSzinkron.getCikkszam(),rendeltcikkSzinkron.getExportkarton());
+					RendeltcikkSzinkron rendeltcikkSzinkron = rendeltcikkSzinkroList
+							.get(j);
+					Rendeltcikk rendeltcikk = new Rendeltcikk(
+							rendeltcikkSzinkron.getRovidnev(),
+							rendeltcikkSzinkron.getRendeles(),
+							rendeltcikkSzinkron.getCikkszam(),
+							rendeltcikkSzinkron.getExportkarton());
 					pm.makePersistent(rendeltcikk);
 				}
 			}
-			
+
 			szinkronSer.setDownloadrendelt(rendeltSzinkronList.size());
-//			tx.commit();
+			// tx.commit();
 		} catch (Exception e) {
-//			tx.rollback();
+			// tx.rollback();
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();

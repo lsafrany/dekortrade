@@ -26,31 +26,30 @@ public class KepDataSource extends GwtRpcDataSource {
 	private CtorzsLabels ctozsLabels = GWT.create(CtorzsLabels.class);
 
 	private static String cikkszam = "";
-	
+
 	private static String sorszam = "";
 
 	public KepDataSource() {
 
 		DataSourceField field;
-  		
+
 		field = new DataSourceTextField(CtorzsConstants.KEP_SORSZAM,
 				ctozsLabels.kepsorszam());
 		field.setPrimaryKey(true);
 		field.setHidden(true);
 		addField(field);
 
-		field = new DataSourceImageField(CtorzsConstants.KEP_KEP,ctozsLabels.kep());
+		field = new DataSourceImageField(CtorzsConstants.KEP_KEP,
+				ctozsLabels.kep());
 		addField(field);
-			
+
 	}
 
 	@Override
 	protected void executeFetch(final String requestId,
-		final DSRequest request, final DSResponse response) {
-		cikkszam =  request.getAttributeAsString(
-					CtorzsConstants.CIKK_CIKKSZAM);
-		dekorTradeService.getKep(cikkszam
-					,new AsyncCallback<List<String>>() {
+			final DSRequest request, final DSResponse response) {
+		cikkszam = request.getAttributeAsString(CtorzsConstants.CIKK_CIKKSZAM);
+		dekorTradeService.getKep(cikkszam, new AsyncCallback<List<String>>() {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof SQLExceptionSer)
 					response.setAttribute(ClientConstants.SERVER_SQLERROR,
@@ -66,7 +65,7 @@ public class KepDataSource extends GwtRpcDataSource {
 				ListGridRecord[] list = new ListGridRecord[result.size()];
 				for (int i = 0; i < result.size(); i++) {
 					ListGridRecord record = new ListGridRecord();
-					copyValues(cikkszam,result.get(i), record);
+					copyValues(cikkszam, result.get(i), record);
 					list[i] = record;
 				}
 				setLastId(null);
@@ -88,7 +87,6 @@ public class KepDataSource extends GwtRpcDataSource {
 	protected void executeUpdate(final String requestId,
 			final DSRequest request, final DSResponse response) {
 
-
 	}
 
 	@Override
@@ -98,13 +96,11 @@ public class KepDataSource extends GwtRpcDataSource {
 		JavaScriptObject data = request.getData();
 		final ListGridRecord rec = new ListGridRecord(data);
 
-		cikkszam =  request.getAttributeAsString(
-				CtorzsConstants.CIKK_CIKKSZAM);
+		cikkszam = request.getAttributeAsString(CtorzsConstants.CIKK_CIKKSZAM);
 
-		sorszam =  request.getAttributeAsString(
-				CtorzsConstants.KEP_SORSZAM);
+		sorszam = request.getAttributeAsString(CtorzsConstants.KEP_SORSZAM);
 
-		dekorTradeService.removeKep(cikkszam,sorszam,
+		dekorTradeService.removeKep(cikkszam, sorszam,
 				new AsyncCallback<String>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -132,9 +128,11 @@ public class KepDataSource extends GwtRpcDataSource {
 
 	}
 
-	private static void copyValues(String cikkszam,String from, ListGridRecord to) {
+	private static void copyValues(String cikkszam, String from,
+			ListGridRecord to) {
 		to.setAttribute(CtorzsConstants.KEP_SORSZAM, from);
-		to.setAttribute(CtorzsConstants.KEP_KEP, GWT.getModuleBaseURL()+ "download?cikkszam=" + cikkszam + "&sorszam=" + from);
+		to.setAttribute(CtorzsConstants.KEP_KEP, GWT.getModuleBaseURL()
+				+ "download?cikkszam=" + cikkszam + "&sorszam=" + from);
 	}
 
 }

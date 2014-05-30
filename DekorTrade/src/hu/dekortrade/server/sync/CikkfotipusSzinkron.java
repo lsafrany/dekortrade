@@ -2,16 +2,16 @@ package hu.dekortrade.server.sync;
 
 import com.google.appengine.api.datastore.Blob;
 
-public class CikkfotipusSzinkron  {
+public class CikkfotipusSzinkron {
 
 	private String kod;
 
 	private String nev;
 
 	private Blob blob;
-	
+
 	public CikkfotipusSzinkron() {
-		
+
 	}
 
 	public CikkfotipusSzinkron(String kod, String nev, Blob blob) {
@@ -43,5 +43,5 @@ public class CikkfotipusSzinkron  {
 	public void setBlob(Blob blob) {
 		this.blob = blob;
 	}
-	
+
 }

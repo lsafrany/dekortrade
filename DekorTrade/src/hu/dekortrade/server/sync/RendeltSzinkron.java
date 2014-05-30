@@ -11,13 +11,14 @@ public class RendeltSzinkron {
 
 	private Date datum;
 
-	List<RendeltcikkSzinkron> rendeltCikkszam = null;	
-	
+	List<RendeltcikkSzinkron> rendeltCikkszam = null;
+
 	public RendeltSzinkron() {
-		
+
 	}
 
-	public RendeltSzinkron(String rovidnev, String rendeles, Date datum, List<RendeltcikkSzinkron> rendeltCikkszam) {
+	public RendeltSzinkron(String rovidnev, String rendeles, Date datum,
+			List<RendeltcikkSzinkron> rendeltCikkszam) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.datum = datum;

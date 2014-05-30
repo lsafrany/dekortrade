@@ -31,7 +31,7 @@ public class CikkfotipusDataSource extends GwtRpcDataSource {
 
 		TextItem textItem = new TextItem();
 		textItem.setWidth("400");
-		
+
 		DataSourceField field;
 
 		field = new DataSourceTextField(CikktipusConstants.CIKKFOTIPUS_KOD,
@@ -44,37 +44,40 @@ public class CikkfotipusDataSource extends GwtRpcDataSource {
 				cikktipusLabels.nev());
 		field.setLength(30);
 		addField(field);
-	
+
 	}
 
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getCikkfotipus(new AsyncCallback<List<CikkfotipusSer>>() {
-			public void onFailure(Throwable caught) {
-				if (caught instanceof SQLExceptionSer)
-					response.setAttribute(ClientConstants.SERVER_SQLERROR,
-							caught.getMessage());
-				else
-					response.setAttribute(ClientConstants.SERVER_ERROR,
-							ClientConstants.SERVER_ERROR);
-				response.setStatus(DSResponse.STATUS_FAILURE);
-				processResponse(requestId, response);
-			}
+		dekorTradeService
+				.getCikkfotipus(new AsyncCallback<List<CikkfotipusSer>>() {
+					public void onFailure(Throwable caught) {
+						if (caught instanceof SQLExceptionSer)
+							response.setAttribute(
+									ClientConstants.SERVER_SQLERROR,
+									caught.getMessage());
+						else
+							response.setAttribute(ClientConstants.SERVER_ERROR,
+									ClientConstants.SERVER_ERROR);
+						response.setStatus(DSResponse.STATUS_FAILURE);
+						processResponse(requestId, response);
+					}
 
-			public void onSuccess(List<CikkfotipusSer> result) {
-				ListGridRecord[] list = new ListGridRecord[result.size()];
-				for (int i = 0; i < result.size(); i++) {
-					ListGridRecord record = new ListGridRecord();
-					copyValues(result.get(i), record);
-					list[i] = record;
-				}
-				setLastId(null);
-				response.setData(list);
-				processResponse(requestId, response);
-			}
+					public void onSuccess(List<CikkfotipusSer> result) {
+						ListGridRecord[] list = new ListGridRecord[result
+								.size()];
+						for (int i = 0; i < result.size(); i++) {
+							ListGridRecord record = new ListGridRecord();
+							copyValues(result.get(i), record);
+							list[i] = record;
+						}
+						setLastId(null);
+						response.setData(list);
+						processResponse(requestId, response);
+					}
 
-		});
+				});
 
 	}
 
@@ -86,27 +89,29 @@ public class CikkfotipusDataSource extends GwtRpcDataSource {
 		ListGridRecord rec = new ListGridRecord(data);
 		CikkfotipusSer cikkfotipusSer = new CikkfotipusSer();
 		copyValues(rec, cikkfotipusSer);
-		dekorTradeService.addCikkfotipus(cikkfotipusSer, new AsyncCallback<CikkfotipusSer>() {
-			public void onFailure(Throwable caught) {
-				if (caught instanceof SQLExceptionSer)
-					response.setAttribute(ClientConstants.SERVER_SQLERROR,
-							caught.getMessage());
-				else
-					response.setAttribute(ClientConstants.SERVER_ERROR,
-							ClientConstants.SERVER_ERROR);
-				response.setStatus(DSResponse.STATUS_FAILURE);
-				processResponse(requestId, response);
-			}
+		dekorTradeService.addCikkfotipus(cikkfotipusSer,
+				new AsyncCallback<CikkfotipusSer>() {
+					public void onFailure(Throwable caught) {
+						if (caught instanceof SQLExceptionSer)
+							response.setAttribute(
+									ClientConstants.SERVER_SQLERROR,
+									caught.getMessage());
+						else
+							response.setAttribute(ClientConstants.SERVER_ERROR,
+									ClientConstants.SERVER_ERROR);
+						response.setStatus(DSResponse.STATUS_FAILURE);
+						processResponse(requestId, response);
+					}
 
-			public void onSuccess(CikkfotipusSer result) {
-				ListGridRecord[] list = new ListGridRecord[1];
-				ListGridRecord newRec = new ListGridRecord();
-				copyValues(result, newRec);
-				list[0] = newRec;
-				response.setData(list);
-				processResponse(requestId, response);
-			}
-		});
+					public void onSuccess(CikkfotipusSer result) {
+						ListGridRecord[] list = new ListGridRecord[1];
+						ListGridRecord newRec = new ListGridRecord();
+						copyValues(result, newRec);
+						list[0] = newRec;
+						response.setData(list);
+						processResponse(requestId, response);
+					}
+				});
 
 	}
 
@@ -117,40 +122,42 @@ public class CikkfotipusDataSource extends GwtRpcDataSource {
 		ListGridRecord rec = getEditedRecord(request);
 		CikkfotipusSer cikkfotipusSer = new CikkfotipusSer();
 		copyValues(rec, cikkfotipusSer);
-		dekorTradeService.updateCikkfotipus(cikkfotipusSer, new AsyncCallback<CikkfotipusSer>() {
-			public void onFailure(Throwable caught) {
-				if (caught instanceof SQLExceptionSer)
-					response.setAttribute(ClientConstants.SERVER_SQLERROR,
-							caught.getMessage());
-				else
-					response.setAttribute(ClientConstants.SERVER_ERROR,
-							ClientConstants.SERVER_ERROR);
-				response.setStatus(DSResponse.STATUS_FAILURE);
-				processResponse(requestId, response);
-			}
+		dekorTradeService.updateCikkfotipus(cikkfotipusSer,
+				new AsyncCallback<CikkfotipusSer>() {
+					public void onFailure(Throwable caught) {
+						if (caught instanceof SQLExceptionSer)
+							response.setAttribute(
+									ClientConstants.SERVER_SQLERROR,
+									caught.getMessage());
+						else
+							response.setAttribute(ClientConstants.SERVER_ERROR,
+									ClientConstants.SERVER_ERROR);
+						response.setStatus(DSResponse.STATUS_FAILURE);
+						processResponse(requestId, response);
+					}
 
-			public void onSuccess(CikkfotipusSer result) {
-				ListGridRecord[] list = new ListGridRecord[1];
-				ListGridRecord updRec = new ListGridRecord();
-				copyValues(result, updRec);
-				list[0] = updRec;
-				response.setData(list);
-				processResponse(requestId, response);
-			}
-		});
+					public void onSuccess(CikkfotipusSer result) {
+						ListGridRecord[] list = new ListGridRecord[1];
+						ListGridRecord updRec = new ListGridRecord();
+						copyValues(result, updRec);
+						list[0] = updRec;
+						response.setData(list);
+						processResponse(requestId, response);
+					}
+				});
 
 	}
 
 	@Override
 	protected void executeRemove(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		
+
 	}
 
 	private static void copyValues(CikkfotipusSer from, ListGridRecord to) {
 		to.setAttribute(CikktipusConstants.CIKKFOTIPUS_KOD, from.getKod());
 		to.setAttribute(CikktipusConstants.CIKKFOTIPUS_NEV, from.getNev());
-		}
+	}
 
 	private static void copyValues(ListGridRecord from, CikkfotipusSer to) {
 		to.setKod(from.getAttributeAsString(CikktipusConstants.CIKKFOTIPUS_KOD));

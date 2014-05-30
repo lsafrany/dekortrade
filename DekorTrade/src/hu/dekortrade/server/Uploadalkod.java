@@ -1,4 +1,3 @@
-
 package hu.dekortrade.server;
 
 import hu.dekortrade.server.jdo.Cikkaltipus;
@@ -34,30 +33,30 @@ public class Uploadalkod extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
-	
+
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		try {
 			ServletFileUpload upload = new ServletFileUpload();
-		    FileItemIterator iter = upload.getItemIterator(request);
-		    FileItemStream imageItem = iter.next();
-		    InputStream imgStream = imageItem.openStream();
+			FileItemIterator iter = upload.getItemIterator(request);
+			FileItemStream imageItem = iter.next();
+			InputStream imgStream = imageItem.openStream();
 
-		    // construct our entity objects
-		    Blob imageBlob = new Blob(IOUtils.toByteArray(imgStream));
-		    if (imageBlob.getBytes().length < 999999) {
-		    
-		    	String kod = request.getParameter("kod");		
-		    	
+			// construct our entity objects
+			Blob imageBlob = new Blob(IOUtils.toByteArray(imgStream));
+			if (imageBlob.getBytes().length < 999999) {
+
+				String kod = request.getParameter("kod");
+
 				Query query = pm.newQuery(Cikkaltipus.class);
 				query.setFilter("this.kod == pkod");
 				query.declareParameters("String pkod");
 				@SuppressWarnings("unchecked")
 				List<Cikkaltipus> list = (List<Cikkaltipus>) pm.newQuery(query)
 						.execute(kod);
-								
+
 				if (!list.isEmpty()) {
 					for (Cikkaltipus l : list) {
 						l.setBlob(imageBlob);
@@ -65,22 +64,23 @@ public class Uploadalkod extends HttpServlet {
 					}
 				}
 				session.removeAttribute(ServerConstants.FILE);
-				session.removeAttribute(ServerConstants.FILE_ERROR);		
-		    }
-		    else  {
+				session.removeAttribute(ServerConstants.FILE_ERROR);
+			} else {
 				session.removeAttribute(ServerConstants.FILE);
-				session.setAttribute(ServerConstants.FILE_ERROR,Constants.FILE_SIZE_ERROR);
-		    }
-		    response.setContentType("text/plain");
-		    response.getOutputStream().write("OK!".getBytes());
+				session.setAttribute(ServerConstants.FILE_ERROR,
+						Constants.FILE_SIZE_ERROR);
+			}
+			response.setContentType("text/plain");
+			response.getOutputStream().write("OK!".getBytes());
 
 		} catch (Exception e) {
 			session.removeAttribute(ServerConstants.FILE);
-			session.setAttribute(ServerConstants.FILE_ERROR,Constants.FILE_SAVE_ERROR);
-			throw new ServletException();			
+			session.setAttribute(ServerConstants.FILE_ERROR,
+					Constants.FILE_SAVE_ERROR);
+			throw new ServletException();
 		} finally {
-		    pm.close();
+			pm.close();
 		}
-		
+
 	}
 }

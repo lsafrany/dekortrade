@@ -24,40 +24,40 @@ public class Download extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		if (request.getParameter("cikkszam") != null) {
 			String cikkszam = request.getParameter("cikkszam");
 
 			String sorszam = request.getParameter("sorszam");
-			
+
 			PersistenceManager pm = PMF.get().getPersistenceManager();
-					
+
 			try {
 				Query query = pm.newQuery(Kep.class);
 				query.setFilter("(this.cikkszam == pcikkszam) && (this.sorszam == psorszam)");
 				query.declareParameters("String pcikkszam,String psorszam");
 				@SuppressWarnings("unchecked")
-				List<Kep> list = (List<Kep>) pm.newQuery(query)
-						.execute(cikkszam,sorszam);
+				List<Kep> list = (List<Kep>) pm.newQuery(query).execute(
+						cikkszam, sorszam);
 
 				if ((list != null) && (!list.isEmpty())) {
 					Blob image = list.get(0).getBlob();
-				    response.setContentType("image/jpeg");
-				    response.getOutputStream().write(image.getBytes());	
+					response.setContentType("image/jpeg");
+					response.getOutputStream().write(image.getBytes());
 				}
-				    
+
 			} catch (Exception e) {
-				throw new ServletException();	
+				throw new ServletException();
 			} finally {
 				pm.close();
-			}		
+			}
 		}
-	
+
 		if (request.getParameter("fotipus") != null) {
 			String fotipus = request.getParameter("fotipus");
-			
+
 			PersistenceManager pm = PMF.get().getPersistenceManager();
-					
+
 			try {
 				Query query = pm.newQuery(Cikkfotipus.class);
 				query.setFilter("this.kod == pkod");
@@ -68,22 +68,22 @@ public class Download extends HttpServlet {
 
 				if ((list != null) && (!list.isEmpty())) {
 					Blob image = list.get(0).getBlob();
-				    response.setContentType("image/jpeg");
-				    response.getOutputStream().write(image.getBytes());	
+					response.setContentType("image/jpeg");
+					response.getOutputStream().write(image.getBytes());
 				}
-				    
+
 			} catch (Exception e) {
-				throw new ServletException();	
+				throw new ServletException();
 			} finally {
 				pm.close();
-			}		
+			}
 		}
 
 		if (request.getParameter("altipus") != null) {
 			String altipus = request.getParameter("altipus");
-			
+
 			PersistenceManager pm = PMF.get().getPersistenceManager();
-					
+
 			try {
 				Query query = pm.newQuery(Cikkaltipus.class);
 				query.setFilter("this.kod == pkod");
@@ -94,21 +94,21 @@ public class Download extends HttpServlet {
 
 				if ((list != null) && (!list.isEmpty())) {
 					Blob image = list.get(0).getBlob();
-				    response.setContentType("image/jpeg");
-				    response.getOutputStream().write(image.getBytes());	
+					response.setContentType("image/jpeg");
+					response.getOutputStream().write(image.getBytes());
 				}
-				    
+
 			} catch (Exception e) {
-				throw new ServletException();	
+				throw new ServletException();
 			} finally {
 				pm.close();
-			}		
+			}
 		}
 
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);	
+		doGet(request, response);
 	}
 }

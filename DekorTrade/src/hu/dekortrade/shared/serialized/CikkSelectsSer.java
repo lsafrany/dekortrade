@@ -12,11 +12,14 @@ public class CikkSelectsSer implements IsSerializable {
 
 	LinkedHashMap<String, String> altipus = new LinkedHashMap<String, String>();
 
+	LinkedHashMap<String, String> gyarto = new LinkedHashMap<String, String>();
+
 	public LinkedHashMap<String, LinkedHashMap<String, String>> getTipus() {
 		return tipus;
 	}
 
-	public void setTipus(LinkedHashMap<String, LinkedHashMap<String, String>> tipus) {
+	public void setTipus(
+			LinkedHashMap<String, LinkedHashMap<String, String>> tipus) {
 		this.tipus = tipus;
 	}
 
@@ -34,6 +37,14 @@ public class CikkSelectsSer implements IsSerializable {
 
 	public void setAltipus(LinkedHashMap<String, String> altipus) {
 		this.altipus = altipus;
+	}
+
+	public LinkedHashMap<String, String> getGyarto() {
+		return gyarto;
+	}
+
+	public void setGyarto(LinkedHashMap<String, String> gyarto) {
+		this.gyarto = gyarto;
 	}
 
 }

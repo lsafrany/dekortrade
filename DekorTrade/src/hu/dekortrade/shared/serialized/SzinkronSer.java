@@ -5,17 +5,17 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class SzinkronSer implements IsSerializable {
 
 	private int uploadvevo = 0;
-	
+
 	private int uploadcikkfotipus = 0;
-	
+
 	private int uploadcikkaltipus = 0;
-	
+
 	private int uploadcikk = 0;
 
 	private int uploadkep = 0;
 
 	private int downloadrendelt = 0;
-	
+
 	public int getUploadvevo() {
 		return uploadvevo;
 	}
@@ -23,7 +23,7 @@ public class SzinkronSer implements IsSerializable {
 	public void setUploadvevo(int uploadvevo) {
 		this.uploadvevo = uploadvevo;
 	}
-	
+
 	public int getUploadcikkfotipus() {
 		return uploadcikkfotipus;
 	}

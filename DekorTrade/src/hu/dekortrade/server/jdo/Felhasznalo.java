@@ -3,10 +3,8 @@ package hu.dekortrade.server.jdo;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
 @PersistenceCapable
-public class Felhasznalo implements IsSerializable {
+public class Felhasznalo {
 
 	@Persistent
 	private String rovidnev;

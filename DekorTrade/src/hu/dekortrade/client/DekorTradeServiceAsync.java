@@ -5,10 +5,10 @@ import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
 import hu.dekortrade.shared.serialized.CikkfotipusSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
+import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
-import hu.dekortrade.shared.serialized.SzallitoSer;
 import hu.dekortrade.shared.serialized.SzinkronSer;
 import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
@@ -46,16 +46,16 @@ public interface DekorTradeServiceAsync {
 	void updateJog(String rovidnev, JogSer jogSer,
 			AsyncCallback<JogSer> callback);
 
-	void getSzallito(AsyncCallback<List<SzallitoSer>> callback);
+	void getGyarto(AsyncCallback<List<GyartoSer>> callback);
 
-	void addSzallito(SzallitoSer szallitoSer,
-			AsyncCallback<SzallitoSer> asyncCallback);
+	void addGyarto(GyartoSer szallitoSer,
+			AsyncCallback<GyartoSer> asyncCallback);
 
-	void updateSzallito(SzallitoSer szallitoSer,
-			AsyncCallback<SzallitoSer> asyncCallback);
+	void updateGyarto(GyartoSer szallitoSer,
+			AsyncCallback<GyartoSer> asyncCallback);
 
-	void removeSzallito(SzallitoSer szallitoSer,
-			AsyncCallback<SzallitoSer> asyncCallback);
+	void removeGyarto(GyartoSer szallitoSer,
+			AsyncCallback<GyartoSer> asyncCallback);
 
 	void getVevo(AsyncCallback<List<VevoSer>> callback);
 
@@ -67,16 +67,14 @@ public interface DekorTradeServiceAsync {
 
 	void removeVevo(VevoSer vevoSer, AsyncCallback<VevoSer> asyncCallback);
 
-	void getCikk(int page,  String fotipus, String altipus, String cikkszam,
+	void getCikk(int page, String fotipus, String altipus, String cikkszam,
 			AsyncCallback<List<CikkSer>> asyncCallback);
 
 	void addCikk(CikkSer cikkSer, AsyncCallback<CikkSer> asyncCallback);
 
-	void updateCikk(CikkSer cikkSer,
-			AsyncCallback<CikkSer> asyncCallback);
+	void updateCikk(CikkSer cikkSer, AsyncCallback<CikkSer> asyncCallback);
 
-	void removeCikk(CikkSer ctorzsSer,
-			AsyncCallback<CikkSer> asyncCallback);
+	void removeCikk(CikkSer ctorzsSer, AsyncCallback<CikkSer> asyncCallback);
 
 	void getRendelt(AsyncCallback<List<RendeltSer>> asyncCallback);
 
@@ -87,25 +85,33 @@ public interface DekorTradeServiceAsync {
 
 	void teljesszinkron(AsyncCallback<String> callback);
 
-	void initUploadFileStatus(AsyncCallback<String> callback) throws IllegalArgumentException;
+	void initUploadFileStatus(AsyncCallback<String> callback)
+			throws IllegalArgumentException;
 
-	void getUploadFileStatus(AsyncCallback<UploadSer> callback) throws IllegalArgumentException;
+	void getUploadFileStatus(AsyncCallback<UploadSer> callback)
+			throws IllegalArgumentException;
 
-	void getKep(String cikkszam,AsyncCallback<List<String>> asyncCallback);
+	void getKep(String cikkszam, AsyncCallback<List<String>> asyncCallback);
 
-	void removeKep(String cikkszam,String sorszam,AsyncCallback<String> asyncCallback);
+	void removeKep(String cikkszam, String sorszam,
+			AsyncCallback<String> asyncCallback);
 
 	void getCikkfotipus(AsyncCallback<List<CikkfotipusSer>> asyncCallback);
-	
-	void addCikkfotipus(CikkfotipusSer cikktipusSer, AsyncCallback<CikkfotipusSer> asyncCallback);
 
-	void updateCikkfotipus(CikkfotipusSer cikktipusSer, AsyncCallback<CikkfotipusSer> asyncCallback);
+	void addCikkfotipus(CikkfotipusSer cikktipusSer,
+			AsyncCallback<CikkfotipusSer> asyncCallback);
 
-	void getCikkaltipus(String fokod,AsyncCallback<List<CikkaltipusSer>> asyncCallback);
+	void updateCikkfotipus(CikkfotipusSer cikktipusSer,
+			AsyncCallback<CikkfotipusSer> asyncCallback);
 
-	void addCikkaltipus(CikkaltipusSer cikktipusSer, AsyncCallback<CikkaltipusSer> asyncCallback);
+	void getCikkaltipus(String fokod,
+			AsyncCallback<List<CikkaltipusSer>> asyncCallback);
 
-	void updateCikkaltipus(CikkaltipusSer cikktipusSer, AsyncCallback<CikkaltipusSer> asyncCallback);
+	void addCikkaltipus(CikkaltipusSer cikktipusSer,
+			AsyncCallback<CikkaltipusSer> asyncCallback);
+
+	void updateCikkaltipus(CikkaltipusSer cikktipusSer,
+			AsyncCallback<CikkaltipusSer> asyncCallback);
 
 	void getCikkSelects(AsyncCallback<CikkSelectsSer> asyncCallback);
 

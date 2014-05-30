@@ -3,9 +3,9 @@ package hu.dekortrade.server.sync;
 public class CikkSzinkron {
 
 	private String fotipus;
-	
+
 	private String altipus;
-	
+
 	private String cikkszam;
 
 	private String megnevezes;
@@ -25,14 +25,15 @@ public class CikkSzinkron {
 	private Integer kepek;
 
 	private Boolean torolt;
-	
+
 	public CikkSzinkron() {
-		
+
 	}
-	
-	public CikkSzinkron(String fotipus, String altipus, String cikkszam, String megnevezes, Double ar,
-			Integer kiskarton, Integer darab, Double terfogat,
-			Double bsuly, Double nsuly, Integer kepek, Boolean torolt) {
+
+	public CikkSzinkron(String fotipus, String altipus, String cikkszam,
+			String megnevezes, Double ar, Integer kiskarton, Integer darab,
+			Double terfogat, Double bsuly, Double nsuly, Integer kepek,
+			Boolean torolt) {
 		this.fotipus = fotipus;
 		this.altipus = altipus;
 		this.cikkszam = cikkszam;

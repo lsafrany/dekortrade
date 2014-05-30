@@ -7,7 +7,7 @@ public class UploadSer implements IsSerializable {
 	private String status = "";
 
 	private String error = "";
-	
+
 	public String getStatus() {
 		return status;
 	}

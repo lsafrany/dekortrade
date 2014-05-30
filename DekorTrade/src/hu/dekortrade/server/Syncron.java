@@ -28,17 +28,20 @@ public class Syncron extends HttpServlet {
 		out.append("<body>");
 
 		out.append("<h1>Syncron - start</h1>");
-			
+
 		SzinkronObject szinkronObject = new SzinkronObject();
 		SzinkronSer szinkronSer = new SzinkronSer();
 		try {
 			szinkronSer = szinkronObject.feldolgozas();
-			out.append("<p>Vevo : " + szinkronSer.getUploadvevo() + "</p>");	
-			out.append("<p>Cikkfotipus : " + szinkronSer.getUploadcikkfotipus() + "</p>");
-			out.append("<p>Cikkaltipus : " + szinkronSer.getUploadcikkaltipus() + "</p>");
+			out.append("<p>Vevo : " + szinkronSer.getUploadvevo() + "</p>");
+			out.append("<p>Cikkfotipus : " + szinkronSer.getUploadcikkfotipus()
+					+ "</p>");
+			out.append("<p>Cikkaltipus : " + szinkronSer.getUploadcikkaltipus()
+					+ "</p>");
 			out.append("<p>Cikk : " + szinkronSer.getUploadcikk() + "</p>");
 			out.append("<p>Kep : " + szinkronSer.getUploadkep() + "</p>");
-			out.append("<p>Rendelt : " + szinkronSer.getDownloadrendelt() + "</p>");
+			out.append("<p>Rendelt : " + szinkronSer.getDownloadrendelt()
+					+ "</p>");
 		} catch (Exception e) {
 			out.append("<h1>Syncron - error</h1>");
 		}

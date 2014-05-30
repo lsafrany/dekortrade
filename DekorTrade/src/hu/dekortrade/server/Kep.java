@@ -14,7 +14,7 @@ public class Kep implements IsSerializable {
 
 	@Persistent
 	private String sorszam;
-	
+
 	@Persistent
 	private Blob blob;
 
@@ -24,7 +24,8 @@ public class Kep implements IsSerializable {
 	@Persistent
 	private Boolean torolt;
 
-	public Kep(String cikkszam, String sorszam, Blob blob, Boolean szinkron, Boolean torolt) {
+	public Kep(String cikkszam, String sorszam, Blob blob, Boolean szinkron,
+			Boolean torolt) {
 		this.cikkszam = cikkszam;
 		this.sorszam = sorszam;
 		this.blob = blob;
@@ -73,4 +74,3 @@ public class Kep implements IsSerializable {
 	}
 
 }
-

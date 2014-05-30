@@ -3,7 +3,7 @@ package hu.dekortrade.shared.serialized;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class CikkfotipusSer implements IsSerializable {
-	
+
 	private String kod;
 
 	private String nev;

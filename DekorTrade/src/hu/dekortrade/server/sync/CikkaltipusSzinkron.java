@@ -2,18 +2,18 @@ package hu.dekortrade.server.sync;
 
 import com.google.appengine.api.datastore.Blob;
 
-public class CikkaltipusSzinkron  {
+public class CikkaltipusSzinkron {
 
 	private String fokod;
-	
+
 	private String kod;
 
 	private String nev;
 
 	private Blob blob;
-	
+
 	public CikkaltipusSzinkron() {
-		
+
 	}
 
 	public CikkaltipusSzinkron(String fokod, String kod, String nev, Blob blob) {
@@ -55,5 +55,4 @@ public class CikkaltipusSzinkron  {
 		this.blob = blob;
 	}
 
-	
 }

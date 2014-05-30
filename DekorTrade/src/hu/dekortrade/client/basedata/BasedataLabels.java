@@ -6,12 +6,12 @@ public interface BasedataLabels extends Constants {
 
 	String basedata();
 
-	String szallitok();
+	String gyartok();
 
 	String vevok();
 
 	String cikktipusok();
-	
+
 	String cikkek();
 
 }

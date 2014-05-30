@@ -6,11 +6,11 @@ import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Cikkaltipus;
 import hu.dekortrade.server.jdo.Cikkfotipus;
 import hu.dekortrade.server.jdo.Felhasznalo;
+import hu.dekortrade.server.jdo.Gyarto;
 import hu.dekortrade.server.jdo.Jog;
 import hu.dekortrade.server.jdo.PMF;
 import hu.dekortrade.server.jdo.Rendelt;
 import hu.dekortrade.server.jdo.Rendeltcikk;
-import hu.dekortrade.server.jdo.Szallito;
 import hu.dekortrade.server.jdo.Vevo;
 import hu.dekortrade.shared.Constants;
 
@@ -47,34 +47,54 @@ public class Init extends HttpServlet {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
+			out.append("<h1>Gyártók</h1>");
+
+			Query gyartoQuery = pm.newQuery(Gyarto.class);
+			gyartoQuery.deletePersistentAll();
+
+			Gyarto gyarto = new Gyarto("1", "CHAMP HANNA LIMITED",
+					"WAH MOU FACTORY BUILDING 5TH FL.", "0085223061083", "","","", new Double(0), "1", "",
+					Boolean.FALSE);
+			pm.makePersistent(gyarto);
+
+			out.append("<h1>Cikk</h1>");
+
 			int counter = 0;
 
 			Query fotipusQuery = pm.newQuery(Cikkfotipus.class);
 			fotipusQuery.deletePersistentAll();
 
-			Cikkfotipus cikkfotipus1 = new Cikkfotipus("1","Selyemvurágok",Boolean.FALSE);
-			Cikkfotipus cikkfotipus2 = new Cikkfotipus("2","Karácsonyi dekor",Boolean.FALSE);
-			Cikkfotipus cikkfotipus3 = new Cikkfotipus("3","Húsvéti/tavaszi dekor",Boolean.FALSE);
-			
+			Cikkfotipus cikkfotipus1 = new Cikkfotipus("1", "Selyemvurágok",
+					Boolean.FALSE);
+			Cikkfotipus cikkfotipus2 = new Cikkfotipus("2", "Karácsonyi dekor",
+					Boolean.FALSE);
+			Cikkfotipus cikkfotipus3 = new Cikkfotipus("3",
+					"Húsvéti/tavaszi dekor", Boolean.FALSE);
+
 			pm.makePersistent(cikkfotipus1);
 			pm.makePersistent(cikkfotipus2);
 			pm.makePersistent(cikkfotipus3);
-			
+
 			Query altipusQuery = pm.newQuery(Cikkaltipus.class);
 			altipusQuery.deletePersistentAll();
-			
-			Cikkaltipus cikkaltipus1 = new Cikkaltipus("1","1","Fejvirágok",Boolean.FALSE);
-			Cikkaltipus cikkaltipus2 = new Cikkaltipus("1","2","Szálasok",Boolean.FALSE);
-			Cikkaltipus cikkaltipus3 = new Cikkaltipus("1","3","Csokrok",Boolean.FALSE);
-			Cikkaltipus cikkaltipus4 = new Cikkaltipus("1","4","Futók",Boolean.FALSE);
-			Cikkaltipus cikkaltipus5 = new Cikkaltipus("1","5","Egyéb",Boolean.FALSE);
-				
+
+			Cikkaltipus cikkaltipus1 = new Cikkaltipus("1", "1", "Fejvirágok",
+					Boolean.FALSE);
+			Cikkaltipus cikkaltipus2 = new Cikkaltipus("1", "2", "Szálasok",
+					Boolean.FALSE);
+			Cikkaltipus cikkaltipus3 = new Cikkaltipus("1", "3", "Csokrok",
+					Boolean.FALSE);
+			Cikkaltipus cikkaltipus4 = new Cikkaltipus("1", "4", "Futók",
+					Boolean.FALSE);
+			Cikkaltipus cikkaltipus5 = new Cikkaltipus("1", "5", "Egyéb",
+					Boolean.FALSE);
+
 			pm.makePersistent(cikkaltipus1);
 			pm.makePersistent(cikkaltipus2);
-			pm.makePersistent(cikkaltipus3);		
-			pm.makePersistent(cikkaltipus4);	
-			pm.makePersistent(cikkaltipus5);	
-			
+			pm.makePersistent(cikkaltipus3);
+			pm.makePersistent(cikkaltipus4);
+			pm.makePersistent(cikkaltipus5);
+
 			Query cikkQuery = pm.newQuery(Cikk.class);
 			cikkQuery.deletePersistentAll();
 
@@ -93,13 +113,17 @@ public class Init extends HttpServlet {
 					fields[7] = fields[7].replaceAll(",", ".");
 					fields[8] = fields[8].replaceAll(",", ".");
 					fields[9] = fields[9].replaceAll(",", ".");
-					Cikk cikk = new Cikk(fields[0], fields[1], fields[2], fields[3],
-							new Double(fields[4]), new Integer(fields[5]),
-							new Integer(fields[6]), new Double(fields[7]),
-							new Double(fields[8]), new Double(
-									fields[9]), 0, Boolean.FALSE, Boolean.FALSE);
+					Cikk cikk = new Cikk(fields[0], fields[1], "1", "", 
+							fields[2], "", null, null, null, null, fields[3], "", 
+							new Double(0), new Double(0), new Double(0), new Double(0), new Double(0), 
+							new Double(0), new Double(0), new Double(0), new Double(0), new Double(0), 
+						    new Double(fields[4]), new Double(0), new Double(0),
+						    new Integer(fields[5]), new Integer(fields[6]),
+							new Double(fields[7]), new Double(0), new Double(fields[8]),
+							new Double(fields[9]), "", "", Boolean.FALSE, "DB", 0, Boolean.FALSE,
+							Boolean.FALSE);
 					pm.makePersistent(cikk);
-					counter++;				
+					counter++;
 				}
 			}
 
@@ -113,9 +137,6 @@ public class Init extends HttpServlet {
 
 			Query jogQuery = pm.newQuery(Jog.class);
 			jogQuery.deletePersistentAll();
-
-			Query szallitoQuery = pm.newQuery(Szallito.class);
-			szallitoQuery.deletePersistentAll();
 
 			Query vevoQuery = pm.newQuery(Vevo.class);
 			vevoQuery.deletePersistentAll();
@@ -152,13 +173,6 @@ public class Init extends HttpServlet {
 
 			pm.makePersistent(jog5);
 
-			out.append("<h1>Szállítók</h1>");
-
-			Szallito szallito = new Szallito("1", "CHAMP HANNA LIMITED",
-					"WAH MOU FACTORY BUILDING 5TH FL.", "0085223061083",
-					Boolean.FALSE);
-			pm.makePersistent(szallito);
-
 			out.append("<h1>Vevők</h1>");
 
 			Vevo vevo1 = new Vevo("Floradekor", "Flora Dekor",
@@ -179,8 +193,7 @@ public class Init extends HttpServlet {
 
 			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
 			rendeltcikkQuery.deletePersistentAll();
-			
-			
+
 		} finally {
 			pm.close();
 		}

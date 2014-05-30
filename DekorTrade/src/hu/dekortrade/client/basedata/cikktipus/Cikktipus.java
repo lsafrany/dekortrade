@@ -60,7 +60,6 @@ public class Cikktipus {
 		fotipusLayout.setWidth("30%");
 		fotipusLayout.setDefaultLayoutAlign(Alignment.CENTER);
 		fotipusLayout.setAlign(Alignment.CENTER);
-		
 
 		final CikkfotipusDataSource cikkfotipusDataSource = new CikkfotipusDataSource() {
 
@@ -85,14 +84,15 @@ public class Cikktipus {
 						SC.warn(commonLabels.server_error());
 					else if (event.getResponse().getAttribute(
 							ClientConstants.SERVER_SQLERROR) != null)
-						if (event.getResponse().getAttribute(
-								ClientConstants.SERVER_SQLERROR).equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());							
+						if (event.getResponse()
+								.getAttribute(ClientConstants.SERVER_SQLERROR)
+								.equals(Constants.EXISTSID)) {
+							SC.warn(commonLabels.letezoid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "
 									+ event.getResponse().getAttribute(
-											ClientConstants.SERVER_SQLERROR));							
+											ClientConstants.SERVER_SQLERROR));
 						}
 					event.cancel();
 				}
@@ -134,11 +134,11 @@ public class Cikktipus {
 		fomodifyButtonLayout.addMember(fomodifyButton);
 
 		fobuttonsLayout.addMember(foaddButtonLayout);
-		fobuttonsLayout.addMember(fomodifyButtonLayout);		
-		
+		fobuttonsLayout.addMember(fomodifyButtonLayout);
+
 		fotipusLayout.addMember(cikkfotipusGrid);
 		fotipusLayout.addMember(fobuttonsLayout);
-		
+
 		final VLayout fotipusKepLayout = new VLayout();
 		fotipusKepLayout.setWidth("20%");
 		fotipusKepLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -147,7 +147,7 @@ public class Cikktipus {
 		final HLayout fotipusImgLayout = new HLayout();
 		fotipusImgLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		fotipusImgLayout.setAlign(Alignment.CENTER);
-		
+
 		HLayout fokepbuttonsLayout = new HLayout();
 		fokepbuttonsLayout.setHeight("3%");
 		fokepbuttonsLayout.setWidth("80%");
@@ -158,12 +158,12 @@ public class Cikktipus {
 		foloadButton.setDisabled(true);
 		foloadButtonLayout.setAlign(Alignment.CENTER);
 		foloadButtonLayout.addMember(foloadButton);
-	
+
 		fokepbuttonsLayout.addMember(foloadButtonLayout);
-		
+
 		fotipusKepLayout.addMember(fotipusImgLayout);
 		fotipusKepLayout.addMember(fokepbuttonsLayout);
-		
+
 		VLayout altipusLayout = new VLayout();
 		altipusLayout.setWidth("30%");
 		altipusLayout.setDefaultLayoutAlign(Alignment.CENTER);
@@ -192,14 +192,15 @@ public class Cikktipus {
 						SC.warn(commonLabels.server_error());
 					else if (event.getResponse().getAttribute(
 							ClientConstants.SERVER_SQLERROR) != null)
-						if (event.getResponse().getAttribute(
-								ClientConstants.SERVER_SQLERROR).equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());							
+						if (event.getResponse()
+								.getAttribute(ClientConstants.SERVER_SQLERROR)
+								.equals(Constants.EXISTSID)) {
+							SC.warn(commonLabels.letezoid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "
 									+ event.getResponse().getAttribute(
-											ClientConstants.SERVER_SQLERROR));							
+											ClientConstants.SERVER_SQLERROR));
 						}
 					event.cancel();
 				}
@@ -241,11 +242,11 @@ public class Cikktipus {
 		almodifyButtonLayout.addMember(almodifyButton);
 
 		albuttonsLayout.addMember(aladdButtonLayout);
-		albuttonsLayout.addMember(almodifyButtonLayout);		
-		
+		albuttonsLayout.addMember(almodifyButtonLayout);
+
 		altipusLayout.addMember(cikkaltipusGrid);
 		altipusLayout.addMember(albuttonsLayout);
-		
+
 		final VLayout altipusKepLayout = new VLayout();
 		altipusKepLayout.setWidth("20%");
 		altipusKepLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -254,7 +255,7 @@ public class Cikktipus {
 		final HLayout altipusImgLayout = new HLayout();
 		altipusImgLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		altipusImgLayout.setAlign(Alignment.CENTER);
-		
+
 		HLayout alkepbuttonsLayout = new HLayout();
 		alkepbuttonsLayout.setHeight("3%");
 		alkepbuttonsLayout.setWidth("80%");
@@ -265,12 +266,12 @@ public class Cikktipus {
 		alloadButton.setDisabled(true);
 		alloadButtonLayout.setAlign(Alignment.CENTER);
 		alloadButtonLayout.addMember(alloadButton);
-	
+
 		alkepbuttonsLayout.addMember(alloadButtonLayout);
-		
+
 		altipusKepLayout.addMember(altipusImgLayout);
 		altipusKepLayout.addMember(alkepbuttonsLayout);
-				
+
 		middleLayout.addMember(fotipusLayout);
 		middleLayout.addMember(fotipusKepLayout);
 		middleLayout.addMember(altipusLayout);
@@ -288,66 +289,81 @@ public class Cikktipus {
 						CikktipusConstants.CIKKALTIPUS_FOKOD,
 						cikkfotipusGrid.getSelectedRecord().getAttribute(
 								CikktipusConstants.CIKKFOTIPUS_KOD));
-				
+
 				cikkaltipusGrid.fetchData(criteria);
-				
+
 				fotipusImgLayout.removeMembers(fotipusImgLayout.getMembers());
 				Random generator = new Random();
-				final String random = Double.toString(generator.nextDouble()); 
-				final Img fotipusImg = new Img(GWT.getModuleBaseURL() + "download?fotipus=" + cikkfotipusGrid.getSelectedRecord().getAttribute(
-						CikktipusConstants.CIKKFOTIPUS_KOD) + "&random=" + random, 250, 150);
+				final String random = Double.toString(generator.nextDouble());
+				final Img fotipusImg = new Img(GWT.getModuleBaseURL()
+						+ "download?fotipus="
+						+ cikkfotipusGrid.getSelectedRecord().getAttribute(
+								CikktipusConstants.CIKKFOTIPUS_KOD)
+						+ "&random=" + random, 250, 150);
 				fotipusImgLayout.addMember(fotipusImg);
-				
+
 				altipusImgLayout.removeMembers(altipusImgLayout.getMembers());
 			}
 		});
 
 		foaddButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				cikkfotipusEdit(cikkfotipusDataSource, cikkfotipusGrid, Boolean.TRUE);
+				cikkfotipusEdit(cikkfotipusDataSource, cikkfotipusGrid,
+						Boolean.TRUE);
 			}
 		});
 
 		fomodifyButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				cikkfotipusEdit(cikkfotipusDataSource, cikkfotipusGrid, Boolean.FALSE);
+				cikkfotipusEdit(cikkfotipusDataSource, cikkfotipusGrid,
+						Boolean.FALSE);
 			}
 		});
-	
+
 		cikkaltipusGrid.addRecordClickHandler(new RecordClickHandler() {
 			public void onRecordClick(RecordClickEvent event) {
 				alloadButton.setDisabled(false);
 				altipusImgLayout.removeMembers(altipusImgLayout.getMembers());
 				Random generator = new Random();
-				final String random = Double.toString(generator.nextDouble()); 
-				final Img altipusImg = new Img(GWT.getModuleBaseURL() + "download?altipus=" + cikkaltipusGrid.getSelectedRecord().getAttribute(
-						CikktipusConstants.CIKKALTIPUS_KOD) + "&random=" + random, 250, 150);
+				final String random = Double.toString(generator.nextDouble());
+				final Img altipusImg = new Img(GWT.getModuleBaseURL()
+						+ "download?altipus="
+						+ cikkaltipusGrid.getSelectedRecord().getAttribute(
+								CikktipusConstants.CIKKALTIPUS_KOD)
+						+ "&random=" + random, 250, 150);
 				altipusImgLayout.addMember(altipusImg);
-				
+
 			}
 		});
-			
+
 		foloadButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				upload(cikkfotipusGrid.getSelectedRecord().getAttribute(
-						CikktipusConstants.CIKKFOTIPUS_KOD), null, cikkfotipusGrid.getSelectedRecord().getAttribute(
-								CikktipusConstants.CIKKFOTIPUS_NEV),fotipusImgLayout);
+						CikktipusConstants.CIKKFOTIPUS_KOD),
+						null,
+						cikkfotipusGrid.getSelectedRecord().getAttribute(
+								CikktipusConstants.CIKKFOTIPUS_NEV),
+						fotipusImgLayout);
 			}
 		});
 
 		alloadButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				upload(null,cikkaltipusGrid.getSelectedRecord().getAttribute(
-						CikktipusConstants.CIKKALTIPUS_KOD), cikkaltipusGrid.getSelectedRecord().getAttribute(
-								CikktipusConstants.CIKKALTIPUS_NEV),altipusImgLayout);
+				upload(null,
+						cikkaltipusGrid.getSelectedRecord().getAttribute(
+								CikktipusConstants.CIKKALTIPUS_KOD),
+						cikkaltipusGrid.getSelectedRecord().getAttribute(
+								CikktipusConstants.CIKKALTIPUS_NEV),
+						altipusImgLayout);
 			}
 		});
-		
+
 		return middleLayout;
 
 	}
 
-	void cikkfotipusEdit(CikkfotipusDataSource dataSource, ListGrid listGrid, boolean uj) {
+	void cikkfotipusEdit(CikkfotipusDataSource dataSource, ListGrid listGrid,
+			boolean uj) {
 
 		final Window winModal = new Window();
 		winModal.setWidth(400);
@@ -369,8 +385,8 @@ public class Cikktipus {
 			editForm.editNewRecord();
 		else {
 			editForm.editSelectedData(listGrid);
-		}	
-			
+		}
+
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -412,7 +428,8 @@ public class Cikktipus {
 
 	}
 
-	void upload(final String fokod, final String alkod, String title, final HLayout imgLayout) {
+	void upload(final String fokod, final String alkod, String title,
+			final HLayout imgLayout) {
 
 		final Window winModal = new Window();
 		winModal.setWidth(600);
@@ -423,7 +440,7 @@ public class Cikktipus {
 		winModal.setIsModal(true);
 		winModal.setShowModalMask(true);
 		winModal.centerInPage();
-			
+
 		final HLayout formLayout = new HLayout();
 		formLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		formLayout.setAlign(Alignment.CENTER);
@@ -436,12 +453,16 @@ public class Cikktipus {
 		uploadForm.setWidth100();
 		uploadForm.setNumCols(2);
 		uploadForm.setColWidths("40%", "*");
-		uploadForm.setTarget("fileUploadFrame"); 
+		uploadForm.setTarget("fileUploadFrame");
 		Random generator = new Random();
-		final String random = Double.toString(generator.nextDouble()); 
-		if (fokod != null) uploadForm.setAction(GWT.getModuleBaseURL()+ "uploadfokod?kod=" + fokod + "&random=" + random);
-		else uploadForm.setAction(GWT.getModuleBaseURL()+ "uploadalkod?kod=" + alkod + "&random=" + random);
-		
+		final String random = Double.toString(generator.nextDouble());
+		if (fokod != null)
+			uploadForm.setAction(GWT.getModuleBaseURL() + "uploadfokod?kod="
+					+ fokod + "&random=" + random);
+		else
+			uploadForm.setAction(GWT.getModuleBaseURL() + "uploadalkod?kod="
+					+ alkod + "&random=" + random);
+
 		final UploadItem uploadItem = new UploadItem();
 		uploadItem.setWidth(300);
 		uploadItem.setName("kep");
@@ -449,9 +470,9 @@ public class Cikktipus {
 		uploadItem.setRequired(true);
 
 		uploadForm.setFields(uploadItem);
-		
+
 		formLayout.addMember(uploadForm);
-		
+
 		final HLayout labelLayout = new HLayout();
 		labelLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		labelLayout.setAlign(Alignment.CENTER);
@@ -462,7 +483,7 @@ public class Cikktipus {
 		label.setWidth("100%");
 		label.setContents("");
 		label.setAlign(Alignment.CENTER);
-	
+
 		labelLayout.addMember(label);
 
 		final HLayout formButtonsLayout = new HLayout();
@@ -474,103 +495,139 @@ public class Cikktipus {
 		saveLayout.setAlign(Alignment.CENTER);
 		saveLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		IButton saveIButton = new IButton(commonLabels.save());
-	
+
 		HLayout cancelLayout = new HLayout();
 		cancelLayout.setAlign(Alignment.CENTER);
 		cancelLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		IButton cancelIButton = new IButton(commonLabels.cancel());
-		
+
 		saveLayout.addMember(saveIButton);
 		cancelLayout.addMember(cancelIButton);
 		formButtonsLayout.addMember(saveLayout);
 		formButtonsLayout.addMember(cancelLayout);
-			
-		winModal.addItem(formLayout);			
-		winModal.addItem(labelLayout);	
-		winModal.addItem(formButtonsLayout);		
-			
-		saveIButton.addClickHandler(new ClickHandler() {			
-			public void onClick(ClickEvent event) {	
-				if ((uploadItem.getValueAsString() != null) && (uploadItem.getValueAsString().contains(".jpg"))) {	
-					dekorTradeService.initUploadFileStatus(
-        				new AsyncCallback<String>() {
-        					public void onFailure(Throwable caught) {
-        						
-        					}
-        					public void onSuccess(String result) {     
-        						uploadForm.submitForm();
-        						uploadForm.setDisabled(true);	
-        						formButtonsLayout.setDisabled(true);
-        						label.setContents(cikktipusLabels.toltes());
-        						new Timer() {
-        				            int timesWaited = 0;  
-        				            int maxTimes = 100;
-        				            
-        							public void run() {				
-        				                timesWaited++; 
-        				                if (timesWaited >= maxTimes){
-        	        						uploadForm.setDisabled(false);	
-        	        						formButtonsLayout.setDisabled(false);
-        				                	label.setContents("");
-        				                	SC.say(cikktipusLabels.idotullepes()); 
-        				                } 
-        				                else {
-        				                	dekorTradeService.getUploadFileStatus( 
-        				        				new AsyncCallback<UploadSer>() {
-        				        					public void onFailure(Throwable caught) {
-        				        						winModal.destroy();
-        				        						SC.say(cikktipusLabels.tolteshiba());
-        				         					}
-        				        					public void onSuccess(UploadSer result) {        				        						      				        					
-        				        						if (result.getStatus().equals(Constants.LOADING)) {        				        						
-        				        							schedule(ClientConstants.PROGRESS_SCHEDULE);
-        				        						}
-        				        						else  {
-        				        							if (result.getStatus().equals(Constants.ERROR)) {  
-        				      	        						uploadForm.setDisabled(false);	
-        			        	        						formButtonsLayout.setDisabled(false);
-           				        								label.setContents("");
-           				        								if (result.getError().equals(Constants.FILE_SAVE_ERROR)) SC.say(cikktipusLabels.tolteshiba());     	
-           				        								else SC.say(cikktipusLabels.tulnagyfile());     				        								
-        				        							}
-         				        							else {
-              				        							imgLayout.removeMembers(imgLayout.getMembers());
-              				        							Random generator = new Random();
-              				        							final String random = Double.toString(generator.nextDouble()); 
-              				        							if (fokod != null)  {
-                 				        							final Img fotipusImg = new Img(GWT.getModuleBaseURL() + "download?fotipus=" + fokod  + "&random=" + random, 250, 150);
-                  				        							imgLayout.addMember(fotipusImg);              				        								
-              				        							} 
-              				        							else  {
-	              				        							final Img altipusImg = new Img(GWT.getModuleBaseURL() + "download?altipus=" + alkod +  "&random=" + random, 250, 150);
-	              				        							imgLayout.addMember(altipusImg);
-              				        							}
-              				        							imgLayout.markForRedraw();
-              				        							winModal.destroy();     
-        				        							}
-        				        						}
-        				         					}
-        				        				});
-        				                }
-        							}
-        						}.schedule(ClientConstants.PROGRESS_SCHEDULE);
-        					        						        						
-          					}
-        				});	
-				}
-				else SC.say(cikktipusLabels.jpg());  
-			}			
-		});		
-			
+
+		winModal.addItem(formLayout);
+		winModal.addItem(labelLayout);
+		winModal.addItem(formButtonsLayout);
+
+		saveIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if ((uploadItem.getValueAsString() != null)
+						&& (uploadItem.getValueAsString().contains(".jpg"))) {
+					dekorTradeService
+							.initUploadFileStatus(new AsyncCallback<String>() {
+								public void onFailure(Throwable caught) {
+
+								}
+
+								public void onSuccess(String result) {
+									uploadForm.submitForm();
+									uploadForm.setDisabled(true);
+									formButtonsLayout.setDisabled(true);
+									label.setContents(cikktipusLabels.toltes());
+									new Timer() {
+										int timesWaited = 0;
+										int maxTimes = 100;
+
+										public void run() {
+											timesWaited++;
+											if (timesWaited >= maxTimes) {
+												uploadForm.setDisabled(false);
+												formButtonsLayout
+														.setDisabled(false);
+												label.setContents("");
+												SC.say(cikktipusLabels
+														.idotullepes());
+											} else {
+												dekorTradeService
+														.getUploadFileStatus(new AsyncCallback<UploadSer>() {
+															public void onFailure(
+																	Throwable caught) {
+																winModal.destroy();
+																SC.say(cikktipusLabels
+																		.tolteshiba());
+															}
+
+															public void onSuccess(
+																	UploadSer result) {
+																if (result
+																		.getStatus()
+																		.equals(Constants.LOADING)) {
+																	schedule(ClientConstants.PROGRESS_SCHEDULE);
+																} else {
+																	if (result
+																			.getStatus()
+																			.equals(Constants.ERROR)) {
+																		uploadForm
+																				.setDisabled(false);
+																		formButtonsLayout
+																				.setDisabled(false);
+																		label.setContents("");
+																		if (result
+																				.getError()
+																				.equals(Constants.FILE_SAVE_ERROR))
+																			SC.say(cikktipusLabels
+																					.tolteshiba());
+																		else
+																			SC.say(cikktipusLabels
+																					.tulnagyfile());
+																	} else {
+																		imgLayout
+																				.removeMembers(imgLayout
+																						.getMembers());
+																		Random generator = new Random();
+																		final String random = Double
+																				.toString(generator
+																						.nextDouble());
+																		if (fokod != null) {
+																			final Img fotipusImg = new Img(
+																					GWT.getModuleBaseURL()
+																							+ "download?fotipus="
+																							+ fokod
+																							+ "&random="
+																							+ random,
+																					250,
+																					150);
+																			imgLayout
+																					.addMember(fotipusImg);
+																		} else {
+																			final Img altipusImg = new Img(
+																					GWT.getModuleBaseURL()
+																							+ "download?altipus="
+																							+ alkod
+																							+ "&random="
+																							+ random,
+																					250,
+																					150);
+																			imgLayout
+																					.addMember(altipusImg);
+																		}
+																		imgLayout
+																				.markForRedraw();
+																		winModal.destroy();
+																	}
+																}
+															}
+														});
+											}
+										}
+									}.schedule(ClientConstants.PROGRESS_SCHEDULE);
+
+								}
+							});
+				} else
+					SC.say(cikktipusLabels.jpg());
+			}
+		});
+
 		cancelIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				winModal.destroy();
 			}
 		});
-	
+
 		winModal.show();
 
 	}
 
-	
 }
