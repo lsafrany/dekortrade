@@ -137,61 +137,61 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 		
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_FOB,
 				ctorzsLabels.cikk_fob());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_UJFOB,
 				ctorzsLabels.cikk_ujfob());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_SZALLITAS,
 				ctorzsLabels.cikk_szallitas());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_UJSZALLITAS,
 				ctorzsLabels.cikk_ujszallitas());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_DDU,
 				ctorzsLabels.cikk_ddu());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_UJDDU,
 				ctorzsLabels.cikk_ujddu());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_ERSZ,
 				ctorzsLabels.cikk_ersz());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_UJERSZ,
 				ctorzsLabels.cikk_ujersz());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_ELORAR,
 				ctorzsLabels.cikk_elorar());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceFloatField(CtorzsConstants.CIKK_UJELORAR,
 				ctorzsLabels.cikk_ujelorar());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 

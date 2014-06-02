@@ -175,14 +175,29 @@ public class Init extends HttpServlet {
 
 			out.append("<h1>Vevők</h1>");
 
-			Vevo vevo1 = new Vevo("Floradekor", "Flora Dekor",
-					"24413 Palics Nikola Tesla 7.", "", Boolean.TRUE,
-					Boolean.FALSE, Boolean.FALSE);
-			Vevo vevo2 = new Vevo("Floratrade", "Flora Trade Kft", "", "",
+			Vevo vevo1 = new Vevo("Floradekor", "BELFOLDI", "Flora Dekor",
+					"24413 Palics Nikola Tesla 7.", "", 
+					new Double(0),new Double(0),new Double(0),
+					new Double(0),new Double(0),
+					"","",
+					new Double(0),new Double(0),
+					"hu","",
 					Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
-			Vevo vevo3 = new Vevo("Berendi", "S.C. Berendi S.R.L.",
-					"Satu Mare ROMĆNIA", "", Boolean.FALSE, Boolean.FALSE,
-					Boolean.FALSE);
+			Vevo vevo2 = new Vevo("Floratrade", "EXPORT", "Flora Trade Kft", "", "",
+					new Double(0),new Double(0),new Double(0),
+					new Double(0),new Double(0),
+					"","",
+					new Double(0),new Double(0),
+					"hu","",					
+					Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
+			Vevo vevo3 = new Vevo("Berendi", "EXPORT", "S.C. Berendi S.R.L.", 
+					"Satu Mare ROMĆNIA", "", 
+					new Double(0),new Double(0),new Double(0),
+					new Double(0),new Double(0),
+					"","",
+					new Double(0),new Double(0),
+					"hu","",					
+					Boolean.FALSE, Boolean.FALSE,Boolean.FALSE);
 
 			pm.makePersistent(vevo1);
 			pm.makePersistent(vevo2);

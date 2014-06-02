@@ -16,9 +16,12 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceBooleanField;
+import com.smartgwt.client.data.fields.DataSourceFloatField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.util.JSOHelper;
+import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.validator.IsFloatValidator;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class VevoDataSource extends GwtRpcDataSource {
@@ -30,8 +33,17 @@ public class VevoDataSource extends GwtRpcDataSource {
 
 	public VevoDataSource() {
 
+		IsFloatValidator isFloatValidator = new IsFloatValidator();
+		
 		TextItem textItem = new TextItem();
 		textItem.setWidth("400");
+
+		TextItem textItem1 = new TextItem();
+		textItem1.setWidth("300");
+
+		TextAreaItem textAreaItem = new TextAreaItem();
+		textAreaItem.setWidth("500");
+		textAreaItem.setHeight("60");
 
 		DataSourceField field;
 
@@ -40,6 +52,11 @@ public class VevoDataSource extends GwtRpcDataSource {
 		field.setPrimaryKey(true);
 		field.setLength(20);
 		field.setRequired(true);
+		addField(field);
+
+		field = new DataSourceTextField(VevoConstants.VEVO_TIPUS,
+				vevoLabels.vevo_tipus());
+		field.setValueMap(VevoConstants.getTipus());
 		addField(field);
 
 		field = new DataSourceTextField(VevoConstants.VEVO_NEV,
@@ -57,10 +74,75 @@ public class VevoDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceTextField(VevoConstants.VEVO_ELERHETOSEG,
 				vevoLabels.vevo_elerhetoseg());
-		field.setLength(100);
-		field.setEditorProperties(textItem);
+		field.setLength(150);
+		field.setEditorProperties(textAreaItem);
 		addField(field);
 
+		field = new DataSourceFloatField(VevoConstants.VEVO_EGYENLEG_USD,
+				vevoLabels.vevo_egyenleg_usd());
+		field.setLength(12);
+		field.setValidators(isFloatValidator);
+		addField(field);
+
+		field = new DataSourceFloatField(VevoConstants.VEVO_EGYENLEG_EUR,
+				vevoLabels.vevo_egyenleg_eur());
+		field.setLength(12);
+		field.setValidators(isFloatValidator);
+		addField(field);
+		
+		field = new DataSourceFloatField(VevoConstants.VEVO_EGYENLEG_HUF,
+				vevoLabels.vevo_egyenleg_huf());
+		field.setLength(12);
+		field.setValidators(isFloatValidator);
+		addField(field);
+
+		field = new DataSourceFloatField(VevoConstants.VEVO_TAROLASIDIJ,
+				vevoLabels.vevo_tarolasidij());
+		field.setLength(8);
+		field.setValidators(isFloatValidator);
+		addField(field);
+
+		field = new DataSourceFloatField(VevoConstants.VEVO_ELOLEG,
+				vevoLabels.vevo_eloleg());
+		field.setLength(12);
+		field.setValidators(isFloatValidator);
+		addField(field);
+	
+		field = new DataSourceTextField(VevoConstants.VEVO_BANKSZAMLASZAM,
+				vevoLabels.vevo_bankszamlaszam());
+		field.setLength(20);
+		field.setEditorProperties(textItem1);
+		addField(field);
+	
+		field = new DataSourceTextField(VevoConstants.VEVO_EUADOSZAM,
+				vevoLabels.vevo_euadoszam());
+		field.setLength(20);
+		field.setEditorProperties(textItem1);
+		addField(field);
+		
+		field = new DataSourceFloatField(VevoConstants.VEVO_ELORARKEDVEZMENY,
+				vevoLabels.vevo_elorarkedvezmeny());
+		field.setLength(10);
+		field.setValidators(isFloatValidator);
+		addField(field);
+		
+		field = new DataSourceFloatField(VevoConstants.VEVO_AJANLOTTARKEDVEZMENY,
+				vevoLabels.vevo_ajanlottarkedvezmeny());
+		field.setLength(10);
+		field.setValidators(isFloatValidator);
+		addField(field);
+	
+		field = new DataSourceTextField(VevoConstants.VEVO_ORSZAG,
+				vevoLabels.vevo_orszag());
+		field.setValueMap(VevoConstants.getOrszag());
+		addField(field);
+
+		field = new DataSourceTextField(VevoConstants.VEVO_MEGJEGYZES,
+				vevoLabels.vevo_megjegyzes());
+		field.setLength(200);
+		field.setEditorProperties(textAreaItem);
+		addField(field);
+		
 		field = new DataSourceBooleanField(VevoConstants.VEVO_INTERNET,
 				vevoLabels.vevo_internet());
 		addField(field);
@@ -197,9 +279,21 @@ public class VevoDataSource extends GwtRpcDataSource {
 
 	private static void copyValues(VevoSer from, ListGridRecord to) {
 		to.setAttribute(VevoConstants.VEVO_ROVIDNEV, from.getRovidnev());
+		to.setAttribute(VevoConstants.VEVO_TIPUS, from.getTipus());
 		to.setAttribute(VevoConstants.VEVO_NEV, from.getNev());
 		to.setAttribute(VevoConstants.VEVO_CIM, from.getCim());
 		to.setAttribute(VevoConstants.VEVO_ELERHETOSEG, from.getElerhetoseg());
+		to.setAttribute(VevoConstants.VEVO_EGYENLEG_USD, from.getEgyenlegusd());
+		to.setAttribute(VevoConstants.VEVO_EGYENLEG_EUR, from.getEgyenlegeur());
+		to.setAttribute(VevoConstants.VEVO_EGYENLEG_HUF, from.getEgyenleghuf());
+		to.setAttribute(VevoConstants.VEVO_TAROLASIDIJ, from.getTarolasidij());
+		to.setAttribute(VevoConstants.VEVO_ELOLEG, from.getEloleg());
+		to.setAttribute(VevoConstants.VEVO_BANKSZAMLASZAM, from.getBankszamlaszam());
+		to.setAttribute(VevoConstants.VEVO_EUADOSZAM, from.getEuadoszam());
+		to.setAttribute(VevoConstants.VEVO_ELORARKEDVEZMENY, from.getElorarkedvezmeny());
+		to.setAttribute(VevoConstants.VEVO_AJANLOTTARKEDVEZMENY, from.getAjanlottarkedvezmeny());
+		to.setAttribute(VevoConstants.VEVO_ORSZAG, from.getOrszag());	
+		to.setAttribute(VevoConstants.VEVO_MEGJEGYZES, from.getMegjegyzes());		
 		to.setAttribute(VevoConstants.VEVO_INTERNET, from.getInternet());
 	}
 
@@ -207,9 +301,32 @@ public class VevoDataSource extends GwtRpcDataSource {
 
 		to.setRovidnev(from.getAttributeAsString(VevoConstants.VEVO_ROVIDNEV));
 		to.setNev(from.getAttributeAsString(VevoConstants.VEVO_NEV));
+		to.setTipus(from.getAttributeAsString(VevoConstants.VEVO_TIPUS));
 		to.setCim(from.getAttributeAsString(VevoConstants.VEVO_CIM));
 		to.setElerhetoseg(from
 				.getAttributeAsString(VevoConstants.VEVO_ELERHETOSEG));
+		to.setEgyenlegusd(from
+				.getAttributeAsDouble(VevoConstants.VEVO_EGYENLEG_USD));
+		to.setEgyenlegeur(from
+				.getAttributeAsDouble(VevoConstants.VEVO_EGYENLEG_EUR));
+		to.setEgyenleghuf(from
+				.getAttributeAsDouble(VevoConstants.VEVO_EGYENLEG_HUF));
+		to.setTarolasidij(from
+				.getAttributeAsDouble(VevoConstants.VEVO_TAROLASIDIJ));
+		to.setEloleg(from
+				.getAttributeAsDouble(VevoConstants.VEVO_ELOLEG));
+		to.setBankszamlaszam(from
+				.getAttributeAsString(VevoConstants.VEVO_BANKSZAMLASZAM));
+		to.setEuadoszam(from
+				.getAttributeAsString(VevoConstants.VEVO_EUADOSZAM));
+		to.setElorarkedvezmeny(from
+				.getAttributeAsDouble(VevoConstants.VEVO_ELORARKEDVEZMENY));
+		to.setAjanlottarkedvezmeny(from
+				.getAttributeAsDouble(VevoConstants.VEVO_AJANLOTTARKEDVEZMENY));
+		to.setOrszag(from
+				.getAttributeAsString(VevoConstants.VEVO_ORSZAG));
+		to.setMegjegyzes(from
+				.getAttributeAsString(VevoConstants.VEVO_MEGJEGYZES));
 		to.setInternet(from.getAttributeAsBoolean(VevoConstants.VEVO_INTERNET));
 	}
 

@@ -16,6 +16,7 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -98,26 +99,24 @@ public class Vevo {
 		vevoGrid.setShowAllRecords(true);
 		vevoGrid.setDataSource(vevoDataSource);
 		vevoGrid.setAutoFetchData(true);
+		vevoGrid.setCanExpandRecords(true);
+		vevoGrid.setExpansionMode(ExpansionMode.DETAILS);
 
 		ListGridField rovidnevGridField = new ListGridField(
 				VevoConstants.VEVO_ROVIDNEV);
 		rovidnevGridField.setWidth("10%");
 
 		ListGridField nevGridField = new ListGridField(VevoConstants.VEVO_NEV);
-		nevGridField.setWidth("20%");
+		nevGridField.setWidth("40%");
 
 		ListGridField cimGridField = new ListGridField(VevoConstants.VEVO_CIM);
-		cimGridField.setWidth("30%");
-
-		ListGridField elerhetosegGridField = new ListGridField(
-				VevoConstants.VEVO_ELERHETOSEG);
 
 		ListGridField internetGridField = new ListGridField(
 				VevoConstants.VEVO_INTERNET);
 		internetGridField.setWidth("10%");
 
 		vevoGrid.setFields(rovidnevGridField, nevGridField, cimGridField,
-				elerhetosegGridField, internetGridField);
+				internetGridField);
 
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setHeight("3%");
@@ -246,8 +245,8 @@ public class Vevo {
 	void vevoEdit(VevoDataSource dataSource, ListGrid listGrid, boolean uj) {
 
 		final Window winModal = new Window();
-		winModal.setWidth(600);
-		winModal.setHeight(200);
+		winModal.setWidth(700);
+		winModal.setHeight(600);
 		winModal.setTitle(vevoLabels.vevo());
 		winModal.setShowMinimizeButton(false);
 		winModal.setShowCloseButton(false);
@@ -257,7 +256,7 @@ public class Vevo {
 
 		final DynamicForm editForm = new DynamicForm();
 		editForm.setNumCols(2);
-		editForm.setColWidths("15%", "*");
+		editForm.setColWidths("25%", "*");
 		editForm.setDataSource(dataSource);
 		editForm.setUseAllDataSourceFields(true);
 

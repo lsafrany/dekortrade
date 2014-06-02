@@ -146,7 +146,7 @@ public class Ctorzs {
 				.setFields(fotipusSelectItem, altipusSelectItem, cikkszamItem);
 
 		final IButton szuresIButton = new IButton(commonLabels.filter());
-		szuresIButton.setDisabled(true);
+//		szuresIButton.setDisabled(true);
 
 		final IButton kepekIButton = new IButton(ctorzsLabels.cikk_kepek());
 		kepekIButton.setDisabled(true);
@@ -210,7 +210,7 @@ public class Ctorzs {
 		ctorzsGrid.setCanExpandRecords(true);
 		ctorzsGrid.setExpansionMode(ExpansionMode.DETAILS);
 
-		Criteria criteria = new Criteria();
+/*		Criteria criteria = new Criteria();
 		criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
 		criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
 				fotipusSelectItem.getValueAsString());
@@ -219,7 +219,7 @@ public class Ctorzs {
 		criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 				cikkszamItem.getValueAsString());
 		ctorzsGrid.fetchData(criteria);
-
+*/		
 		ListGridField cikkszamGridField = new ListGridField(
 				CtorzsConstants.CIKK_CIKKSZAM);
 		cikkszamGridField.setWidth("20%");

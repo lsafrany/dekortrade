@@ -416,9 +416,21 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				for (Vevo l : list) {
 					VevoSer VevoSer = new VevoSer();
 					VevoSer.setRovidnev(l.getRovidnev());
+					VevoSer.setTipus(l.getTipus());
 					VevoSer.setNev(l.getNev());
 					VevoSer.setCim(l.getCim());
 					VevoSer.setElerhetoseg(l.getElerhetoseg());
+					VevoSer.setEgyenlegusd(l.getEgyenlegusd());
+					VevoSer.setEgyenlegeur(l.getEgyenlegeur());
+					VevoSer.setEgyenleghuf(l.getEgyenleghuf());
+					VevoSer.setTarolasidij(l.getTarolasidij());
+					VevoSer.setEloleg(l.getEloleg());
+					VevoSer.setBankszamlaszam(l.getBankszamlaszam());
+					VevoSer.setEuadoszam(l.getEuadoszam());
+					VevoSer.setElorarkedvezmeny(l.getElorarkedvezmeny());
+					VevoSer.setAjanlottarkedvezmeny(l.getAjanlottarkedvezmeny());
+					VevoSer.setOrszag(l.getOrszag());
+					VevoSer.setMegjegyzes(l.getMegjegyzes());
 					VevoSer.setInternet(l.getInternet());
 					Vevok.add(VevoSer);
 				}
@@ -448,8 +460,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if ((list != null) && (!list.isEmpty())) {
 				throw new Exception(Constants.EXISTSID);
 			} else {
-				Vevo vevo = new Vevo(vevoSer.getRovidnev(), vevoSer.getNev(),
+				Vevo vevo = new Vevo(vevoSer.getRovidnev(), vevoSer.getTipus(),  vevoSer.getNev(),
 						vevoSer.getCim(), vevoSer.getElerhetoseg(),
+						vevoSer.getEgyenlegusd(), vevoSer.getEgyenlegeur(), vevoSer.getEgyenleghuf(),  
+						vevoSer.getTarolasidij(), vevoSer.getEloleg(), 
+						vevoSer.getBankszamlaszam(), vevoSer.getEuadoszam(),
+						vevoSer.getElorarkedvezmeny(), vevoSer.getAjanlottarkedvezmeny(),
+						vevoSer.getOrszag(), vevoSer.getMegjegyzes(),
 						Boolean.FALSE, Boolean.FALSE, Boolean.FALSE);
 				pm.makePersistent(vevo);
 			}
@@ -478,8 +495,20 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if ((list != null) && (!list.isEmpty())) {
 				for (Vevo l : list) {
 					l.setNev(vevoSer.getNev());
+					l.setTipus(vevoSer.getTipus());
 					l.setCim(vevoSer.getCim());
 					l.setElerhetoseg(vevoSer.getElerhetoseg());
+					l.setEgyenlegusd(vevoSer.getEgyenlegusd());
+					l.setEgyenlegeur(vevoSer.getEgyenlegeur());
+					l.setEgyenleghuf(vevoSer.getEgyenleghuf());
+					l.setTarolasidij(vevoSer.getTarolasidij());
+					l.setEloleg(vevoSer.getEloleg());
+					l.setBankszamlaszam(vevoSer.getBankszamlaszam());
+					l.setEuadoszam(vevoSer.getEuadoszam());
+					l.setElorarkedvezmeny(vevoSer.getElorarkedvezmeny());
+					l.setAjanlottarkedvezmeny(vevoSer.getAjanlottarkedvezmeny());
+					l.setOrszag(vevoSer.getOrszag());
+					l.setMegjegyzes(vevoSer.getMegjegyzes());
 					l.setInternet(vevoSer.getInternet());
 					l.setSzinkron(Boolean.FALSE);
 				}

@@ -91,13 +91,14 @@ public class GyartoDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceFloatField(GyartoConstants.GYARTO_EGYENLEG,
 				gyartoLabels.gyarto_egyenleg());
-		field.setLength(10);
+		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
 		field = new DataSourceTextField(GyartoConstants.GYARTO_KEDVEZMENY,
 				gyartoLabels.gyarto_kedvezmeny());
 		field.setValueMap(GyartoConstants.getKedvezmeny());
+		field.setValidators(isFloatValidator);
 		addField(field);
 		
 		field = new DataSourceTextField(GyartoConstants.GYARTO_MEGJEGYZES,
