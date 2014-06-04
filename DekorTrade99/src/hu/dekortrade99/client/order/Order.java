@@ -748,77 +748,80 @@ public class Order {
 		});
 
 		ctorzsGrid.addRecordClickHandler(new RecordClickHandler() {
-			public void onRecordClick(RecordClickEvent event) {
-				kosarAddIButton.setDisabled(false);
-
-				cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
-						OrderConstants.CIKK_CIKKSZAM);
-
-				Window winModal = new Window();
-				winModal.setWidth(800);
-				winModal.setHeight(800);
-				winModal.setTitle(cikkszam
-						+ " - "
-						+ ctorzsGrid.getSelectedRecord().getAttribute(
-								OrderConstants.CIKK_MEGNEVEZES));
-				winModal.setShowMinimizeButton(false);
-				winModal.setIsModal(true);
-				winModal.setShowModalMask(true);
-				winModal.centerInPage();
-				
-				final KepDataSource kepDataSource = new KepDataSource() {
-
-					protected Object transformRequest(DSRequest dsRequest) {
-						DisplayRequest.startRequest();
-						dsRequest.setAttribute(OrderConstants.CIKK_CIKKSZAM,
-								cikkszam);
-						return super.transformRequest(dsRequest);
-					}
-
-					protected void transformResponse(DSResponse response,
-							DSRequest request, Object data) {
-						DisplayRequest.serverResponse();
-						super.transformResponse(response, request, data);
-					}
-				};
-
-				kepDataSource.addHandleErrorHandler(new HandleErrorHandler() {
-					public void onHandleError(ErrorEvent event) {
-
-						if (event.getResponse().getStatus() == DSResponse.STATUS_FAILURE) {
-							if (event.getResponse().getAttribute(
-									ClientConstants.SERVER_ERROR) != null)
-								SC.warn(commonLabels.server_error());
-							else if (event.getResponse().getAttribute(
-									ClientConstants.SERVER_SQLERROR) != null)
-								SC.warn(commonLabels.server_sqlerror()
-										+ " : "
-										+ event.getResponse().getAttribute(
-												ClientConstants.SERVER_SQLERROR));
-							event.cancel();
+				public void onRecordClick(RecordClickEvent event) {
+					kosarAddIButton.setDisabled(false);
+	
+					cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
+							OrderConstants.CIKK_CIKKSZAM);
+	
+					if ((ctorzsGrid.getSelectedRecord().getAttribute(OrderConstants.CIKK_KEPEK) != null) && 
+							(!ctorzsGrid.getSelectedRecord().getAttribute(OrderConstants.CIKK_KEPEK).equals("0"))) {
+						
+					Window winModal = new Window();
+					winModal.setWidth(800);
+					winModal.setHeight(800);
+					winModal.setTitle(cikkszam
+							+ " - "
+							+ ctorzsGrid.getSelectedRecord().getAttribute(
+									OrderConstants.CIKK_MEGNEVEZES));
+					winModal.setShowMinimizeButton(false);
+					winModal.setIsModal(true);
+					winModal.setShowModalMask(true);
+					winModal.centerInPage();
+					
+					final KepDataSource kepDataSource = new KepDataSource() {
+	
+						protected Object transformRequest(DSRequest dsRequest) {
+							DisplayRequest.startRequest();
+							dsRequest.setAttribute(OrderConstants.CIKK_CIKKSZAM,
+									cikkszam);
+							return super.transformRequest(dsRequest);
 						}
-					}
-				});
-
-				final TileGrid tileGrid = new TileGrid();  
-				tileGrid.setHeight(750);
-			    tileGrid.setWidth(750);
-			    tileGrid.setTileWidth(700);
-		        tileGrid.setTileHeight(500);  
-		        tileGrid.setShowAllRecords(true);  
-		        tileGrid.setDataSource(kepDataSource);  
-		        tileGrid.setAutoFetchData(true);  
-			  				
-				DetailViewerField pictureField = new DetailViewerField(OrderConstants.KEP_KEP);  			
-			    pictureField.setImageWidth(650);
-			    pictureField.setImageHeight(450);
-
-				tileGrid.setFields(pictureField);
-				
-				winModal.addItem(tileGrid);
-				
-				winModal.show();							
-
+	
+						protected void transformResponse(DSResponse response,
+								DSRequest request, Object data) {
+							DisplayRequest.serverResponse();
+							super.transformResponse(response, request, data);
+						}
+					};
+	
+					kepDataSource.addHandleErrorHandler(new HandleErrorHandler() {
+						public void onHandleError(ErrorEvent event) {
+	
+							if (event.getResponse().getStatus() == DSResponse.STATUS_FAILURE) {
+								if (event.getResponse().getAttribute(
+										ClientConstants.SERVER_ERROR) != null)
+									SC.warn(commonLabels.server_error());
+								else if (event.getResponse().getAttribute(
+										ClientConstants.SERVER_SQLERROR) != null)
+									SC.warn(commonLabels.server_sqlerror()
+											+ " : "
+											+ event.getResponse().getAttribute(
+													ClientConstants.SERVER_SQLERROR));
+								event.cancel();
+							}
+						}
+					});
+	
+					final TileGrid tileGrid = new TileGrid();  
+					tileGrid.setHeight(750);
+				    tileGrid.setWidth(750);
+				    tileGrid.setTileWidth(700);
+			        tileGrid.setTileHeight(500);  
+			        tileGrid.setShowAllRecords(true);  
+			        tileGrid.setDataSource(kepDataSource);  
+			        tileGrid.setAutoFetchData(true);  
+				  				
+					DetailViewerField pictureField = new DetailViewerField(OrderConstants.KEP_KEP);  			
+				    pictureField.setImageWidth(650);
+				    pictureField.setImageHeight(450);
+	
+					tileGrid.setFields(pictureField);
+					
+					winModal.addItem(tileGrid);
+					
+					winModal.show();							
+				}
 			}
 		});
 		

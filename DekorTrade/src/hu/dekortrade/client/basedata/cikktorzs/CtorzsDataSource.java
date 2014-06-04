@@ -52,16 +52,12 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 	    dateItem.setUseTextField(true);
 	    
 		final SelectItem fotipusSelectItem = new SelectItem();
-		fotipusSelectItem.setValueMap(fotipus);
 		fotipusSelectItem.setWidth("200");
 
 		final SelectItem altipusSelectItem = new SelectItem();
-		// altipusSelectItem.setValueMap(new LinkedHashMap<String, String>());
-		altipusSelectItem.setValueMap(altipus);
 		altipusSelectItem.setWidth("200");
 
 		final SelectItem gyartoSelectItem = new SelectItem();
-		gyartoSelectItem.setValueMap(gyarto);
 		gyartoSelectItem.setWidth("300");
 
 		IsFloatValidator isFloatValidator = new IsFloatValidator();
@@ -72,16 +68,19 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 		field = new DataSourceTextField(CtorzsConstants.CIKK_FOTIPUS,
 				ctorzsLabels.cikk_fotipus());
 		field.setEditorProperties(fotipusSelectItem);
+		field.setValueMap(fotipus);
 		addField(field);
 
 		field = new DataSourceTextField(CtorzsConstants.CIKK_ALTIPUS,
 				ctorzsLabels.cikk_altipus());
 		field.setEditorProperties(altipusSelectItem);
+		field.setValueMap(altipus);
 		addField(field);
 
 		field = new DataSourceTextField(CtorzsConstants.CIKK_GYARTO,
 				ctorzsLabels.cikk_gyarto());
 		field.setEditorProperties(gyartoSelectItem);
+		field.setValueMap(gyarto);
 		addField(field);
 
 		field = new DataSourceTextField(CtorzsConstants.CIKK_GYARTOCIKKSZAM,

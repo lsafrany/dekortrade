@@ -235,15 +235,12 @@ public class Ctorzs {
 				CtorzsConstants.CIKK_AKCIOS);
 		akciosGridField.setWidth("10%");
 		
-		ListGridField arGridField = new ListGridField(CtorzsConstants.CIKK_AR);
-		arGridField.setWidth("10%");
-
 		ListGridField kepekGridField = new ListGridField(
 				CtorzsConstants.CIKK_KEPEK);
 		kepekGridField.setWidth("10%");
 
 		ctorzsGrid
-				.setFields(cikkszamGridField, szinkodGridField , megnevezesGridField, akciosGridField, arGridField, kepekGridField);
+				.setFields(cikkszamGridField, szinkodGridField , megnevezesGridField, akciosGridField, kepekGridField);
 
 		ctorzsGridLayout.addMember(ctorzsGrid);
 
