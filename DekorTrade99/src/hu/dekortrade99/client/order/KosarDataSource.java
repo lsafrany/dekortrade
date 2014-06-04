@@ -16,6 +16,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.util.JSOHelper;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -41,8 +42,18 @@ public class KosarDataSource extends GwtRpcDataSource {
 		field.setPrimaryKey(true);
 		addField(field);
 
-		field = new DataSourceTextField(OrderConstants.KOSAR_EXPORTKARTON,
+		field = new DataSourceIntegerField(OrderConstants.KOSAR_EXPORTKARTON,
 				orderLabels.kosar_exportkarton());
+		field.setLength(10);
+		addField(field);
+
+		field = new DataSourceIntegerField(OrderConstants.KOSAR_KISKARTON,
+				orderLabels.kosar_kiskarton());
+		field.setLength(10);
+		addField(field);
+
+		field = new DataSourceIntegerField(OrderConstants.KOSAR_DARAB,
+				orderLabels.kosar_darab());
 		field.setLength(10);
 		addField(field);
 
@@ -189,6 +200,10 @@ public class KosarDataSource extends GwtRpcDataSource {
 		to.setCikkszam(from.getAttribute(OrderConstants.KOSAR_CIKKSZAM));
 		to.setExportkarton(from
 				.getAttributeAsInt(OrderConstants.KOSAR_EXPORTKARTON));
+		to.setKiskarton(from
+				.getAttributeAsInt(OrderConstants.KOSAR_KISKARTON));
+		to.setDarab(from
+				.getAttributeAsInt(OrderConstants.KOSAR_DARAB));
 	}
 
 	private static void copyValues(KosarSer from, ListGridRecord to) {
@@ -196,6 +211,10 @@ public class KosarDataSource extends GwtRpcDataSource {
 		to.setAttribute(OrderConstants.KOSAR_CIKKSZAM, from.getCikkszam());
 		to.setAttribute(OrderConstants.KOSAR_EXPORTKARTON,
 				from.getExportkarton());
+		to.setAttribute(OrderConstants.KOSAR_KISKARTON,
+				from.getKiskarton());
+		to.setAttribute(OrderConstants.KOSAR_DARAB,
+				from.getDarab());
 	}
 
 	private ListGridRecord getEditedRecord(DSRequest request) {

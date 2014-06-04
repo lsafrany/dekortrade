@@ -1,2 +1,3 @@
 # Module dekortrade99
 # RPC service class, partial path of RPC policy file
+hu.dekortrade99.client.DekorTrade99Service, 57EDA504C90F445516583084DFD55157.gwt.rpc

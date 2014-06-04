@@ -260,8 +260,11 @@ public class Vevo {
 		editForm.setDataSource(dataSource);
 		editForm.setUseAllDataSourceFields(true);
 
-		if (uj)
+		if (uj) {
+			editForm.getField(VevoConstants.VEVO_TIPUS).setDefaultValue("BELFOLDI");
+			editForm.getField(VevoConstants.VEVO_ORSZAG).setDefaultValue("hu");
 			editForm.editNewRecord();
+		}
 		else {
 			editForm.getField(VevoConstants.VEVO_ROVIDNEV).setCanEdit(false);
 			editForm.editSelectedData(listGrid);

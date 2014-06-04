@@ -15,10 +15,18 @@ public class Kosar {
 	@Persistent
 	private Integer exportkarton;
 
-	public Kosar(String rovidnev, String cikkszam, Integer exportkarton) {
+	@Persistent
+	private Integer kiskarton;
+
+	@Persistent
+	private Integer darab;
+
+	public Kosar(String rovidnev, String cikkszam, Integer exportkarton, Integer kiskarton, Integer darab) {
 		this.rovidnev = rovidnev;
 		this.cikkszam = cikkszam;
 		this.exportkarton = exportkarton;
+		this.kiskarton = kiskarton;
+		this.darab = darab;
 	}
 
 	public String getRovidnev() {
@@ -43,6 +51,22 @@ public class Kosar {
 
 	public void setExportkarton(Integer exportkarton) {
 		this.exportkarton = exportkarton;
+	}
+
+	public Integer getKiskarton() {
+		return kiskarton;
+	}
+
+	public void setKiskarton(Integer kiskarton) {
+		this.kiskarton = kiskarton;
+	}
+
+	public Integer getDarab() {
+		return darab;
+	}
+
+	public void setDarab(Integer darab) {
+		this.darab = darab;
 	}
 
 }

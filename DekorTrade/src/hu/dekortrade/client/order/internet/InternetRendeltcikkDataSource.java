@@ -1,4 +1,4 @@
-package hu.dekortrade.client.order;
+package hu.dekortrade.client.order.internet;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
@@ -14,37 +14,48 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class RendeltcikkDataSource extends GwtRpcDataSource {
+public class InternetRendeltcikkDataSource extends GwtRpcDataSource {
 
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private OrderLabels orderLabels = GWT.create(OrderLabels.class);
+	private InternetOrderLabels internetorderLabels = GWT.create(InternetOrderLabels.class);
 
-	public RendeltcikkDataSource() {
+	public InternetRendeltcikkDataSource() {
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(OrderConstants.RENDELTCIKK_ROVIDNEV,
-				orderLabels.rendelt_rovidnev());
+		field = new DataSourceTextField(InternetOrderConstants.INTERNETRENDELTCIKK_ROVIDNEV,
+				internetorderLabels.rendelt_rovidnev());
 		field.setHidden(true);
 		addField(field);
 
-		field = new DataSourceTextField(OrderConstants.RENDELTCIKK_RENDELES,
-				orderLabels.rendelt_rendeles());
+		field = new DataSourceTextField(InternetOrderConstants.INTERNETRENDELTCIKK_RENDELES,
+				internetorderLabels.rendelt_rendeles());
 		field.setHidden(true);
 		addField(field);
 
-		field = new DataSourceTextField(OrderConstants.RENDELTCIKK_CIKKSZAM,
-				orderLabels.rendelt_cikkszam());
+		field = new DataSourceTextField(InternetOrderConstants.INTERNETRENDELTCIKK_CIKKSZAM,
+				internetorderLabels.rendelt_cikkszam());
 		addField(field);
 
-		field = new DataSourceTextField(
-				OrderConstants.RENDELTCIKK_EXPORTKARTON,
-				orderLabels.rendelt_exportkarton());
+		field = new DataSourceIntegerField(
+				InternetOrderConstants.INTERNETRENDELTCIKK_EXPORTKARTON,
+				internetorderLabels.rendelt_exportkarton());
+		addField(field);
+
+		field = new DataSourceIntegerField(
+				InternetOrderConstants.INTERNETRENDELTCIKK_KISKARTON,
+				internetorderLabels.rendelt_kiskarton());
+		addField(field);
+
+		field = new DataSourceIntegerField(
+				InternetOrderConstants.INTERNETRENDELTCIKK_DARAB,
+				internetorderLabels.rendelt_darab());
 		addField(field);
 
 	}
@@ -54,9 +65,9 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 			final DSRequest request, final DSResponse response) {
 		dekorTradeService.getRendeltcikk(
 				request.getCriteria().getAttributeAsString(
-						OrderConstants.RENDELTCIKK_ROVIDNEV),
+						InternetOrderConstants.INTERNETRENDELTCIKK_ROVIDNEV),
 				request.getCriteria().getAttributeAsString(
-						OrderConstants.RENDELTCIKK_RENDELES),
+						InternetOrderConstants.INTERNETRENDELTCIKK_RENDELES),
 				new AsyncCallback<List<RendeltcikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -103,11 +114,16 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(RendeltcikkSer from, ListGridRecord to) {
-		to.setAttribute(OrderConstants.RENDELTCIKK_ROVIDNEV, from.getRovidnev());
-		to.setAttribute(OrderConstants.RENDELTCIKK_RENDELES, from.getRendeles());
-		to.setAttribute(OrderConstants.RENDELTCIKK_CIKKSZAM, from.getCikkszam());
-		to.setAttribute(OrderConstants.RENDELTCIKK_EXPORTKARTON,
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELTCIKK_ROVIDNEV, from.getRovidnev());
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELTCIKK_RENDELES, from.getRendeles());
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELTCIKK_CIKKSZAM, from.getCikkszam());
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELTCIKK_EXPORTKARTON,
 				from.getExportkarton());
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELTCIKK_KISKARTON,
+				from.getKiskarton());
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELTCIKK_DARAB,
+				from.getDarab());
+
 	}
 
 }

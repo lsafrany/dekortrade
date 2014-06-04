@@ -70,12 +70,12 @@ public class Order {
 
 //		final VLayout ctorzsLayout = new VLayout();
 		ctorzsLayout.setStyleName("middle");
-		ctorzsLayout.setWidth("80%");
+		ctorzsLayout.setWidth("65%");
 			
 		getFotipus();
 		
 		VLayout kosarLayout = new VLayout();
-		kosarLayout.setWidth("20%");
+		kosarLayout.setWidth("35%");
 		kosarLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
 		final KosarDataSource kosarDataSource = new KosarDataSource() {
@@ -125,9 +125,17 @@ public class Order {
 
 		ListGridField exportkartonGridField = new ListGridField(
 				OrderConstants.KOSAR_EXPORTKARTON);
-		exportkartonGridField.setWidth("30%");
+		exportkartonGridField.setWidth("20%");
 
-		kosarGrid.setFields(cikkszamGridField, exportkartonGridField);
+		ListGridField kiskartonGridField = new ListGridField(
+				OrderConstants.KOSAR_KISKARTON);
+		kiskartonGridField.setWidth("20%");
+
+		ListGridField darabGridField = new ListGridField(
+				OrderConstants.KOSAR_DARAB);
+		darabGridField.setWidth("20%");
+
+		kosarGrid.setFields(cikkszamGridField, exportkartonGridField, kiskartonGridField, darabGridField);
 
 		HLayout buttons1Layout = new HLayout();
 		buttons1Layout.setAlign(Alignment.CENTER);
@@ -175,7 +183,7 @@ public class Order {
 
 				final Window winModal = new Window();
 				winModal.setWidth(400);
-				winModal.setHeight(110);
+				winModal.setHeight(180);
 				winModal.setTitle(orderLabels.rendeles());
 				winModal.setShowMinimizeButton(false);
 				winModal.setShowCloseButton(false);
@@ -185,7 +193,7 @@ public class Order {
 
 				final DynamicForm kosarEditForm = new DynamicForm();
 				kosarEditForm.setNumCols(2);
-				kosarEditForm.setColWidths("20%", "35%");
+				kosarEditForm.setColWidths("40%", "*");
 				kosarEditForm.setDataSource(kosarDataSource);
 				kosarEditForm.setUseAllDataSourceFields(true);
 
@@ -211,6 +219,10 @@ public class Order {
 				kosarEditForm.getField(OrderConstants.KOSAR_EXPORTKARTON)
 						.setValidateOnChange(true);
 				kosarEditForm.getField(OrderConstants.KOSAR_EXPORTKARTON)
+						.setValidators(new IsIntegerValidator());
+				kosarEditForm.getField(OrderConstants.KOSAR_KISKARTON)
+						.setValidators(new IsIntegerValidator());
+				kosarEditForm.getField(OrderConstants.KOSAR_DARAB)
 						.setValidators(new IsIntegerValidator());
 
 				HLayout buttonsLayout = new HLayout();

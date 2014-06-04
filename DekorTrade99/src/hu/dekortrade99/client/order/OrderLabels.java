@@ -50,6 +50,10 @@ public interface OrderLabels extends Constants {
 
 	String kosar_exportkarton();
 
+	String kosar_kiskarton();
+	
+	String kosar_darab();
+	
 	String rendeles();
 
 	String torles();

@@ -210,7 +210,7 @@ public class Ctorzs {
 		ctorzsGrid.setCanExpandRecords(true);
 		ctorzsGrid.setExpansionMode(ExpansionMode.DETAILS);
 
-/*		Criteria criteria = new Criteria();
+		Criteria criteria = new Criteria();
 		criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
 		criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
 				fotipusSelectItem.getValueAsString());
@@ -219,7 +219,7 @@ public class Ctorzs {
 		criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 				cikkszamItem.getValueAsString());
 		ctorzsGrid.fetchData(criteria);
-*/		
+		
 		ListGridField cikkszamGridField = new ListGridField(
 				CtorzsConstants.CIKK_CIKKSZAM);
 		cikkszamGridField.setWidth("20%");
@@ -658,6 +658,10 @@ public class Ctorzs {
 					.setDefaultValue("1");
 			editForm.getField(CtorzsConstants.CIKK_ALTIPUS)
 					.setDefaultValue("1");
+			editForm.getField(CtorzsConstants.CIKK_GYARTO)
+					.setDefaultValue("1");			
+			editForm.getField(CtorzsConstants.CIKK_MERTEKEGYSEG)
+					.setDefaultValue("DB");
 		} else {
 			editForm.getField(CtorzsConstants.CIKK_CIKKSZAM).setCanEdit(false);
 			editForm.getField(CtorzsConstants.CIKK_SZINKOD).setCanEdit(false);

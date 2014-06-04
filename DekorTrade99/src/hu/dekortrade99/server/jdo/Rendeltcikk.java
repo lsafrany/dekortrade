@@ -18,12 +18,20 @@ public class Rendeltcikk {
 	@Persistent
 	private Integer exportkarton;
 
+	@Persistent
+	private Integer kiskarton;
+
+	@Persistent
+	private Integer darab;
+
 	public Rendeltcikk(String rovidnev, String rendeles, String cikkszam,
-			Integer exportkarton) {
+			Integer exportkarton, Integer kiskarton, Integer darab) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.cikkszam = cikkszam;
 		this.exportkarton = exportkarton;
+		this.kiskarton = kiskarton;
+		this.darab = darab;
 	}
 
 	public String getRovidnev() {
@@ -56,6 +64,22 @@ public class Rendeltcikk {
 
 	public void setExportkarton(Integer exportkarton) {
 		this.exportkarton = exportkarton;
+	}
+
+	public Integer getKiskarton() {
+		return kiskarton;
+	}
+
+	public void setKiskarton(Integer kiskarton) {
+		this.kiskarton = kiskarton;
+	}
+
+	public Integer getDarab() {
+		return darab;
+	}
+
+	public void setDarab(Integer darab) {
+		this.darab = darab;
 	}
 
 }

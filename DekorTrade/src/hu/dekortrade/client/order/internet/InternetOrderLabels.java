@@ -1,10 +1,8 @@
-package hu.dekortrade99.client.archive;
+package hu.dekortrade.client.order.internet;
 
 import com.google.gwt.i18n.client.Constants;
 
-public interface ArchiveLabels extends Constants {
-
-	String archive();
+public interface InternetOrderLabels extends Constants {
 
 	String rendeles();
 
@@ -16,16 +14,14 @@ public interface ArchiveLabels extends Constants {
 
 	String rendelt_datum();
 
-	String rendelt_statusz();
-
 	String rendelt_cikkszam();
 
 	String rendelt_exportkarton();
-	
+
 	String rendelt_kiskarton();
 	
 	String rendelt_darab();
-
+	
 	String frissit();
 
 }

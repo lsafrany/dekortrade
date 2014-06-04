@@ -275,6 +275,8 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					kosarSer.setRovidnev(l.getRovidnev());
 					kosarSer.setCikkszam(l.getCikkszam());
 					kosarSer.setExportkarton(l.getExportkarton());
+					kosarSer.setKiskarton(l.getKiskarton());
+					kosarSer.setDarab(l.getDarab());
 					kosar.add(kosarSer);
 				}
 			}
@@ -343,6 +345,8 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					rendeltcikkSer.setRendeles(l.getRendeles());
 					rendeltcikkSer.setCikkszam(l.getCikkszam());
 					rendeltcikkSer.setExportkarton(l.getExportkarton());
+					rendeltcikkSer.setKiskarton(l.getKiskarton());
+					rendeltcikkSer.setDarab(l.getDarab());
 					rendeltcikk.add(rendeltcikkSer);
 				}
 			}
@@ -361,7 +365,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 			Kosar kosar = new Kosar(kosarSer.getRovidnev(),
-					kosarSer.getCikkszam(), kosarSer.getExportkarton());
+					kosarSer.getCikkszam(), kosarSer.getExportkarton(), kosarSer.getKiskarton(),  kosarSer.getDarab());
 			pm.makePersistent(kosar);
 
 		} catch (Exception e) {
@@ -387,6 +391,8 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			if (!list.isEmpty()) {
 				for (Kosar l : list) {
 					l.setExportkarton(kosarSer.getExportkarton());
+					l.setKiskarton(kosarSer.getKiskarton());
+					l.setDarab(kosarSer.getDarab());
 				}
 			}
 
@@ -459,7 +465,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			if (!list.isEmpty()) {
 				for (Kosar l : list) {
 					Rendeltcikk rendeltcikk = new Rendeltcikk(rovidnev,
-							rendeles, l.getCikkszam(), l.getExportkarton());
+							rendeles, l.getCikkszam(), l.getExportkarton(), l.getKiskarton(), l.getDarab());
 					pm.makePersistent(rendeltcikk);
 					pm.deletePersistent(l);
 				}

@@ -113,14 +113,14 @@ public class Init extends HttpServlet {
 					fields[7] = fields[7].replaceAll(",", ".");
 					fields[8] = fields[8].replaceAll(",", ".");
 					fields[9] = fields[9].replaceAll(",", ".");
-					Cikk cikk = new Cikk(fields[0], fields[1], "1", "", 
-							fields[2], "", null, null, null, null, fields[3], "", 
+					Cikk cikk = new Cikk(fields[0], fields[1], "1", null, 
+							fields[2], null, null, null, null, null, fields[3], null, 
 							new Double(0), new Double(0), new Double(0), new Double(0), new Double(0), 
 							new Double(0), new Double(0), new Double(0), new Double(0), new Double(0), 
 						    new Double(fields[4]), new Double(0), new Double(0),
 						    new Integer(fields[5]), new Integer(fields[6]),
 							new Double(fields[7]), new Double(0), new Double(fields[8]),
-							new Double(fields[9]), "", "", Boolean.FALSE, "DB", 0, Boolean.FALSE,
+							new Double(fields[9]), null, null, Boolean.FALSE, "DB", 0, Boolean.FALSE,
 							Boolean.FALSE);
 					pm.makePersistent(cikk);
 					counter++;

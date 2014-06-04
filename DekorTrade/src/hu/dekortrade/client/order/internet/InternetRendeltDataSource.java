@@ -1,4 +1,4 @@
-package hu.dekortrade.client.order;
+package hu.dekortrade.client.order.internet;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
@@ -17,27 +17,27 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class RendeltDataSource extends GwtRpcDataSource {
+public class InternetRendeltDataSource extends GwtRpcDataSource {
 
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private OrderLabels orderLabels = GWT.create(OrderLabels.class);
+	private InternetOrderLabels internetorderLabels = GWT.create(InternetOrderLabels.class);
 
-	public RendeltDataSource() {
+	public InternetRendeltDataSource() {
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(OrderConstants.RENDELT_ROVIDNEV,
-				orderLabels.rendelt_rovidnev());
+		field = new DataSourceTextField(InternetOrderConstants.INTERNETRENDELT_ROVIDNEV,
+				internetorderLabels.rendelt_rovidnev());
 		addField(field);
 
-		field = new DataSourceTextField(OrderConstants.RENDELT_RENDELES,
-				orderLabels.rendelt_rendeles());
+		field = new DataSourceTextField(InternetOrderConstants.INTERNETRENDELT_RENDELES,
+				internetorderLabels.rendelt_rendeles());
 		addField(field);
 
-		field = new DataSourceTextField(OrderConstants.RENDELT_DATUM,
-				orderLabels.rendelt_datum());
+		field = new DataSourceTextField(InternetOrderConstants.INTERNETRENDELT_DATUM,
+				internetorderLabels.rendelt_datum());
 		addField(field);
 
 	}
@@ -89,9 +89,9 @@ public class RendeltDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(RendeltSer from, ListGridRecord to) {
-		to.setAttribute(OrderConstants.RENDELT_ROVIDNEV, from.getRovidnev());
-		to.setAttribute(OrderConstants.RENDELT_RENDELES, from.getRendeles());
-		to.setAttribute(OrderConstants.RENDELT_DATUM, from.getDatum());
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELT_ROVIDNEV, from.getRovidnev());
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELT_RENDELES, from.getRendeles());
+		to.setAttribute(InternetOrderConstants.INTERNETRENDELT_DATUM, from.getDatum());
 	}
 
 }

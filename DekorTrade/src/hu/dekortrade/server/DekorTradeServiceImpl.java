@@ -5,13 +5,13 @@ import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Cikkaltipus;
 import hu.dekortrade.server.jdo.Cikkfotipus;
 import hu.dekortrade.server.jdo.Felhasznalo;
+import hu.dekortrade.server.jdo.Gyarto;
 import hu.dekortrade.server.jdo.Jog;
 import hu.dekortrade.server.jdo.Kep;
 import hu.dekortrade.server.jdo.PMF;
 import hu.dekortrade.server.jdo.Rendelt;
 import hu.dekortrade.server.jdo.Rendeltcikk;
 import hu.dekortrade.server.jdo.Vevo;
-import hu.dekortrade.server.jdo.Gyarto;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.CikkSer;
@@ -32,6 +32,7 @@ import hu.dekortrade.shared.serialized.VevoSer;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -745,9 +746,14 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					cikkSer.setFotipus(l.getFotipus());
 					cikkSer.setAltipus(l.getAltipus());
 					cikkSer.setGyarto(l.getGyarto());
+					cikkSer.setGyartocikkszam(l.getGyartocikkszam());
 					cikkSer.setCikkszam(l.getCikkszam());
-					cikkSer.setVamtarifaszam(l.getVamtarifaszam());
+					cikkSer.setFelviteltol(l.getFelviteltol() == null ? null : new Date(l.getFelviteltol().getTime()));
+					cikkSer.setFelvitelig(l.getFelvitelig() == null ? null : new Date(l.getFelvitelig().getTime()));
+					cikkSer.setLejarattol(l.getLejarattol() == null ? null : new Date(l.getLejarattol().getTime()));
+					cikkSer.setLejaratig(l.getLejaratig() == null ? null : new Date(l.getLejaratig().getTime()));
 					cikkSer.setMegnevezes(l.getMegnevezes());
+					cikkSer.setVamtarifaszam(l.getVamtarifaszam());
 					cikkSer.setFob(l.getFob());
 					cikkSer.setSzallitas(l.getSzallitas());
 					cikkSer.setDdu(l.getDdu());
@@ -789,11 +795,9 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-
 			Query query = pm.newQuery(Cikk.class);
 			query.setFilter("this.cikkszam == pcikkszam && this.szinkod == pszinkod");
-			query.declareParameters("String pcikkszam");
-			query.declareParameters("String pszinkod");
+			query.declareParameters("String pcikkszam,String pszinkod");
 			@SuppressWarnings("unchecked")
 			List<Cikk> list = (List<Cikk>) pm.newQuery(query).execute(
 					cikkSer.getCikkszam(),cikkSer.getSzinkod());
@@ -803,9 +807,12 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				Cikk cikk = new Cikk(cikkSer.getFotipus(),
 						cikkSer.getAltipus(), cikkSer.getGyarto(),
 						cikkSer.getGyartocikkszam(), cikkSer.getCikkszam(),
-						cikkSer.getSzinkod(), cikkSer.getFelviteltol(),
-						cikkSer.getFelvitelig(), cikkSer.getLejarattol(),
-						cikkSer.getLejaratig(), cikkSer.getMegnevezes(),
+						cikkSer.getSzinkod(),
+						cikkSer.getFelviteltol() == null ? null : new Date(cikkSer.getFelviteltol().getTime()),
+						cikkSer.getFelvitelig() == null ? null : new Date(cikkSer.getFelvitelig().getTime()),	
+						cikkSer.getLejarattol() == null ? null : new Date(cikkSer.getLejarattol().getTime()),	
+						cikkSer.getLejaratig() == null ? null : new Date(cikkSer.getLejaratig().getTime()),	
+						cikkSer.getMegnevezes(),
 						cikkSer.getVamtarifaszam(), 
 						cikkSer.getFob(),cikkSer.getSzallitas(), cikkSer.getDdu(),
 						cikkSer.getErsz(), cikkSer.getElorar(),
@@ -847,8 +854,14 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					l.setAltipus(cikkSer.getAltipus());
 					l.setGyarto(cikkSer.getGyarto());
 					l.setGyartocikkszam(cikkSer.getGyartocikkszam());
+					l.setCikkszam(cikkSer.getCikkszam());
 					l.setSzinkod(cikkSer.getSzinkod());
+					l.setFelviteltol(cikkSer.getFelviteltol() == null ? null : new Date(cikkSer.getFelviteltol().getTime()));
+					l.setFelvitelig(cikkSer.getFelvitelig() == null ? null : new Date(cikkSer.getFelvitelig().getTime()));
+					l.setLejarattol(cikkSer.getLejarattol() == null ? null : new Date(cikkSer.getLejarattol().getTime()));
+					l.setLejaratig(cikkSer.getLejaratig() == null ? null : new Date(cikkSer.getLejaratig().getTime()));
 					l.setMegnevezes(cikkSer.getMegnevezes());
+					l.setVamtarifaszam(cikkSer.getVamtarifaszam());
 					l.setFob(cikkSer.getFob());
 					l.setSzallitas(cikkSer.getSzallitas());
 					l.setDdu(cikkSer.getDdu());

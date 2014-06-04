@@ -9,17 +9,23 @@ public class RendeltcikkSzinkron {
 	private String cikkszam;
 
 	private Integer exportkarton;
+	
+	private Integer kiskarton;
+	
+	private Integer darab;
 
 	public RendeltcikkSzinkron()  {
 		
 	}
 			
 	public RendeltcikkSzinkron(String rovidnev, String rendeles, String cikkszam,
-			Integer exportkarton) {
+			Integer exportkarton, Integer kiskarton, Integer darab) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.cikkszam = cikkszam;
 		this.exportkarton = exportkarton;
+		this.kiskarton = kiskarton;
+		this.darab = darab;
 	}
 
 	public String getRovidnev() {
@@ -52,6 +58,22 @@ public class RendeltcikkSzinkron {
 
 	public void setExportkarton(Integer exportkarton) {
 		this.exportkarton = exportkarton;
+	}
+
+	public Integer getKiskarton() {
+		return kiskarton;
+	}
+
+	public void setKiskarton(Integer kiskarton) {
+		this.kiskarton = kiskarton;
+	}
+
+	public Integer getDarab() {
+		return darab;
+	}
+
+	public void setDarab(Integer darab) {
+		this.darab = darab;
 	}
 
 }

@@ -98,7 +98,6 @@ public class GyartoDataSource extends GwtRpcDataSource {
 		field = new DataSourceTextField(GyartoConstants.GYARTO_KEDVEZMENY,
 				gyartoLabels.gyarto_kedvezmeny());
 		field.setValueMap(GyartoConstants.getKedvezmeny());
-		field.setValidators(isFloatValidator);
 		addField(field);
 		
 		field = new DataSourceTextField(GyartoConstants.GYARTO_MEGJEGYZES,
@@ -272,6 +271,8 @@ public class GyartoDataSource extends GwtRpcDataSource {
 				.getAttributeAsString(GyartoConstants.GYARTO_SZAMLASZAM));
 		to.setEgyenleg(from
 				.getAttributeAsDouble(GyartoConstants.GYARTO_EGYENLEG));
+		to.setKedvezmeny(from
+				.getAttributeAsString(GyartoConstants.GYARTO_KEDVEZMENY));		
 		to.setMegjegyzes(from
 				.getAttributeAsString(GyartoConstants.GYARTO_MEGJEGYZES));	
 	}

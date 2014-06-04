@@ -1,14 +1,9 @@
-package hu.dekortrade99.client.archive;
+package hu.dekortrade.client.order.internet;
 
-import hu.dekortrade99.client.ClientConstants;
-import hu.dekortrade99.client.CommonLabels;
-import hu.dekortrade99.client.DisplayRequest;
-import hu.dekortrade99.client.UserInfo;
+import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonLabels;
+import hu.dekortrade.client.DisplayRequest;
 
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
-import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DSRequest;
@@ -20,15 +15,19 @@ import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class Archive {
+public class InternetOrder {
 
-	private ArchiveLabels archiveLabels = GWT.create(ArchiveLabels.class);
+	private InternetOrderLabels internetorderLabels = GWT.create(InternetOrderLabels.class);
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
@@ -42,7 +41,7 @@ public class Archive {
 		VLayout rendeltLayout = new VLayout();
 		rendeltLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
-		final RendeltDataSource rendeltDataSource = new RendeltDataSource() {
+		final InternetRendeltDataSource rendeltDataSource = new InternetRendeltDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
 				DisplayRequest.startRequest();
@@ -75,31 +74,28 @@ public class Archive {
 		});
 
 		final ListGrid rendeltGrid = new ListGrid();
-		rendeltGrid.setTitle(archiveLabels.rendeles());
-		rendeltGrid.setWidth("50%");
+		rendeltGrid.setTitle(internetorderLabels.rendeles());
+		rendeltGrid.setWidth("60%");
 		rendeltGrid.setShowHeaderContextMenu(false);
 		rendeltGrid.setShowHeaderMenuButton(false);
 		rendeltGrid.setCanSort(false);
 		rendeltGrid.setShowAllRecords(true);
 		rendeltGrid.setDataSource(rendeltDataSource);
-		Criteria criteria = new Criteria();
-		criteria.setAttribute(ArchiveConstants.RENDELT_ROVIDNEV,
-				UserInfo.userId);
-		rendeltGrid.fetchData(criteria);
+		rendeltGrid.setAutoFetchData(true);
+
+		ListGridField rovidnevGridField = new ListGridField(
+				InternetOrderConstants.INTERNETRENDELT_ROVIDNEV);
+		rovidnevGridField.setWidth("30%");
 
 		ListGridField rendelesGridField = new ListGridField(
-				ArchiveConstants.RENDELT_RENDELES);
+				InternetOrderConstants.INTERNETRENDELT_RENDELES);
 
 		ListGridField datumGridField = new ListGridField(
-				ArchiveConstants.RENDELT_DATUM);
-		datumGridField.setWidth("40%");
+				InternetOrderConstants.INTERNETRENDELT_DATUM);
+		datumGridField.setWidth("35%");
 
-		ListGridField statuszGridField = new ListGridField(
-				ArchiveConstants.RENDELT_STATUSZ);
-		statuszGridField.setWidth("15%");
-
-		rendeltGrid.setFields(rendelesGridField, datumGridField,
-				statuszGridField);
+		rendeltGrid.setFields(rovidnevGridField, rendelesGridField,
+				datumGridField);
 
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
@@ -107,7 +103,7 @@ public class Archive {
 		buttonsLayout.setHeight("3%");
 		buttonsLayout.setWidth("100%");
 
-		IButton frissitIButton = new IButton(archiveLabels.frissit());
+		IButton frissitIButton = new IButton(internetorderLabels.frissit());
 
 		buttonsLayout.addMember(frissitIButton);
 
@@ -117,7 +113,7 @@ public class Archive {
 		VLayout rendeltcikkLayout = new VLayout();
 		rendeltcikkLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
-		final RendeltcikkDataSource rendeltcikkDataSource = new RendeltcikkDataSource() {
+		final InternetRendeltcikkDataSource rendeltcikkDataSource = new InternetRendeltcikkDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
 				DisplayRequest.startRequest();
@@ -150,8 +146,8 @@ public class Archive {
 		});
 
 		final ListGrid rendeltcikkGrid = new ListGrid();
-		rendeltcikkGrid.setTitle(archiveLabels.rendeltcikk());
-		rendeltcikkGrid.setWidth("70%");
+		rendeltcikkGrid.setTitle(internetorderLabels.rendeltcikk());
+		rendeltcikkGrid.setWidth("60%");
 		rendeltcikkGrid.setShowHeaderContextMenu(false);
 		rendeltcikkGrid.setShowHeaderMenuButton(false);
 		rendeltcikkGrid.setCanSort(false);
@@ -159,18 +155,18 @@ public class Archive {
 		rendeltcikkGrid.setDataSource(rendeltcikkDataSource);
 
 		ListGridField cikkszamGridField = new ListGridField(
-				ArchiveConstants.RENDELTCIKK_CIKKSZAM);
+				InternetOrderConstants.INTERNETRENDELTCIKK_CIKKSZAM);
 
 		ListGridField exportkartonGridField = new ListGridField(
-				ArchiveConstants.RENDELTCIKK_EXPORTKARTON);
+				InternetOrderConstants.INTERNETRENDELTCIKK_EXPORTKARTON);
 		exportkartonGridField.setWidth("20%");
 
 		ListGridField kiskartonGridField = new ListGridField(
-				ArchiveConstants.RENDELTCIKK_KISKARTON);
+				InternetOrderConstants.INTERNETRENDELTCIKK_KISKARTON);
 		kiskartonGridField.setWidth("20%");
 
 		ListGridField darabGridField = new ListGridField(
-				ArchiveConstants.RENDELTCIKK_DARAB);
+				InternetOrderConstants.INTERNETRENDELTCIKK_DARAB);
 		darabGridField.setWidth("20%");
 
 		rendeltcikkGrid.setFields(cikkszamGridField, exportkartonGridField, kiskartonGridField, darabGridField);
@@ -182,11 +178,8 @@ public class Archive {
 
 		frissitIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Criteria criteria = new Criteria();
-				criteria.setAttribute(ArchiveConstants.RENDELT_ROVIDNEV,
-						UserInfo.userId);
 				rendeltGrid.invalidateCache();
-				rendeltGrid.fetchData(criteria);
+				rendeltGrid.fetchData();
 				rendeltcikkGrid.setData(new ListGridRecord[] {});
 			}
 		});
@@ -194,12 +187,14 @@ public class Archive {
 		rendeltGrid.addRecordClickHandler(new RecordClickHandler() {
 			public void onRecordClick(RecordClickEvent event) {
 				Criteria criteria = new Criteria();
-				criteria.setAttribute(ArchiveConstants.RENDELTCIKK_ROVIDNEV,
-						UserInfo.userId);
 				criteria.setAttribute(
-						ArchiveConstants.RENDELTCIKK_RENDELES,
+						InternetOrderConstants.INTERNETRENDELTCIKK_ROVIDNEV,
 						rendeltGrid.getSelectedRecord().getAttribute(
-								ArchiveConstants.RENDELT_RENDELES));
+								InternetOrderConstants.INTERNETRENDELT_ROVIDNEV));
+				criteria.setAttribute(
+						InternetOrderConstants.INTERNETRENDELTCIKK_RENDELES,
+						rendeltGrid.getSelectedRecord().getAttribute(
+								InternetOrderConstants.INTERNETRENDELT_RENDELES));
 				rendeltcikkGrid.fetchData(criteria);
 			}
 		});

@@ -39,9 +39,9 @@ import org.codehaus.jackson.type.TypeReference;
 
 @SuppressWarnings("serial")
 public class Syncron extends HttpServlet {
-	
-	private static final Logger log = Logger.getLogger(Syncron.class.getName()); 
-	
+
+	private static final Logger log = Logger.getLogger(Syncron.class.getName());
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -51,11 +51,11 @@ public class Syncron extends HttpServlet {
 		String akcio = request.getParameter("akcio");
 
 		if (akcio.equals("vevojelszo")) {
-		
+
 			log.info("vevojelszo");
 
 			String rovidnev = request.getParameter("rovidnev");
-			
+
 			PersistenceManager pm = PMF.get().getPersistenceManager();
 			try {
 				Query query = pm.newQuery(Vevo.class);
@@ -79,14 +79,14 @@ public class Syncron extends HttpServlet {
 		}
 
 		if (akcio.equals("rendelt")) {
-			
+
 			log.info("rendelt");
-			
-			List<RendeltSzinkron> rendeltSzinkronList = new ArrayList<RendeltSzinkron>(); 
-					
+
+			List<RendeltSzinkron> rendeltSzinkronList = new ArrayList<RendeltSzinkron>();
+
 			PersistenceManager pm = PMF.get().getPersistenceManager();
-//			Transaction tx = pm.currentTransaction();
-//			tx.begin();
+			// Transaction tx = pm.currentTransaction();
+			// tx.begin();
 			try {
 
 				Query query = pm.newQuery(Rendelt.class);
@@ -94,54 +94,62 @@ public class Syncron extends HttpServlet {
 				query.declareParameters("String pstatusz");
 				query.setRange(0, 50);
 				@SuppressWarnings("unchecked")
-				List<Rendelt> list = (List<Rendelt>) pm.newQuery(query).execute(
-						"PENDING");
+				List<Rendelt> list = (List<Rendelt>) pm.newQuery(query)
+						.execute("PENDING");
 				if ((list != null) && (!list.isEmpty())) {
 					for (Rendelt l : list) {
-					
+
 						Query query1 = pm.newQuery(Rendeltcikk.class);
 						query1.setFilter("(rovidnev == providnev) && (rendeles == prendeles)");
 						query1.declareParameters("String providnev,String prendeles");
 						@SuppressWarnings("unchecked")
-						List<Rendeltcikk> list1 = (List<Rendeltcikk>) pm.newQuery(query1).execute(l.getRovidnev(),l.getRendeles());
-						
-						List<RendeltcikkSzinkron> rendeltcikkSzinkronList = new ArrayList<RendeltcikkSzinkron>(); 
-						
+						List<Rendeltcikk> list1 = (List<Rendeltcikk>) pm
+								.newQuery(query1).execute(l.getRovidnev(),
+										l.getRendeles());
+
+						List<RendeltcikkSzinkron> rendeltcikkSzinkronList = new ArrayList<RendeltcikkSzinkron>();
+
 						if ((list1 != null) && (!list1.isEmpty())) {
 							for (Rendeltcikk l1 : list1) {
-								RendeltcikkSzinkron rendeltcikkSzinkron = new RendeltcikkSzinkron(l1.getRovidnev(),l1.getRendeles(),l1.getCikkszam(),l1.getExportkarton());
-								rendeltcikkSzinkronList.add(rendeltcikkSzinkron);
+								RendeltcikkSzinkron rendeltcikkSzinkron = new RendeltcikkSzinkron(
+										l1.getRovidnev(), l1.getRendeles(),
+										l1.getCikkszam(), l1.getExportkarton(),
+										l1.getKiskarton(), l1.getDarab());
+								rendeltcikkSzinkronList
+										.add(rendeltcikkSzinkron);
 							}
 						}
 						l.setStatusz("PROCESSED");
-						RendeltSzinkron	rendeltSzinkron = new RendeltSzinkron(l.getRovidnev(),l.getRendeles(),l.getDatum(),rendeltcikkSzinkronList);
+						RendeltSzinkron rendeltSzinkron = new RendeltSzinkron(
+								l.getRovidnev(), l.getRendeles(), l.getDatum(),
+								rendeltcikkSzinkronList);
 						rendeltSzinkronList.add(rendeltSzinkron);
 					}
 				}
-			
+
 				ObjectMapper mapper = new ObjectMapper();
-					
+
 				out.println(mapper.writeValueAsString(rendeltSzinkronList));
-//				tx.commit();
+				// tx.commit();
 			} catch (Exception e) {
-//				tx.rollback();
+				// tx.rollback();
 				log.info(e.getMessage());
 				out.println("rendelt - ERROR");
 			} finally {
 				pm.close();
-			}			
+			}
 		}
-		
+
 		if (akcio.equals("szinkron")) {
-			
+
 			log.info("szinkron");
-								
+
 			PersistenceManager pm = PMF.get().getPersistenceManager();
 			try {
 
 				Query vevoQuery = pm.newQuery(Vevo.class);
 				vevoQuery.deletePersistentAll();
-				
+
 				Query cikkfotipusQuery = pm.newQuery(Cikkfotipus.class);
 				cikkfotipusQuery.deletePersistentAll();
 
@@ -150,28 +158,29 @@ public class Syncron extends HttpServlet {
 
 				Query cikkQuery = pm.newQuery(Cikk.class);
 				cikkQuery.deletePersistentAll();
-				
+
 				Query kepQuery = pm.newQuery(Kep.class);
 				kepQuery.deletePersistentAll();
-								
+
 				Query query = pm.newQuery(Rendelt.class);
 				@SuppressWarnings("unchecked")
-				List<Rendelt> list = (List<Rendelt>) pm.newQuery(query).execute();
+				List<Rendelt> list = (List<Rendelt>) pm.newQuery(query)
+						.execute();
 				if ((list != null) && (!list.isEmpty())) {
 					for (Rendelt l : list) {
 						l.setStatusz("PENDING");
 					}
 				}
-					
+
 				out.println("szinkron - OK");
 			} catch (Exception e) {
 				log.info(e.getMessage());
 				out.println("szinkron - ERROR");
 			} finally {
 				pm.close();
-			}			
-		}		
-		
+			}
+		}
+
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -185,12 +194,12 @@ public class Syncron extends HttpServlet {
 		if (tabla.equals("vevo")) {
 
 			out.println("Vevo - START");
-			
+
 			log.info("vevo");
-			
+
 			// 1. get received JSON data from request
 			BufferedReader br = new BufferedReader(new InputStreamReader(
-					request.getInputStream(),"UTF-8"));
+					request.getInputStream(), "UTF-8"));
 			String json = "";
 			if (br != null) {
 				json = br.readLine();
@@ -203,12 +212,12 @@ public class Syncron extends HttpServlet {
 			List<VevoSzinkron> list = mapper.readValue(json,
 					new TypeReference<List<VevoSzinkron>>() {
 					});
-			
+
 			if ((list != null) && (!list.isEmpty())) {
 
 				PersistenceManager pm = PMF.get().getPersistenceManager();
-//				Transaction tx = pm.currentTransaction();
-//				tx.begin();
+				// Transaction tx = pm.currentTransaction();
+				// tx.begin();
 				try {
 					for (VevoSzinkron l : list) {
 
@@ -225,13 +234,15 @@ public class Syncron extends HttpServlet {
 								l1.setInternet(l.getInternet());
 							}
 						} else {
-							Vevo vevo = new Vevo(l.getRovidnev(),Constants.INIT_PASSWORD,l.getNev(),l.getInternet(),l.getTorolt());
+							Vevo vevo = new Vevo(l.getRovidnev(),
+									Constants.INIT_PASSWORD, l.getNev(),
+									l.getInternet(), l.getTorolt());
 							pm.makePersistent(vevo);
 						}
 					}
-//					tx.commit();
+					// tx.commit();
 				} catch (Exception e) {
-//					tx.rollback();
+					// tx.rollback();
 					log.info(e.getMessage());
 					out.println("Vevo - ERROR");
 				} finally {
@@ -239,20 +250,20 @@ public class Syncron extends HttpServlet {
 				}
 
 			}
-			
+
 			log.info("vevo - " + list.size());
-			
+
 			out.println("Vevo - OK");
 
 		} else if (tabla.equals("cikkfotipus")) {
-			
+
 			out.println("Cikkfotipus - START");
 
 			log.info("cikkfotipus");
-						
+
 			// 1. get received JSON data from request
 			BufferedReader br = new BufferedReader(new InputStreamReader(
-					request.getInputStream(),"UTF-8"));
+					request.getInputStream(), "UTF-8"));
 			String json = "";
 			if (br != null) {
 				json = br.readLine();
@@ -265,12 +276,12 @@ public class Syncron extends HttpServlet {
 			List<CikkfotipusSzinkron> list = mapper.readValue(json,
 					new TypeReference<List<CikkfotipusSzinkron>>() {
 					});
-			
+
 			if ((list != null) && (!list.isEmpty())) {
 
 				PersistenceManager pm = PMF.get().getPersistenceManager();
-//				Transaction tx = pm.currentTransaction();
-//				tx.begin();
+				// Transaction tx = pm.currentTransaction();
+				// tx.begin();
 				try {
 					for (CikkfotipusSzinkron l : list) {
 
@@ -278,8 +289,8 @@ public class Syncron extends HttpServlet {
 						query.setFilter("this.kod == pkod");
 						query.declareParameters("String pkod");
 						@SuppressWarnings("unchecked")
-						List<Cikkfotipus> list1 = (List<Cikkfotipus>) pm.newQuery(query)
-								.execute(l.getKod());
+						List<Cikkfotipus> list1 = (List<Cikkfotipus>) pm
+								.newQuery(query).execute(l.getKod());
 						if (!list1.isEmpty()) {
 							for (Cikkfotipus l1 : list1) {
 								l1.setNev(l.getNev());
@@ -288,15 +299,13 @@ public class Syncron extends HttpServlet {
 						} else {
 
 							Cikkfotipus cikkfotipus = new Cikkfotipus(
-									l.getKod(),
-									l.getNev(),
-									l.getBlob());
-							pm.makePersistent(cikkfotipus);			
+									l.getKod(), l.getNev(), l.getBlob());
+							pm.makePersistent(cikkfotipus);
 						}
 					}
-//					tx.commit();
+					// tx.commit();
 				} catch (Exception e) {
-//					tx.rollback();
+					// tx.rollback();
 					log.info(e.getMessage());
 					out.println("Cikkfotipus - ERROR");
 				} finally {
@@ -306,18 +315,18 @@ public class Syncron extends HttpServlet {
 			}
 
 			log.info("cikkfotipus - " + list.size());
-			
+
 			out.println("Cikkfotips - OK");
 
 		} else if (tabla.equals("cikkaltipus")) {
-			
+
 			out.println("Cikkaltipus - START");
 
 			log.info("cikkaltipus");
-						
+
 			// 1. get received JSON data from request
 			BufferedReader br = new BufferedReader(new InputStreamReader(
-					request.getInputStream(),"UTF-8"));
+					request.getInputStream(), "UTF-8"));
 			String json = "";
 			if (br != null) {
 				json = br.readLine();
@@ -330,12 +339,12 @@ public class Syncron extends HttpServlet {
 			List<CikkaltipusSzinkron> list = mapper.readValue(json,
 					new TypeReference<List<CikkaltipusSzinkron>>() {
 					});
-			
+
 			if ((list != null) && (!list.isEmpty())) {
 
 				PersistenceManager pm = PMF.get().getPersistenceManager();
-//				Transaction tx = pm.currentTransaction();
-//				tx.begin();
+				// Transaction tx = pm.currentTransaction();
+				// tx.begin();
 				try {
 					for (CikkaltipusSzinkron l : list) {
 
@@ -343,8 +352,9 @@ public class Syncron extends HttpServlet {
 						query.setFilter("fokod == pfokod && kod == pkod");
 						query.declareParameters("String pfokod,String pkod");
 						@SuppressWarnings("unchecked")
-						List<Cikkaltipus> list1 = (List<Cikkaltipus>) pm.newQuery(query)
-								.execute(l.getFokod(),l.getKod());
+						List<Cikkaltipus> list1 = (List<Cikkaltipus>) pm
+								.newQuery(query).execute(l.getFokod(),
+										l.getKod());
 						if (!list1.isEmpty()) {
 							for (Cikkaltipus l1 : list1) {
 								l1.setNev(l.getNev());
@@ -353,16 +363,14 @@ public class Syncron extends HttpServlet {
 						} else {
 
 							Cikkaltipus cikkaltipus = new Cikkaltipus(
-									l.getFokod(),
-									l.getKod(),
-									l.getNev(),
+									l.getFokod(), l.getKod(), l.getNev(),
 									l.getBlob());
-							pm.makePersistent(cikkaltipus);			
+							pm.makePersistent(cikkaltipus);
 						}
 					}
-//					tx.commit();
+					// tx.commit();
 				} catch (Exception e) {
-//					tx.rollback();
+					// tx.rollback();
 					log.info(e.getMessage());
 					out.println("Cikkaltipus - ERROR");
 				} finally {
@@ -372,18 +380,18 @@ public class Syncron extends HttpServlet {
 			}
 
 			log.info("cikkaltipus - " + list.size());
-			
+
 			out.println("Cikkaltips - OK");
 
 		} else if (tabla.equals("cikk")) {
-			
+
 			out.println("Cikk - START");
 
 			log.info("cikk");
-						
+
 			// 1. get received JSON data from request
 			BufferedReader br = new BufferedReader(new InputStreamReader(
-					request.getInputStream(),"UTF-8"));
+					request.getInputStream(), "UTF-8"));
 			String json = "";
 			if (br != null) {
 				json = br.readLine();
@@ -396,12 +404,12 @@ public class Syncron extends HttpServlet {
 			List<CikkSzinkron> list = mapper.readValue(json,
 					new TypeReference<List<CikkSzinkron>>() {
 					});
-			
+
 			if ((list != null) && (!list.isEmpty())) {
 
 				PersistenceManager pm = PMF.get().getPersistenceManager();
-//				Transaction tx = pm.currentTransaction();
-//				tx.begin();
+				// Transaction tx = pm.currentTransaction();
+				// tx.begin();
 				try {
 					for (CikkSzinkron l : list) {
 
@@ -427,25 +435,18 @@ public class Syncron extends HttpServlet {
 							}
 						} else {
 
-							Cikk cikk = new Cikk(
-									l.getFotipus(),
-									l.getAltipus(),
-									l.getCikkszam(),
-									l.getMegnevezes(),
-									l.getAr(),
-									l.getKiskarton(),
-									l.getDarab(),
-									l.getTerfogat(),
-									l.getBsuly(),
-									l.getNsuly(),
-									l.getKepek(),
-									l.getTorolt());
-							pm.makePersistent(cikk);			
+							Cikk cikk = new Cikk(l.getFotipus(),
+									l.getAltipus(), l.getCikkszam(),
+									l.getMegnevezes(), l.getAr(),
+									l.getKiskarton(), l.getDarab(),
+									l.getTerfogat(), l.getBsuly(),
+									l.getNsuly(), l.getKepek(), l.getTorolt());
+							pm.makePersistent(cikk);
 						}
 					}
-//					tx.commit();
+					// tx.commit();
 				} catch (Exception e) {
-//					tx.rollback();
+					// tx.rollback();
 					log.info(e.getMessage());
 					out.println("Cikk - ERROR");
 				} finally {
@@ -455,7 +456,7 @@ public class Syncron extends HttpServlet {
 			}
 
 			log.info("cikk - " + list.size());
-			
+
 			out.println("Cikk - OK");
 
 		} else if (tabla.equals("kep")) {
@@ -463,7 +464,7 @@ public class Syncron extends HttpServlet {
 			out.println("Kep - START");
 
 			log.info("kep");
-			
+
 			// 1. get received JSON data from request
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					request.getInputStream()));
@@ -479,12 +480,12 @@ public class Syncron extends HttpServlet {
 			List<KepSzinkron> list = mapper.readValue(json,
 					new TypeReference<List<KepSzinkron>>() {
 					});
-			
+
 			if ((list != null) && (!list.isEmpty())) {
 
 				PersistenceManager pm = PMF.get().getPersistenceManager();
-//				Transaction tx = pm.currentTransaction();
-//				tx.begin();
+				// Transaction tx = pm.currentTransaction();
+				// tx.begin();
 				try {
 					for (KepSzinkron l : list) {
 
@@ -500,13 +501,14 @@ public class Syncron extends HttpServlet {
 								l1.setTorolt(l.getTorolt());
 							}
 						} else {
-							Kep kep = new Kep(l.getCikkszam(),l.getSorszam(),l.getBlob(),l.getTorolt());
+							Kep kep = new Kep(l.getCikkszam(), l.getSorszam(),
+									l.getBlob(), l.getTorolt());
 							pm.makePersistent(kep);
 						}
 					}
-//					tx.commit();
+					// tx.commit();
 				} catch (Exception e) {
-//					tx.rollback();
+					// tx.rollback();
 					log.info(e.getMessage());
 					out.println("Kep - ERROR");
 				} finally {
@@ -516,7 +518,7 @@ public class Syncron extends HttpServlet {
 			}
 
 			log.info("kep - " + list.size());
-			
+
 			out.println("Kep - OK");
 
 		}

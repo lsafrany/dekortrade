@@ -332,7 +332,9 @@ public class SzinkronObject {
 							rendeltcikkSzinkron.getRovidnev(),
 							rendeltcikkSzinkron.getRendeles(),
 							rendeltcikkSzinkron.getCikkszam(),
-							rendeltcikkSzinkron.getExportkarton());
+							rendeltcikkSzinkron.getExportkarton(),
+							rendeltcikkSzinkron.getKiskarton(),
+							rendeltcikkSzinkron.getDarab());
 					pm.makePersistent(rendeltcikk);
 				}
 			}

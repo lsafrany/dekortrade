@@ -196,11 +196,14 @@ public class Gyarto {
 		editForm.setDataSource(dataSource);
 		editForm.setUseAllDataSourceFields(true);
 
-		if (uj)
+		if (uj) {
+			editForm.getField(GyartoConstants.GYARTO_KEDVEZMENY)
+			.setDefaultValue("1");
 			editForm.editNewRecord();
-		else
+		}
+		else {
 			editForm.editSelectedData(listGrid);
-
+		}
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);

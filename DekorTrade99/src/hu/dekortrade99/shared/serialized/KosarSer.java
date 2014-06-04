@@ -10,6 +10,10 @@ public class KosarSer implements IsSerializable {
 
 	private Integer exportkarton;
 
+	private Integer kiskarton;
+	
+	private Integer darab;
+	
 	public String getRovidnev() {
 		return rovidnev;
 	}
@@ -32,6 +36,22 @@ public class KosarSer implements IsSerializable {
 
 	public void setExportkarton(Integer exportkarton) {
 		this.exportkarton = exportkarton;
+	}
+
+	public Integer getKiskarton() {
+		return kiskarton;
+	}
+
+	public void setKiskarton(Integer kiskarton) {
+		this.kiskarton = kiskarton;
+	}
+
+	public Integer getDarab() {
+		return darab;
+	}
+
+	public void setDarab(Integer darab) {
+		this.darab = darab;
 	}
 
 }

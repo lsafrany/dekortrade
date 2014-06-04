@@ -14,6 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
@@ -42,9 +43,19 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 				archiveLabels.rendelt_cikkszam());
 		addField(field);
 
-		field = new DataSourceTextField(
+		field = new DataSourceIntegerField(
 				ArchiveConstants.RENDELTCIKK_EXPORTKARTON,
 				archiveLabels.rendelt_exportkarton());
+		addField(field);
+
+		field = new DataSourceIntegerField(
+				ArchiveConstants.RENDELTCIKK_KISKARTON,
+				archiveLabels.rendelt_kiskarton());
+		addField(field);
+
+		field = new DataSourceIntegerField(
+				ArchiveConstants.RENDELTCIKK_DARAB,
+				archiveLabels.rendelt_darab());
 		addField(field);
 
 	}
@@ -111,6 +122,9 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 				from.getCikkszam());
 		to.setAttribute(ArchiveConstants.RENDELTCIKK_EXPORTKARTON,
 				from.getExportkarton());
+		to.setAttribute(ArchiveConstants.RENDELTCIKK_KISKARTON,
+				from.getKiskarton());
+		to.setAttribute(ArchiveConstants.RENDELTCIKK_DARAB,
+				from.getDarab());
 	}
-
 }
