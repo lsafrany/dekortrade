@@ -12,7 +12,7 @@ public class SystemConstants {
 
 	public static final String JOG_NEV = "jog_nev";
 	public static final String JOG_JOG = "jog_jog";
-
+	
 	private static LinkedHashMap<String, String> menuk = null;
 
 	public static LinkedHashMap<String, String> getMenuk() {

@@ -6,4 +6,6 @@ public interface OrderLabels extends Constants {
 
 	String internetorder();
 
+	String preorder();
+
 }

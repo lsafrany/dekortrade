@@ -2,6 +2,7 @@ package hu.dekortrade.client.order;
 
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.order.internet.InternetOrder;
+import hu.dekortrade.client.order.pre.PreOrder;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
@@ -30,8 +31,13 @@ public class Order {
 
 		final Tab internetOrderTab = new Tab(orderLabels.internetorder());
 		InternetOrder internetOrder = new InternetOrder();
-		internetOrderTab.setPane(internetOrder.get());
+		internetOrderTab.setPane(internetOrder.get(null));
 		tabSet.addTab(internetOrderTab);
+
+		final Tab preOrderTab = new Tab(orderLabels.preorder());
+		PreOrder preOrder = new PreOrder();
+		preOrderTab.setPane(preOrder.get());
+		tabSet.addTab(preOrderTab);
 
 		middleLayout.addMember(tabSet);
 

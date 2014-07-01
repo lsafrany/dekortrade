@@ -16,6 +16,9 @@ public class Rendeltcikk {
 	private String cikkszam;
 
 	@Persistent
+	private String szinkod;
+
+	@Persistent
 	private Integer exportkarton;
 
 	@Persistent
@@ -25,10 +28,11 @@ public class Rendeltcikk {
 	private Integer darab;
 
 	public Rendeltcikk(String rovidnev, String rendeles, String cikkszam,
-			Integer exportkarton, Integer kiskarton, Integer darab) {
+			String szinkod, Integer exportkarton, Integer kiskarton, Integer darab) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.cikkszam = cikkszam;
+		this.szinkod = szinkod;
 		this.exportkarton = exportkarton;
 		this.kiskarton = kiskarton;
 		this.darab = darab;
@@ -56,6 +60,14 @@ public class Rendeltcikk {
 
 	public void setCikkszam(String cikkszam) {
 		this.cikkszam = cikkszam;
+	}
+
+	public String getSzinkod() {
+		return szinkod;
+	}
+
+	public void setSzinkod(String szinkod) {
+		this.szinkod = szinkod;
 	}
 
 	public Integer getExportkarton() {

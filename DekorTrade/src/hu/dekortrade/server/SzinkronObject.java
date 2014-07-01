@@ -1,5 +1,6 @@
 package hu.dekortrade.server;
 
+import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Cikkaltipus;
 import hu.dekortrade.server.jdo.Cikkfotipus;
@@ -319,6 +320,7 @@ public class SzinkronObject {
 				RendeltSzinkron rendeltSzinkron = rendeltSzinkronList.get(i);
 				Rendelt rendelt = new Rendelt(rendeltSzinkron.getRovidnev(),
 						rendeltSzinkron.getRendeles(),
+						ClientConstants.INTERNET_ELORENDEL,
 						rendeltSzinkron.getDatum());
 				pm.makePersistent(rendelt);
 
@@ -332,6 +334,7 @@ public class SzinkronObject {
 							rendeltcikkSzinkron.getRovidnev(),
 							rendeltcikkSzinkron.getRendeles(),
 							rendeltcikkSzinkron.getCikkszam(),
+							rendeltcikkSzinkron.getSzinkod(),
 							rendeltcikkSzinkron.getExportkarton(),
 							rendeltcikkSzinkron.getKiskarton(),
 							rendeltcikkSzinkron.getDarab());

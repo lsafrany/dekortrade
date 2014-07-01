@@ -26,8 +26,14 @@ public interface CommonLabels extends Constants {
 
 	String save();
 
-	String alapjeszo();
+	String defaultpassword();
 
-	String letezoid();
+	String existingid();
 
+	String refresh();
+	
+	String select();
+	
+	String print();
+	
 }

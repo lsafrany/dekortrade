@@ -1,5 +1,7 @@
 package hu.dekortrade.client;
 
+import hu.dekortrade.shared.serialized.CedulaSer;
+import hu.dekortrade.shared.serialized.CedulacikkSer;
 import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
@@ -7,6 +9,7 @@ import hu.dekortrade.shared.serialized.CikkfotipusSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
+import hu.dekortrade.shared.serialized.KosarSer;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
@@ -14,6 +17,7 @@ import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.SzinkronSer;
 import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
+import hu.dekortrade.shared.serialized.VevoKosarSer;
 import hu.dekortrade.shared.serialized.VevoSer;
 
 import java.util.List;
@@ -57,8 +61,8 @@ public interface DekorTradeService extends RemoteService {
 	List<GyartoSer> getGyarto() throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	GyartoSer addGyarto(GyartoSer szallitoSer)
-			throws IllegalArgumentException, SQLExceptionSer;
+	GyartoSer addGyarto(GyartoSer szallitoSer) throws IllegalArgumentException,
+			SQLExceptionSer;
 
 	GyartoSer updateGyarto(GyartoSer szallitoSer)
 			throws IllegalArgumentException, SQLExceptionSer;
@@ -132,4 +136,38 @@ public interface DekorTradeService extends RemoteService {
 
 	CikkSelectsSer getCikkSelects() throws IllegalArgumentException,
 			SQLExceptionSer;
+
+	List<KosarSer> getKosarCikk(String elado, String vevo, String tipus)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	VevoKosarSer getVevoKosar(String elado, String tipus)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	String addKosar(String elado, String vevo, String tipus)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	String removeKosar(String elado, String vevo, String tipus)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	KosarSer addKosarCikk(KosarSer kosarSer)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	KosarSer updateKosarCikk(KosarSer kosarSer)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	KosarSer removeKosarCikk(KosarSer kosarSer)
+			throws IllegalArgumentException, SQLExceptionSer;
+	
+	String importInternet(String elado, String vevo, String rendeles)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	String createCedula(String elado, String vevo, String tipus)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	List<CedulaSer> getCedula() throws IllegalArgumentException,
+			SQLExceptionSer;
+
+	List<CedulacikkSer> getCedulacikk(String cedula, String tipus) throws IllegalArgumentException,
+			SQLExceptionSer;
+
 }

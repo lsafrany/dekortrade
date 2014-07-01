@@ -122,7 +122,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					l.setJelszo(password);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -367,13 +367,13 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			Kosar kosar = new Kosar(kosarSer.getRovidnev(),
 					kosarSer.getCikkszam(), kosarSer.getExportkarton(), kosarSer.getKiskarton(),  kosarSer.getDarab());
 			pm.makePersistent(kosar);
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
 		}
-
+		
 		return kosarSer;
 	}
 
@@ -395,7 +395,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					l.setDarab(kosarSer.getDarab());
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -422,7 +422,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					pm.deletePersistent(l);
 				}
 			}
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -471,7 +471,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 			ret = rovidnev + "/" + rendeles;
-
+			pm.flush();
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {

@@ -5,6 +5,8 @@ import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.client.UserInfo;
+import hu.dekortrade.client.order.pre.PreOrder;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
@@ -42,10 +44,10 @@ public class Vevo {
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
-	public Canvas get() {
+	public Canvas get(boolean select) {
 		DisplayRequest.counterInit();
 
-		HLayout middleLayout = new HLayout();
+		final HLayout middleLayout = new HLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
 
@@ -78,7 +80,7 @@ public class Vevo {
 						if (event.getResponse()
 								.getAttribute(ClientConstants.SERVER_SQLERROR)
 								.equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());
+							SC.warn(commonLabels.existingid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "
@@ -153,16 +155,39 @@ public class Vevo {
 		buttonsLayout.addMember(modifyButtonLayout);
 		buttonsLayout.addMember(jelszoButtonLayout);
 		buttonsLayout.addMember(deleteButtonLayout);
-
+		
 		vevoLayout.addMember(vevoGrid);
 		vevoLayout.addMember(buttonsLayout);
 
+		final IButton selectOKButton = new IButton(commonLabels.select());
+		
+		if (select) {
+			HLayout buttonsLayout2 = new HLayout();
+			buttonsLayout2.setHeight("3%");
+			buttonsLayout2.setWidth("70%");
+
+			HLayout selectOKButtonLayout = new HLayout();
+			selectOKButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+			selectOKButtonLayout.setAlign(Alignment.CENTER);
+			selectOKButton.disable();
+			selectOKButtonLayout.addMember(selectOKButton);
+		
+			buttonsLayout2.addMember(selectOKButtonLayout);
+			
+			vevoLayout.addMember(buttonsLayout2);
+
+			
+			
+			
+		}
+		
 		middleLayout.addMember(vevoLayout);
 
 		vevoGrid.addRecordClickHandler(new RecordClickHandler() {
 			public void onRecordClick(RecordClickEvent event) {
 				modifyButton.setDisabled(false);
 				deleteButton.setDisabled(false);
+				selectOKButton.setDisabled(false);
 				if (vevoGrid.getSelectedRecord().getAttributeAsBoolean(
 						VevoConstants.VEVO_INTERNET))
 					jelszoButton.setDisabled(false);
@@ -210,7 +235,7 @@ public class Vevo {
 										public void onSuccess(String result) {
 											DisplayRequest.serverResponse();
 											SC.say(result + " : "
-													+ commonLabels.alapjeszo());
+													+ commonLabels.existingid());
 											jelszoButton.setDisabled(false);
 										}
 									});
@@ -235,6 +260,39 @@ public class Vevo {
 					}
 				});
 
+			}
+		});
+		
+		selectOKButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+
+			}
+		});
+
+		selectOKButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				dekorTradeService.addKosar(UserInfo.userId, vevoGrid.getSelectedRecord().getAttribute(
+											VevoConstants.VEVO_ROVIDNEV), ClientConstants.KOSRAR_ELORENDEL,
+					new AsyncCallback<String>() {
+						public void onFailure(Throwable caught) {
+							DisplayRequest.serverResponse();
+							if (caught instanceof SQLExceptionSer)
+								SC.warn(commonLabels
+										.server_sqlerror()
+										+ " : "
+										+ caught.getMessage());
+							else
+								SC.warn(commonLabels
+										.server_error());
+						}
+
+						public void onSuccess(String result) {
+							DisplayRequest.serverResponse();
+							middleLayout.removeMembers(middleLayout.getMembers());
+							PreOrder preorder = new PreOrder();
+							middleLayout.addMember(preorder.get());
+						}
+					});				
 			}
 		});
 

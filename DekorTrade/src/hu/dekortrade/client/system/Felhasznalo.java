@@ -49,7 +49,6 @@ public class Felhasznalo {
 		DisplayRequest.counterInit();
 
 		HLayout middleLayout = new HLayout();
-		middleLayout.setWidth("70%");
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
 
@@ -82,7 +81,7 @@ public class Felhasznalo {
 						if (event.getResponse()
 								.getAttribute(ClientConstants.SERVER_SQLERROR)
 								.equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());
+							SC.warn(commonLabels.existingid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "
@@ -296,7 +295,7 @@ public class Felhasznalo {
 													SC.say(result
 															+ " : "
 															+ commonLabels
-																	.alapjeszo());
+																	.defaultpassword());
 													jelszoButton
 															.setDisabled(false);
 												}

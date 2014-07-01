@@ -19,4 +19,7 @@ public class ClientConstants {
 
 	public static final int CACHE = 3600;
 
+	public static final String KOSRAR_ELORENDEL = "ELORENDEL";
+	public static final String INTERNET_IMPORTED = "IMPORTED";
+	public static final String INTERNET_ELORENDEL = "ELORENDEL";
 }

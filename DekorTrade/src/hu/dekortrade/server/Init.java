@@ -2,15 +2,21 @@
 
 package hu.dekortrade.server;
 
+import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.server.jdo.Cedula;
+import hu.dekortrade.server.jdo.Cedulacikk;
 import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Cikkaltipus;
 import hu.dekortrade.server.jdo.Cikkfotipus;
 import hu.dekortrade.server.jdo.Felhasznalo;
 import hu.dekortrade.server.jdo.Gyarto;
 import hu.dekortrade.server.jdo.Jog;
+import hu.dekortrade.server.jdo.Kosar;
+import hu.dekortrade.server.jdo.Kosarcikk;
 import hu.dekortrade.server.jdo.PMF;
 import hu.dekortrade.server.jdo.Rendelt;
 import hu.dekortrade.server.jdo.Rendeltcikk;
+import hu.dekortrade.server.jdo.Sorszam;
 import hu.dekortrade.server.jdo.Vevo;
 import hu.dekortrade.shared.Constants;
 
@@ -46,6 +52,34 @@ public class Init extends HttpServlet {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
+
+			out.append("<h1>Sorszam</h1>");
+			
+			Query sorszamQuery = pm.newQuery(Sorszam.class);
+			sorszamQuery.deletePersistentAll();
+
+			Sorszam sorszam = new Sorszam ("0", ClientConstants.KOSRAR_ELORENDEL);
+			pm.makePersistent(sorszam);
+			
+			out.append("<h1>Cedula</h1>");
+			
+			Query cedulaQuery = pm.newQuery(Cedula.class);
+			cedulaQuery.deletePersistentAll();
+
+			out.append("<h1>Cedulacikk</h1>");
+			
+			Query cedulacikkQuery = pm.newQuery(Cedulacikk.class);
+			cedulacikkQuery.deletePersistentAll();
+			
+			out.append("<h1>Kosár</h1>");
+			
+			Query kosarQuery = pm.newQuery(Kosar.class);
+			kosarQuery.deletePersistentAll();
+
+			out.append("<h1>KosárCikk</h1>");
+			
+			Query kosarCikkQuery = pm.newQuery(Kosarcikk.class);
+			kosarCikkQuery.deletePersistentAll();
 
 			out.append("<h1>Gyártók</h1>");
 
@@ -114,7 +148,7 @@ public class Init extends HttpServlet {
 					fields[8] = fields[8].replaceAll(",", ".");
 					fields[9] = fields[9].replaceAll(",", ".");
 					Cikk cikk = new Cikk(fields[0], fields[1], "1", null, 
-							fields[2], null, null, null, null, null, fields[3], null, 
+							fields[2], "", null, null, null, null, fields[3], null, 
 							new Double(0), new Double(0), new Double(0), new Double(0), new Double(0), 
 							new Double(0), new Double(0), new Double(0), new Double(0), new Double(0), 
 						    new Double(fields[4]), new Double(0), new Double(0),

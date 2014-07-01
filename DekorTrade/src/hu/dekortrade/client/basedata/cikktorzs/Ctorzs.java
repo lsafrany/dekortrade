@@ -65,6 +65,10 @@ public class Ctorzs {
 
 	private String cikkszam = "";
 
+	private String szinkod = "";
+	
+	private String megnevezes = "";
+	
 	private String sorszam = "";
 
 	public Canvas get(final IButton extIButton) {
@@ -127,19 +131,20 @@ public class Ctorzs {
 		ctorzsForm.setColWidths("10%", "15%", "10%", "15%", "10%", "*");
 
 		final SelectItem fotipusSelectItem = new SelectItem();
-		fotipusSelectItem.setWidth("180");
+		fotipusSelectItem.setWidth("160");
 		fotipusSelectItem.setAllowEmptyValue(true);
 		fotipusSelectItem.setTitle(ctorzsLabels.cikk_fotipus());
 		fotipusSelectItem.setValueMap(cikkSelectsSer.getFotipus());
 
 		final SelectItem altipusSelectItem = new SelectItem();
-		altipusSelectItem.setWidth("180");
+		altipusSelectItem.setWidth("160");
 		altipusSelectItem.setAllowEmptyValue(true);
 		altipusSelectItem.setTitle(ctorzsLabels.cikk_altipus());
 		altipusSelectItem.setValueMap(new LinkedHashMap<String, String>());
 
 		final TextItem cikkszamItem = new TextItem();
 		cikkszamItem.setTitle(ctorzsLabels.cikk_cikkszam());
+		cikkszamItem.setWidth("100");
 		cikkszamItem.setLength(15);
 
 		ctorzsForm
@@ -187,7 +192,7 @@ public class Ctorzs {
 						if (event.getResponse()
 								.getAttribute(ClientConstants.SERVER_SQLERROR)
 								.equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());
+							SC.warn(commonLabels.existingid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "
@@ -210,7 +215,7 @@ public class Ctorzs {
 		ctorzsGrid.setCanExpandRecords(true);
 		ctorzsGrid.setExpansionMode(ExpansionMode.DETAILS);
 
-		Criteria criteria = new Criteria();
+/*		Criteria criteria = new Criteria();
 		criteria.setAttribute(CtorzsConstants.CTORZS_PAGE, page);
 		criteria.setAttribute(CtorzsConstants.CIKK_FOTIPUS,
 				fotipusSelectItem.getValueAsString());
@@ -219,7 +224,7 @@ public class Ctorzs {
 		criteria.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
 				cikkszamItem.getValueAsString());
 		ctorzsGrid.fetchData(criteria);
-		
+*/		
 		ListGridField cikkszamGridField = new ListGridField(
 				CtorzsConstants.CIKK_CIKKSZAM);
 		cikkszamGridField.setWidth("20%");
@@ -430,6 +435,10 @@ public class Ctorzs {
 
 				cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
 						CtorzsConstants.CIKK_CIKKSZAM);
+				szinkod = ctorzsGrid.getSelectedRecord().getAttribute(
+						CtorzsConstants.CIKK_SZINKOD);
+				megnevezes = ctorzsGrid.getSelectedRecord().getAttribute(
+						CtorzsConstants.CIKK_MEGNEVEZES);
 
 				if (ctorzsGrid.getSelectedRecord().getAttributeAsInt(
 						CtorzsConstants.CIKK_KEPEK) > 0)
@@ -621,6 +630,14 @@ public class Ctorzs {
 
 	public String getCikkszam() {
 		return cikkszam;
+	}
+
+	public String getSzinkod() {
+		return szinkod;
+	}
+
+	public String getMegnevezes() {
+		return megnevezes;
 	}
 
 	void ctorzsEdit(final CtorzsDataSource dataSource, final ListGrid listGrid,

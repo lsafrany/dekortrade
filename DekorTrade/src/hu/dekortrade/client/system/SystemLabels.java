@@ -45,4 +45,26 @@ public interface SystemLabels extends Constants {
 	String feltoltottkep();
 
 	String letoltottrendeles();
+	
+	String kosar();
+	
+	String kosar_elado();
+
+	String kosar_vevo();
+	
+	String kosar_tipus();
+	
+	String kosar_cikkszam();
+	
+	String kosar_szinkod();
+	
+	String kosar_megnevezes();
+	
+	String kosar_exportkarton();
+	
+	String kosar_kiskarton();
+	
+	String kosar_darab();
+
+	String cedula();
 }

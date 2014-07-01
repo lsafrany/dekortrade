@@ -87,7 +87,7 @@ public class Cikktipus {
 						if (event.getResponse()
 								.getAttribute(ClientConstants.SERVER_SQLERROR)
 								.equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());
+							SC.warn(commonLabels.existingid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "
@@ -195,7 +195,7 @@ public class Cikktipus {
 						if (event.getResponse()
 								.getAttribute(ClientConstants.SERVER_SQLERROR)
 								.equals(Constants.EXISTSID)) {
-							SC.warn(commonLabels.letezoid());
+							SC.warn(commonLabels.existingid());
 						} else {
 							SC.warn(commonLabels.server_sqlerror()
 									+ " : "

@@ -15,11 +15,15 @@ public class Rendelt {
 	private String rendeles;
 
 	@Persistent
+	private String status;
+
+	@Persistent
 	private Date datum;
 
-	public Rendelt(String rovidnev, String rendeles, Date datum) {
+	public Rendelt(String rovidnev, String rendeles, String status,Date datum) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
+		this.status = status;
 		this.datum = datum;
 	}
 
@@ -37,6 +41,14 @@ public class Rendelt {
 
 	public void setRendeles(String rendeles) {
 		this.rendeles = rendeles;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Date getDatum() {

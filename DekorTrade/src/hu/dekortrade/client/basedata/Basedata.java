@@ -38,7 +38,7 @@ public class Basedata {
 
 		final Tab vevoTab = new Tab(basedataLabels.vevok());
 		Vevo vevo = new Vevo();
-		vevoTab.setPane(vevo.get());
+		vevoTab.setPane(vevo.get(false));
 		tabSet.addTab(vevoTab);
 
 		final Tab cikktipusTab = new Tab(basedataLabels.cikktipusok());

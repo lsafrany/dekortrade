@@ -31,7 +31,9 @@ public class InternetOrder {
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
-	public Canvas get() {
+	private String rendeles = "";
+	
+	public Canvas get(final IButton extIButton) {
 		DisplayRequest.counterInit();
 
 		final HLayout middleLayout = new HLayout();
@@ -186,15 +188,19 @@ public class InternetOrder {
 
 		rendeltGrid.addRecordClickHandler(new RecordClickHandler() {
 			public void onRecordClick(RecordClickEvent event) {
+				if (extIButton != null) {
+					extIButton.setDisabled(false);
+				}					
 				Criteria criteria = new Criteria();
 				criteria.setAttribute(
 						InternetOrderConstants.INTERNETRENDELTCIKK_ROVIDNEV,
 						rendeltGrid.getSelectedRecord().getAttribute(
 								InternetOrderConstants.INTERNETRENDELT_ROVIDNEV));
+				rendeles = rendeltGrid.getSelectedRecord().getAttribute(
+						InternetOrderConstants.INTERNETRENDELT_RENDELES);
 				criteria.setAttribute(
 						InternetOrderConstants.INTERNETRENDELTCIKK_RENDELES,
-						rendeltGrid.getSelectedRecord().getAttribute(
-								InternetOrderConstants.INTERNETRENDELT_RENDELES));
+						rendeles);
 				rendeltcikkGrid.fetchData(criteria);
 			}
 		});
@@ -202,4 +208,9 @@ public class InternetOrder {
 		return middleLayout;
 
 	}
+
+	public String getRendeles() {
+		return this.rendeles;
+	}
+		
 }

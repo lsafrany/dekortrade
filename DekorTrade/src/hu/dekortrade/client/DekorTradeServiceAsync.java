@@ -1,5 +1,7 @@
 package hu.dekortrade.client;
 
+import hu.dekortrade.shared.serialized.CedulaSer;
+import hu.dekortrade.shared.serialized.CedulacikkSer;
 import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
@@ -7,11 +9,13 @@ import hu.dekortrade.shared.serialized.CikkfotipusSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
+import hu.dekortrade.shared.serialized.KosarSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SzinkronSer;
 import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
+import hu.dekortrade.shared.serialized.VevoKosarSer;
 import hu.dekortrade.shared.serialized.VevoSer;
 
 import java.util.List;
@@ -48,8 +52,7 @@ public interface DekorTradeServiceAsync {
 
 	void getGyarto(AsyncCallback<List<GyartoSer>> callback);
 
-	void addGyarto(GyartoSer szallitoSer,
-			AsyncCallback<GyartoSer> asyncCallback);
+	void addGyarto(GyartoSer szallitoSer, AsyncCallback<GyartoSer> asyncCallback);
 
 	void updateGyarto(GyartoSer szallitoSer,
 			AsyncCallback<GyartoSer> asyncCallback);
@@ -115,4 +118,35 @@ public interface DekorTradeServiceAsync {
 
 	void getCikkSelects(AsyncCallback<CikkSelectsSer> asyncCallback);
 
+	void getKosarCikk(String elado, String vevo, String tipus,
+			AsyncCallback<List<KosarSer>> asyncCallback);
+
+	void getVevoKosar(String elado, String tipus,
+			AsyncCallback<VevoKosarSer> asyncCallback);
+
+	void addKosar(String elado, String vevo, String tipus,
+			AsyncCallback<String> asyncCallback);
+
+	void removeKosar(String elado, String vevo, String tipus,
+			AsyncCallback<String> asyncCallback);
+
+	void addKosarCikk(KosarSer kosarSer,
+			AsyncCallback<KosarSer> asyncCallback);
+
+	void updateKosarCikk(KosarSer kosarSer,
+			AsyncCallback<KosarSer> asyncCallback);
+
+	void removeKosarCikk(KosarSer kosarSer,
+			AsyncCallback<KosarSer> asyncCallback);
+
+	void importInternet(String elado, String vevo, String rendeles,
+			AsyncCallback<String> asyncCallback);
+
+	void createCedula(String elado, String vevo, String tipus,
+			AsyncCallback<String> asyncCallback);
+
+	void getCedula(AsyncCallback<List<CedulaSer>> asyncCallback);
+	
+	void getCedulacikk(String cedula, String tipus,AsyncCallback<List<CedulacikkSer>> asyncCallback);
+	
 }
