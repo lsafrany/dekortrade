@@ -16,13 +16,7 @@ public class Kosar {
 
 	@Persistent
 	private String tipus;	
-	
-	@Persistent
-	private Double fizet;
-	
-	@Persistent
-	private Double fizeteur;	
-	
+		
 	@Persistent
 	private String cedula;	
 
@@ -55,22 +49,6 @@ public class Kosar {
 
 	public void setTipus(String tipus) {
 		this.tipus = tipus;
-	}
-
-	public Double getFizet() {
-		return fizet;
-	}
-
-	public void setFizet(Double fizet) {
-		this.fizet = fizet;
-	}
-
-	public Double getFizeteur() {
-		return fizeteur;
-	}
-
-	public void setFizeteur(Double fizeteur) {
-		this.fizeteur = fizeteur;
 	}
 
 	public String getCedula() {

@@ -1,7 +1,6 @@
 package hu.dekortrade.client.system;
 
 import hu.dekortrade.client.DisplayRequest;
-import hu.dekortrade.client.cedula.Cedula;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
@@ -42,11 +41,6 @@ public class System {
 		KosarCikk kosarCikk = new KosarCikk();
 		kosarTab.setPane(kosarCikk.get());
 		tabSet.addTab(kosarTab);
-
-		final Tab cedulaTab = new Tab(systemLabels.cedula());
-		Cedula cedula = new Cedula();
-		cedulaTab.setPane(cedula.get());
-		tabSet.addTab(cedulaTab);
 
 		middleLayout.addMember(tabSet);
 

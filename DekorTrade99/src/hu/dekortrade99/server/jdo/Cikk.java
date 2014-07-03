@@ -19,7 +19,7 @@ public class Cikk {
 	private String megnevezes;
 
 	@Persistent
-	private Double ar;
+	private Float ar;
 
 	@Persistent
 	private Integer kiskarton;
@@ -28,13 +28,13 @@ public class Cikk {
 	private Integer darab;
 
 	@Persistent
-	private Double terfogat;
+	private Float terfogat;
 
 	@Persistent
-	private Double bsuly;
+	private Float bsuly;
 
 	@Persistent
-	private Double nsuly;
+	private Float nsuly;
 
 	@Persistent
 	private Integer kepek;
@@ -42,9 +42,9 @@ public class Cikk {
 	@Persistent
 	private Boolean torolt;
 
-	public Cikk(String fotipus, String altipus, String cikkszam, String megnevezes, Double ar,
-			Integer kiskarton, Integer darab, Double terfogat,
-			Double bsuly, Double nsuly, Integer kepek, Boolean torolt) {
+	public Cikk(String fotipus, String altipus, String cikkszam, String megnevezes, Float ar,
+			Integer kiskarton, Integer darab, Float terfogat,
+			Float bsuly, Float nsuly, Integer kepek, Boolean torolt) {
 		this.fotipus = fotipus;
 		this.altipus = altipus;
 		this.cikkszam = cikkszam;
@@ -95,11 +95,11 @@ public class Cikk {
 		this.megnevezes = megnevezes;
 	}
 
-	public Double getAr() {
+	public Float getAr() {
 		return ar;
 	}
 
-	public void setAr(Double ar) {
+	public void setAr(Float ar) {
 		this.ar = ar;
 	}
 
@@ -119,27 +119,27 @@ public class Cikk {
 		this.darab = darab;
 	}
 
-	public Double getTerfogat() {
+	public Float getTerfogat() {
 		return terfogat;
 	}
 
-	public void setTerfogat(Double terfogat) {
+	public void setTerfogat(Float terfogat) {
 		this.terfogat = terfogat;
 	}
 
-	public Double getBsuly() {
+	public Float getBsuly() {
 		return bsuly;
 	}
 
-	public void setBsuly(Double bsuly) {
+	public void setBsuly(Float bsuly) {
 		this.bsuly = bsuly;
 	}
 
-	public Double getNsuly() {
+	public Float getNsuly() {
 		return nsuly;
 	}
 
-	public void setNsuly(Double nsuly) {
+	public void setNsuly(Float nsuly) {
 		this.nsuly = nsuly;
 	}
 

@@ -94,9 +94,9 @@ public interface DekorTradeServiceAsync {
 	void getUploadFileStatus(AsyncCallback<UploadSer> callback)
 			throws IllegalArgumentException;
 
-	void getKep(String cikkszam, AsyncCallback<List<String>> asyncCallback);
+	void getKep(String cikkszam, String szinkod, AsyncCallback<List<String>> asyncCallback);
 
-	void removeKep(String cikkszam, String sorszam,
+	void removeKep(String cikkszam, String szinkod, String sorszam,
 			AsyncCallback<String> asyncCallback);
 
 	void getCikkfotipus(AsyncCallback<List<CikkfotipusSer>> asyncCallback);

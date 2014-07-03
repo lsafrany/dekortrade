@@ -43,6 +43,7 @@ import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
@@ -62,12 +63,8 @@ public class Ctorzs {
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
 	private int page = 0;
-
-	private String cikkszam = "";
-
-	private String szinkod = "";
 	
-	private String megnevezes = "";
+	private  ListGridRecord selectedRecord = null;
 	
 	private String sorszam = "";
 
@@ -433,13 +430,8 @@ public class Ctorzs {
 					extIButton.setDisabled(false);
 				}
 
-				cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
-						CtorzsConstants.CIKK_CIKKSZAM);
-				szinkod = ctorzsGrid.getSelectedRecord().getAttribute(
-						CtorzsConstants.CIKK_SZINKOD);
-				megnevezes = ctorzsGrid.getSelectedRecord().getAttribute(
-						CtorzsConstants.CIKK_MEGNEVEZES);
-
+				selectedRecord = ctorzsGrid.getSelectedRecord();
+	
 				if (ctorzsGrid.getSelectedRecord().getAttributeAsInt(
 						CtorzsConstants.CIKK_KEPEK) > 0)
 					kepekIButton.setDisabled(false);
@@ -454,7 +446,11 @@ public class Ctorzs {
 				Window winModal = new Window();
 				winModal.setWidth(900);
 				winModal.setHeight(800);
-				winModal.setTitle(cikkszam
+				winModal.setTitle(ctorzsGrid.getSelectedRecord().getAttribute(
+						CtorzsConstants.CIKK_CIKKSZAM)
+						+ " - " 
+						+ ctorzsGrid.getSelectedRecord().getAttribute(
+						CtorzsConstants.CIKK_SZINKOD)
 						+ " - "
 						+ ctorzsGrid.getSelectedRecord().getAttribute(
 								CtorzsConstants.CIKK_MEGNEVEZES));
@@ -472,7 +468,11 @@ public class Ctorzs {
 					protected Object transformRequest(DSRequest dsRequest) {
 						DisplayRequest.startRequest();
 						dsRequest.setAttribute(CtorzsConstants.CIKK_CIKKSZAM,
-								cikkszam);
+								ctorzsGrid.getSelectedRecord().getAttribute(
+										CtorzsConstants.CIKK_CIKKSZAM));
+						dsRequest.setAttribute(CtorzsConstants.CIKK_SZINKOD,
+								ctorzsGrid.getSelectedRecord().getAttribute(
+										CtorzsConstants.CIKK_SZINKOD));
 						dsRequest.setAttribute(CtorzsConstants.KEP_SORSZAM,
 								sorszam);
 						return super.transformRequest(dsRequest);
@@ -628,16 +628,8 @@ public class Ctorzs {
 
 	}
 
-	public String getCikkszam() {
-		return cikkszam;
-	}
-
-	public String getSzinkod() {
-		return szinkod;
-	}
-
-	public String getMegnevezes() {
-		return megnevezes;
+	public ListGridRecord getSelectedRecord() {
+		return selectedRecord;
 	}
 
 	void ctorzsEdit(final CtorzsDataSource dataSource, final ListGrid listGrid,
@@ -776,13 +768,19 @@ public class Ctorzs {
 		uploadForm.setTarget("fileUploadFrame");
 		Random generator = new Random();
 		final String random = Double.toString(generator.nextDouble());
-		uploadForm.setAction(GWT.getModuleBaseURL() + "upload?cikkszam="
-				+ cikkszam + "&random=" + random);
+		uploadForm.setAction(GWT.getModuleBaseURL() + "upload?"
+				+ "cikkszam=" + ctorzsGrid.getSelectedRecord().getAttribute(
+					CtorzsConstants.CIKK_CIKKSZAM)  
+				+ "&szinkod=" + ctorzsGrid.getSelectedRecord().getAttribute(
+					CtorzsConstants.CIKK_SZINKOD)  
+				+ "&random=" + random);
 
 		final UploadItem uploadItem = new UploadItem();
 		uploadItem.setWidth(300);
 		uploadItem.setName("kep");
-		uploadItem.setTitle(cikkszam);
+		uploadItem.setTitle(ctorzsGrid.getSelectedRecord().getAttribute(
+				CtorzsConstants.CIKK_CIKKSZAM) + " - "  + ctorzsGrid.getSelectedRecord().getAttribute(
+						CtorzsConstants.CIKK_SZINKOD));
 		uploadItem.setRequired(true);
 
 		uploadForm.setFields(uploadItem);

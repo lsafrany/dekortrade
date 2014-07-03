@@ -15,6 +15,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceFloatField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.util.JSOHelper;
@@ -82,6 +83,30 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		
 		field = new DataSourceIntegerField(KosarConstants.KOSAR_DARAB,
 				kosarLabels.kosar_darab());
+		addField(field);
+
+		field = new DataSourceFloatField(KosarConstants.KOSAR_AR,
+				kosarLabels.koasr_ar());
+		addField(field);
+
+		field = new DataSourceFloatField(KosarConstants.KOSAR_AREUR,
+				kosarLabels.koasr_areur());
+		addField(field);
+
+		field = new DataSourceFloatField(KosarConstants.KOSAR_ARUSD,
+				kosarLabels.koasr_arusd());
+		addField(field);
+
+		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZET,
+				kosarLabels.koasr_fizet());
+		addField(field);
+
+		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZETEUR,
+				kosarLabels.koasr_fizeteur());
+		addField(field);
+
+		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZETUSD,
+				kosarLabels.koasr_fizetusd());
 		addField(field);
 
 	}
@@ -236,6 +261,12 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		to.setAttribute(KosarConstants.KOSAR_EXPORTKARTON, from.getExportkarton());
 		to.setAttribute(KosarConstants.KOSAR_KISKARTON, from.getKiskarton());
 		to.setAttribute(KosarConstants.KOSAR_DARAB, from.getDarab());
+		to.setAttribute(KosarConstants.KOSAR_AR, from.getAr());
+		to.setAttribute(KosarConstants.KOSAR_AREUR, from.getAreur());
+		to.setAttribute(KosarConstants.KOSAR_ARUSD, from.getArusd());
+		to.setAttribute(KosarConstants.KOSAR_FIZET, from.getFizet());
+		to.setAttribute(KosarConstants.KOSAR_FIZETEUR, from.getFizeteur());
+		to.setAttribute(KosarConstants.KOSAR_FIZETUSD, from.getFizetusd());
 	}
 
 	private static void copyValues(ListGridRecord from, KosarSer to) {
@@ -248,6 +279,12 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		to.setExportkarton(from.getAttributeAsInt(KosarConstants.KOSAR_EXPORTKARTON));
 		to.setKiskarton(from.getAttributeAsInt(KosarConstants.KOSAR_KISKARTON));
 		to.setDarab(from.getAttributeAsInt(KosarConstants.KOSAR_DARAB));
+		to.setAr(from.getAttributeAsFloat(KosarConstants.KOSAR_AR));
+		to.setAreur(from.getAttributeAsFloat(KosarConstants.KOSAR_AREUR));
+		to.setArusd(from.getAttributeAsFloat(KosarConstants.KOSAR_ARUSD));
+		to.setFizet(from.getAttributeAsFloat(KosarConstants.KOSAR_FIZET));
+		to.setFizeteur(from.getAttributeAsFloat(KosarConstants.KOSAR_FIZETEUR));
+		to.setFizetusd(from.getAttributeAsFloat(KosarConstants.KOSAR_FIZETUSD));
 	}
 
 	private ListGridRecord getEditedRecord(DSRequest request) {

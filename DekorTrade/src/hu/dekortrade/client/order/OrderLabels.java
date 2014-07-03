@@ -8,4 +8,5 @@ public interface OrderLabels extends Constants {
 
 	String preorder();
 
+	String finalizeorder();
 }

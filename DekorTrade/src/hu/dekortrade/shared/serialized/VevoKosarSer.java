@@ -8,6 +8,8 @@ public class VevoKosarSer implements IsSerializable {
 
 	private String vevonev = null;
 
+	private String vevotipus = null;
+	
 	public String getVevo() {
 		return vevo;
 	}
@@ -22,6 +24,14 @@ public class VevoKosarSer implements IsSerializable {
 
 	public void setVevonev(String vevonev) {
 		this.vevonev = vevonev;
+	}
+
+	public String getVevotipus() {
+		return vevotipus;
+	}
+
+	public void setVevotipus(String vevotipus) {
+		this.vevotipus = vevotipus;
 	}
 		
 }

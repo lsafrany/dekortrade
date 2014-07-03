@@ -36,4 +36,8 @@ public interface CommonLabels extends Constants {
 	
 	String print();
 	
+	String cedulaelorendelo();
+	
+	String cedulavegleges();
+	
 }

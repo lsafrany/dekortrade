@@ -110,10 +110,10 @@ public interface DekorTradeService extends RemoteService {
 
 	UploadSer getUploadFileStatus() throws IllegalArgumentException;
 
-	List<String> getKep(String cikkszam) throws IllegalArgumentException,
+	List<String> getKep(String cikkszam, String szinkod) throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	String removeKep(String cikkszam, String rorszam)
+	String removeKep(String cikkszam, String szinkod, String rorszam)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	List<CikkfotipusSer> getCikkfotipus() throws IllegalArgumentException,

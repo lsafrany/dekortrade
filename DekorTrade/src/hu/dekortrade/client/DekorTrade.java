@@ -1,14 +1,9 @@
 package hu.dekortrade.client;
 
-import hu.dekortrade.client.ClientConstants;
-import hu.dekortrade.client.CommonLabels;
-import hu.dekortrade.client.DekorTradeLabels;
-import hu.dekortrade.client.DekorTradeService;
-import hu.dekortrade.client.DekorTradeServiceAsync;
-import hu.dekortrade.client.DisplayRequest;
-import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.client.basedata.Basedata;
+import hu.dekortrade.client.cash.Cash;
 import hu.dekortrade.client.order.Order;
+import hu.dekortrade.client.query.Query;
 import hu.dekortrade.client.system.System;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
@@ -17,7 +12,6 @@ import hu.dekortrade.shared.serialized.UserSer;
 
 import java.util.Date;
 
-import com.smartgwt.client.widgets.Label;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
@@ -30,6 +24,7 @@ import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -463,6 +458,60 @@ public class DekorTrade implements EntryPoint {
 											TabSelectedEvent event) {
 
 										tab.setPane(order.get());
+									}
+
+								});
+							}
+
+							if (userSer.getTabList().get(i).getName()
+									.equals(Constants.MENU_QUERY)) {
+								UserInfo.orderID = userSer.getTabList().get(i)
+										.getId();
+								final Tab tab = new Tab(dekorTradeLabels
+										.menu_query());
+								tabSet.addTab(tab);
+								final Query query = new Query();
+
+								if (userSer.getTabList().get(i).getId() == userSer
+										.getDefultTab()) {
+
+									tab.setPane(query.get());
+									tabSet.selectTab(i);
+								}
+								tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+									@Override
+									public void onTabSelected(
+											TabSelectedEvent event) {
+
+										tab.setPane(query.get());
+									}
+
+								});
+							}
+							
+							if (userSer.getTabList().get(i).getName()
+									.equals(Constants.MENU_CASH)) {
+								UserInfo.orderID = userSer.getTabList().get(i)
+										.getId();
+								final Tab tab = new Tab(dekorTradeLabels
+										.menu_cash());
+								tabSet.addTab(tab);
+								final Cash cash = new Cash();
+
+								if (userSer.getTabList().get(i).getId() == userSer
+										.getDefultTab()) {
+
+									tab.setPane(cash.get());
+									tabSet.selectTab(i);
+								}
+								tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+									@Override
+									public void onTabSelected(
+											TabSelectedEvent event) {
+
+										tab.setPane(cash.get());
 									}
 
 								});

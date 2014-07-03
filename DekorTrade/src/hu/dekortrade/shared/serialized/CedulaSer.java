@@ -10,10 +10,14 @@ public class CedulaSer implements IsSerializable {
 
 	private String rovidnev;
 
+	private String vevonev;
+	
 	private String status;
 
 	private String elado;
 
+	private String eladonev;
+	
 	private Date datum;
 
 	public String getCedula() {
@@ -32,6 +36,14 @@ public class CedulaSer implements IsSerializable {
 		this.rovidnev = rovidnev;
 	}
 
+	public String getVevonev() {
+		return vevonev;
+	}
+
+	public void setVevonev(String vevonev) {
+		this.vevonev = vevonev;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -46,6 +58,14 @@ public class CedulaSer implements IsSerializable {
 
 	public void setElado(String elado) {
 		this.elado = elado;
+	}
+
+	public String getEladonev() {
+		return eladonev;
+	}
+
+	public void setEladonev(String eladonev) {
+		this.eladonev = eladonev;
 	}
 
 	public Date getDatum() {

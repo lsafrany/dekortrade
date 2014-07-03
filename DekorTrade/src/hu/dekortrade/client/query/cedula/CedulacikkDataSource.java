@@ -1,4 +1,4 @@
-package hu.dekortrade.client.cedula;
+package hu.dekortrade.client.query.cedula;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
@@ -14,6 +14,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceFloatField;
+import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
@@ -50,32 +52,44 @@ public class CedulacikkDataSource extends GwtRpcDataSource {
 				cedulaLabels.megnevezes());
 		addField(field);
 
-		field = new DataSourceTextField(CedulaConstants.CEDULACIKK_AR,
-				cedulaLabels.ar());
-		addField(field);
-
-		field = new DataSourceTextField(CedulaConstants.CEDULACIKK_AREUR,
-				cedulaLabels.areur());
-		addField(field);
-
-		field = new DataSourceTextField(CedulaConstants.CEDULACIKK_EXPORTKARTON,
+		field = new DataSourceIntegerField(CedulaConstants.CEDULACIKK_EXPORTKARTON,
 				cedulaLabels.exportkarton());
 		addField(field);
 
-		field = new DataSourceTextField(CedulaConstants.CEDULACIKK_KISKARTON,
+		field = new DataSourceIntegerField(CedulaConstants.CEDULACIKK_KISKARTON,
 				cedulaLabels.kiskarton());
 		addField(field);
 		
-		field = new DataSourceTextField(CedulaConstants.CEDULACIKK_DARAB,
+		field = new DataSourceIntegerField(CedulaConstants.CEDULACIKK_DARAB,
 				cedulaLabels.darab());
 		addField(field);
 
-		field = new DataSourceTextField(CedulaConstants.CEDULACIKK_FIZET,
+		field = new DataSourceFloatField(CedulaConstants.CEDULACIKK_AR,
+				cedulaLabels.ar());
+		addField(field);
+
+		field = new DataSourceFloatField(CedulaConstants.CEDULACIKK_AREUR,
+				cedulaLabels.areur());
+		addField(field);
+
+		field = new DataSourceFloatField(CedulaConstants.CEDULACIKK_ARUSD,
+				cedulaLabels.arusd());
+		addField(field);
+
+		field = new DataSourceFloatField(CedulaConstants.CEDULACIKK_AREUR,
+				cedulaLabels.arusd());
+		addField(field);
+
+		field = new DataSourceFloatField(CedulaConstants.CEDULACIKK_FIZET,
 				cedulaLabels.fizet());
 		addField(field);
 
-		field = new DataSourceTextField(CedulaConstants.CEDULACIKK_FIZETEUR,
+		field = new DataSourceFloatField(CedulaConstants.CEDULACIKK_FIZETEUR,
 				cedulaLabels.fizeteur());
+		addField(field);
+
+		field = new DataSourceFloatField(CedulaConstants.CEDULACIKK_FIZETUSD,
+				cedulaLabels.fizetusd());
 		addField(field);
 
 	}
@@ -139,13 +153,15 @@ public class CedulacikkDataSource extends GwtRpcDataSource {
 		to.setAttribute(CedulaConstants.CEDULACIKK_CIKKSZAM, from.getCikkszam());
 		to.setAttribute(CedulaConstants.CEDULACIKK_SZINKOD, from.getSzinkod());
 		to.setAttribute(CedulaConstants.CEDULACIKK_MEGNEVEZES, from.getMegnevezes());
-		to.setAttribute(CedulaConstants.CEDULACIKK_AR, from.getAr());		
-		to.setAttribute(CedulaConstants.CEDULACIKK_AREUR, from.getAreur());
 		to.setAttribute(CedulaConstants.CEDULACIKK_EXPORTKARTON, from.getExportkarton());
 		to.setAttribute(CedulaConstants.CEDULACIKK_KISKARTON, from.getKiskarton());		
-		to.setAttribute(CedulaConstants.CEDULACIKK_DARAB, from.getDarab());		
+		to.setAttribute(CedulaConstants.CEDULACIKK_DARAB, from.getDarab());	
+		to.setAttribute(CedulaConstants.CEDULACIKK_AR, from.getAr());		
+		to.setAttribute(CedulaConstants.CEDULACIKK_AREUR, from.getAreur());
+		to.setAttribute(CedulaConstants.CEDULACIKK_ARUSD, from.getArusd());
 		to.setAttribute(CedulaConstants.CEDULACIKK_FIZET, from.getFizet());				
-		to.setAttribute(CedulaConstants.CEDULACIKK_FIZETEUR, from.getFizeteur());			
+		to.setAttribute(CedulaConstants.CEDULACIKK_FIZETEUR, from.getFizeteur());	
+		to.setAttribute(CedulaConstants.CEDULACIKK_FIZETUSD, from.getFizetusd());			
 	}
 
 }

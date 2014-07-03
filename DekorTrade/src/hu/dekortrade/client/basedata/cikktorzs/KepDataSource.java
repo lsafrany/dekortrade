@@ -27,6 +27,8 @@ public class KepDataSource extends GwtRpcDataSource {
 
 	private static String cikkszam = "";
 
+	private static String szinkod = "";
+
 	private static String sorszam = "";
 
 	public KepDataSource() {
@@ -49,7 +51,8 @@ public class KepDataSource extends GwtRpcDataSource {
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
 		cikkszam = request.getAttributeAsString(CtorzsConstants.CIKK_CIKKSZAM);
-		dekorTradeService.getKep(cikkszam, new AsyncCallback<List<String>>() {
+		szinkod = request.getAttributeAsString(CtorzsConstants.CIKK_SZINKOD);
+		dekorTradeService.getKep(cikkszam, szinkod, new AsyncCallback<List<String>>() {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof SQLExceptionSer)
 					response.setAttribute(ClientConstants.SERVER_SQLERROR,
@@ -98,9 +101,11 @@ public class KepDataSource extends GwtRpcDataSource {
 
 		cikkszam = request.getAttributeAsString(CtorzsConstants.CIKK_CIKKSZAM);
 
+		szinkod = request.getAttributeAsString(CtorzsConstants.CIKK_SZINKOD);
+		
 		sorszam = request.getAttributeAsString(CtorzsConstants.KEP_SORSZAM);
 
-		dekorTradeService.removeKep(cikkszam, sorszam,
+		dekorTradeService.removeKep(cikkszam, szinkod, sorszam,
 				new AsyncCallback<String>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -132,7 +137,7 @@ public class KepDataSource extends GwtRpcDataSource {
 			ListGridRecord to) {
 		to.setAttribute(CtorzsConstants.KEP_SORSZAM, from);
 		to.setAttribute(CtorzsConstants.KEP_KEP, GWT.getModuleBaseURL()
-				+ "download?cikkszam=" + cikkszam + "&sorszam=" + from);
+				+ "download?cikkszam=" + cikkszam + "&szinkod=" + szinkod + "&sorszam=" + from);
 	}
 
 }

@@ -481,7 +481,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		return ret;
 	}
 
-	public ArrayList<String> getKep(String cikkszam) throws IllegalArgumentException, SQLExceptionSer {
+	public ArrayList<String> getKep(String cikkszam,String szinkod) throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
@@ -489,11 +489,11 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Query query = pm.newQuery(Kep.class);
-			query.setFilter("(this.cikkszam == pcikkszam) && (this.torolt == false)");
-			query.declareParameters("String pcikkszam");
+			query.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.torolt == false)");
+			query.declareParameters("String pcikkszam,String pszinkod");
 			@SuppressWarnings("unchecked")
 			List<Kep> list = (List<Kep>) pm.newQuery(query)
-					.execute(cikkszam);
+					.execute(cikkszam,szinkod);
 			if (!list.isEmpty()) {
 				for (Kep l : list) {
 					kepsorszam.add(new Integer(l.getSorszam()).toString());

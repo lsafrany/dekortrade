@@ -1,6 +1,7 @@
 package hu.dekortrade.client.order;
 
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.client.order.finalize.FinalizeOrder;
 import hu.dekortrade.client.order.internet.InternetOrder;
 import hu.dekortrade.client.order.pre.PreOrder;
 
@@ -38,6 +39,11 @@ public class Order {
 		PreOrder preOrder = new PreOrder();
 		preOrderTab.setPane(preOrder.get());
 		tabSet.addTab(preOrderTab);
+
+		final Tab finalizeOrderTab = new Tab(orderLabels.finalizeorder());
+		FinalizeOrder finalizeOrder = new FinalizeOrder();
+		finalizeOrderTab.setPane(finalizeOrder.get());
+		tabSet.addTab(finalizeOrderTab);
 
 		middleLayout.addMember(tabSet);
 

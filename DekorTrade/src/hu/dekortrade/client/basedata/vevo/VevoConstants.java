@@ -32,15 +32,19 @@ public class VevoConstants {
 	
 	public static final String VEVO_MEGJEGYZES = "vevo_megjegyzes";
 	
+	public static final String VEVO_TIPUS_BELFOLDI = "BELFOLDI";
+	public static final String VEVO_TIPUS_ELORENDELO = "ELORENDELO";
+	public static final String VEVO_TIPUS_EXPORT = "EXPORT";
+	
 	private static LinkedHashMap<String, String> tipus = null;
 	
 	public static LinkedHashMap<String, String> getTipus() {
 
 		if (tipus == null) {
 			tipus = new LinkedHashMap<String, String>();
-			tipus.put("BELFOLDI", vevoLabels.belfoldi());
-			tipus.put("ELORENDELO", vevoLabels.elorendelo());
-			tipus.put("EXPORT", vevoLabels.export());
+			tipus.put(VEVO_TIPUS_BELFOLDI, vevoLabels.belfoldi());
+			tipus.put(VEVO_TIPUS_ELORENDELO, vevoLabels.elorendelo());
+			tipus.put(VEVO_TIPUS_EXPORT, vevoLabels.export());
 		}
 		return tipus;
 	}

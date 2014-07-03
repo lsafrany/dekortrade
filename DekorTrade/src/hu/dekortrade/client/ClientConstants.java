@@ -1,7 +1,14 @@
 package hu.dekortrade.client;
 
+import hu.dekortrade.shared.Constants;
+
+import java.util.LinkedHashMap;
+import com.google.gwt.core.client.GWT;
+
 public class ClientConstants {
 
+	private static CommonLabels commonLabels = GWT.create(CommonLabels.class);
+	
 	public static final String SERVER_ERROR = "server_error";
 	public static final String SERVER_SQLERROR = "server_sqlerror";
 	public static final String DATA_ERROR = "data_error";
@@ -19,7 +26,19 @@ public class ClientConstants {
 
 	public static final int CACHE = 3600;
 
-	public static final String KOSRAR_ELORENDEL = "ELORENDEL";
 	public static final String INTERNET_IMPORTED = "IMPORTED";
 	public static final String INTERNET_ELORENDEL = "ELORENDEL";
+	
+	private static LinkedHashMap<String, String> cedulatipus = null;
+	
+	public static LinkedHashMap<String, String> getCedulaTipus() {
+
+		if (cedulatipus == null) {
+			cedulatipus = new LinkedHashMap<String, String>();
+			cedulatipus.put(Constants.CEDULA_STATUS_ELORENDELT, commonLabels.cedulaelorendelo());
+			cedulatipus.put(Constants.CEDULA_STATUS_VEGLEGESIT, commonLabels.cedulavegleges());
+		}
+		return cedulatipus;
+	}
+
 }

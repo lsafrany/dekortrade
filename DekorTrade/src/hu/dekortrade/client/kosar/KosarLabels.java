@@ -24,7 +24,20 @@ public interface KosarLabels extends Constants {
 	
 	String kosar_darab();
 	
+	String koasr_ar();
+	
+	String koasr_areur();
+	
+	String koasr_arusd();
+	
+	String koasr_fizet();
+	
+	String koasr_fizeteur();
+	
+	String koasr_fizetusd();
+
 	String kosar_ctorzs();
 	
 	String kosar_internet();
+	
 }

@@ -2,7 +2,6 @@
 
 package hu.dekortrade.server;
 
-import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.server.jdo.Cedula;
 import hu.dekortrade.server.jdo.Cedulacikk;
 import hu.dekortrade.server.jdo.Cikk;
@@ -11,6 +10,7 @@ import hu.dekortrade.server.jdo.Cikkfotipus;
 import hu.dekortrade.server.jdo.Felhasznalo;
 import hu.dekortrade.server.jdo.Gyarto;
 import hu.dekortrade.server.jdo.Jog;
+import hu.dekortrade.server.jdo.Kep;
 import hu.dekortrade.server.jdo.Kosar;
 import hu.dekortrade.server.jdo.Kosarcikk;
 import hu.dekortrade.server.jdo.PMF;
@@ -58,7 +58,7 @@ public class Init extends HttpServlet {
 			Query sorszamQuery = pm.newQuery(Sorszam.class);
 			sorszamQuery.deletePersistentAll();
 
-			Sorszam sorszam = new Sorszam ("0", ClientConstants.KOSRAR_ELORENDEL);
+			Sorszam sorszam = new Sorszam ("0", Constants.CEDULA_STATUS_ELORENDELT);
 			pm.makePersistent(sorszam);
 			
 			out.append("<h1>Cedula</h1>");
@@ -87,7 +87,7 @@ public class Init extends HttpServlet {
 			gyartoQuery.deletePersistentAll();
 
 			Gyarto gyarto = new Gyarto("1", "CHAMP HANNA LIMITED",
-					"WAH MOU FACTORY BUILDING 5TH FL.", "0085223061083", "","","", new Double(0), "1", "",
+					"WAH MOU FACTORY BUILDING 5TH FL.", "0085223061083", "","","", new Float(0), "1", "",
 					Boolean.FALSE);
 			pm.makePersistent(gyarto);
 
@@ -149,12 +149,12 @@ public class Init extends HttpServlet {
 					fields[9] = fields[9].replaceAll(",", ".");
 					Cikk cikk = new Cikk(fields[0], fields[1], "1", null, 
 							fields[2], "", null, null, null, null, fields[3], null, 
-							new Double(0), new Double(0), new Double(0), new Double(0), new Double(0), 
-							new Double(0), new Double(0), new Double(0), new Double(0), new Double(0), 
-						    new Double(fields[4]), new Double(0), new Double(0),
+							new Float(0), new Float(0), new Float(0), new Float(0), new Float(2.3), 
+							new Float(0), new Float(0), new Float(0), new Float(0), new Float(0), 
+						    new Float(fields[4]), new Float(0), new Float(0),
 						    new Integer(fields[5]), new Integer(fields[6]),
-							new Double(fields[7]), new Double(0), new Double(fields[8]),
-							new Double(fields[9]), null, null, Boolean.FALSE, "DB", 0, Boolean.FALSE,
+							new Float(fields[7]), new Float(0), new Float(fields[8]),
+							new Float(fields[9]), null, null, Boolean.FALSE, "DB", 0, Boolean.FALSE,
 							Boolean.FALSE);
 					pm.makePersistent(cikk);
 					counter++;
@@ -196,40 +196,44 @@ public class Init extends HttpServlet {
 			Jog jog2 = new Jog("Csabi", Constants.MENU_SYSTEM);
 			Jog jog3 = new Jog("Csabi", Constants.MENU_BASEDATA);
 			Jog jog4 = new Jog("Csabi", Constants.MENU_ORDER);
-
-			Jog jog5 = new Jog("Tamás", Constants.MENU_BASEDATA);
+			Jog jog5 = new Jog("Csabi", Constants.MENU_QUERY);
+			Jog jog6 = new Jog("Csabi", Constants.MENU_CASH);
+			
+			Jog jog7 = new Jog("Tamás", Constants.MENU_BASEDATA);
 
 			pm.makePersistent(jog1);
 
 			pm.makePersistent(jog2);
 			pm.makePersistent(jog3);
 			pm.makePersistent(jog4);
-
 			pm.makePersistent(jog5);
+			pm.makePersistent(jog6);
+
+			pm.makePersistent(jog7);
 
 			out.append("<h1>Vevők</h1>");
 
 			Vevo vevo1 = new Vevo("Floradekor", "BELFOLDI", "Flora Dekor",
 					"24413 Palics Nikola Tesla 7.", "", 
-					new Double(0),new Double(0),new Double(0),
-					new Double(0),new Double(0),
+					new Float(0),new Float(0),new Float(0),
+					new Float(0),new Float(0),
 					"","",
-					new Double(0),new Double(0),
+					new Float(0),new Float(0),
 					"hu","",
 					Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
 			Vevo vevo2 = new Vevo("Floratrade", "EXPORT", "Flora Trade Kft", "", "",
-					new Double(0),new Double(0),new Double(0),
-					new Double(0),new Double(0),
+					new Float(0),new Float(0),new Float(0),
+					new Float(0),new Float(0),
 					"","",
-					new Double(0),new Double(0),
+					new Float(0),new Float(0),
 					"hu","",					
 					Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
 			Vevo vevo3 = new Vevo("Berendi", "EXPORT", "S.C. Berendi S.R.L.", 
 					"Satu Mare ROMĆNIA", "", 
-					new Double(0),new Double(0),new Double(0),
-					new Double(0),new Double(0),
+					new Float(0),new Float(0),new Float(0),
+					new Float(0),new Float(0),
 					"","",
-					new Double(0),new Double(0),
+					new Float(0),new Float(0),
 					"hu","",					
 					Boolean.FALSE, Boolean.FALSE,Boolean.FALSE);
 

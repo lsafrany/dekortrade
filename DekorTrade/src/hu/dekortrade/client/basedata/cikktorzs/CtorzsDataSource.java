@@ -467,28 +467,28 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 				.getAttributeAsString(CtorzsConstants.CIKK_MEGNEVEZES));
 		to.setVamtarifaszam(from
 				.getAttributeAsString(CtorzsConstants.CIKK_VAMTARIFASZAM));
-		to.setFob(from.getAttributeAsDouble(CtorzsConstants.CIKK_FOB));
+		to.setFob(from.getAttributeAsFloat(CtorzsConstants.CIKK_FOB));
 		to.setSzallitas(from
-				.getAttributeAsDouble(CtorzsConstants.CIKK_SZALLITAS));
-		to.setDdu(from.getAttributeAsDouble(CtorzsConstants.CIKK_DDU));
-		to.setErsz(from.getAttributeAsDouble(CtorzsConstants.CIKK_ERSZ));
-		to.setElorar(from.getAttributeAsDouble(CtorzsConstants.CIKK_ELORAR));
-		to.setUjfob(from.getAttributeAsDouble(CtorzsConstants.CIKK_UJFOB));
+				.getAttributeAsFloat(CtorzsConstants.CIKK_SZALLITAS));
+		to.setDdu(from.getAttributeAsFloat(CtorzsConstants.CIKK_DDU));
+		to.setErsz(from.getAttributeAsFloat(CtorzsConstants.CIKK_ERSZ));
+		to.setElorar(from.getAttributeAsFloat(CtorzsConstants.CIKK_ELORAR));
+		to.setUjfob(from.getAttributeAsFloat(CtorzsConstants.CIKK_UJFOB));
 		to.setUjszallitas(from
-				.getAttributeAsDouble(CtorzsConstants.CIKK_UJSZALLITAS));
-		to.setUjddu(from.getAttributeAsDouble(CtorzsConstants.CIKK_UJDDU));
-		to.setUjersz(from.getAttributeAsDouble(CtorzsConstants.CIKK_UJERSZ));
-		to.setUjelorar(from.getAttributeAsDouble(CtorzsConstants.CIKK_UJELORAR));
-		to.setAr(from.getAttributeAsDouble(CtorzsConstants.CIKK_AR));
-		to.setAreur(from.getAttributeAsDouble(CtorzsConstants.CIKK_AREUR));
-		to.setArszorzo(from.getAttributeAsDouble(CtorzsConstants.CIKK_ARSZORZO));
+				.getAttributeAsFloat(CtorzsConstants.CIKK_UJSZALLITAS));
+		to.setUjddu(from.getAttributeAsFloat(CtorzsConstants.CIKK_UJDDU));
+		to.setUjersz(from.getAttributeAsFloat(CtorzsConstants.CIKK_UJERSZ));
+		to.setUjelorar(from.getAttributeAsFloat(CtorzsConstants.CIKK_UJELORAR));
+		to.setAr(from.getAttributeAsFloat(CtorzsConstants.CIKK_AR));
+		to.setAreur(from.getAttributeAsFloat(CtorzsConstants.CIKK_AREUR));
+		to.setArszorzo(from.getAttributeAsFloat(CtorzsConstants.CIKK_ARSZORZO));
 		to.setKiskarton(from.getAttributeAsInt(CtorzsConstants.CIKK_KISKARTON));
 		to.setDarab(from.getAttributeAsInt(CtorzsConstants.CIKK_DARAB));
 		to.setMertekegyseg(from.getAttributeAsString(CtorzsConstants.CIKK_MERTEKEGYSEG));
-		to.setTerfogat(from.getAttributeAsDouble(CtorzsConstants.CIKK_TERFOGAT));
-		to.setTerfogatlab(from.getAttributeAsDouble(CtorzsConstants.CIKK_TERFOGATLAB));
-		to.setBsuly(from.getAttributeAsDouble(CtorzsConstants.CIKK_BSULY));
-		to.setNsuly(from.getAttributeAsDouble(CtorzsConstants.CIKK_NSULY));
+		to.setTerfogat(from.getAttributeAsFloat(CtorzsConstants.CIKK_TERFOGAT));
+		to.setTerfogatlab(from.getAttributeAsFloat(CtorzsConstants.CIKK_TERFOGATLAB));
+		to.setBsuly(from.getAttributeAsFloat(CtorzsConstants.CIKK_BSULY));
+		to.setNsuly(from.getAttributeAsFloat(CtorzsConstants.CIKK_NSULY));
 		to.setLeiras(from.getAttributeAsString(CtorzsConstants.CIKK_LEIRAS));
 		to.setMegjegyzes(from.getAttributeAsString(CtorzsConstants.CIKK_MEGJEGYZES));
 		to.setKepek(from.getAttributeAsInt(CtorzsConstants.CIKK_KEPEK));

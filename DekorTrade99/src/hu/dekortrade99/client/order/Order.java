@@ -58,6 +58,7 @@ public class Order {
 	private int page = 0;
 
 	private String cikkszam = "";
+	private String szinkod = "";
 
 	private VLayout ctorzsLayout = new VLayout();
 	
@@ -753,7 +754,10 @@ public class Order {
 	
 					cikkszam = ctorzsGrid.getSelectedRecord().getAttribute(
 							OrderConstants.CIKK_CIKKSZAM);
-	
+
+					szinkod = ctorzsGrid.getSelectedRecord().getAttribute(
+							OrderConstants.CIKK_SZINKOD);
+
 					if ((ctorzsGrid.getSelectedRecord().getAttribute(OrderConstants.CIKK_KEPEK) != null) && 
 							(!ctorzsGrid.getSelectedRecord().getAttribute(OrderConstants.CIKK_KEPEK).equals("0"))) {
 						
@@ -761,6 +765,8 @@ public class Order {
 					winModal.setWidth(800);
 					winModal.setHeight(800);
 					winModal.setTitle(cikkszam
+							+ " - "
+							+ szinkod
 							+ " - "
 							+ ctorzsGrid.getSelectedRecord().getAttribute(
 									OrderConstants.CIKK_MEGNEVEZES));
@@ -775,6 +781,8 @@ public class Order {
 							DisplayRequest.startRequest();
 							dsRequest.setAttribute(OrderConstants.CIKK_CIKKSZAM,
 									cikkszam);
+							dsRequest.setAttribute(OrderConstants.CIKK_SZINKOD,
+									szinkod);
 							return super.transformRequest(dsRequest);
 						}
 	

@@ -13,8 +13,8 @@ public class Kosarcikk {
 	private String vevo;
 
 	@Persistent
-	private String tipus;	
-	
+	private String tipus;
+
 	@Persistent
 	private String cikkszam;
 
@@ -22,13 +22,13 @@ public class Kosarcikk {
 	private String szinkod;
 
 	@Persistent
-	private String megnevezes;
+	private Float ar;
 
 	@Persistent
-	private Double ar;
+	private Float areur;
 
 	@Persistent
-	private Double areur;
+	private Float arusd;
 
 	@Persistent
 	private Integer exportkarton;
@@ -40,33 +40,36 @@ public class Kosarcikk {
 	private Integer darab;
 
 	@Persistent
-	private Double fizet;
-	
-	@Persistent
-	private Double fizeteur;	
-	
-	@Persistent
-	private String cedula;	
+	private Float fizet;
 
-	public Kosarcikk(String elado, String vevo, String tipus,
-			String cikkszam, String szinkod, String megnevezes, 
-			Double ar, Double areur, 
-			Integer exportkarton, Integer kiskarton, Integer darab,
-			Double fizet, Double fizeteur, String cedula) {
+	@Persistent
+	private Float fizeteur;
+
+	@Persistent
+	private Float fizetusd;
+
+	@Persistent
+	private String cedula;
+
+	public Kosarcikk(String elado, String vevo, String tipus, String cikkszam,
+			String szinkod, Float ar, Float areur, Float arusd, Integer exportkarton,
+			Integer kiskarton, Integer darab, Float fizet, Float fizeteur, Float fizetusd,
+			String cedula) {
 
 		this.elado = elado;
 		this.vevo = vevo;
 		this.tipus = tipus;
 		this.cikkszam = cikkszam;
 		this.szinkod = szinkod;
-		this.megnevezes = megnevezes;
 		this.ar = ar;
 		this.areur = areur;
+		this.arusd = arusd;
 		this.exportkarton = exportkarton;
 		this.kiskarton = kiskarton;
 		this.darab = darab;
 		this.fizet = fizet;
 		this.fizeteur = fizeteur;
+		this.fizetusd = fizetusd;
 		this.cedula = cedula;
 	}
 
@@ -74,11 +77,9 @@ public class Kosarcikk {
 		return elado;
 	}
 
-
 	public void setElado(String elado) {
 		this.elado = elado;
 	}
-
 
 	public String getVevo() {
 		return vevo;
@@ -112,28 +113,28 @@ public class Kosarcikk {
 		this.szinkod = szinkod;
 	}
 
-	public String getMegnevezes() {
-		return megnevezes;
-	}
-
-	public void setMegnevezes(String megnevezes) {
-		this.megnevezes = megnevezes;
-	}
-
-	public Double getAr() {
+	public Float getAr() {
 		return ar;
 	}
 
-	public void setAr(Double ar) {
+	public void setAr(Float ar) {
 		this.ar = ar;
 	}
 
-	public Double getAreur() {
+	public Float getAreur() {
 		return areur;
 	}
 
-	public void setAreur(Double areur) {
+	public void setAreur(Float areur) {
 		this.areur = areur;
+	}
+
+	public Float getArusd() {
+		return arusd;
+	}
+
+	public void setArusd(Float arusd) {
+		this.arusd = arusd;
 	}
 
 	public Integer getExportkarton() {
@@ -160,20 +161,28 @@ public class Kosarcikk {
 		this.darab = darab;
 	}
 
-	public Double getFizet() {
+	public Float getFizet() {
 		return fizet;
 	}
 
-	public void setFizet(Double fizet) {
+	public void setFizet(Float fizet) {
 		this.fizet = fizet;
 	}
 
-	public Double getFizeteur() {
+	public Float getFizeteur() {
 		return fizeteur;
 	}
 
-	public void setFizeteur(Double fizeteur) {
+	public void setFizeteur(Float fizeteur) {
 		this.fizeteur = fizeteur;
+	}
+
+	public Float getFizetusd() {
+		return fizetusd;
+	}
+
+	public void setFizetusd(Float fizetusd) {
+		this.fizetusd = fizetusd;
 	}
 
 	public String getCedula() {
@@ -183,5 +192,5 @@ public class Kosarcikk {
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
-	
+
 }

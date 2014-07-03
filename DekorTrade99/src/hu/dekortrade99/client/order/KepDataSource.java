@@ -26,6 +26,8 @@ public class KepDataSource extends GwtRpcDataSource {
 
 	private static String cikkszam = "";
 
+	private static String szinkod = "";
+	
 	public KepDataSource() {
 
 		DataSourceField field;
@@ -46,7 +48,9 @@ public class KepDataSource extends GwtRpcDataSource {
 			final DSRequest request, final DSResponse response) {
 			cikkszam =  request.getAttributeAsString(
 					OrderConstants.CIKK_CIKKSZAM);
-			dekorTrade99Service.getKep(cikkszam
+			szinkod =  request.getAttributeAsString(
+					OrderConstants.CIKK_SZINKOD);
+			dekorTrade99Service.getKep(cikkszam,szinkod
 					,new AsyncCallback<ArrayList<String>>() {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof SQLExceptionSer)
@@ -96,7 +100,7 @@ public class KepDataSource extends GwtRpcDataSource {
 
 	private static void copyValues(String cikkszam,String from, ListGridRecord to) {
 		to.setAttribute(OrderConstants.KEP_SORSZAM, from);
-		to.setAttribute(OrderConstants.KEP_KEP, GWT.getModuleBaseURL()+ "download?cikkszam=" + cikkszam + "&sorszam=" + from);
+		to.setAttribute(OrderConstants.KEP_KEP, GWT.getModuleBaseURL()+ "download?cikkszam=" + cikkszam + "&szinkod=" + szinkod + "&sorszam=" + from);
 	}
 
 }

@@ -16,6 +16,7 @@ public class OrderConstants {
 	public static final String CIKK_FOTIPUS = "cikk_fotipus";
 	public static final String CIKK_ALTIPUS = "cikk_altipus";
 	public static final String CIKK_CIKKSZAM = "cikk_cikkszam";
+	public static final String CIKK_SZINKOD = "cikk_szinkod";
 	public static final String CIKK_MEGNEVEZES = "cikk_megnevezes";
 	public static final String CIKK_AR = "cikk_ar";
 	public static final String CIKK_KISKARTON = "cikk_kiskarton";

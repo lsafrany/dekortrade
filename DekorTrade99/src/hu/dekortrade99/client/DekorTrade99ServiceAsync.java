@@ -52,6 +52,6 @@ public interface DekorTrade99ServiceAsync {
 	void commitKosar(String userid, AsyncCallback<String> callback)
 			throws IllegalArgumentException;
 
-	void getKep(String cikkszam,AsyncCallback<ArrayList<String>> asyncCallback);
+	void getKep(String cikkszam,String szinkod,AsyncCallback<ArrayList<String>> asyncCallback);
 
 }

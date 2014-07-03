@@ -1,4 +1,4 @@
-package hu.dekortrade.client.cedula;
+package hu.dekortrade.client.query.cedula;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
@@ -35,14 +35,23 @@ public class CedulaDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceTextField(CedulaConstants.CEDULA_STATUS,
 				cedulaLabels.status());
+		field.setValueMap(ClientConstants.getCedulaTipus());
 		addField(field);
 
 		field = new DataSourceTextField(CedulaConstants.CEDULA_VEVO,
 				cedulaLabels.vevo());
 		addField(field);
 
+		field = new DataSourceTextField(CedulaConstants.CEDULA_VEVONEV,
+				cedulaLabels.vevonev());
+		addField(field);
+
 		field = new DataSourceTextField(CedulaConstants.CEDULA_ELADO,
 				cedulaLabels.elado());
+		addField(field);
+
+		field = new DataSourceTextField(CedulaConstants.CEDULA_ELADONEV,
+				cedulaLabels.eladonev());
 		addField(field);
 
 		field = new DataSourceDateField(CedulaConstants.CEDULA_DATUM,
@@ -101,7 +110,9 @@ public class CedulaDataSource extends GwtRpcDataSource {
 		to.setAttribute(CedulaConstants.CEDULA_CEDULA, from.getCedula());
 		to.setAttribute(CedulaConstants.CEDULA_STATUS, from.getStatus());
 		to.setAttribute(CedulaConstants.CEDULA_VEVO, from.getRovidnev());
+		to.setAttribute(CedulaConstants.CEDULA_VEVONEV, from.getVevonev());
 		to.setAttribute(CedulaConstants.CEDULA_ELADO, from.getElado());
+		to.setAttribute(CedulaConstants.CEDULA_ELADONEV, from.getEladonev());
 		to.setAttribute(CedulaConstants.CEDULA_DATUM, from.getDatum());
 	}
 

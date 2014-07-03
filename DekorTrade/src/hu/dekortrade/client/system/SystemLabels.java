@@ -66,5 +66,4 @@ public interface SystemLabels extends Constants {
 	
 	String kosar_darab();
 
-	String cedula();
 }

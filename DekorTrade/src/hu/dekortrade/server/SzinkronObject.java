@@ -4,6 +4,7 @@ import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Cikkaltipus;
 import hu.dekortrade.server.jdo.Cikkfotipus;
+import hu.dekortrade.server.jdo.Kep;
 import hu.dekortrade.server.jdo.PMF;
 import hu.dekortrade.server.jdo.Rendelt;
 import hu.dekortrade.server.jdo.Rendeltcikk;
@@ -252,7 +253,7 @@ public class SzinkronObject {
 			List<KepSzinkron> keplistszinkron = new ArrayList<KepSzinkron>();
 			if ((keplist != null) && (!keplist.isEmpty())) {
 				for (Kep l : keplist) {
-					KepSzinkron kepSzinkron = new KepSzinkron(l.getCikkszam(),
+					KepSzinkron kepSzinkron = new KepSzinkron(l.getCikkszam(),l.getSzinkod(),
 							l.getSorszam(), l.getBlob(), l.getTorolt());
 					keplistszinkron.add(kepSzinkron);
 					l.setSzinkron(Boolean.TRUE);

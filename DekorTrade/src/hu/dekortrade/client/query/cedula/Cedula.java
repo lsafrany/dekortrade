@@ -1,8 +1,10 @@
-package hu.dekortrade.client.cedula;
+package hu.dekortrade.client.query.cedula;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DisplayRequest;
+
+import java.text.DecimalFormat;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.Criteria;
@@ -21,6 +23,8 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -31,7 +35,9 @@ public class Cedula {
 	private CedulaLabels cedulaLabels = GWT.create(CedulaLabels.class);
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
-
+	
+	private DecimalFormat df = new DecimalFormat("#.#####");
+	
 	public Canvas get() {
 		DisplayRequest.counterInit();
 
@@ -76,7 +82,7 @@ public class Cedula {
 
 		final ListGrid cedulaGrid = new ListGrid();
 		cedulaGrid.setTitle(cedulaLabels.cedula());
-		cedulaGrid.setWidth("60%");
+		cedulaGrid.setWidth("90%");
 		cedulaGrid.setShowHeaderContextMenu(false);
 		cedulaGrid.setShowHeaderMenuButton(false);
 		cedulaGrid.setCanSort(false);
@@ -86,20 +92,24 @@ public class Cedula {
 
 		ListGridField cedulaGridField = new ListGridField(
 				CedulaConstants.CEDULA_CEDULA);
-		cedulaGridField.setWidth("30%");
+		cedulaGridField.setWidth("10%");
 
 		ListGridField statusGridField = new ListGridField(
 				CedulaConstants.CEDULA_STATUS);
-		statusGridField.setWidth("30%");
+		statusGridField.setWidth("20%");
 		
 		ListGridField vevoGridField = new ListGridField(
-				CedulaConstants.CEDULA_VEVO);
-		vevoGridField.setWidth("35%");
+				CedulaConstants.CEDULA_VEVONEV);
+
+		ListGridField eladoGridField = new ListGridField(
+				CedulaConstants.CEDULA_ELADONEV);
+		eladoGridField.setWidth("15%");
 
 		ListGridField datumGridField = new ListGridField(
 				CedulaConstants.CEDULA_DATUM);
+		datumGridField .setWidth("15%");
 		
-		cedulaGrid.setFields(cedulaGridField, statusGridField, vevoGridField,
+		cedulaGrid.setFields(cedulaGridField, statusGridField, vevoGridField, eladoGridField,
 				datumGridField);
 
 		HLayout buttonsLayout = new HLayout();
@@ -164,7 +174,7 @@ public class Cedula {
 
 		final ListGrid cedulacikkGrid = new ListGrid();
 		cedulacikkGrid.setTitle(cedulaLabels.cedulacikk());
-		cedulacikkGrid.setWidth("60%");
+		cedulacikkGrid.setWidth("90%");
 		cedulacikkGrid.setShowHeaderContextMenu(false);
 		cedulacikkGrid.setShowHeaderMenuButton(false);
 		cedulacikkGrid.setCanSort(false);
@@ -184,13 +194,21 @@ public class Cedula {
 
 		ListGridField kiskartonGridField = new ListGridField(
 				CedulaConstants.CEDULACIKK_KISKARTON);
-		kiskartonGridField.setWidth("20%");
+		kiskartonGridField.setWidth("10%");
 
 		ListGridField darabGridField = new ListGridField(
 				CedulaConstants.CEDULACIKK_DARAB);
-		darabGridField.setWidth("20%");
+		darabGridField.setWidth("10%");
 
-		cedulacikkGrid.setFields(cikkszamGridField,szinkodGridField,exportkartonGridField,kiskartonGridField,darabGridField);
+		ListGridField arusdGridField = new ListGridField(
+				CedulaConstants.CEDULACIKK_ARUSD);
+		arusdGridField.setWidth("10%");
+
+		ListGridField fizetusdGridField = new ListGridField(
+				CedulaConstants.CEDULACIKK_FIZETUSD);
+		fizetusdGridField.setWidth("10%");
+	
+		cedulacikkGrid.setFields(cikkszamGridField,szinkodGridField,exportkartonGridField,kiskartonGridField,darabGridField,arusdGridField,fizetusdGridField);
 
 		cedulacikkLayout.addMember(cedulacikkGrid);
 
@@ -211,7 +229,8 @@ public class Cedula {
 				middleLayout.removeMembers(middleLayout.getMembers());
 				middleLayout.addMember(printCedula(cedulaGrid.getSelectedRecord().getAttribute(
 						CedulaConstants.CEDULA_CEDULA),cedulaGrid.getSelectedRecord().getAttribute(
-								CedulaConstants.CEDULA_STATUS),get()));																								
+								CedulaConstants.CEDULA_STATUS),cedulaGrid.getSelectedRecord().getAttribute(
+										CedulaConstants.CEDULA_VEVONEV),get()));																								
 		}
 		});
 
@@ -235,7 +254,7 @@ public class Cedula {
 
 	}
 	
-	public Canvas printCedula(String cedula,String status, final Canvas retLayout) {
+	public Canvas printCedula(String cedula,String status, String vevonev, final Canvas retLayout) {
 		DisplayRequest.counterInit();
 
 		final VLayout middleLayout = new VLayout();
@@ -251,11 +270,11 @@ public class Cedula {
 		titleLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		titleLayout.setStyleName("middle");
 		titleLayout.setHeight("3%");
-		titleLayout.setWidth("80%");
-
-		Label titleLabel = new Label(cedula + " - " + status);
+		titleLayout.setWidth("100%");
+								
+		Label titleLabel = new Label(cedula + " - " + ClientConstants.getCedulaTipus().get(status) + " : " + vevonev);
 		titleLabel.setAlign(Alignment.CENTER);
-		titleLabel.setWidth("80%");
+		titleLabel.setWidth("100%");
 		titleLayout.addMember(titleLabel);
 
 		final VLayout cedulacikkLayout = new VLayout();
@@ -295,7 +314,7 @@ public class Cedula {
 
 		final ListGrid cedulacikkGrid = new ListGrid();
 		cedulacikkGrid.setTitle(cedulaLabels.cedulacikk());
-		cedulacikkGrid.setWidth("60%");
+		cedulacikkGrid.setWidth("80%");
 		cedulacikkGrid.setShowHeaderContextMenu(false);
 		cedulacikkGrid.setShowHeaderMenuButton(false);
 		cedulacikkGrid.setCanSort(false);
@@ -320,20 +339,49 @@ public class Cedula {
 		
 		ListGridField exportkartonGridField = new ListGridField(
 				CedulaConstants.CEDULACIKK_EXPORTKARTON);
-		exportkartonGridField.setWidth("20%");
+		exportkartonGridField.setWidth("10%");
 
 		ListGridField kiskartonGridField = new ListGridField(
 				CedulaConstants.CEDULACIKK_KISKARTON);
-		kiskartonGridField.setWidth("20%");
+		kiskartonGridField.setWidth("10%");
 
 		ListGridField darabGridField = new ListGridField(
 				CedulaConstants.CEDULACIKK_DARAB);
-		darabGridField.setWidth("20%");
+		darabGridField.setWidth("10%");
 
-		cedulacikkGrid.setFields(cikkszamGridField,szinkodGridField,exportkartonGridField,kiskartonGridField,darabGridField);
+		ListGridField arusdGridField = new ListGridField(
+				CedulaConstants.CEDULACIKK_ARUSD);
+		arusdGridField.setWidth("15%");
+	
+		ListGridField fizetusdGridField = new ListGridField(
+				CedulaConstants.CEDULACIKK_FIZETUSD);
+		fizetusdGridField.setWidth("15%");
+	
+		cedulacikkGrid.setFields(cikkszamGridField,szinkodGridField,exportkartonGridField,kiskartonGridField,darabGridField,arusdGridField,fizetusdGridField);
 
 		cedulacikkLayout.addMember(cedulacikkGrid);
 	
+		HLayout fizetLayout = new HLayout();
+		fizetLayout.setHeight("3%");
+		fizetLayout.setWidth("100%");
+			
+		HLayout usdCurrLabelLayout = new HLayout();
+		usdCurrLabelLayout.setAlign(Alignment.CENTER);	
+		usdCurrLabelLayout.setWidth("50%");
+		Label usdCurrLabel = new Label("USD :");
+		usdCurrLabel.setAlign(Alignment.CENTER);	
+		usdCurrLabelLayout.addMember(usdCurrLabel);
+		
+		HLayout usdLabelLayout = new HLayout();
+		usdLabelLayout.setAlign(Alignment.CENTER);	
+		usdLabelLayout.setWidth("50%");
+		final Label usdLabel = new Label("0");
+		usdLabel.setAlign(Alignment.CENTER);	
+		usdLabelLayout.addMember(usdLabel);
+		
+		fizetLayout.addMember(usdCurrLabelLayout);
+		fizetLayout.addMember(usdLabelLayout);
+
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -357,9 +405,26 @@ public class Cedula {
 		
 		middleLayout1.addMember(titleLayout);
 		middleLayout1.addMember(cedulacikkLayout);
+		middleLayout1.addMember(fizetLayout);
 		middleLayout.addMember(middleLayout1);
 		middleLayout.addMember(buttonsLayout);
 
+		cedulacikkGrid.addDataArrivedHandler(new DataArrivedHandler() {
+			public void onDataArrived(DataArrivedEvent event) {
+			
+				float fizet = 0;
+				for (int i = 0; i < cedulacikkGrid.getRecords().length; i++) {
+					if (cedulacikkGrid.getRecord(i)
+							.getAttribute(CedulaConstants.CEDULACIKK_FIZETUSD) != null) {
+						fizet = fizet + cedulacikkGrid.getRecord(i)
+								.getAttributeAsFloat(CedulaConstants.CEDULACIKK_FIZETUSD);	
+					}
+						
+				}
+				usdLabel.setContents(df.format(fizet));
+			}
+		});
+			
 		okIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {			
 				middleLayout.removeMembers(middleLayout.getMembers());

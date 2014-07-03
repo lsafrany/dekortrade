@@ -12,23 +12,19 @@ public class CikkSer implements IsSerializable {
 
 	private String megnevezes;
 
-	private Double ar;
+	private Float ar;
 
 	private Integer kiskarton;
 
 	private Integer darab;
 
-	private Double terfogat;
+	private Float terfogat;
 
-	private Double bsuly;
+	private Float bsuly;
 
-	private Double nsuly;
+	private Float nsuly;
 
 	private Integer kepek;
-
-	public String getCikkszam() {
-		return cikkszam;
-	}
 
 	public String getFotipus() {
 		return fotipus;
@@ -46,6 +42,10 @@ public class CikkSer implements IsSerializable {
 		this.altipus = altipus;
 	}
 
+	public String getCikkszam() {
+		return cikkszam;
+	}
+
 	public void setCikkszam(String cikkszam) {
 		this.cikkszam = cikkszam;
 	}
@@ -58,11 +58,11 @@ public class CikkSer implements IsSerializable {
 		this.megnevezes = megnevezes;
 	}
 
-	public Double getAr() {
+	public Float getAr() {
 		return ar;
 	}
 
-	public void setAr(Double ar) {
+	public void setAr(Float ar) {
 		this.ar = ar;
 	}
 
@@ -82,27 +82,27 @@ public class CikkSer implements IsSerializable {
 		this.darab = darab;
 	}
 
-	public Double getTerfogat() {
+	public Float getTerfogat() {
 		return terfogat;
 	}
 
-	public void setTerfogat(Double terfogat) {
+	public void setTerfogat(Float terfogat) {
 		this.terfogat = terfogat;
 	}
 
-	public Double getBsuly() {
+	public Float getBsuly() {
 		return bsuly;
 	}
 
-	public void setBsuly(Double bsuly) {
+	public void setBsuly(Float bsuly) {
 		this.bsuly = bsuly;
 	}
 
-	public Double getNsuly() {
+	public Float getNsuly() {
 		return nsuly;
 	}
 
-	public void setNsuly(Double nsuly) {
+	public void setNsuly(Float nsuly) {
 		this.nsuly = nsuly;
 	}
 

@@ -306,23 +306,23 @@ public class VevoDataSource extends GwtRpcDataSource {
 		to.setElerhetoseg(from
 				.getAttributeAsString(VevoConstants.VEVO_ELERHETOSEG));
 		to.setEgyenlegusd(from
-				.getAttributeAsDouble(VevoConstants.VEVO_EGYENLEG_USD));
+				.getAttributeAsFloat(VevoConstants.VEVO_EGYENLEG_USD));
 		to.setEgyenlegeur(from
-				.getAttributeAsDouble(VevoConstants.VEVO_EGYENLEG_EUR));
+				.getAttributeAsFloat(VevoConstants.VEVO_EGYENLEG_EUR));
 		to.setEgyenleghuf(from
-				.getAttributeAsDouble(VevoConstants.VEVO_EGYENLEG_HUF));
+				.getAttributeAsFloat(VevoConstants.VEVO_EGYENLEG_HUF));
 		to.setTarolasidij(from
-				.getAttributeAsDouble(VevoConstants.VEVO_TAROLASIDIJ));
+				.getAttributeAsFloat(VevoConstants.VEVO_TAROLASIDIJ));
 		to.setEloleg(from
-				.getAttributeAsDouble(VevoConstants.VEVO_ELOLEG));
+				.getAttributeAsFloat(VevoConstants.VEVO_ELOLEG));
 		to.setBankszamlaszam(from
 				.getAttributeAsString(VevoConstants.VEVO_BANKSZAMLASZAM));
 		to.setEuadoszam(from
 				.getAttributeAsString(VevoConstants.VEVO_EUADOSZAM));
 		to.setElorarkedvezmeny(from
-				.getAttributeAsDouble(VevoConstants.VEVO_ELORARKEDVEZMENY));
+				.getAttributeAsFloat(VevoConstants.VEVO_ELORARKEDVEZMENY));
 		to.setAjanlottarkedvezmeny(from
-				.getAttributeAsDouble(VevoConstants.VEVO_AJANLOTTARKEDVEZMENY));
+				.getAttributeAsFloat(VevoConstants.VEVO_AJANLOTTARKEDVEZMENY));
 		to.setOrszag(from
 				.getAttributeAsString(VevoConstants.VEVO_ORSZAG));
 		to.setMegjegyzes(from

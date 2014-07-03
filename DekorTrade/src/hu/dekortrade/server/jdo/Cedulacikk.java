@@ -19,13 +19,13 @@ public class Cedulacikk {
 	private String szinkod;
 
 	@Persistent
-	private String megnevezes;
+	private Float ar;
 
 	@Persistent
-	private Double ar;
+	private Float areur;
 
 	@Persistent
-	private Double areur;
+	private Float arusd;
 
 	@Persistent
 	private Integer exportkarton;
@@ -37,29 +37,33 @@ public class Cedulacikk {
 	private Integer darab;
 
 	@Persistent
-	private Double fizet;
+	private Float fizet;
 	
 	@Persistent
-	private Double fizeteur;	
-	
+	private Float fizeteur;	
+
+	@Persistent
+	private Float fizetusd;	
+
 	public Cedulacikk(String cedula, String status,
-			String cikkszam, String szinkod, String megnevezes, 
-			Double ar, Double areur, 
+			String cikkszam, String szinkod,
+			Float ar, Float areur, Float arusd, 
 			Integer exportkarton, Integer kiskarton, Integer darab,
-			Double fizet, Double fizeteur) {
+			Float fizet, Float fizeteur, Float fizetusd) {
 
 		this.cedula = cedula;
 		this.status = status;
 		this.cikkszam = cikkszam;
 		this.szinkod = szinkod;
-		this.megnevezes = megnevezes;
 		this.ar = ar;
 		this.areur = areur;
+		this.arusd = arusd;
 		this.exportkarton = exportkarton;
 		this.kiskarton = kiskarton;
 		this.darab = darab;
 		this.fizet = fizet;
 		this.fizeteur = fizeteur;
+		this.fizetusd = fizetusd;
 		this.cedula = cedula;
 	}
 
@@ -95,28 +99,28 @@ public class Cedulacikk {
 		this.szinkod = szinkod;
 	}
 
-	public String getMegnevezes() {
-		return megnevezes;
-	}
-
-	public void setMegnevezes(String megnevezes) {
-		this.megnevezes = megnevezes;
-	}
-
-	public Double getAr() {
+	public Float getAr() {
 		return ar;
 	}
 
-	public void setAr(Double ar) {
+	public void setAr(Float ar) {
 		this.ar = ar;
 	}
 
-	public Double getAreur() {
+	public Float getAreur() {
 		return areur;
 	}
 
-	public void setAreur(Double areur) {
+	public void setAreur(Float areur) {
 		this.areur = areur;
+	}
+
+	public Float getArusd() {
+		return arusd;
+	}
+
+	public void setArusd(Float arusd) {
+		this.arusd = arusd;
 	}
 
 	public Integer getExportkarton() {
@@ -143,20 +147,28 @@ public class Cedulacikk {
 		this.darab = darab;
 	}
 
-	public Double getFizet() {
+	public Float getFizet() {
 		return fizet;
 	}
 
-	public void setFizet(Double fizet) {
+	public void setFizet(Float fizet) {
 		this.fizet = fizet;
 	}
 
-	public Double getFizeteur() {
+	public Float getFizeteur() {
 		return fizeteur;
 	}
 
-	public void setFizeteur(Double fizeteur) {
+	public void setFizeteur(Float fizeteur) {
 		this.fizeteur = fizeteur;
+	}
+
+	public Float getFizetusd() {
+		return fizetusd;
+	}
+
+	public void setFizetusd(Float fizetusd) {
+		this.fizetusd = fizetusd;
 	}
 	
 }

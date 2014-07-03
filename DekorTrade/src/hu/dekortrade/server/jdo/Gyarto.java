@@ -28,7 +28,7 @@ public class Gyarto {
 	private String szamlaszam;
 
 	@Persistent
-	private Double egyenleg;
+	private Float egyenleg;
 
 	@Persistent
 	private String kedvezmeny;
@@ -41,7 +41,7 @@ public class Gyarto {
 
 	public Gyarto(String kod, String nev, String cim, String elerhetoseg,
 			String swifkod, String bankadat, String szamlaszam,
-			Double egyenleg, String kedvezmeny, String megjegyzes,
+			Float egyenleg, String kedvezmeny, String megjegyzes,
 			Boolean torolt) {
 		this.kod = kod;
 		this.nev = nev;
@@ -112,11 +112,11 @@ public class Gyarto {
 		this.szamlaszam = szamlaszam;
 	}
 
-	public Double getEgyenleg() {
+	public Float getEgyenleg() {
 		return egyenleg;
 	}
 
-	public void setEgyenleg(Double egyenleg) {
+	public void setEgyenleg(Float egyenleg) {
 		this.egyenleg = egyenleg;
 	}
 

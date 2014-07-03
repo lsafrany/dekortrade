@@ -490,18 +490,18 @@ public class Syncron extends HttpServlet {
 					for (KepSzinkron l : list) {
 
 						Query query = pm.newQuery(Kep.class);
-						query.setFilter("cikkszam == pcikkszam && sorszam == psorszam");
-						query.declareParameters("String pcikkszam,String psorszam");
+						query.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.sorszam == psorszam)");
+						query.declareParameters("String pcikkszam,String pszinkod,String psorszam");
 						@SuppressWarnings("unchecked")
 						List<Kep> list1 = (List<Kep>) pm.newQuery(query)
-								.execute(l.getCikkszam(), l.getSorszam());
+								.execute(l.getCikkszam(), l.getSzinkod(), l.getSorszam());
 						if (!list1.isEmpty()) {
 							for (Kep l1 : list1) {
 								l1.setBlob(l.getBlob());
 								l1.setTorolt(l.getTorolt());
 							}
 						} else {
-							Kep kep = new Kep(l.getCikkszam(), l.getSorszam(),
+							Kep kep = new Kep(l.getCikkszam(), l.getSzinkod(), l.getSorszam(),
 									l.getBlob(), l.getTorolt());
 							pm.makePersistent(kep);
 						}

@@ -1,6 +1,5 @@
 package hu.dekortrade.client.order.pre;
 
-import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
@@ -8,6 +7,7 @@ import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.client.basedata.vevo.Vevo;
 import hu.dekortrade.client.kosar.KosarCikk;
+import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.VevoKosarSer;
 
@@ -25,7 +25,7 @@ public class PreOrder {
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private PreOrderLabels preorderLabels = GWT.create(PreOrderLabels.class);
+//	private PreOrderLabels preorderLabels = GWT.create(PreOrderLabels.class);
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
@@ -46,7 +46,7 @@ public class PreOrder {
 		middleLayout.addMember(loadLayout);
 
 		DisplayRequest.startRequest();
-		dekorTradeService.getVevoKosar(UserInfo.userId,ClientConstants.KOSRAR_ELORENDEL,new AsyncCallback<VevoKosarSer>() {
+		dekorTradeService.getVevoKosar(UserInfo.userId,Constants.CEDULA_STATUS_ELORENDELT,new AsyncCallback<VevoKosarSer>() {
 			public void onFailure(Throwable caught) {
 				DisplayRequest.serverResponse();
 				if (caught instanceof SQLExceptionSer)
@@ -76,11 +76,11 @@ public class PreOrder {
 		
 		if (result == null) {
 			Vevo vevo = new Vevo();
-			middleLayout.addMember(vevo.get(true));
+			middleLayout.addMember(vevo.get(true,true));
 		}	
 		else {
 			KosarCikk kosarCikk = new KosarCikk();
-			middleLayout.addMember(kosarCikk.get(UserInfo.userId,result.getVevo(),ClientConstants.KOSRAR_ELORENDEL));	
+			middleLayout.addMember(kosarCikk.get(UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.CEDULA_STATUS_ELORENDELT));	
 		}
 			
 		return middleLayout;

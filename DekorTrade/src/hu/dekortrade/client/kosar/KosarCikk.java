@@ -6,11 +6,14 @@ import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.basedata.cikktorzs.Ctorzs;
+import hu.dekortrade.client.basedata.cikktorzs.CtorzsConstants;
 import hu.dekortrade.client.basedata.vevo.Vevo;
-import hu.dekortrade.client.cedula.Cedula;
 import hu.dekortrade.client.order.internet.InternetOrder;
 import hu.dekortrade.client.order.pre.PreOrder;
+import hu.dekortrade.client.query.cedula.Cedula;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
+
+import java.text.DecimalFormat;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -34,6 +37,8 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.validator.IsIntegerValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -54,7 +59,9 @@ public class KosarCikk {
 	
 	private boolean ctorzsSelect = true;
 	
-	public Canvas get(final String elado, final String vevo, final String tipus) {
+	private DecimalFormat df = new DecimalFormat("#.#####");
+	
+	public Canvas get(final String elado, final String vevo, final String vevonev, final String vevotipus, final String tipus) {
 		DisplayRequest.counterInit();
 
 		final VLayout middleLayout = new VLayout();
@@ -67,9 +74,8 @@ public class KosarCikk {
 		titleLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		titleLayout.setStyleName("middle");
 		titleLayout.setHeight("3%");
-		titleLayout.setWidth("80%");
 
-		Label titleLabel = new Label(vevo);
+		Label titleLabel = new Label(vevonev);
 		titleLabel.setAlign(Alignment.CENTER);
 		titleLabel.setWidth("80%");
 		titleLayout.addMember(titleLabel);
@@ -163,6 +169,11 @@ public class KosarCikk {
 				KosarConstants.KOSAR_DARAB);
 		darabGridField.setWidth("10%");
 
+		kosarCikkDataSource.getField(KosarConstants.KOSAR_AR).setCanView(false);		
+		kosarCikkDataSource.getField(KosarConstants.KOSAR_AREUR).setCanView(false);	
+		kosarCikkDataSource.getField(KosarConstants.KOSAR_FIZET).setCanView(false);	
+		kosarCikkDataSource.getField(KosarConstants.KOSAR_FIZETEUR).setCanView(false);	
+		
 		kosarGrid.setFields(cikkszamGridField,szinkodGridField,
 				exportkartonGridField, kiskartonGridField, darabGridField);
 
@@ -189,10 +200,29 @@ public class KosarCikk {
 		selectLayout.addMember(ctorzsButtonLayout);
 		selectLayout.addMember(internetButtonLayout);
 		selectLayout.addMember(addButtonLayout);
+	
+		HLayout fizetLayout = new HLayout();
+		fizetLayout.setHeight("3%");
+		fizetLayout.setWidth("90%");
+					
+		HLayout usdCurrLabelLayout = new HLayout();
+		usdCurrLabelLayout.setWidth("70%");
+		Label usdCurrLabel = new Label("USD :");
+		usdCurrLabel.setAlign(Alignment.CENTER);	
+		usdCurrLabelLayout.addMember(usdCurrLabel);
+		
+		HLayout usdLabelLayout = new HLayout();
+		usdLabelLayout.setWidth("30%");
+		final Label usdLabel = new Label("0");
+		usdLabel.setAlign(Alignment.CENTER);	
+		usdLabelLayout.addMember(usdLabel);
+	
+		fizetLayout.addMember(usdCurrLabelLayout);
+		fizetLayout.addMember(usdLabelLayout);
 		
 		HLayout buttons1Layout = new HLayout();
 		buttons1Layout.setHeight("3%");
-		buttons1Layout.setWidth("80%");
+		buttons1Layout.setWidth("90%");
 		
 		HLayout deleteButtonLayout = new HLayout();
 		deleteButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -205,7 +235,7 @@ public class KosarCikk {
 		
 		HLayout buttons2Layout = new HLayout();
 		buttons2Layout.setHeight("3%");
-		buttons2Layout.setWidth("80%");
+		buttons2Layout.setWidth("90%");
 
 		HLayout okButtonLayout = new HLayout();
 		okButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -222,8 +252,6 @@ public class KosarCikk {
 		buttons2Layout.addMember(okButtonLayout);
 		buttons2Layout.addMember(elvetButtonLayout);
 
-		middleLayout.addMember(titleLayout);
-
 		middleLayout.addMember(middleLayout1);
 		middleLayout1.addMember(leftLayout);
 		middleLayout1.addMember(selectLayout);
@@ -231,7 +259,9 @@ public class KosarCikk {
 		
 		leftLayout.addMember(kosarLayout);
 		
+		kosarLayout.addMember(titleLayout);
 		kosarLayout.addMember(kosarGrid);
+		kosarLayout.addMember(fizetLayout);
 		kosarLayout.addMember(buttons1Layout);
 		kosarLayout.addMember(buttons2Layout);
 			
@@ -317,9 +347,9 @@ public class KosarCikk {
 					for (int i = 0; i < kosarGrid.getRecords().length; i++) {
 						if ((kosarGrid.getRecord(i)
 								.getAttribute(KosarConstants.KOSAR_CIKKSZAM)
-								.equals(ctorzs.getCikkszam())) && (kosarGrid.getRecord(i)
+								.equals(ctorzs.getSelectedRecord().getAttribute(CtorzsConstants.CIKK_CIKKSZAM))) && (kosarGrid.getRecord(i)
 										.getAttribute(KosarConstants.KOSAR_SZINKOD)
-										.equals(ctorzs.getSzinkod()))) {
+										.equals(ctorzs.getSelectedRecord().getAttribute(CtorzsConstants.CIKK_SZINKOD)))) {
 							found = i;
 							i = kosarGrid.getRecords().length;
 						}
@@ -331,15 +361,18 @@ public class KosarCikk {
 						kosarEditForm.editNewRecord();
 	
 					kosarEditForm.getField(KosarConstants.KOSAR_CIKKSZAM).setValue(
-							ctorzs.getCikkszam());
+							ctorzs.getSelectedRecord().getAttribute(
+									CtorzsConstants.CIKK_CIKKSZAM));
 					kosarEditForm.getField(KosarConstants.KOSAR_CIKKSZAM)
 							.setCanEdit(false);
 					kosarEditForm.getField(KosarConstants.KOSAR_SZINKOD).setValue(
-							ctorzs.getSzinkod());
+							ctorzs.getSelectedRecord().getAttribute(
+									CtorzsConstants.CIKK_SZINKOD));
 					kosarEditForm.getField(KosarConstants.KOSAR_SZINKOD)
 							.setCanEdit(false);
 					kosarEditForm.getField(KosarConstants.KOSAR_MEGNEVEZES).setValue(
-							ctorzs.getMegnevezes());
+							ctorzs.getSelectedRecord().getAttribute(
+									CtorzsConstants.CIKK_MEGNEVEZES));
 					kosarEditForm.getField(KosarConstants.KOSAR_MEGNEVEZES)
 							.setCanEdit(false);					
 					kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON)
@@ -350,6 +383,11 @@ public class KosarCikk {
 							.setValidators(new IsIntegerValidator());
 					kosarEditForm.getField(KosarConstants.KOSAR_DARAB)
 							.setValidators(new IsIntegerValidator());
+				
+					kosarEditForm.getField(KosarConstants.KOSAR_ARUSD).setValue(ctorzs.getSelectedRecord().getAttributeAsFloat(CtorzsConstants.CIKK_ELORAR));
+					kosarEditForm.getField(KosarConstants.KOSAR_ARUSD).setVisible(false);					
+		
+					kosarEditForm.getField(KosarConstants.KOSAR_FIZETUSD).setVisible(false);	
 					
 					HLayout buttonsLayout = new HLayout();
 					buttonsLayout.setWidth100();
@@ -369,6 +407,36 @@ public class KosarCikk {
 					saveIButton.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {
 							cancelIButton.setDisabled(true);
+							
+							int exp = 0;
+							int kk = 0;
+							int db = 0;
+							if (kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON).getValue() == null) 
+								kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON).setValue("0");
+							if (kosarEditForm.getField(KosarConstants.KOSAR_KISKARTON).getValue() == null)
+								kosarEditForm.getField(KosarConstants.KOSAR_KISKARTON).setValue("0");
+							if (kosarEditForm.getField(KosarConstants.KOSAR_DARAB).getValue() == null)
+								kosarEditForm.getField(KosarConstants.KOSAR_DARAB).setValue("0");
+							
+							exp = new Integer ((String) kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON).getValue());
+							kk = new Integer ((String) kosarEditForm.getField(KosarConstants.KOSAR_KISKARTON).getValue());		
+							db = new Integer ((String) kosarEditForm.getField(KosarConstants.KOSAR_DARAB).getValue());
+							
+							int ckk = 0;
+							int cdb = 0;
+							if (ctorzs.getSelectedRecord().getAttributeAsInt(CtorzsConstants.CIKK_KISKARTON) != null)
+								ckk = ctorzs.getSelectedRecord().getAttributeAsInt(CtorzsConstants.CIKK_KISKARTON);
+							if (ctorzs.getSelectedRecord().getAttributeAsInt(CtorzsConstants.CIKK_DARAB) != null)
+								cdb = ctorzs.getSelectedRecord().getAttributeAsInt(CtorzsConstants.CIKK_DARAB);
+		
+							float elarar = 0; 					
+							if (ctorzs.getSelectedRecord().getAttributeAsFloat(CtorzsConstants.CIKK_ELORAR) != null)
+								elarar = ctorzs.getSelectedRecord().getAttributeAsFloat(CtorzsConstants.CIKK_ELORAR);
+								
+							float fizet = (float)(((((ckk * cdb) * exp) +  (cdb * kk) +  db ) * elarar) * 0.2);
+	
+							kosarEditForm.getField(KosarConstants.KOSAR_FIZETUSD).setValue(new Float(df.format(fizet)));	
+							
 							kosarEditForm.saveData(new DSCallback() {
 								public void execute(DSResponse response,
 										Object rawData, DSRequest request) {
@@ -433,6 +501,22 @@ public class KosarCikk {
 			}
 		});
 		
+		kosarGrid.addDataArrivedHandler(new DataArrivedHandler() {
+			public void onDataArrived(DataArrivedEvent event) {
+			
+				float fizet = 0;
+				for (int i = 0; i < kosarGrid.getRecords().length; i++) {
+					if (kosarGrid.getRecord(i)
+							.getAttribute(KosarConstants.KOSAR_FIZETUSD) != null) {
+						fizet = fizet + kosarGrid.getRecord(i)
+								.getAttributeAsFloat(KosarConstants.KOSAR_FIZETUSD);	
+					}
+						
+				}
+				usdLabel.setContents(df.format(fizet));
+			}
+		});
+	
 		deleteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				SC.ask(commonLabels.sure(), new BooleanCallback() {
@@ -473,7 +557,7 @@ public class KosarCikk {
 										middleLayout.removeMembers(middleLayout.getMembers());
 										Cedula cedula = new Cedula();
 										Vevo vevo = new Vevo();
-										middleLayout.addMember(cedula.printCedula(result, tipus,vevo.get(true)));																																		
+										middleLayout.addMember(cedula.printCedula(result, tipus, vevonev, vevo.get(true,true)));																																		
 									}
 								});														
 						}

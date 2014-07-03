@@ -44,7 +44,7 @@ public class Vevo {
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
-	public Canvas get(boolean select) {
+	public Canvas get(final boolean select,final boolean elorendel) {
 		DisplayRequest.counterInit();
 
 		final HLayout middleLayout = new HLayout();
@@ -113,11 +113,15 @@ public class Vevo {
 
 		ListGridField cimGridField = new ListGridField(VevoConstants.VEVO_CIM);
 
+		ListGridField tipusGridField = new ListGridField(
+				VevoConstants.VEVO_TIPUS);
+		tipusGridField.setWidth("10%");
+
 		ListGridField internetGridField = new ListGridField(
 				VevoConstants.VEVO_INTERNET);
 		internetGridField.setWidth("10%");
 
-		vevoGrid.setFields(rovidnevGridField, nevGridField, cimGridField,
+		vevoGrid.setFields(rovidnevGridField, nevGridField, cimGridField, tipusGridField,
 				internetGridField);
 
 		HLayout buttonsLayout = new HLayout();
@@ -175,9 +179,6 @@ public class Vevo {
 			buttonsLayout2.addMember(selectOKButtonLayout);
 			
 			vevoLayout.addMember(buttonsLayout2);
-
-			
-			
 			
 		}
 		
@@ -187,7 +188,14 @@ public class Vevo {
 			public void onRecordClick(RecordClickEvent event) {
 				modifyButton.setDisabled(false);
 				deleteButton.setDisabled(false);
-				selectOKButton.setDisabled(false);
+			
+				if ((elorendel) && (vevoGrid.getSelectedRecord().getAttributeAsString(VevoConstants.VEVO_TIPUS).equals(VevoConstants.VEVO_TIPUS_BELFOLDI))) {
+					selectOKButton.setDisabled(true);
+				}	
+				else {
+					selectOKButton.setDisabled(false);
+				}
+				
 				if (vevoGrid.getSelectedRecord().getAttributeAsBoolean(
 						VevoConstants.VEVO_INTERNET))
 					jelszoButton.setDisabled(false);
@@ -265,14 +273,8 @@ public class Vevo {
 		
 		selectOKButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-
-			}
-		});
-
-		selectOKButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
 				dekorTradeService.addKosar(UserInfo.userId, vevoGrid.getSelectedRecord().getAttribute(
-											VevoConstants.VEVO_ROVIDNEV), ClientConstants.KOSRAR_ELORENDEL,
+											VevoConstants.VEVO_ROVIDNEV), Constants.CEDULA_STATUS_ELORENDELT,
 					new AsyncCallback<String>() {
 						public void onFailure(Throwable caught) {
 							DisplayRequest.serverResponse();
