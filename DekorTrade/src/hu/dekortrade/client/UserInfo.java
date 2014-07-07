@@ -6,19 +6,15 @@ public class UserInfo {
 
 	public static String userId = "";
 
-	public static Integer orderID = null;
+	public static int defaultTab = 0;
+	
+	public static ArrayList<String> mainMenu = new ArrayList<String>();
 
-	public static ArrayList<String> order = null;
-
-	public static Integer archiveID = null;
-
-	public static ArrayList<String> archive = null;
-
+	public static ArrayList<String> menu = new ArrayList<String>();
+	
 	public static void clearValues() {
 		userId = "";
-		orderID = null;
-		order = null;
-		archiveID = null;
-		archive = null;
+		mainMenu.clear();
+		menu.clear();
 	}
 }

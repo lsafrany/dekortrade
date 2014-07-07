@@ -76,11 +76,11 @@ public class FinalizeOrder {
 		
 		if (result == null) {
 			Vevo vevo = new Vevo();
-			middleLayout.addMember(vevo.get(true,true));
+			middleLayout.addMember(vevo.get(Constants.MENU_ORDER_FINALIZE));
 		}	
 		else {
 			KosarCikk kosarCikk = new KosarCikk();
-			middleLayout.addMember(kosarCikk.get(UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.CEDULA_STATUS_VEGLEGESIT));	
+			middleLayout.addMember(kosarCikk.get(UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.MENU_ORDER_FINALIZE));	
 		}
 			
 		return middleLayout;

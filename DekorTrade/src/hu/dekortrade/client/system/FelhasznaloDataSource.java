@@ -51,7 +51,7 @@ public class FelhasznaloDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceEnumField(SystemConstants.FELHASZNALO_MENU,
 				systemLabels.felhasznalo_menu());
-		field.setValueMap(SystemConstants.getMenuk());
+		field.setValueMap(SystemConstants.getMainMenu());
 		field.setRequired(true);
 		addField(field);
 

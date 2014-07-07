@@ -25,7 +25,12 @@ public class CedulaDataSource extends GwtRpcDataSource {
 
 	private CedulaLabels cedulaLabels = GWT.create(CedulaLabels.class);
 
-	public CedulaDataSource() {
+	private String vevo  = null;
+	private String menu = null;
+
+	public CedulaDataSource(String vevo, String menu) {
+		this.vevo  = vevo;
+		this.menu  = menu;
 
 		DataSourceField field;
 
@@ -63,7 +68,7 @@ public class CedulaDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getCedula(new AsyncCallback<List<CedulaSer>>() {
+		dekorTradeService.getCedula(vevo,menu,new AsyncCallback<List<CedulaSer>>() {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof SQLExceptionSer)
 					response.setAttribute(ClientConstants.SERVER_SQLERROR,

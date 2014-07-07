@@ -46,7 +46,7 @@ public class PreOrder {
 		middleLayout.addMember(loadLayout);
 
 		DisplayRequest.startRequest();
-		dekorTradeService.getVevoKosar(UserInfo.userId,Constants.CEDULA_STATUS_ELORENDELT,new AsyncCallback<VevoKosarSer>() {
+		dekorTradeService.getVevoKosar(UserInfo.userId,Constants.MENU_ORDER_PRE,new AsyncCallback<VevoKosarSer>() {
 			public void onFailure(Throwable caught) {
 				DisplayRequest.serverResponse();
 				if (caught instanceof SQLExceptionSer)
@@ -76,11 +76,11 @@ public class PreOrder {
 		
 		if (result == null) {
 			Vevo vevo = new Vevo();
-			middleLayout.addMember(vevo.get(true,true));
+			middleLayout.addMember(vevo.get(Constants.MENU_ORDER_PRE));
 		}	
 		else {
 			KosarCikk kosarCikk = new KosarCikk();
-			middleLayout.addMember(kosarCikk.get(UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.CEDULA_STATUS_ELORENDELT));	
+			middleLayout.addMember(kosarCikk.get(UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.MENU_ORDER_PRE));	
 		}
 			
 		return middleLayout;

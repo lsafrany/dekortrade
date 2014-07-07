@@ -16,9 +16,8 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceBooleanField;
-import com.smartgwt.client.data.fields.DataSourceTextField;
+import com.smartgwt.client.data.fields.DataSourceEnumField;
 import com.smartgwt.client.util.JSOHelper;
-import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class JogDataSource extends GwtRpcDataSource {
@@ -30,16 +29,13 @@ public class JogDataSource extends GwtRpcDataSource {
 
 	public JogDataSource() {
 
-		StaticTextItem staticTextItem = new StaticTextItem();
-
 		DataSourceField field;
 
-		field = new DataSourceTextField(SystemConstants.JOG_NEV,
+		field = new DataSourceEnumField(SystemConstants.JOG_NEV,
 				systemLabels.jog_nev());
 		field.setPrimaryKey(true);
 		field.setCanEdit(false);
-		field.setLength(30);
-		field.setEditorProperties(staticTextItem);
+		field.setValueMap(SystemConstants.getMenu());
 		addField(field);
 
 		field = new DataSourceBooleanField(SystemConstants.JOG_JOG,
@@ -51,7 +47,7 @@ public class JogDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getJog(request
+		dekorTradeService.getJog(request.getCriteria()
 				.getAttributeAsString(SystemConstants.FELHASZNALO_ROVIDNEV),
 				new AsyncCallback<List<JogSer>>() {
 					public void onFailure(Throwable caught) {

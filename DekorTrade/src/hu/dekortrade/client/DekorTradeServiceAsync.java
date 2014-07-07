@@ -118,16 +118,16 @@ public interface DekorTradeServiceAsync {
 
 	void getCikkSelects(AsyncCallback<CikkSelectsSer> asyncCallback);
 
-	void getKosarCikk(String elado, String vevo, String tipus,
+	void getKosarCikk(String elado, String vevo, String menu,
 			AsyncCallback<List<KosarSer>> asyncCallback);
 
-	void getVevoKosar(String elado, String tipus,
+	void getVevoKosar(String elado, String menu,
 			AsyncCallback<VevoKosarSer> asyncCallback);
 
-	void addKosar(String elado, String vevo, String tipus,
+	void addKosar(String elado, String vevo, String menu,
 			AsyncCallback<String> asyncCallback);
 
-	void removeKosar(String elado, String vevo, String tipus,
+	void removeKosar(String elado, String vevo, String menu,
 			AsyncCallback<String> asyncCallback);
 
 	void addKosarCikk(KosarSer kosarSer,
@@ -142,10 +142,10 @@ public interface DekorTradeServiceAsync {
 	void importInternet(String elado, String vevo, String rendeles,
 			AsyncCallback<String> asyncCallback);
 
-	void createCedula(String elado, String vevo, String tipus,
+	void createCedula(String elado, String vevo, String menu,
 			AsyncCallback<String> asyncCallback);
 
-	void getCedula(AsyncCallback<List<CedulaSer>> asyncCallback);
+	void getCedula(String vevo,String menu,AsyncCallback<List<CedulaSer>> asyncCallback);
 	
 	void getCedulacikk(String cedula, String tipus,AsyncCallback<List<CedulacikkSer>> asyncCallback);
 	

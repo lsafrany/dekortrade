@@ -61,9 +61,9 @@ public class KosarCikk {
 	
 	private DecimalFormat df = new DecimalFormat("#.#####");
 	
-	public Canvas get(final String elado, final String vevo, final String vevonev, final String vevotipus, final String tipus) {
+	public Canvas get(final String elado, final String vevo, final String vevonev, final String vevotipus, final String menu) {
 		DisplayRequest.counterInit();
-
+		
 		final VLayout middleLayout = new VLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -106,7 +106,7 @@ public class KosarCikk {
 		kosarLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
 		final KosarCikkDataSource kosarCikkDataSource = new KosarCikkDataSource(
-				elado, vevo, tipus) {
+				elado, vevo, menu) {
 
 			protected Object transformRequest(DSRequest dsRequest) {
 				DisplayRequest.startRequest();
@@ -295,7 +295,7 @@ public class KosarCikk {
 					public void execute(Boolean value) {
 						if (value != null && value) {
 							DisplayRequest.startRequest();
-							dekorTradeService.removeKosar(elado,vevo,tipus,
+							dekorTradeService.removeKosar(elado,vevo,menu,
 								new AsyncCallback<String>() {
 									public void onFailure(Throwable caught) {
 										DisplayRequest.serverResponse();
@@ -537,7 +537,7 @@ public class KosarCikk {
 						if (value != null && value) {
 													
 							DisplayRequest.startRequest();
-							dekorTradeService.createCedula(elado,vevo,tipus,
+							dekorTradeService.createCedula(elado,vevo,menu,
 								new AsyncCallback<String>() {
 									public void onFailure(Throwable caught) {
 										DisplayRequest.serverResponse();
@@ -557,7 +557,7 @@ public class KosarCikk {
 										middleLayout.removeMembers(middleLayout.getMembers());
 										Cedula cedula = new Cedula();
 										Vevo vevo = new Vevo();
-										middleLayout.addMember(cedula.printCedula(result, tipus, vevonev, vevo.get(true,true)));																																		
+										middleLayout.addMember(cedula.printCedula(result, menu, vevonev, vevo.get(menu)));																																		
 									}
 								});														
 						}

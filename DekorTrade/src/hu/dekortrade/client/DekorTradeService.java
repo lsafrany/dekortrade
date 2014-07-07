@@ -137,16 +137,16 @@ public interface DekorTradeService extends RemoteService {
 	CikkSelectsSer getCikkSelects() throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	List<KosarSer> getKosarCikk(String elado, String vevo, String tipus)
+	List<KosarSer> getKosarCikk(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	VevoKosarSer getVevoKosar(String elado, String tipus)
+	VevoKosarSer getVevoKosar(String elado, String menu)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String addKosar(String elado, String vevo, String tipus)
+	String addKosar(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String removeKosar(String elado, String vevo, String tipus)
+	String removeKosar(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	KosarSer addKosarCikk(KosarSer kosarSer)
@@ -161,10 +161,10 @@ public interface DekorTradeService extends RemoteService {
 	String importInternet(String elado, String vevo, String rendeles)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String createCedula(String elado, String vevo, String tipus)
+	String createCedula(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	List<CedulaSer> getCedula() throws IllegalArgumentException,
+	List<CedulaSer> getCedula(String vevo,String menu) throws IllegalArgumentException,
 			SQLExceptionSer;
 
 	List<CedulacikkSer> getCedulacikk(String cedula, String tipus) throws IllegalArgumentException,

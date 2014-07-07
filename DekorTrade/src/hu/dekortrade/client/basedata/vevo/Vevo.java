@@ -7,6 +7,7 @@ import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.client.order.pre.PreOrder;
+import hu.dekortrade.client.query.cedula.Cedula;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
@@ -44,7 +45,7 @@ public class Vevo {
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
-	public Canvas get(final boolean select,final boolean elorendel) {
+	public Canvas get(final String menu) {
 		DisplayRequest.counterInit();
 
 		final HLayout middleLayout = new HLayout();
@@ -165,7 +166,7 @@ public class Vevo {
 
 		final IButton selectOKButton = new IButton(commonLabels.select());
 		
-		if (select) {
+		if (menu.equals(Constants.MENU_ORDER_PRE) || menu.equals(Constants.MENU_ORDER_FINALIZE)) {
 			HLayout buttonsLayout2 = new HLayout();
 			buttonsLayout2.setHeight("3%");
 			buttonsLayout2.setWidth("70%");
@@ -189,7 +190,7 @@ public class Vevo {
 				modifyButton.setDisabled(false);
 				deleteButton.setDisabled(false);
 			
-				if ((elorendel) && (vevoGrid.getSelectedRecord().getAttributeAsString(VevoConstants.VEVO_TIPUS).equals(VevoConstants.VEVO_TIPUS_BELFOLDI))) {
+				if (menu.equals(Constants.MENU_ORDER_PRE) && (vevoGrid.getSelectedRecord().getAttributeAsString(VevoConstants.VEVO_TIPUS).equals(VevoConstants.VEVO_TIPUS_BELFOLDI))) {
 					selectOKButton.setDisabled(true);
 				}	
 				else {
@@ -273,28 +274,37 @@ public class Vevo {
 		
 		selectOKButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				dekorTradeService.addKosar(UserInfo.userId, vevoGrid.getSelectedRecord().getAttribute(
-											VevoConstants.VEVO_ROVIDNEV), Constants.CEDULA_STATUS_ELORENDELT,
-					new AsyncCallback<String>() {
-						public void onFailure(Throwable caught) {
-							DisplayRequest.serverResponse();
-							if (caught instanceof SQLExceptionSer)
-								SC.warn(commonLabels
-										.server_sqlerror()
-										+ " : "
-										+ caught.getMessage());
-							else
-								SC.warn(commonLabels
-										.server_error());
-						}
-
-						public void onSuccess(String result) {
-							DisplayRequest.serverResponse();
-							middleLayout.removeMembers(middleLayout.getMembers());
-							PreOrder preorder = new PreOrder();
-							middleLayout.addMember(preorder.get());
-						}
-					});				
+				
+				if (menu.equals(Constants.MENU_ORDER_PRE)) {
+					dekorTradeService.addKosar(UserInfo.userId, vevoGrid.getSelectedRecord().getAttribute(
+												VevoConstants.VEVO_ROVIDNEV), menu,
+						new AsyncCallback<String>() {
+							public void onFailure(Throwable caught) {
+								DisplayRequest.serverResponse();
+								if (caught instanceof SQLExceptionSer)
+									SC.warn(commonLabels
+											.server_sqlerror()
+											+ " : "
+											+ caught.getMessage());
+								else
+									SC.warn(commonLabels
+											.server_error());
+							}
+	
+							public void onSuccess(String result) {
+								DisplayRequest.serverResponse();
+								middleLayout.removeMembers(middleLayout.getMembers());
+								PreOrder preorder = new PreOrder();
+								middleLayout.addMember(preorder.get());
+							}
+						});		
+				}
+				if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+					middleLayout.removeMembers(middleLayout.getMembers());
+					Cedula cedula = new Cedula();
+					middleLayout.addMember(cedula.get(vevoGrid.getSelectedRecord().getAttribute(
+							VevoConstants.VEVO_ROVIDNEV),menu));
+				}
 			}
 		});
 

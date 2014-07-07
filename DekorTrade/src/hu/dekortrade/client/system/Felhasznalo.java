@@ -163,10 +163,6 @@ public class Felhasznalo {
 		final JogDataSource jogDataSource = new JogDataSource() {
 
 			protected Object transformRequest(DSRequest dsRequest) {
-				dsRequest.setAttribute(
-						SystemConstants.FELHASZNALO_ROVIDNEV,
-						felhasznaloGrid.getSelectedRecord().getAttribute(
-								SystemConstants.FELHASZNALO_ROVIDNEV));
 				DisplayRequest.startRequest();
 				return super.transformRequest(dsRequest);
 			}
@@ -238,8 +234,11 @@ public class Felhasznalo {
 				modifyButton.setDisabled(false);
 				jelszoButton.setDisabled(false);
 				deleteButton.setDisabled(false);
+				Criteria criteria = new Criteria();
+				criteria.setAttribute(SystemConstants.FELHASZNALO_ROVIDNEV,felhasznaloGrid.getSelectedRecord().getAttributeAsString(
+						SystemConstants.FELHASZNALO_ROVIDNEV));
 				jogGrid.invalidateCache();
-				jogGrid.fetchData();
+				jogGrid.fetchData(criteria);
 				modify1Button.setDisabled(true);
 			}
 		});
@@ -404,9 +403,8 @@ public class Felhasznalo {
 								Criteria criteria = new Criteria();
 								criteria.setAttribute(
 										SystemConstants.FELHASZNALO_ROVIDNEV,
-										listGrid.getSelectedRecord()
-												.getAttribute(
-														SystemConstants.FELHASZNALO_ROVIDNEV));
+										editForm.getField(
+														SystemConstants.FELHASZNALO_ROVIDNEV).getValue());
 								jogGrid.fetchData(criteria);
 							}
 							winModal.destroy();

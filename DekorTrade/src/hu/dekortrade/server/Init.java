@@ -191,26 +191,53 @@ public class Init extends HttpServlet {
 			pm.makePersistent(felhasznalo2);
 			pm.makePersistent(felhasznalo3);
 
-			Jog jog1 = new Jog("Szilvi", Constants.MENU_ORDER);
+			Jog szilvijog1 = new Jog("Szilvi", Constants.MENU_ORDER);
+			Jog szilvijog2 = new Jog("Szilvi", Constants.MENU_ORDER_PRE);
+	
+			Jog csabijog1 = new Jog("Csabi", Constants.MENU_SYSTEM);
+			Jog csabijog2 = new Jog("Csabi", Constants.MENU_SYSTEM_USERS);
+			Jog csabijog3 = new Jog("Csabi", Constants.MENU_SYSTEM_SYNC);
+			Jog csabijog4 = new Jog("Csabi", Constants.MENU_SYSTEM_BASKET);
 
-			Jog jog2 = new Jog("Csabi", Constants.MENU_SYSTEM);
-			Jog jog3 = new Jog("Csabi", Constants.MENU_BASEDATA);
-			Jog jog4 = new Jog("Csabi", Constants.MENU_ORDER);
-			Jog jog5 = new Jog("Csabi", Constants.MENU_QUERY);
-			Jog jog6 = new Jog("Csabi", Constants.MENU_CASH);
+			Jog csabijog5 = new Jog("Csabi", Constants.MENU_BASEDATA);
+			Jog csabijog6 = new Jog("Csabi", Constants.MENU_BASEDATA_PRODUCER);
+			Jog csabijog7 = new Jog("Csabi", Constants.MENU_BASEDATA_BUYER);
+			Jog csabijog8 = new Jog("Csabi", Constants.MENU_BASEDATA_TYPEOFITEMS);
+			Jog csabijog9 = new Jog("Csabi", Constants.MENU_BASEDATA_ITEMS);
 			
-			Jog jog7 = new Jog("Tamás", Constants.MENU_BASEDATA);
-
-			pm.makePersistent(jog1);
-
-			pm.makePersistent(jog2);
-			pm.makePersistent(jog3);
-			pm.makePersistent(jog4);
-			pm.makePersistent(jog5);
-			pm.makePersistent(jog6);
-
-			pm.makePersistent(jog7);
-
+			Jog csabijog10 = new Jog("Csabi", Constants.MENU_ORDER);
+			Jog csabijog11 = new Jog("Csabi", Constants.MENU_ORDER_INTERNET);
+			Jog csabijog12 = new Jog("Csabi", Constants.MENU_ORDER_PRE);
+			Jog csabijog13 = new Jog("Csabi", Constants.MENU_ORDER_FINALIZE);
+			
+			Jog csabijog14 = new Jog("Csabi", Constants.MENU_QUERY);
+			Jog csabijog15 = new Jog("Csabi", Constants.MENU_QUERY_TICKET);
+			Jog csabijog16 = new Jog("Csabi", Constants.MENU_CASH);
+			
+			Jog tamasjog1 = new Jog("Tamás", Constants.MENU_CASH);
+			
+			pm.makePersistent(szilvijog1);
+			pm.makePersistent(szilvijog2);
+			
+			pm.makePersistent(csabijog1);
+			pm.makePersistent(csabijog2);
+			pm.makePersistent(csabijog3);
+			pm.makePersistent(csabijog4);
+			pm.makePersistent(csabijog5);
+			pm.makePersistent(csabijog6);
+			pm.makePersistent(csabijog7);
+			pm.makePersistent(csabijog8);
+			pm.makePersistent(csabijog9);
+			pm.makePersistent(csabijog10);
+			pm.makePersistent(csabijog11);
+			pm.makePersistent(csabijog12);
+			pm.makePersistent(csabijog13);
+			pm.makePersistent(csabijog14);
+			pm.makePersistent(csabijog15);
+			pm.makePersistent(csabijog16);
+			
+			pm.makePersistent(tamasjog1);
+			
 			out.append("<h1>Vevők</h1>");
 
 			Vevo vevo1 = new Vevo("Floradekor", "BELFOLDI", "Flora Dekor",

@@ -118,16 +118,20 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				Query query = pm.newQuery(Jog.class);
 				query.setFilter("this.rovidnev == providnev");
 				query.declareParameters("String providnev");
-				query.setOrdering("nev desc");
+				query.setOrdering("nev asc");
 				@SuppressWarnings("unchecked")
 				List<Jog> list = (List<Jog>) pm.newQuery(query).execute(userId);
 				if ((list != null) && (!list.isEmpty())) {
-					int tabindex = 1;
+					int tabindex = 0;
 					for (Jog l : list) {
 						if ((l.getNev().equals(Constants.MENU_SYSTEM))
+									
 								|| (l.getNev().equals(Constants.MENU_BASEDATA))
+								
 								|| (l.getNev().equals(Constants.MENU_ORDER))
+								
 								|| (l.getNev().equals(Constants.MENU_QUERY))
+								
 								|| (l.getNev().equals(Constants.MENU_CASH))
 								) {
 
@@ -138,6 +142,24 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 							if (l.getNev().equals(defaultMenu))
 								userSer.setDefultTab(tabindex);
 							tabindex++;
+						}
+						if ((l.getNev().equals(Constants.MENU_SYSTEM_USERS))
+								|| (l.getNev().equals(Constants.MENU_SYSTEM_SYNC))
+								|| (l.getNev().equals(Constants.MENU_SYSTEM_BASKET))
+								
+								|| (l.getNev().equals(Constants.MENU_BASEDATA_PRODUCER))
+								|| (l.getNev().equals(Constants.MENU_BASEDATA_BUYER))
+								|| (l.getNev().equals(Constants.MENU_BASEDATA_TYPEOFITEMS))
+								|| (l.getNev().equals(Constants.MENU_BASEDATA_ITEMS))
+
+								|| (l.getNev().equals(Constants.MENU_ORDER_INTERNET))	
+								|| (l.getNev().equals(Constants.MENU_ORDER_PRE))	
+								|| (l.getNev().equals(Constants.MENU_ORDER_FINALIZE))	
+	
+								|| (l.getNev().equals(Constants.MENU_QUERY_TICKET))
+								
+							) {
+							userSer.getMenu().add(l.getNev());
 						}
 					}
 				}
@@ -376,21 +398,92 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
-			JogSer menu1jogSer = new JogSer();
-			menu1jogSer.setNev(Constants.MENU_SYSTEM);
-			menu1jogSer.setJog(Boolean.FALSE);
-			jog.add(menu1jogSer);
+			JogSer mainmenu1jogSer = new JogSer();
+			mainmenu1jogSer.setNev(Constants.MENU_SYSTEM);
+			mainmenu1jogSer.setJog(Boolean.FALSE);
+			jog.add(mainmenu1jogSer);
 
-			JogSer menu2jogSer = new JogSer();
-			menu2jogSer.setNev(Constants.MENU_BASEDATA);
-			menu2jogSer.setJog(Boolean.FALSE);
-			jog.add(menu2jogSer);
+			JogSer systemmenu1jogSer = new JogSer();
+			systemmenu1jogSer.setNev(Constants.MENU_SYSTEM_USERS);
+			systemmenu1jogSer.setJog(Boolean.FALSE);
+			jog.add(systemmenu1jogSer);
 
-			JogSer menu3jogSer = new JogSer();
-			menu3jogSer.setNev(Constants.MENU_ORDER);
-			menu3jogSer.setJog(Boolean.FALSE);
-			jog.add(menu3jogSer);
+			JogSer systemmenu2jogSer = new JogSer();
+			systemmenu2jogSer.setNev(Constants.MENU_SYSTEM_SYNC);
+			systemmenu2jogSer.setJog(Boolean.FALSE);
+			jog.add(systemmenu2jogSer);
+			
+			JogSer systemmenu3jogSer = new JogSer();
+			systemmenu3jogSer.setNev(Constants.MENU_SYSTEM_BASKET);
+			systemmenu3jogSer.setJog(Boolean.FALSE);
+			jog.add(systemmenu3jogSer);
+			
+			
+			JogSer mainmenu2jogSer = new JogSer();
+			mainmenu2jogSer.setNev(Constants.MENU_BASEDATA);
+			mainmenu2jogSer.setJog(Boolean.FALSE);
+			jog.add(mainmenu2jogSer);
 
+			JogSer basedatamenu1jogSer = new JogSer();
+			basedatamenu1jogSer.setNev(Constants.MENU_BASEDATA_PRODUCER);
+			basedatamenu1jogSer.setJog(Boolean.FALSE);
+			jog.add(basedatamenu1jogSer);
+			
+			JogSer basedatamenu2jogSer = new JogSer();
+			basedatamenu2jogSer.setNev(Constants.MENU_BASEDATA_BUYER);
+			basedatamenu2jogSer.setJog(Boolean.FALSE);
+			jog.add(basedatamenu2jogSer);
+			
+			JogSer basedatamenu3jogSer = new JogSer();
+			basedatamenu3jogSer.setNev(Constants.MENU_BASEDATA_TYPEOFITEMS);
+			basedatamenu3jogSer.setJog(Boolean.FALSE);
+			jog.add(basedatamenu3jogSer);
+			
+			JogSer basedatamenu4jogSer = new JogSer();
+			basedatamenu4jogSer.setNev(Constants.MENU_BASEDATA_ITEMS);
+			basedatamenu4jogSer.setJog(Boolean.FALSE);
+			jog.add(basedatamenu4jogSer);
+			
+			
+			JogSer mainmenu3jogSer = new JogSer();
+			mainmenu3jogSer.setNev(Constants.MENU_ORDER);
+			mainmenu3jogSer.setJog(Boolean.FALSE);
+			jog.add(mainmenu3jogSer);
+
+			JogSer ordermenu1jogSer = new JogSer();
+			ordermenu1jogSer.setNev(Constants.MENU_ORDER_INTERNET);
+			ordermenu1jogSer.setJog(Boolean.FALSE);
+			jog.add(ordermenu1jogSer);
+			
+			JogSer ordermenu2jogSer = new JogSer();
+			ordermenu2jogSer.setNev(Constants.MENU_ORDER_PRE);
+			ordermenu2jogSer.setJog(Boolean.FALSE);
+			jog.add(ordermenu2jogSer);
+			
+			JogSer ordermenu3jogSer = new JogSer();
+			ordermenu3jogSer.setNev(Constants.MENU_ORDER_FINALIZE);
+			ordermenu3jogSer.setJog(Boolean.FALSE);
+			jog.add(ordermenu3jogSer);
+			
+			
+			
+			JogSer mainmenu4jogSer = new JogSer();
+			mainmenu4jogSer.setNev(Constants.MENU_QUERY);
+			mainmenu4jogSer.setJog(Boolean.FALSE);
+			jog.add(mainmenu4jogSer);
+	
+			JogSer querymenu1jogSer = new JogSer();
+			querymenu1jogSer.setNev(Constants.MENU_QUERY_TICKET);
+			querymenu1jogSer.setJog(Boolean.FALSE);
+			jog.add(querymenu1jogSer);
+	
+			
+			JogSer mainmenu5jogSer = new JogSer();
+			mainmenu5jogSer.setNev(Constants.MENU_CASH);
+			mainmenu5jogSer.setJog(Boolean.FALSE);
+			jog.add(mainmenu5jogSer);
+			
+			
 			Query query = pm.newQuery(Jog.class);
 			query.setFilter("rovidnev == providnev");
 			query.declareParameters("String providnev");
@@ -1461,7 +1554,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cikkSelectsSer;
 	}
 
-	public List<KosarSer> getKosarCikk(String elado, String vevo, String tipus)
+	public List<KosarSer> getKosarCikk(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -1477,6 +1570,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Kosarcikk.class);
 						
 			if (vevo != null) {
+				String tipus = "";
+				if (menu.equals(Constants.MENU_ORDER_PRE)) {
+					tipus = Constants.CEDULA_STATUS_ELORENDELT;
+				}
+				if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+					tipus = Constants.CEDULA_STATUS_VEGLEGESIT;
+				}
 				query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
 				query.declareParameters("String pelado,String pvevo,String ptipus");
 				@SuppressWarnings("unchecked")
@@ -1545,12 +1645,20 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return kosar;
 	}
 
-	public VevoKosarSer getVevoKosar(String elado, String tipus)
+	public VevoKosarSer getVevoKosar(String elado, String menu)
 			throws IllegalArgumentException, SQLExceptionSer {
 		VevoKosarSer ret = null;
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
+
+			String tipus = "";
+			if (menu.equals(Constants.MENU_ORDER_PRE)) {
+				tipus = Constants.CEDULA_STATUS_ELORENDELT;
+			}
+			if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+				tipus = Constants.CEDULA_STATUS_VEGLEGESIT;
+			}
 
 			Query query = pm.newQuery(Kosar.class);
 			query.setFilter("(this.elado == pelado) && (this.tipus == ptipus)");
@@ -1586,11 +1694,19 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return ret;
 	}
 
-	public String addKosar(String elado, String vevo, String tipus)
+	public String addKosar(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
+
+			String tipus = "";
+			if (menu.equals(Constants.MENU_ORDER_PRE)) {
+				tipus = Constants.CEDULA_STATUS_ELORENDELT;
+			}
+			if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+				tipus = Constants.CEDULA_STATUS_VEGLEGESIT;
+			}
 
 			Kosar kosar = new Kosar(elado, vevo, tipus);
 			pm.makePersistent(kosar);
@@ -1618,11 +1734,19 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return "";
 	}
 
-	public String removeKosar(String elado, String vevo, String tipus)
+	public String removeKosar(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
+
+			String tipus = "";
+			if (menu.equals(Constants.MENU_ORDER_PRE)) {
+				tipus = Constants.CEDULA_STATUS_ELORENDELT;
+			}
+			if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+				tipus = Constants.CEDULA_STATUS_VEGLEGESIT;
+			}
 
 			Query query = pm.newQuery(Kosarcikk.class);
 			query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
@@ -1844,13 +1968,21 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return "";
 	}
 
-	public String createCedula(String elado, String vevo, String tipus)
+	public String createCedula(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		String cedulasorszam = "";
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
+			String tipus = "";
+			if (menu.equals(Constants.MENU_ORDER_PRE)) {
+				tipus = Constants.CEDULA_STATUS_ELORENDELT;
+			}
+			if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+				tipus = Constants.CEDULA_STATUS_VEGLEGESIT;
+			}
+			
 			Query sorszamQuery = pm.newQuery(Sorszam.class);
 			sorszamQuery.setFilter("this.tipus == ptipus");
 			sorszamQuery.declareParameters("String ptipus");
@@ -1920,7 +2052,8 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cedulasorszam;
 	}
 
-	public List<CedulaSer> getCedula()
+	@SuppressWarnings("unchecked")
+	public List<CedulaSer> getCedula(String vevo,String menu)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -1937,17 +2070,30 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			felhasznaloquery.setFilter("this.rovidnev == providnev");
 			felhasznaloquery.declareParameters("String providnev");
 
+			List<Cedula> list = null;
 			Query query = pm.newQuery(Cedula.class);
-			@SuppressWarnings("unchecked")
-			List<Cedula> list = (List<Cedula>) pm.newQuery(query)
-					.execute();
-			if (!list.isEmpty()) {
+			if (vevo == null) {
+				list = (List<Cedula>) pm.newQuery(query)
+						.execute();
+			}
+			else {
+				query.setFilter("(this.rovidnev == providnev) && (this.status == pstatus)");
+				query.declareParameters("String providnev,String pstatus");	
+				
+				String status = "";
+				if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+					status = Constants.CEDULA_STATUS_ELORENDELT;
+				}
+								
+				list = (List<Cedula>) pm.newQuery(query)
+						.execute(vevo,status);
+			}
+			if ((list != null) && (!list.isEmpty())) {
 				for (Cedula l : list) {
 					CedulaSer cedulaSer = new CedulaSer();
 					cedulaSer.setCedula(l.getCedula());
 					cedulaSer.setRovidnev(l.getRovidnev());
 					
-					@SuppressWarnings("unchecked")
 					List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery)
 							.execute(l.getRovidnev());
 					if (!vevolist.isEmpty()) {
@@ -1957,7 +2103,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					cedulaSer.setStatus(l.getStatus());
 					cedulaSer.setElado(l.getElado());
 					
-					@SuppressWarnings("unchecked")
 					List<Felhasznalo> felhasznalolist = (List<Felhasznalo>) pm.newQuery(felhasznaloquery)
 							.execute(l.getElado());
 					if (!felhasznalolist.isEmpty()) {

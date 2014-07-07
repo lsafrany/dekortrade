@@ -4,6 +4,7 @@ import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
+import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.KosarSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
@@ -33,10 +34,15 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 	private String vevo  = null;
 	private String tipus = null;
 	
-	public KosarCikkDataSource(String elado, String vevo, String tipus) {
+	public KosarCikkDataSource(String elado, String vevo, String menu) {
 		this.elado  = elado;
 		this.vevo  = vevo;
-		this.tipus  = tipus;
+		if (menu.equals(Constants.MENU_ORDER_PRE)) {
+			this.tipus = Constants.CEDULA_STATUS_ELORENDELT;
+		}
+		if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+			this.tipus = Constants.CEDULA_STATUS_VEGLEGESIT;
+		}
 		
 		TextItem textItem = new TextItem();
 		textItem.setWidth("200");

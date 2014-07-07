@@ -14,6 +14,8 @@ public class UserSer implements IsSerializable {
 
 	private int defultTab = 0;
 
+	private ArrayList<String> menu = new ArrayList<String>();
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -44,6 +46,14 @@ public class UserSer implements IsSerializable {
 
 	public void setDefultTab(int defultTab) {
 		this.defultTab = defultTab;
+	}
+
+	public ArrayList<String> getMenu() {
+		return menu;
+	}
+
+	public void setMenu(ArrayList<String> menu) {
+		this.menu = menu;
 	}
 
 }

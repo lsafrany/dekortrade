@@ -356,6 +356,10 @@ public class DekorTrade implements EntryPoint {
 
 						UserInfo.userId = userSer.getUserId();
 
+						UserInfo.menu =  userSer.getMenu();
+						
+						UserInfo.defaultTab = userSer.getDefultTab();
+						
 						if ((password != null)
 								&& (password.equals(Constants.INIT_PASSWORD))) {
 							topLayoutRight.addMember(getPassword(userSer
@@ -384,9 +388,8 @@ public class DekorTrade implements EntryPoint {
 
 							if (userSer.getTabList().get(i).getName()
 									.equals(Constants.MENU_SYSTEM)) {
-								UserInfo.orderID = userSer.getTabList().get(i)
-										.getId();
-								final Tab tab = new Tab(dekorTradeLabels
+
+								final Tab tab = new Tab(commonLabels
 										.menu_system());
 								tabSet.addTab(tab);
 								final System system = new System();
@@ -411,9 +414,8 @@ public class DekorTrade implements EntryPoint {
 
 							if (userSer.getTabList().get(i).getName()
 									.equals(Constants.MENU_BASEDATA)) {
-								UserInfo.orderID = userSer.getTabList().get(i)
-										.getId();
-								final Tab tab = new Tab(dekorTradeLabels
+
+								final Tab tab = new Tab(commonLabels
 										.menu_basedata());
 								tabSet.addTab(tab);
 								final Basedata basedata = new Basedata();
@@ -438,9 +440,8 @@ public class DekorTrade implements EntryPoint {
 
 							if (userSer.getTabList().get(i).getName()
 									.equals(Constants.MENU_ORDER)) {
-								UserInfo.orderID = userSer.getTabList().get(i)
-										.getId();
-								final Tab tab = new Tab(dekorTradeLabels
+
+								final Tab tab = new Tab(commonLabels
 										.menu_order());
 								tabSet.addTab(tab);
 								final Order order = new Order();
@@ -464,10 +465,35 @@ public class DekorTrade implements EntryPoint {
 							}
 
 							if (userSer.getTabList().get(i).getName()
+									.equals(Constants.MENU_CASH)) {
+
+								final Tab tab = new Tab(commonLabels.menu_cash());
+								tabSet.addTab(tab);
+								final Cash cash = new Cash();
+
+								if (userSer.getTabList().get(i).getId() == userSer
+										.getDefultTab()) {
+
+									tab.setPane(cash.get());
+									tabSet.selectTab(i);
+								}
+								tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+									@Override
+									public void onTabSelected(
+											TabSelectedEvent event) {
+
+										tab.setPane(cash.get());
+									}
+
+								});
+							}
+
+
+							if (userSer.getTabList().get(i).getName()
 									.equals(Constants.MENU_QUERY)) {
-								UserInfo.orderID = userSer.getTabList().get(i)
-										.getId();
-								final Tab tab = new Tab(dekorTradeLabels
+
+								final Tab tab = new Tab(commonLabels
 										.menu_query());
 								tabSet.addTab(tab);
 								final Query query = new Query();
@@ -485,33 +511,6 @@ public class DekorTrade implements EntryPoint {
 											TabSelectedEvent event) {
 
 										tab.setPane(query.get());
-									}
-
-								});
-							}
-							
-							if (userSer.getTabList().get(i).getName()
-									.equals(Constants.MENU_CASH)) {
-								UserInfo.orderID = userSer.getTabList().get(i)
-										.getId();
-								final Tab tab = new Tab(dekorTradeLabels
-										.menu_cash());
-								tabSet.addTab(tab);
-								final Cash cash = new Cash();
-
-								if (userSer.getTabList().get(i).getId() == userSer
-										.getDefultTab()) {
-
-									tab.setPane(cash.get());
-									tabSet.selectTab(i);
-								}
-								tab.addTabSelectedHandler(new TabSelectedHandler() {
-
-									@Override
-									public void onTabSelected(
-											TabSelectedEvent event) {
-
-										tab.setPane(cash.get());
 									}
 
 								});

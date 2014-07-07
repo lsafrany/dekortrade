@@ -3,6 +3,8 @@ package hu.dekortrade.client.query.cedula;
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.client.basedata.vevo.Vevo;
+import hu.dekortrade.shared.Constants;
 
 import java.text.DecimalFormat;
 
@@ -38,7 +40,7 @@ public class Cedula {
 	
 	private DecimalFormat df = new DecimalFormat("#.#####");
 	
-	public Canvas get() {
+	public Canvas get(final String vevo,final String menu) {
 		DisplayRequest.counterInit();
 
 		final HLayout middleLayout = new HLayout();
@@ -48,7 +50,7 @@ public class Cedula {
 		VLayout cedulaLayout = new VLayout();
 		cedulaLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
-		final CedulaDataSource cedulaDataSource = new CedulaDataSource() {
+		final CedulaDataSource cedulaDataSource = new CedulaDataSource(vevo,menu) {
 
 			protected Object transformRequest(DSRequest dsRequest) {
 				DisplayRequest.startRequest();
@@ -119,11 +121,14 @@ public class Cedula {
 		buttonsLayout.setWidth("60%");
 
 		HLayout refreshButtonLayout = new HLayout();
-		refreshButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		IButton refreshIButton = new IButton(commonLabels.refresh());
-		refreshButtonLayout.setAlign(Alignment.CENTER);
-		refreshButtonLayout.addMember(refreshIButton);
-
+		
+		if (menu.equals(Constants.MENU_QUERY_TICKET)) {
+			refreshButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+			refreshButtonLayout.setAlign(Alignment.CENTER);
+			refreshButtonLayout.addMember(refreshIButton);
+		}
+		
 		HLayout selectButtonLayout = new HLayout();
 		selectButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		final IButton selectIButton = new IButton(commonLabels.select());
@@ -131,8 +136,23 @@ public class Cedula {
 		selectButtonLayout.setAlign(Alignment.CENTER);
 		selectButtonLayout.addMember(selectIButton);
 
-		buttonsLayout.addMember(refreshButtonLayout);
+		HLayout cancelButtonLayout = new HLayout();
+		IButton cancelIButton = new IButton(commonLabels.cancel());
+
+		if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+			cancelButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+			cancelButtonLayout.setAlign(Alignment.CENTER);
+			cancelButtonLayout.addMember(cancelIButton);
+		}
+
+		if (menu.equals(Constants.MENU_QUERY_TICKET)) {
+			buttonsLayout.addMember(refreshButtonLayout);
+		}
 		buttonsLayout.addMember(selectButtonLayout);
+
+		if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+			buttonsLayout.addMember(cancelButtonLayout);
+		}
 
 		cedulaLayout.addMember(cedulaGrid);
 		cedulaLayout.addMember(buttonsLayout);
@@ -215,14 +235,26 @@ public class Cedula {
 		middleLayout.addMember(cedulaLayout);
 		middleLayout.addMember(cedulacikkLayout);
 
-		refreshIButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				cedulaGrid.invalidateCache();
-				cedulaGrid.fetchData();
-				cedulacikkGrid.setData(new ListGridRecord[] {});
-				selectIButton.setDisabled(true);
-			}
-		});
+		if (menu.equals(Constants.MENU_QUERY_TICKET)) {
+			refreshIButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					cedulaGrid.invalidateCache();
+					cedulaGrid.fetchData();
+					cedulacikkGrid.setData(new ListGridRecord[] {});
+					selectIButton.setDisabled(true);
+				}
+			});
+		}
+	
+		if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+			cancelIButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					middleLayout.removeMembers(middleLayout.getMembers());
+					Vevo vevo = new Vevo();
+					middleLayout.addMember(vevo.get(Constants.MENU_ORDER_FINALIZE));
+				}
+			});
+		}
 
 		selectIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {			
@@ -230,7 +262,7 @@ public class Cedula {
 				middleLayout.addMember(printCedula(cedulaGrid.getSelectedRecord().getAttribute(
 						CedulaConstants.CEDULA_CEDULA),cedulaGrid.getSelectedRecord().getAttribute(
 								CedulaConstants.CEDULA_STATUS),cedulaGrid.getSelectedRecord().getAttribute(
-										CedulaConstants.CEDULA_VEVONEV),get()));																								
+										CedulaConstants.CEDULA_VEVONEV),get(vevo,menu)));																								
 		}
 		});
 
@@ -254,7 +286,7 @@ public class Cedula {
 
 	}
 	
-	public Canvas printCedula(String cedula,String status, String vevonev, final Canvas retLayout) {
+	public Canvas printCedula(String cedula,String menu, String vevonev, final Canvas retLayout) {
 		DisplayRequest.counterInit();
 
 		final VLayout middleLayout = new VLayout();
@@ -271,7 +303,15 @@ public class Cedula {
 		titleLayout.setStyleName("middle");
 		titleLayout.setHeight("3%");
 		titleLayout.setWidth("100%");
-								
+					
+		String status = "";
+		if (menu.equals(Constants.MENU_ORDER_PRE)) {
+			status = Constants.CEDULA_STATUS_ELORENDELT;
+		}
+		if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+			status = Constants.CEDULA_STATUS_VEGLEGESIT;
+		}
+		
 		Label titleLabel = new Label(cedula + " - " + ClientConstants.getCedulaTipus().get(status) + " : " + vevonev);
 		titleLabel.setAlign(Alignment.CENTER);
 		titleLabel.setWidth("100%");
