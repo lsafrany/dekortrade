@@ -7,6 +7,7 @@ import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
 import hu.dekortrade.shared.serialized.CikkfotipusSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
+import hu.dekortrade.shared.serialized.FizetesSer;
 import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.KosarSer;
@@ -124,10 +125,10 @@ public interface DekorTradeServiceAsync {
 	void getVevoKosar(String elado, String menu,
 			AsyncCallback<VevoKosarSer> asyncCallback);
 
-	void addKosar(String elado, String vevo, String menu,
+	void addKosar(String elado, String vevo, String menu, String cedula,
 			AsyncCallback<String> asyncCallback);
 
-	void removeKosar(String elado, String vevo, String menu,
+	void removeKosar(String elado, String vevo, String menu, String cedula,
 			AsyncCallback<String> asyncCallback);
 
 	void addKosarCikk(KosarSer kosarSer,
@@ -149,4 +150,12 @@ public interface DekorTradeServiceAsync {
 	
 	void getCedulacikk(String cedula, String tipus,AsyncCallback<List<CedulacikkSer>> asyncCallback);
 	
+	void cedulaToKosar(String elado, String vevo, String menu, String cedula,
+			AsyncCallback<String> asyncCallback);
+
+	void kosarToCedula(String elado, String vevo, String menu, String cedula,
+			AsyncCallback<String> asyncCallback);
+
+	void getFizetes(AsyncCallback<List<FizetesSer>>  asyncCallback);
+
 }

@@ -30,20 +30,28 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 
 	private KosarLabels kosarLabels = GWT.create(KosarLabels.class);
 
+	private String cedula = null;
 	private String elado = null;
 	private String vevo  = null;
+	private String menu = null;
 	private String tipus = null;
 	
-	public KosarCikkDataSource(String elado, String vevo, String menu) {
+	public KosarCikkDataSource(String cedula, String elado, String vevo, String menu) {
+		this.cedula  = cedula;
 		this.elado  = elado;
 		this.vevo  = vevo;
+		this.menu = menu ;
+					
 		if (menu.equals(Constants.MENU_ORDER_PRE)) {
 			this.tipus = Constants.CEDULA_STATUS_ELORENDELT;
 		}
 		if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
 			this.tipus = Constants.CEDULA_STATUS_VEGLEGESIT;
 		}
-		
+		if (menu.equals(Constants.MENU_CASH_PAY)) {
+			this.tipus = Constants.CEDULA_STATUS_ELORENDELES_FIZETES;
+		}
+
 		TextItem textItem = new TextItem();
 		textItem.setWidth("200");
 
@@ -121,7 +129,7 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
 		dekorTradeService
-				.getKosarCikk(this.elado,this.vevo,this.tipus,new AsyncCallback<List<KosarSer>>() {
+				.getKosarCikk(this.elado,this.vevo,this.menu,new AsyncCallback<List<KosarSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
 							response.setAttribute(
@@ -159,6 +167,7 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		ListGridRecord rec = new ListGridRecord(data);
 		KosarSer kosarSer = new KosarSer();
 		copyValues(rec, kosarSer);
+		kosarSer.setCedula(this.cedula);
 		kosarSer.setElado(this.elado);
 		kosarSer.setVevo(this.vevo);
 		kosarSer.setTipus(this.tipus);
@@ -193,6 +202,7 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		ListGridRecord rec = getEditedRecord(request);
 		KosarSer kosarSer = new KosarSer();
 		copyValues(rec, kosarSer);
+		kosarSer.setCedula(this.cedula);
 		kosarSer.setElado(this.elado);
 		kosarSer.setVevo(this.vevo);
 		kosarSer.setTipus(this.tipus);
@@ -228,6 +238,7 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		final ListGridRecord rec = new ListGridRecord(data);
 		KosarSer kosarSer = new KosarSer();
 		copyValues(rec, kosarSer);
+		kosarSer.setCedula(this.cedula);
 		kosarSer.setElado(this.elado);
 		kosarSer.setVevo(this.vevo);
 		kosarSer.setTipus(this.tipus);

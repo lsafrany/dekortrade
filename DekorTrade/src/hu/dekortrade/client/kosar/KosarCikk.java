@@ -7,10 +7,11 @@ import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.basedata.cikktorzs.Ctorzs;
 import hu.dekortrade.client.basedata.cikktorzs.CtorzsConstants;
-import hu.dekortrade.client.basedata.vevo.Vevo;
+import hu.dekortrade.client.order.finalize.FinalizeOrder;
 import hu.dekortrade.client.order.internet.InternetOrder;
 import hu.dekortrade.client.order.pre.PreOrder;
 import hu.dekortrade.client.query.cedula.Cedula;
+import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
 import java.text.DecimalFormat;
@@ -61,9 +62,9 @@ public class KosarCikk {
 	
 	private DecimalFormat df = new DecimalFormat("#.#####");
 	
-	public Canvas get(final String elado, final String vevo, final String vevonev, final String vevotipus, final String menu) {
+	public Canvas get(final String cedula,final String elado, final String vevo, final String vevonev, final String vevotipus, final String menu) {
 		DisplayRequest.counterInit();
-		
+				
 		final VLayout middleLayout = new VLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -75,7 +76,13 @@ public class KosarCikk {
 		titleLayout.setStyleName("middle");
 		titleLayout.setHeight("3%");
 
-		Label titleLabel = new Label(vevonev);
+		Label titleLabel = new Label();
+		if (menu.equals(Constants.MENU_ORDER_PRE)) {
+			titleLabel.setContents(vevonev);
+		}
+		if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+			titleLabel.setContents(cedula + " : "+ vevonev);
+		}
 		titleLabel.setAlign(Alignment.CENTER);
 		titleLabel.setWidth("80%");
 		titleLayout.addMember(titleLabel);
@@ -106,7 +113,7 @@ public class KosarCikk {
 		kosarLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
 		final KosarCikkDataSource kosarCikkDataSource = new KosarCikkDataSource(
-				elado, vevo, menu) {
+				cedula, elado, vevo, menu) {
 
 			protected Object transformRequest(DSRequest dsRequest) {
 				DisplayRequest.startRequest();
@@ -295,7 +302,7 @@ public class KosarCikk {
 					public void execute(Boolean value) {
 						if (value != null && value) {
 							DisplayRequest.startRequest();
-							dekorTradeService.removeKosar(elado,vevo,menu,
+							dekorTradeService.removeKosar(elado,vevo,menu,cedula,
 								new AsyncCallback<String>() {
 									public void onFailure(Throwable caught) {
 										DisplayRequest.serverResponse();
@@ -504,16 +511,16 @@ public class KosarCikk {
 		kosarGrid.addDataArrivedHandler(new DataArrivedHandler() {
 			public void onDataArrived(DataArrivedEvent event) {
 			
-				float fizet = 0;
+				float fizetusd = 0;
 				for (int i = 0; i < kosarGrid.getRecords().length; i++) {
 					if (kosarGrid.getRecord(i)
 							.getAttribute(KosarConstants.KOSAR_FIZETUSD) != null) {
-						fizet = fizet + kosarGrid.getRecord(i)
+						fizetusd = fizetusd + kosarGrid.getRecord(i)
 								.getAttributeAsFloat(KosarConstants.KOSAR_FIZETUSD);	
 					}
 						
 				}
-				usdLabel.setContents(df.format(fizet));
+				usdLabel.setContents(df.format(fizetusd));
 			}
 		});
 	
@@ -534,33 +541,62 @@ public class KosarCikk {
 			public void onClick(ClickEvent event) {
 				SC.ask(commonLabels.sure(), new BooleanCallback() {
 					public void execute(Boolean value) {
-						if (value != null && value) {
-													
+						if (value != null && value) {													
 							DisplayRequest.startRequest();
-							dekorTradeService.createCedula(elado,vevo,menu,
-								new AsyncCallback<String>() {
-									public void onFailure(Throwable caught) {
-										DisplayRequest.serverResponse();
-										if (caught instanceof SQLExceptionSer)
-											SC.warn(commonLabels
-													.server_sqlerror()
-													+ " : "
-													+ caught.getMessage());
-										else
-											SC.warn(commonLabels
-													.server_error());
-									}
-	
-									public void onSuccess(String result) {
-										DisplayRequest.serverResponse();
-											
-										middleLayout.removeMembers(middleLayout.getMembers());
-										Cedula cedula = new Cedula();
-										Vevo vevo = new Vevo();
-										middleLayout.addMember(cedula.printCedula(result, menu, vevonev, vevo.get(menu)));																																		
-									}
-								});														
+							
+							
+							if (menu.equals(Constants.MENU_ORDER_PRE)) {
+								dekorTradeService.createCedula(elado,vevo,menu,
+									new AsyncCallback<String>() {
+										public void onFailure(Throwable caught) {
+											DisplayRequest.serverResponse();
+											if (caught instanceof SQLExceptionSer)
+												SC.warn(commonLabels
+														.server_sqlerror()
+														+ " : "
+														+ caught.getMessage());
+											else
+												SC.warn(commonLabels
+														.server_error());
+										}
+		
+										public void onSuccess(String result) {
+											DisplayRequest.serverResponse();
+												
+											middleLayout.removeMembers(middleLayout.getMembers());
+											Cedula cedula = new Cedula();
+											middleLayout.addMember(cedula.printCedula(result, Constants.CEDULA_STATUS_ELORENDELT, vevonev, menu));																																		
+										}
+									});			
+							}	
+							
+							if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
+								dekorTradeService.kosarToCedula(elado,vevo,menu,cedula,
+									new AsyncCallback<String>() {
+										public void onFailure(Throwable caught) {
+											DisplayRequest.serverResponse();
+											if (caught instanceof SQLExceptionSer)
+												SC.warn(commonLabels
+														.server_sqlerror()
+														+ " : "
+														+ caught.getMessage());
+											else
+												SC.warn(commonLabels
+														.server_error());
+										}
+		
+										public void onSuccess(String result) {
+											DisplayRequest.serverResponse();
+												
+											middleLayout.removeMembers(middleLayout.getMembers());
+											FinalizeOrder finalizeOrder = new FinalizeOrder();
+											middleLayout.addMember(finalizeOrder.get());																																		
+										}
+									});			
+							}	
+							
 						}
+						
 					}
 				});
 			}

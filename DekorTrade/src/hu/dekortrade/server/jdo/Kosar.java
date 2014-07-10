@@ -20,11 +20,12 @@ public class Kosar {
 	@Persistent
 	private String cedula;	
 
-	public Kosar(String elado, String vevo, String tipus) {
+	public Kosar(String elado, String vevo, String tipus, String cedula) {
 
 		this.elado = elado;
 		this.vevo = vevo;
 		this.tipus = tipus;
+		this.cedula = cedula;
 	}
 
 	public String getElado() {

@@ -1,5 +1,7 @@
 package hu.dekortrade.shared.serialized;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class RendeltSer implements IsSerializable {
@@ -8,7 +10,7 @@ public class RendeltSer implements IsSerializable {
 
 	private String rendeles;
 
-	private String datum;
+	private Date datum;
 
 	public String getRovidnev() {
 		return rovidnev;
@@ -26,11 +28,11 @@ public class RendeltSer implements IsSerializable {
 		this.rendeles = rendeles;
 	}
 
-	public String getDatum() {
+	public Date getDatum() {
 		return datum;
 	}
 
-	public void setDatum(String datum) {
+	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
 

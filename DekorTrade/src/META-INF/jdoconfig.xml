@@ -13,5 +13,7 @@
        <property name="datanucleus.appengine.autoCreateDatastoreTxns" value="true"/>
        <property name="datanucleus.appengine.singletonPMFForName" value="true"/>
      
+       <property name="datanucleus.appengine.datastoreReadConsistency" value="STRONG" />
+     
    </persistence-manager-factory>
 </jdoconfig>

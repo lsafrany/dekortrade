@@ -7,6 +7,7 @@ import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
 import hu.dekortrade.shared.serialized.CikkfotipusSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
+import hu.dekortrade.shared.serialized.FizetesSer;
 import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.KosarSer;
@@ -143,10 +144,10 @@ public interface DekorTradeService extends RemoteService {
 	VevoKosarSer getVevoKosar(String elado, String menu)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String addKosar(String elado, String vevo, String menu)
+	String addKosar(String elado, String vevo, String menu, String cedula)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String removeKosar(String elado, String vevo, String menu)
+	String removeKosar(String elado, String vevo, String menu, String cedula)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	KosarSer addKosarCikk(KosarSer kosarSer)
@@ -169,5 +170,13 @@ public interface DekorTradeService extends RemoteService {
 
 	List<CedulacikkSer> getCedulacikk(String cedula, String tipus) throws IllegalArgumentException,
 			SQLExceptionSer;
+
+	String cedulaToKosar(String elado, String vevo, String menu, String cedula)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	String kosarToCedula(String elado, String vevo, String menu, String cedula)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	List<FizetesSer> getFizetes() throws IllegalArgumentException,SQLExceptionSer;
 
 }

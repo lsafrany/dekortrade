@@ -8,6 +8,7 @@ import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Cikkaltipus;
 import hu.dekortrade.server.jdo.Cikkfotipus;
 import hu.dekortrade.server.jdo.Felhasznalo;
+import hu.dekortrade.server.jdo.Fizetes;
 import hu.dekortrade.server.jdo.Gyarto;
 import hu.dekortrade.server.jdo.Jog;
 import hu.dekortrade.server.jdo.Kep;
@@ -60,7 +61,12 @@ public class Init extends HttpServlet {
 
 			Sorszam sorszam = new Sorszam ("0", Constants.CEDULA_STATUS_ELORENDELT);
 			pm.makePersistent(sorszam);
+		
+			out.append("<h1>Fizetes</h1>");
 			
+			Query fizetesQuery = pm.newQuery(Fizetes.class);
+			fizetesQuery.deletePersistentAll();
+
 			out.append("<h1>Cedula</h1>");
 			
 			Query cedulaQuery = pm.newQuery(Cedula.class);
@@ -213,6 +219,8 @@ public class Init extends HttpServlet {
 			Jog csabijog14 = new Jog("Csabi", Constants.MENU_QUERY);
 			Jog csabijog15 = new Jog("Csabi", Constants.MENU_QUERY_TICKET);
 			Jog csabijog16 = new Jog("Csabi", Constants.MENU_CASH);
+			Jog csabijog17 = new Jog("Csabi", Constants.MENU_CASH_PAY);
+			Jog csabijog18 = new Jog("Csabi", Constants.MENU_CASH_CLOSE);
 			
 			Jog tamasjog1 = new Jog("Tamás", Constants.MENU_CASH);
 			
@@ -235,6 +243,8 @@ public class Init extends HttpServlet {
 			pm.makePersistent(csabijog14);
 			pm.makePersistent(csabijog15);
 			pm.makePersistent(csabijog16);
+			pm.makePersistent(csabijog17);
+			pm.makePersistent(csabijog18);
 			
 			pm.makePersistent(tamasjog1);
 			

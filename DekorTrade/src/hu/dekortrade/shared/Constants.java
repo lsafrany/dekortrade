@@ -23,6 +23,8 @@ public class Constants {
 	public static final String MENU_ORDER_FINALIZE = "MENU_ORDER3_FINALIZE";
 	
 	public static final String MENU_CASH = "MENU4_CASH";
+	public static final String MENU_CASH_PAY = "MENU4_CASH1_PAY";
+	public static final String MENU_CASH_CLOSE = "MENU4_CASH2_CLOSE";
 	
 	public static final String MENU_QUERY = "MENU5_QUERY";
 	public static final String MENU_QUERY_TICKET = "MENU_QUERY1_TICKET";
@@ -37,5 +39,10 @@ public class Constants {
 	
 	public static final String CEDULA_STATUS_ELORENDELT = "ELORENDELT";
 	public static final String CEDULA_STATUS_VEGLEGESIT = "VEGLEGESIT";
+	public static final String CEDULA_STATUS_FIZETENDO_ELORENDELES = "FIZETENDO_ELORENDELES";
+	public static final String CEDULA_STATUS_ELORENDELES_FIZETES = "CEDULA_STATUS_ELORENDELES_FIZETES";
+	public static final String CEDULA_STATUS_FIZETETT_ELORENDELES = "FIZETETT_ELORENDELES";
+	
+	public static final String FIZETES_ELORENDELT = "FIZETES_ELORENDELT";
 	
 }

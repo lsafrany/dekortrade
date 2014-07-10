@@ -46,7 +46,7 @@ public class FinalizeOrder {
 		middleLayout.addMember(loadLayout);
 
 		DisplayRequest.startRequest();
-		dekorTradeService.getVevoKosar(UserInfo.userId,Constants.CEDULA_STATUS_VEGLEGESIT,new AsyncCallback<VevoKosarSer>() {
+		dekorTradeService.getVevoKosar(UserInfo.userId,Constants.MENU_ORDER_FINALIZE,new AsyncCallback<VevoKosarSer>() {
 			public void onFailure(Throwable caught) {
 				DisplayRequest.serverResponse();
 				if (caught instanceof SQLExceptionSer)
@@ -80,7 +80,7 @@ public class FinalizeOrder {
 		}	
 		else {
 			KosarCikk kosarCikk = new KosarCikk();
-			middleLayout.addMember(kosarCikk.get(UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.MENU_ORDER_FINALIZE));	
+			middleLayout.addMember(kosarCikk.get(result.getCedula(),UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.MENU_ORDER_FINALIZE));	
 		}
 			
 		return middleLayout;

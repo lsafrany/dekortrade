@@ -2,13 +2,20 @@ package hu.dekortrade.client.query.cedula;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.CommonLabels;
+import hu.dekortrade.client.DekorTradeService;
+import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.client.basedata.vevo.Vevo;
+import hu.dekortrade.client.cash.pay.CashPay;
+import hu.dekortrade.client.order.finalize.FinalizeOrder;
 import hu.dekortrade.shared.Constants;
+import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
 import java.text.DecimalFormat;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
@@ -16,6 +23,7 @@ import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
@@ -33,6 +41,9 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class Cedula {
+
+	private final DekorTradeServiceAsync dekorTradeService = GWT
+			.create(DekorTradeService.class);
 
 	private CedulaLabels cedulaLabels = GWT.create(CedulaLabels.class);
 
@@ -123,7 +134,7 @@ public class Cedula {
 		HLayout refreshButtonLayout = new HLayout();
 		IButton refreshIButton = new IButton(commonLabels.refresh());
 		
-		if (menu.equals(Constants.MENU_QUERY_TICKET)) {
+		if (menu.equals(Constants.MENU_QUERY_TICKET) || menu.equals(Constants.MENU_CASH_PAY)) {
 			refreshButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 			refreshButtonLayout.setAlign(Alignment.CENTER);
 			refreshButtonLayout.addMember(refreshIButton);
@@ -132,7 +143,7 @@ public class Cedula {
 		HLayout selectButtonLayout = new HLayout();
 		selectButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		final IButton selectIButton = new IButton(commonLabels.select());
-		selectIButton .setDisabled(true);
+		selectIButton.setDisabled(true);
 		selectButtonLayout.setAlign(Alignment.CENTER);
 		selectButtonLayout.addMember(selectIButton);
 
@@ -145,7 +156,7 @@ public class Cedula {
 			cancelButtonLayout.addMember(cancelIButton);
 		}
 
-		if (menu.equals(Constants.MENU_QUERY_TICKET)) {
+		if (menu.equals(Constants.MENU_QUERY_TICKET) || menu.equals(Constants.MENU_CASH_PAY)) {
 			buttonsLayout.addMember(refreshButtonLayout);
 		}
 		buttonsLayout.addMember(selectButtonLayout);
@@ -232,10 +243,30 @@ public class Cedula {
 
 		cedulacikkLayout.addMember(cedulacikkGrid);
 
+		HLayout fizetLayout = new HLayout();
+		fizetLayout.setHeight("3%");
+		fizetLayout.setWidth("90%");
+					
+		HLayout usdCurrLabelLayout = new HLayout();
+		usdCurrLabelLayout.setWidth("70%");
+		Label usdCurrLabel = new Label("USD :");
+		usdCurrLabel.setAlign(Alignment.CENTER);	
+		usdCurrLabelLayout.addMember(usdCurrLabel);
+		
+		HLayout usdLabelLayout = new HLayout();
+		usdLabelLayout.setWidth("30%");
+		final Label usdLabel = new Label("0");
+		usdLabel.setAlign(Alignment.CENTER);	
+		usdLabelLayout.addMember(usdLabel);
+	
+		fizetLayout.addMember(usdCurrLabelLayout);
+		fizetLayout.addMember(usdLabelLayout);
+		cedulacikkLayout.addMember(fizetLayout);
+		
 		middleLayout.addMember(cedulaLayout);
 		middleLayout.addMember(cedulacikkLayout);
 
-		if (menu.equals(Constants.MENU_QUERY_TICKET)) {
+		if (menu.equals(Constants.MENU_QUERY_TICKET) || menu.equals(Constants.MENU_CASH_PAY)) {
 			refreshIButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					cedulaGrid.invalidateCache();
@@ -258,11 +289,55 @@ public class Cedula {
 
 		selectIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {			
-				middleLayout.removeMembers(middleLayout.getMembers());
-				middleLayout.addMember(printCedula(cedulaGrid.getSelectedRecord().getAttribute(
-						CedulaConstants.CEDULA_CEDULA),cedulaGrid.getSelectedRecord().getAttribute(
-								CedulaConstants.CEDULA_STATUS),cedulaGrid.getSelectedRecord().getAttribute(
-										CedulaConstants.CEDULA_VEVONEV),get(vevo,menu)));																								
+			
+				if (menu.equals(Constants.MENU_QUERY_TICKET)) {
+					middleLayout.removeMembers(middleLayout.getMembers());
+					middleLayout.addMember(printCedula(cedulaGrid.getSelectedRecord().getAttribute(
+							CedulaConstants.CEDULA_CEDULA),cedulaGrid.getSelectedRecord().getAttribute(
+									CedulaConstants.CEDULA_STATUS),cedulaGrid.getSelectedRecord().getAttribute(
+											CedulaConstants.CEDULA_VEVONEV),menu));																													
+				}
+				if (menu.equals(Constants.MENU_ORDER_FINALIZE) || menu.equals(Constants.MENU_CASH_PAY)) {
+		
+					SC.ask(commonLabels.sure(), new BooleanCallback() {
+						public void execute(Boolean value) {
+							if (value != null && value) {
+								DisplayRequest.startRequest();
+								dekorTradeService.cedulaToKosar(UserInfo.userId,cedulaGrid.getSelectedRecord().getAttribute(
+										CedulaConstants.CEDULA_VEVO),menu,cedulaGrid.getSelectedRecord().getAttribute(
+										CedulaConstants.CEDULA_CEDULA),
+									new AsyncCallback<String>() {
+										public void onFailure(Throwable caught) {
+											DisplayRequest.serverResponse();
+											if (caught instanceof SQLExceptionSer)
+												SC.warn(commonLabels
+														.server_sqlerror()
+														+ " : "
+														+ caught.getMessage());
+											else
+												SC.warn(commonLabels
+														.server_error());
+										}
+		
+										public void onSuccess(String result) {
+											DisplayRequest.serverResponse();
+											if (menu.equals(Constants.MENU_ORDER_FINALIZE))  {
+												middleLayout.removeMembers(middleLayout.getMembers());
+												FinalizeOrder finalizeOrder = new FinalizeOrder();
+												middleLayout.addMember(finalizeOrder.get());
+											}
+											if (menu.equals(Constants.MENU_CASH_PAY))  {
+												middleLayout.removeMembers(middleLayout.getMembers());
+												CashPay cashPay = new CashPay();
+												middleLayout.addMember(cashPay.get());										
+											}
+										}
+									});
+							}
+						}
+					});
+									
+				}
 		}
 		});
 
@@ -282,11 +357,27 @@ public class Cedula {
 			}
 		});
 
+		cedulacikkGrid.addDataArrivedHandler(new DataArrivedHandler() {
+			public void onDataArrived(DataArrivedEvent event) {
+			
+				float fizetusd = 0;
+				for (int i = 0; i < cedulacikkGrid.getRecords().length; i++) {
+					if (cedulacikkGrid.getRecord(i)
+							.getAttribute(CedulaConstants.CEDULACIKK_FIZETUSD) != null) {
+						fizetusd = fizetusd + cedulacikkGrid.getRecord(i)
+								.getAttributeAsFloat(CedulaConstants.CEDULACIKK_FIZETUSD);	
+					}
+						
+				}
+				usdLabel.setContents(df.format(fizetusd));
+			}
+		});
+
 		return middleLayout;
 
 	}
 	
-	public Canvas printCedula(String cedula,String menu, String vevonev, final Canvas retLayout) {
+	public Canvas printCedula(String cedula, String tipus, String vevonev, final String menu) {
 		DisplayRequest.counterInit();
 
 		final VLayout middleLayout = new VLayout();
@@ -303,16 +394,8 @@ public class Cedula {
 		titleLayout.setStyleName("middle");
 		titleLayout.setHeight("3%");
 		titleLayout.setWidth("100%");
-					
-		String status = "";
-		if (menu.equals(Constants.MENU_ORDER_PRE)) {
-			status = Constants.CEDULA_STATUS_ELORENDELT;
-		}
-		if (menu.equals(Constants.MENU_ORDER_FINALIZE)) {
-			status = Constants.CEDULA_STATUS_VEGLEGESIT;
-		}
-		
-		Label titleLabel = new Label(cedula + " - " + ClientConstants.getCedulaTipus().get(status) + " : " + vevonev);
+						
+		Label titleLabel = new Label(cedula + " - " + ClientConstants.getCedulaTipus().get(tipus) + " : " + vevonev);
 		titleLabel.setAlign(Alignment.CENTER);
 		titleLabel.setWidth("100%");
 		titleLayout.addMember(titleLabel);
@@ -367,7 +450,7 @@ public class Cedula {
 				cedula);				
 		criteria.setAttribute(
 				CedulaConstants.CEDULA_STATUS,
-				status);			
+				tipus);			
 		cedulacikkGrid.fetchData(criteria);
 
 		ListGridField cikkszamGridField = new ListGridField(
@@ -468,7 +551,18 @@ public class Cedula {
 		okIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {			
 				middleLayout.removeMembers(middleLayout.getMembers());
-				middleLayout.addMember(retLayout);																								
+				
+				if (menu.equals(Constants.MENU_ORDER_PRE)) {
+					Vevo vevo = new Vevo();
+					middleLayout.addMember(vevo.get(menu));	
+				}
+				if (menu.equals(Constants.MENU_QUERY_TICKET)) {
+					middleLayout.addMember(get(null,Constants.MENU_QUERY_TICKET));
+				}
+				if (menu.equals(Constants.MENU_CASH_PAY)) {
+					CashPay cashPay = new CashPay();
+					middleLayout.addMember(cashPay.get());
+				}
 			}
 		});
 	

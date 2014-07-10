@@ -277,7 +277,7 @@ public class Vevo {
 				
 				if (menu.equals(Constants.MENU_ORDER_PRE)) {
 					dekorTradeService.addKosar(UserInfo.userId, vevoGrid.getSelectedRecord().getAttribute(
-												VevoConstants.VEVO_ROVIDNEV), menu,
+												VevoConstants.VEVO_ROVIDNEV), menu, "",
 						new AsyncCallback<String>() {
 							public void onFailure(Throwable caught) {
 								DisplayRequest.serverResponse();

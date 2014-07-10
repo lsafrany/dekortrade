@@ -4,12 +4,22 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class VevoKosarSer implements IsSerializable {
 
+	private String cedula = null;
+	
 	private String vevo = null;
 
 	private String vevonev = null;
 
 	private String vevotipus = null;
 	
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
 	public String getVevo() {
 		return vevo;
 	}

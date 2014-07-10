@@ -14,7 +14,10 @@ public interface CommonLabels extends Constants {
 	
 	String menu_cash();
 
+	String menu_pay();	
 	
+	String menu_close();
+
 	String menu_gyartok();
 
 	String menu_vevok();
@@ -73,4 +76,10 @@ public interface CommonLabels extends Constants {
 	
 	String cedulavegleges();
 	
+	String fizetendoelorendeles();
+	
+	String elorendelesfizetes();
+			
+	String fizetettelorendeles();
+
 }

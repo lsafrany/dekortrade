@@ -41,7 +41,7 @@ public class KosarCikk {
 		kosarLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
 		final KosarCikkDataSource kosarCikkDataSource = new KosarCikkDataSource(
-				null, null, "") {
+				"" ,null, null, "") {
 
 			protected Object transformRequest(DSRequest dsRequest) {
 				DisplayRequest.startRequest();

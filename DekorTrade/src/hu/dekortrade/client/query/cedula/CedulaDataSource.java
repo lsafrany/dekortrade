@@ -15,6 +15,7 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
+import com.smartgwt.client.data.fields.DataSourceEnumField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
@@ -38,7 +39,7 @@ public class CedulaDataSource extends GwtRpcDataSource {
 				cedulaLabels.cedula());
 		addField(field);
 
-		field = new DataSourceTextField(CedulaConstants.CEDULA_STATUS,
+		field = new DataSourceEnumField(CedulaConstants.CEDULA_STATUS,
 				cedulaLabels.status());
 		field.setValueMap(ClientConstants.getCedulaTipus());
 		addField(field);

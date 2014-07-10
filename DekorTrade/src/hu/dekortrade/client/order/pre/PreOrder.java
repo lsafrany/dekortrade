@@ -80,7 +80,7 @@ public class PreOrder {
 		}	
 		else {
 			KosarCikk kosarCikk = new KosarCikk();
-			middleLayout.addMember(kosarCikk.get(UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.MENU_ORDER_PRE));	
+			middleLayout.addMember(kosarCikk.get("",UserInfo.userId,result.getVevo(),result.getVevonev(),result.getVevotipus(),Constants.MENU_ORDER_PRE));	
 		}
 			
 		return middleLayout;
