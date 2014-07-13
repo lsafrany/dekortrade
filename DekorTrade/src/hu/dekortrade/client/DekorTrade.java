@@ -1,10 +1,12 @@
 package hu.dekortrade.client;
 
-import hu.dekortrade.client.basedata.Basedata;
-import hu.dekortrade.client.cash.Cash;
-import hu.dekortrade.client.order.Order;
-import hu.dekortrade.client.query.Query;
-import hu.dekortrade.client.system.System;
+import hu.dekortrade.client.eladas.Eladas;
+import hu.dekortrade.client.lekerdezes.Lekerdezes;
+import hu.dekortrade.client.penztar.Penztar;
+import hu.dekortrade.client.raktar.Raktar;
+import hu.dekortrade.client.rendeles.Rendeles;
+import hu.dekortrade.client.srendszer.Rendszer;
+import hu.dekortrade.client.torzsadat.Torzsadat;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
@@ -356,10 +358,10 @@ public class DekorTrade implements EntryPoint {
 
 						UserInfo.userId = userSer.getUserId();
 
-						UserInfo.menu =  userSer.getMenu();
-						
+						UserInfo.menu = userSer.getMenu();
+
 						UserInfo.defaultTab = userSer.getDefultTab();
-						
+
 						if ((password != null)
 								&& (password.equals(Constants.INIT_PASSWORD))) {
 							topLayoutRight.addMember(getPassword(userSer
@@ -387,17 +389,17 @@ public class DekorTrade implements EntryPoint {
 						for (int i = 0; i < userSer.getTabList().size(); i++) {
 
 							if (userSer.getTabList().get(i).getName()
-									.equals(Constants.MENU_SYSTEM)) {
+									.equals(Constants.MENU_RENDSZER)) {
 
 								final Tab tab = new Tab(commonLabels
-										.menu_system());
+										.menu_rendszer());
 								tabSet.addTab(tab);
-								final System system = new System();
+								final Rendszer rendszer = new Rendszer();
 
 								if (userSer.getTabList().get(i).getId() == userSer
 										.getDefultTab()) {
 
-									tab.setPane(system.get());
+									tab.setPane(rendszer.get());
 									tabSet.selectTab(i);
 								}
 								tab.addTabSelectedHandler(new TabSelectedHandler() {
@@ -406,24 +408,24 @@ public class DekorTrade implements EntryPoint {
 									public void onTabSelected(
 											TabSelectedEvent event) {
 
-										tab.setPane(system.get());
+										tab.setPane(rendszer.get());
 									}
 
 								});
 							}
 
 							if (userSer.getTabList().get(i).getName()
-									.equals(Constants.MENU_BASEDATA)) {
+									.equals(Constants.MENU_TORZSADAT)) {
 
 								final Tab tab = new Tab(commonLabels
-										.menu_basedata());
+										.menu_torzsadat());
 								tabSet.addTab(tab);
-								final Basedata basedata = new Basedata();
+								final Torzsadat torzsadat = new Torzsadat();
 
 								if (userSer.getTabList().get(i).getId() == userSer
 										.getDefultTab()) {
 
-									tab.setPane(basedata.get());
+									tab.setPane(torzsadat.get());
 									tabSet.selectTab(i);
 								}
 								tab.addTabSelectedHandler(new TabSelectedHandler() {
@@ -432,24 +434,24 @@ public class DekorTrade implements EntryPoint {
 									public void onTabSelected(
 											TabSelectedEvent event) {
 
-										tab.setPane(basedata.get());
+										tab.setPane(torzsadat.get());
 									}
 
 								});
 							}
 
 							if (userSer.getTabList().get(i).getName()
-									.equals(Constants.MENU_ORDER)) {
+									.equals(Constants.MENU_RENDELES)) {
 
 								final Tab tab = new Tab(commonLabels
-										.menu_order());
+										.menu_rendeles());
 								tabSet.addTab(tab);
-								final Order order = new Order();
+								final Rendeles rendeles = new Rendeles();
 
 								if (userSer.getTabList().get(i).getId() == userSer
 										.getDefultTab()) {
 
-									tab.setPane(order.get());
+									tab.setPane(rendeles.get());
 									tabSet.selectTab(i);
 								}
 								tab.addTabSelectedHandler(new TabSelectedHandler() {
@@ -458,23 +460,24 @@ public class DekorTrade implements EntryPoint {
 									public void onTabSelected(
 											TabSelectedEvent event) {
 
-										tab.setPane(order.get());
+										tab.setPane(rendeles.get());
 									}
 
 								});
 							}
 
 							if (userSer.getTabList().get(i).getName()
-									.equals(Constants.MENU_CASH)) {
+									.equals(Constants.MENU_RAKTAR)) {
 
-								final Tab tab = new Tab(commonLabels.menu_cash());
+								final Tab tab = new Tab(commonLabels
+										.menu_raktar());
 								tabSet.addTab(tab);
-								final Cash cash = new Cash();
+								final Raktar raktar = new Raktar();
 
 								if (userSer.getTabList().get(i).getId() == userSer
 										.getDefultTab()) {
 
-									tab.setPane(cash.get());
+									tab.setPane(raktar.get());
 									tabSet.selectTab(i);
 								}
 								tab.addTabSelectedHandler(new TabSelectedHandler() {
@@ -483,25 +486,24 @@ public class DekorTrade implements EntryPoint {
 									public void onTabSelected(
 											TabSelectedEvent event) {
 
-										tab.setPane(cash.get());
+										tab.setPane(raktar.get());
 									}
 
 								});
 							}
 
-
 							if (userSer.getTabList().get(i).getName()
-									.equals(Constants.MENU_QUERY)) {
+									.equals(Constants.MENU_ELADAS)) {
 
 								final Tab tab = new Tab(commonLabels
-										.menu_query());
+										.menu_eladas());
 								tabSet.addTab(tab);
-								final Query query = new Query();
+								final Eladas eladas = new Eladas();
 
 								if (userSer.getTabList().get(i).getId() == userSer
 										.getDefultTab()) {
 
-									tab.setPane(query.get());
+									tab.setPane(eladas.get());
 									tabSet.selectTab(i);
 								}
 								tab.addTabSelectedHandler(new TabSelectedHandler() {
@@ -510,7 +512,59 @@ public class DekorTrade implements EntryPoint {
 									public void onTabSelected(
 											TabSelectedEvent event) {
 
-										tab.setPane(query.get());
+										tab.setPane(eladas.get());
+									}
+
+								});
+							}
+
+							if (userSer.getTabList().get(i).getName()
+									.equals(Constants.MENU_PENZTAR)) {
+
+								final Tab tab = new Tab(commonLabels
+										.menu_penztar());
+								tabSet.addTab(tab);
+								final Penztar penztar = new Penztar();
+
+								if (userSer.getTabList().get(i).getId() == userSer
+										.getDefultTab()) {
+
+									tab.setPane(penztar.get());
+									tabSet.selectTab(i);
+								}
+								tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+									@Override
+									public void onTabSelected(
+											TabSelectedEvent event) {
+
+										tab.setPane(penztar.get());
+									}
+
+								});
+							}
+
+							if (userSer.getTabList().get(i).getName()
+									.equals(Constants.MENU_LEKERDEZES)) {
+
+								final Tab tab = new Tab(commonLabels
+										.menu_lekerdezes());
+								tabSet.addTab(tab);
+								final Lekerdezes lekerdezes = new Lekerdezes();
+
+								if (userSer.getTabList().get(i).getId() == userSer
+										.getDefultTab()) {
+
+									tab.setPane(lekerdezes.get());
+									tabSet.selectTab(i);
+								}
+								tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+									@Override
+									public void onTabSelected(
+											TabSelectedEvent event) {
+
+										tab.setPane(lekerdezes.get());
 									}
 
 								});

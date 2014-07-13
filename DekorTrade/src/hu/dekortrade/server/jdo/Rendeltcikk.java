@@ -28,7 +28,8 @@ public class Rendeltcikk {
 	private Integer darab;
 
 	public Rendeltcikk(String rovidnev, String rendeles, String cikkszam,
-			String szinkod, Integer exportkarton, Integer kiskarton, Integer darab) {
+			String szinkod, Integer exportkarton, Integer kiskarton,
+			Integer darab) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.cikkszam = cikkszam;

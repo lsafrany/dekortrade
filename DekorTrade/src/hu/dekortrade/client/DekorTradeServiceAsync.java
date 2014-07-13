@@ -18,6 +18,7 @@ import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoKosarSer;
 import hu.dekortrade.shared.serialized.VevoSer;
+import hu.dekortrade.shared.serialized.ZarasSer;
 
 import java.util.List;
 
@@ -95,7 +96,8 @@ public interface DekorTradeServiceAsync {
 	void getUploadFileStatus(AsyncCallback<UploadSer> callback)
 			throws IllegalArgumentException;
 
-	void getKep(String cikkszam, String szinkod, AsyncCallback<List<String>> asyncCallback);
+	void getKep(String cikkszam, String szinkod,
+			AsyncCallback<List<String>> asyncCallback);
 
 	void removeKep(String cikkszam, String szinkod, String sorszam,
 			AsyncCallback<String> asyncCallback);
@@ -131,8 +133,7 @@ public interface DekorTradeServiceAsync {
 	void removeKosar(String elado, String vevo, String menu, String cedula,
 			AsyncCallback<String> asyncCallback);
 
-	void addKosarCikk(KosarSer kosarSer,
-			AsyncCallback<KosarSer> asyncCallback);
+	void addKosarCikk(KosarSer kosarSer, AsyncCallback<KosarSer> asyncCallback);
 
 	void updateKosarCikk(KosarSer kosarSer,
 			AsyncCallback<KosarSer> asyncCallback);
@@ -146,16 +147,24 @@ public interface DekorTradeServiceAsync {
 	void createCedula(String elado, String vevo, String menu,
 			AsyncCallback<String> asyncCallback);
 
-	void getCedula(String vevo,String menu,AsyncCallback<List<CedulaSer>> asyncCallback);
-	
-	void getCedulacikk(String cedula, String tipus,AsyncCallback<List<CedulacikkSer>> asyncCallback);
-	
+	void getCedula(String vevo, String menu,
+			AsyncCallback<List<CedulaSer>> asyncCallback);
+
+	void getCedulacikk(String cedula, String tipus,
+			AsyncCallback<List<CedulacikkSer>> asyncCallback);
+
 	void cedulaToKosar(String elado, String vevo, String menu, String cedula,
 			AsyncCallback<String> asyncCallback);
 
 	void kosarToCedula(String elado, String vevo, String menu, String cedula,
 			AsyncCallback<String> asyncCallback);
 
-	void getFizetes(AsyncCallback<List<FizetesSer>>  asyncCallback);
+	void getFizetes(AsyncCallback<List<FizetesSer>> asyncCallback);
 
+	void createZaras(String penztaros, AsyncCallback<String> asyncCallback);
+
+	void getZarasFizetes(String zaras,
+			AsyncCallback<List<FizetesSer>> asyncCallback);
+
+	void getZaras(AsyncCallback<List<ZarasSer>> asyncCallback);
 }

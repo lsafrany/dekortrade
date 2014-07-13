@@ -9,19 +9,20 @@ public class RendeltcikkSzinkron {
 	private String cikkszam;
 
 	private String szinkod;
-	
+
 	private Integer exportkarton;
 
 	private Integer kiskarton;
-	
+
 	private Integer darab;
-	
+
 	public RendeltcikkSzinkron() {
 
 	}
 
 	public RendeltcikkSzinkron(String rovidnev, String rendeles,
-			String cikkszam, String szinkod, Integer exportkarton, Integer kiskarton, Integer darab) {
+			String cikkszam, String szinkod, Integer exportkarton,
+			Integer kiskarton, Integer darab) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.cikkszam = cikkszam;
@@ -54,7 +55,7 @@ public class RendeltcikkSzinkron {
 	public void setCikkszam(String cikkszam) {
 		this.cikkszam = cikkszam;
 	}
-	
+
 	public String getSzinkod() {
 		return szinkod;
 	}

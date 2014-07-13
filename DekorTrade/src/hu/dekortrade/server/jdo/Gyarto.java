@@ -40,16 +40,15 @@ public class Gyarto {
 	private Boolean torolt;
 
 	public Gyarto(String kod, String nev, String cim, String elerhetoseg,
-			String swifkod, String bankadat, String szamlaszam,
-			Float egyenleg, String kedvezmeny, String megjegyzes,
-			Boolean torolt) {
+			String swifkod, String bankadat, String szamlaszam, Float egyenleg,
+			String kedvezmeny, String megjegyzes, Boolean torolt) {
 		this.kod = kod;
 		this.nev = nev;
 		this.cim = cim;
 		this.elerhetoseg = elerhetoseg;
 		this.swifkod = swifkod;
 		this.bankadat = bankadat;
-		this.szamlaszam = szamlaszam;	
+		this.szamlaszam = szamlaszam;
 		this.egyenleg = egyenleg;
 		this.kedvezmeny = kedvezmeny;
 		this.megjegyzes = megjegyzes;

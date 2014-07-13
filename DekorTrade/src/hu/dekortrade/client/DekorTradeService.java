@@ -20,6 +20,7 @@ import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoKosarSer;
 import hu.dekortrade.shared.serialized.VevoSer;
+import hu.dekortrade.shared.serialized.ZarasSer;
 
 import java.util.List;
 
@@ -111,8 +112,8 @@ public interface DekorTradeService extends RemoteService {
 
 	UploadSer getUploadFileStatus() throws IllegalArgumentException;
 
-	List<String> getKep(String cikkszam, String szinkod) throws IllegalArgumentException,
-			SQLExceptionSer;
+	List<String> getKep(String cikkszam, String szinkod)
+			throws IllegalArgumentException, SQLExceptionSer;
 
 	String removeKep(String cikkszam, String szinkod, String rorszam)
 			throws IllegalArgumentException, SQLExceptionSer;
@@ -150,26 +151,26 @@ public interface DekorTradeService extends RemoteService {
 	String removeKosar(String elado, String vevo, String menu, String cedula)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	KosarSer addKosarCikk(KosarSer kosarSer)
-			throws IllegalArgumentException, SQLExceptionSer;
+	KosarSer addKosarCikk(KosarSer kosarSer) throws IllegalArgumentException,
+			SQLExceptionSer;
 
 	KosarSer updateKosarCikk(KosarSer kosarSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	KosarSer removeKosarCikk(KosarSer kosarSer)
 			throws IllegalArgumentException, SQLExceptionSer;
-	
+
 	String importInternet(String elado, String vevo, String rendeles)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	String createCedula(String elado, String vevo, String menu)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	List<CedulaSer> getCedula(String vevo,String menu) throws IllegalArgumentException,
-			SQLExceptionSer;
+	List<CedulaSer> getCedula(String vevo, String menu)
+			throws IllegalArgumentException, SQLExceptionSer;
 
-	List<CedulacikkSer> getCedulacikk(String cedula, String tipus) throws IllegalArgumentException,
-			SQLExceptionSer;
+	List<CedulacikkSer> getCedulacikk(String cedula, String tipus)
+			throws IllegalArgumentException, SQLExceptionSer;
 
 	String cedulaToKosar(String elado, String vevo, String menu, String cedula)
 			throws IllegalArgumentException, SQLExceptionSer;
@@ -177,6 +178,15 @@ public interface DekorTradeService extends RemoteService {
 	String kosarToCedula(String elado, String vevo, String menu, String cedula)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	List<FizetesSer> getFizetes() throws IllegalArgumentException,SQLExceptionSer;
+	List<FizetesSer> getFizetes() throws IllegalArgumentException,
+			SQLExceptionSer;
+
+	String createZaras(String penztaros) throws IllegalArgumentException,
+			SQLExceptionSer;
+
+	List<FizetesSer> getZarasFizetes(String zaras)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	List<ZarasSer> getZaras() throws IllegalArgumentException, SQLExceptionSer;
 
 }

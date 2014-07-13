@@ -21,7 +21,7 @@ public class CikkSer implements IsSerializable {
 	private Date felviteltol;
 
 	private Date felvitelig;
-	
+
 	private Date lejarattol;
 
 	private Date lejaratig;
@@ -53,9 +53,9 @@ public class CikkSer implements IsSerializable {
 	private Float ar;
 
 	private Float areur;
-	
+
 	private Float arszorzo;
-	
+
 	private Integer kiskarton;
 
 	private Integer darab;
@@ -63,7 +63,7 @@ public class CikkSer implements IsSerializable {
 	private Float terfogat;
 
 	private Float terfogatlab;
-	
+
 	private Float bsuly;
 
 	private Float nsuly;
@@ -71,7 +71,7 @@ public class CikkSer implements IsSerializable {
 	private String leiras;
 
 	private String megjegyzes;
-	
+
 	private Boolean akcios;
 
 	private String mertekegyseg;
@@ -213,7 +213,7 @@ public class CikkSer implements IsSerializable {
 	public void setElorar(Float elorar) {
 		this.elorar = elorar;
 	}
-		
+
 	public Float getUjfob() {
 		return ujfob;
 	}
@@ -261,7 +261,7 @@ public class CikkSer implements IsSerializable {
 	public void setAr(Float ar) {
 		this.ar = ar;
 	}
-	
+
 	public Float getAreur() {
 		return areur;
 	}
@@ -301,7 +301,7 @@ public class CikkSer implements IsSerializable {
 	public void setTerfogat(Float terfogat) {
 		this.terfogat = terfogat;
 	}
-	
+
 	public Float getTerfogatlab() {
 		return terfogatlab;
 	}

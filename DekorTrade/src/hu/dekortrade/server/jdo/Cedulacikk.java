@@ -38,16 +38,15 @@ public class Cedulacikk {
 
 	@Persistent
 	private Float fizet;
-	
-	@Persistent
-	private Float fizeteur;	
 
 	@Persistent
-	private Float fizetusd;	
+	private Float fizeteur;
 
-	public Cedulacikk(String cedula, String status,
-			String cikkszam, String szinkod,
-			Float ar, Float areur, Float arusd, 
+	@Persistent
+	private Float fizetusd;
+
+	public Cedulacikk(String cedula, String status, String cikkszam,
+			String szinkod, Float ar, Float areur, Float arusd,
 			Integer exportkarton, Integer kiskarton, Integer darab,
 			Float fizet, Float fizeteur, Float fizetusd) {
 
@@ -170,5 +169,5 @@ public class Cedulacikk {
 	public void setFizetusd(Float fizetusd) {
 		this.fizetusd = fizetusd;
 	}
-	
+
 }

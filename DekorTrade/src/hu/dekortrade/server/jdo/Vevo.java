@@ -23,37 +23,37 @@ public class Vevo {
 
 	@Persistent
 	private Float egyenlegusd;
-	
+
 	@Persistent
 	private Float egyenlegeur;
-	
+
 	@Persistent
 	private Float egyenleghuf;
-	
+
 	@Persistent
 	private Float tarolasidij;
-	
+
 	@Persistent
 	private Float eloleg;
-	
+
 	@Persistent
 	private String bankszamlaszam;
 
 	@Persistent
 	private String euadoszam;
-	
+
 	@Persistent
 	private Float elorarkedvezmeny;
-	
+
 	@Persistent
 	private Float ajanlottarkedvezmeny;
-	
+
 	@Persistent
 	private String orszag;
-	
+
 	@Persistent
 	private String megjegyzes;
-	
+
 	@Persistent
 	private Boolean internet;
 
@@ -63,9 +63,10 @@ public class Vevo {
 	@Persistent
 	private Boolean torolt;
 
-	public Vevo(String rovidnev, String tipus, String nev, String cim, String elerhetoseg,
-			Float egyenlegusd, Float egyenlegeur, Float egyenleghuf, Float tarolasidij,
-			Float eloleg, String bankszamlaszam, String euadoszam, Float elorarkedvezmeny,
+	public Vevo(String rovidnev, String tipus, String nev, String cim,
+			String elerhetoseg, Float egyenlegusd, Float egyenlegeur,
+			Float egyenleghuf, Float tarolasidij, Float eloleg,
+			String bankszamlaszam, String euadoszam, Float elorarkedvezmeny,
 			Float ajanlottarkedvezmeny, String orszag, String megjegyzes,
 			Boolean internet, Boolean szinkron, Boolean torolt) {
 		this.rovidnev = rovidnev;
@@ -78,12 +79,12 @@ public class Vevo {
 		this.egyenleghuf = egyenleghuf;
 		this.tarolasidij = tarolasidij;
 		this.eloleg = eloleg;
-		this.bankszamlaszam = bankszamlaszam;	
-		this.euadoszam = euadoszam;		
-		this.elorarkedvezmeny = elorarkedvezmeny;				
-		this.ajanlottarkedvezmeny = ajanlottarkedvezmeny;	
-		this.orszag = orszag;	
-		this.megjegyzes = megjegyzes;		
+		this.bankszamlaszam = bankszamlaszam;
+		this.euadoszam = euadoszam;
+		this.elorarkedvezmeny = elorarkedvezmeny;
+		this.ajanlottarkedvezmeny = ajanlottarkedvezmeny;
+		this.orszag = orszag;
+		this.megjegyzes = megjegyzes;
 		this.internet = internet;
 		this.szinkron = szinkron;
 		this.torolt = torolt;
@@ -96,7 +97,7 @@ public class Vevo {
 	public void setRovidnev(String rovidnev) {
 		this.rovidnev = rovidnev;
 	}
-	
+
 	public String getTipus() {
 		return tipus;
 	}
@@ -240,5 +241,5 @@ public class Vevo {
 	public void setMegjegyzes(String megjegyzes) {
 		this.megjegyzes = megjegyzes;
 	}
-	
+
 }

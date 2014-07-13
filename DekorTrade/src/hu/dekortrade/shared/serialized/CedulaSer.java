@@ -11,13 +11,13 @@ public class CedulaSer implements IsSerializable {
 	private String rovidnev;
 
 	private String vevonev;
-	
+
 	private String status;
 
 	private String elado;
 
 	private String eladonev;
-	
+
 	private Date datum;
 
 	public String getCedula() {

@@ -8,8 +8,8 @@ public class KosarSer implements IsSerializable {
 
 	private String vevo;
 
-	private String tipus;	
-	
+	private String tipus;
+
 	private String cikkszam;
 
 	private String szinkod;
@@ -21,7 +21,7 @@ public class KosarSer implements IsSerializable {
 	private Float areur;
 
 	private Float arusd;
-	
+
 	private Integer exportkarton;
 
 	private Integer kiskarton;
@@ -29,11 +29,11 @@ public class KosarSer implements IsSerializable {
 	private Integer darab;
 
 	private Float fizet;
-	
-	private Float fizeteur;	
-	
-	private Float fizetusd;	
-	
+
+	private Float fizeteur;
+
+	private Float fizetusd;
+
 	private String cedula;
 
 	public String getElado() {
@@ -99,7 +99,7 @@ public class KosarSer implements IsSerializable {
 	public void setAreur(Float areur) {
 		this.areur = areur;
 	}
-	
+
 	public Float getArusd() {
 		return arusd;
 	}
@@ -162,6 +162,6 @@ public class KosarSer implements IsSerializable {
 
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
-	}	
+	}
 
 }

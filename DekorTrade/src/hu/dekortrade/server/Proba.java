@@ -39,31 +39,39 @@ public class Proba extends HttpServlet {
 		try {
 
 			out.append("<h1>Próba</h1>");
-			
+
 			Query rendeltQuery = pm.newQuery(Rendelt.class);
 			rendeltQuery.deletePersistentAll();
-			
+
 			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
 			rendeltcikkQuery.deletePersistentAll();
-		
-			Rendeltcikk rendeltcikk1 = new Rendeltcikk("Floradekor", "111-111", "71726", "", new Integer(1),  new Integer(2), new Integer(3));
+
+			Rendeltcikk rendeltcikk1 = new Rendeltcikk("Floradekor", "111-111",
+					"71726", "", new Integer(1), new Integer(2), new Integer(3));
 			pm.makePersistent(rendeltcikk1);
 
-			Rendeltcikk rendeltcikk2 = new Rendeltcikk("Floradekor", "111-111", "ED00022", "", new Integer(11),  new Integer(22), new Integer(33));
+			Rendeltcikk rendeltcikk2 = new Rendeltcikk("Floradekor", "111-111",
+					"ED00022", "", new Integer(11), new Integer(22),
+					new Integer(33));
 			pm.makePersistent(rendeltcikk2);
-	
-			Rendelt rendelt = new Rendelt("Floradekor", "111-111", ClientConstants.INTERNET_ELORENDEL, new Date());
-			pm.makePersistent(rendelt);	
-			
-			Rendeltcikk rendeltcikk3 = new Rendeltcikk("Floradekor", "222-222", "71726", "", new Integer(1),  new Integer(2), new Integer(3));
+
+			Rendelt rendelt = new Rendelt("Floradekor", "111-111",
+					ClientConstants.INTERNET_ELORENDEL, new Date());
+			pm.makePersistent(rendelt);
+
+			Rendeltcikk rendeltcikk3 = new Rendeltcikk("Floradekor", "222-222",
+					"71726", "", new Integer(1), new Integer(2), new Integer(3));
 			pm.makePersistent(rendeltcikk3);
 
-			Rendeltcikk rendeltcikk4 = new Rendeltcikk("Floradekor", "222-222", "ED00022", "", new Integer(11),  new Integer(22), new Integer(33));
+			Rendeltcikk rendeltcikk4 = new Rendeltcikk("Floradekor", "222-222",
+					"ED00022", "", new Integer(11), new Integer(22),
+					new Integer(33));
 			pm.makePersistent(rendeltcikk4);
-			
-			Rendelt rendelt2 = new Rendelt("Floradekor", "222-222", ClientConstants.INTERNET_ELORENDEL, new Date());
-			pm.makePersistent(rendelt2);	
-		
+
+			Rendelt rendelt2 = new Rendelt("Floradekor", "222-222",
+					ClientConstants.INTERNET_ELORENDEL, new Date());
+			pm.makePersistent(rendelt2);
+
 		} finally {
 			pm.close();
 		}

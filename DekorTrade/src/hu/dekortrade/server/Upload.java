@@ -50,17 +50,17 @@ public class Upload extends HttpServlet {
 
 				String cikkszam = request.getParameter("cikkszam");
 				String szinkod = request.getParameter("szinkod");
-				
+
 				Query query = pm.newQuery(Kep.class);
 				query.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.torolt == false)");
 				query.declareParameters("String pcikkszam");
 				@SuppressWarnings("unchecked")
 				List<Kep> list = (List<Kep>) pm.newQuery(query).execute(
-						cikkszam,szinkod);
+						cikkszam, szinkod);
 
-				Kep kep = new Kep(cikkszam,szinkod,
-						new Integer(list.size() + 1).toString(), imageBlob,
-						Boolean.FALSE, Boolean.FALSE);
+				Kep kep = new Kep(cikkszam, szinkod, new Integer(
+						list.size() + 1).toString(), imageBlob, Boolean.FALSE,
+						Boolean.FALSE);
 				pm.makePersistent(kep);
 
 				session.removeAttribute(ServerConstants.FILE);

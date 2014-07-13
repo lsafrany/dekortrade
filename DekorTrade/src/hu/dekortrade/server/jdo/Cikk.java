@@ -31,7 +31,7 @@ public class Cikk {
 
 	@Persistent
 	private Date felvitelig;
-	
+
 	@Persistent
 	private Date lejarattol;
 
@@ -123,14 +123,15 @@ public class Cikk {
 	private Boolean torolt;
 
 	public Cikk(String fotipus, String altipus, String gyarto,
-			String gyartocikkszam, String cikkszam,
-			String szinkod, Date felviteltol, Date felvitelig,
-			Date lejarattol, Date lejaratig, String megnevezes, String vamtarifaszam,
-			Float fob, Float szallitas, Float ddu, Float ersz, Float elorar, 
-			Float ujfob, Float ujszallitas, Float ujddu, Float ujersz, Float ujelorar, 
-			Float ar, Float areur, Float arszoro, Integer kiskarton, Integer darab,
-			Float terfogat, Float terfogatlab, Float bsuly, Float nsuly, String leiras, String megjegyzes,
-			Boolean akcios, String mertekegyseg,Integer kepek, Boolean szinkron, Boolean torolt) {
+			String gyartocikkszam, String cikkszam, String szinkod,
+			Date felviteltol, Date felvitelig, Date lejarattol, Date lejaratig,
+			String megnevezes, String vamtarifaszam, Float fob,
+			Float szallitas, Float ddu, Float ersz, Float elorar, Float ujfob,
+			Float ujszallitas, Float ujddu, Float ujersz, Float ujelorar,
+			Float ar, Float areur, Float arszoro, Integer kiskarton,
+			Integer darab, Float terfogat, Float terfogatlab, Float bsuly,
+			Float nsuly, String leiras, String megjegyzes, Boolean akcios,
+			String mertekegyseg, Integer kepek, Boolean szinkron, Boolean torolt) {
 		this.fotipus = fotipus;
 		this.altipus = altipus;
 		this.gyarto = gyarto;
@@ -147,7 +148,7 @@ public class Cikk {
 		this.szallitas = szallitas;
 		this.ddu = ddu;
 		this.ersz = ersz;
-		this.elorar = elorar;	
+		this.elorar = elorar;
 		this.ujfob = ujfob;
 		this.ujszallitas = ujszallitas;
 		this.ujddu = ujddu;
@@ -218,7 +219,7 @@ public class Cikk {
 	public void setSzinkod(String szinkod) {
 		this.szinkod = szinkod;
 	}
-	
+
 	public Date getFelviteltol() {
 		return felviteltol;
 	}
@@ -306,7 +307,7 @@ public class Cikk {
 	public void setElorar(Float elorar) {
 		this.elorar = elorar;
 	}
-		
+
 	public Float getUjfob() {
 		return ujfob;
 	}
@@ -353,8 +354,8 @@ public class Cikk {
 
 	public void setAr(Float ar) {
 		this.ar = ar;
-	}	
-	
+	}
+
 	public Float getAreur() {
 		return areur;
 	}

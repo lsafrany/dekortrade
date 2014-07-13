@@ -22,12 +22,12 @@ public class Fizetes {
 
 	@Persistent
 	private Float fizet;
-	
-	@Persistent
-	private Float fizeteur;	
 
 	@Persistent
-	private Float fizetusd;	
+	private Float fizeteur;
+
+	@Persistent
+	private Float fizetusd;
 
 	@Persistent
 	private Date datum;
@@ -35,7 +35,9 @@ public class Fizetes {
 	@Persistent
 	private boolean szamolt;
 
-	public Fizetes(String cedula, String vevo, String tipus, String penztaros, Float fizet, Float fizeteur, Float fizetusd, Date datum, boolean szamolt) {
+	public Fizetes(String cedula, String vevo, String tipus, String penztaros,
+			Float fizet, Float fizeteur, Float fizetusd, Date datum,
+			boolean szamolt) {
 		this.cedula = cedula;
 		this.vevo = vevo;
 		this.tipus = tipus;
@@ -118,5 +120,5 @@ public class Fizetes {
 	public void setSzamolt(boolean szamolt) {
 		this.szamolt = szamolt;
 	}
-	
+
 }

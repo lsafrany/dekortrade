@@ -19,8 +19,8 @@ public class KepSzinkron implements IsSerializable {
 
 	}
 
-	public KepSzinkron(String cikkszam, String szinkod, String sorszam, Blob blob,
-			Boolean torolt) {
+	public KepSzinkron(String cikkszam, String szinkod, String sorszam,
+			Blob blob, Boolean torolt) {
 		this.cikkszam = cikkszam;
 		this.szinkod = szinkod;
 		this.sorszam = sorszam;

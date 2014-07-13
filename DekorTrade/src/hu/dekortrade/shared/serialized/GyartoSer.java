@@ -23,7 +23,7 @@ public class GyartoSer implements IsSerializable {
 	private String kedvezmeny;
 
 	private String megjegyzes;
-	
+
 	public String getKod() {
 		return kod;
 	}

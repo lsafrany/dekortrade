@@ -52,9 +52,9 @@ public class Kosarcikk {
 	private String cedula;
 
 	public Kosarcikk(String elado, String vevo, String tipus, String cikkszam,
-			String szinkod, Float ar, Float areur, Float arusd, Integer exportkarton,
-			Integer kiskarton, Integer darab, Float fizet, Float fizeteur, Float fizetusd,
-			String cedula) {
+			String szinkod, Float ar, Float areur, Float arusd,
+			Integer exportkarton, Integer kiskarton, Integer darab,
+			Float fizet, Float fizeteur, Float fizetusd, String cedula) {
 
 		this.elado = elado;
 		this.vevo = vevo;

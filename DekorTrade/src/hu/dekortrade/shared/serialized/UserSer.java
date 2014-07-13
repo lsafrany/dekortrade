@@ -15,7 +15,7 @@ public class UserSer implements IsSerializable {
 	private int defultTab = 0;
 
 	private ArrayList<String> menu = new ArrayList<String>();
-	
+
 	public String getUserId() {
 		return userId;
 	}

@@ -11,18 +11,18 @@ public class FizetesSer implements IsSerializable {
 	private String vevo;
 
 	private String vevonev;
-	
+
 	private String tipus;
 
 	private String penztaros;
 
 	private String penztarosnev;
-	
-	private Float fizet;
-	
-	private Float fizeteur;	
 
-	private Float fizetusd;	
+	private Float fizet;
+
+	private Float fizeteur;
+
+	private Float fizetusd;
 
 	private Date datum;
 

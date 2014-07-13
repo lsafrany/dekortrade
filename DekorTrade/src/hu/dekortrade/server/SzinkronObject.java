@@ -253,8 +253,9 @@ public class SzinkronObject {
 			List<KepSzinkron> keplistszinkron = new ArrayList<KepSzinkron>();
 			if ((keplist != null) && (!keplist.isEmpty())) {
 				for (Kep l : keplist) {
-					KepSzinkron kepSzinkron = new KepSzinkron(l.getCikkszam(),l.getSzinkod(),
-							l.getSorszam(), l.getBlob(), l.getTorolt());
+					KepSzinkron kepSzinkron = new KepSzinkron(l.getCikkszam(),
+							l.getSzinkod(), l.getSorszam(), l.getBlob(),
+							l.getTorolt());
 					keplistszinkron.add(kepSzinkron);
 					l.setSzinkron(Boolean.TRUE);
 				}

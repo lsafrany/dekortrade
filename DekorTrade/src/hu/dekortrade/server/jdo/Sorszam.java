@@ -12,6 +12,11 @@ public class Sorszam {
 	@Persistent
 	private String tipus;
 
+	public Sorszam(String cedula, String tipus) {
+		this.cedula = cedula;
+		this.tipus = tipus;
+	}
+
 	public String getCedula() {
 		return cedula;
 	}
@@ -28,10 +33,4 @@ public class Sorszam {
 		this.tipus = tipus;
 	}
 
-	public Sorszam(String cedula, String tipus) {
-		super();
-		this.cedula = cedula;
-		this.tipus = tipus;
-	}
-	
 }

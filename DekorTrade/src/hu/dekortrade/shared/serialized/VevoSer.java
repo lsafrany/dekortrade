@@ -15,25 +15,25 @@ public class VevoSer implements IsSerializable {
 	private String elerhetoseg;
 
 	private Float egyenlegusd;
-	
+
 	private Float egyenlegeur;
-	
+
 	private Float egyenleghuf;
-	
+
 	private Float tarolasidij;
-	
+
 	private Float eloleg;
-	
+
 	private String bankszamlaszam;
 
 	private String euadoszam;
-		
+
 	private Float elorarkedvezmeny;
-	
+
 	private Float ajanlottarkedvezmeny;
-	
+
 	private String orszag;
-	
+
 	private String megjegyzes;
 
 	private Boolean internet;
@@ -69,7 +69,7 @@ public class VevoSer implements IsSerializable {
 	public void setElerhetoseg(String elerhetoseg) {
 		this.elerhetoseg = elerhetoseg;
 	}
-	
+
 	public String getTipus() {
 		return tipus;
 	}

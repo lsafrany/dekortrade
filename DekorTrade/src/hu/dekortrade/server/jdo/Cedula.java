@@ -23,7 +23,8 @@ public class Cedula {
 	@Persistent
 	private Date datum;
 
-	public Cedula(String cedula, String rovidnev, String status, String elado,Date datum) {
+	public Cedula(String cedula, String rovidnev, String status, String elado,
+			Date datum) {
 		this.cedula = cedula;
 		this.rovidnev = rovidnev;
 		this.status = status;
@@ -70,5 +71,5 @@ public class Cedula {
 	public void setElado(String elado) {
 		this.elado = elado;
 	}
-	
+
 }

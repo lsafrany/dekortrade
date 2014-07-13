@@ -7,7 +7,7 @@ public class CedulacikkSer implements IsSerializable {
 	private String cedula;
 
 	private String status;
-	
+
 	private String cikkszam;
 
 	private String szinkod;
@@ -25,9 +25,9 @@ public class CedulacikkSer implements IsSerializable {
 	private Float areur;
 
 	private Float arusd;
-	
+
 	private Float fizet;
-	
+
 	private Float fizeteur;
 
 	private Float fizetusd;
@@ -143,5 +143,5 @@ public class CedulacikkSer implements IsSerializable {
 	public void setFizetusd(Float fizetusd) {
 		this.fizetusd = fizetusd;
 	}
-	
+
 }

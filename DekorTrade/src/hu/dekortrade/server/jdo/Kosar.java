@@ -15,10 +15,10 @@ public class Kosar {
 	private String vevo;
 
 	@Persistent
-	private String tipus;	
-		
+	private String tipus;
+
 	@Persistent
-	private String cedula;	
+	private String cedula;
 
 	public Kosar(String elado, String vevo, String tipus, String cedula) {
 
@@ -59,5 +59,5 @@ public class Kosar {
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
-	
+
 }

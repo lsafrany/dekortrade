@@ -26,8 +26,8 @@ public class Kep {
 	@Persistent
 	private Boolean torolt;
 
-	public Kep(String cikkszam, String szinkod, String sorszam, Blob blob, Boolean szinkron,
-			Boolean torolt) {
+	public Kep(String cikkszam, String szinkod, String sorszam, Blob blob,
+			Boolean szinkron, Boolean torolt) {
 		this.cikkszam = cikkszam;
 		this.szinkod = szinkod;
 		this.sorszam = sorszam;

@@ -20,7 +20,7 @@ public class Rendelt {
 	@Persistent
 	private Date datum;
 
-	public Rendelt(String rovidnev, String rendeles, String status,Date datum) {
+	public Rendelt(String rovidnev, String rendeles, String status, Date datum) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.status = status;
