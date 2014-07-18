@@ -1,4 +1,4 @@
-package hu.dekortrade.client.srendszer;
+package hu.dekortrade.client.rendszer;
 
 import com.google.gwt.i18n.client.Constants;
 

@@ -56,8 +56,10 @@ public class Constants {
 	public static final String CEDULA_STATUSZ_FIZETETT_ELORENDELES = "FIZETETT_ELORENDELES";
 
 	public static final String FIZETES_ELORENDELT = "FIZETES_ELORENDELT";
-
+	public static final String FIZETES_TORLESZTES = "FIZETES_TORLESZTES";
+	
 	public static final String CEDULA_RENDELES = "RENDELES";
 	public static final String CEDULA_ZARAS = "ZARAS";
+	public static final String CEDULA_TORLESZTES = "TORLESZTES";
 
 }

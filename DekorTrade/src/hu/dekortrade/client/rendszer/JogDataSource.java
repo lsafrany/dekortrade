@@ -1,4 +1,4 @@
-package hu.dekortrade.client.srendszer;
+package hu.dekortrade.client.rendszer;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;

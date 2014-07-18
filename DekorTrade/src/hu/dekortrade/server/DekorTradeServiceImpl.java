@@ -43,6 +43,7 @@ import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoKosarSer;
 import hu.dekortrade.shared.serialized.VevoSer;
+import hu.dekortrade.shared.serialized.ZarasEgyenlegSer;
 import hu.dekortrade.shared.serialized.ZarasSer;
 
 import java.math.BigInteger;
@@ -2216,7 +2217,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if ((list1 != null) && (!list1.isEmpty())) {
 				for (Kosar l : list1) {
 					Cedula cedula = new Cedula(cedulasorszam, l.getVevo(),
-							tipus, l.getElado(), new Date());
+							tipus, l.getElado(), null,null,null, new Date());
 					pm.makePersistent(cedula);
 					pm.deletePersistent(l);
 				}
@@ -2262,7 +2263,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CedulaSer> getCedula(String vevo, String menu)
+	public List<CedulaSer> getCedula(String vevo, String menu, String tipus)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -2290,7 +2291,11 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 					status = Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES;
 					list = (List<Cedula>) pm.newQuery(query).execute(status);
-				} else {
+				} 
+				else if ((menu.equals(Constants.MENU_LEKERDEZES_CEDULAK)) && (tipus != null)) {
+					status = tipus;
+				}
+				else {
 					list = (List<Cedula>) pm.newQuery(query).execute();
 				}
 			} else {
@@ -2324,6 +2329,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						cedulaSer.setEladonev(felhasznalolist.get(0).getNev());
 					}
 
+					cedulaSer.setBefizethuf(l.getBefizethuf());
+					cedulaSer.setBefizeteur(l.getBefizeteur());
+					cedulaSer.setBefizetusd(l.getBefizetusd());
+					
 					cedulaSer.setDatum(new Date(l.getDatum().getTime()));
 					cedula.add(cedulaSer);
 				}
@@ -2450,7 +2459,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					pm.deletePersistent(l);
 				}
 			}
-
+			
 			pm.flush();
 
 			boolean flush = false;
@@ -2492,11 +2501,15 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 	}
 
 	public String kosarToCedula(String elado, String vevo, String menu,
-			String cedulasorszam) throws IllegalArgumentException,
+			String cedulasorszam,Float befizet, Float befizeteur, Float befizetusd) throws IllegalArgumentException,
 			SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
+
+			Query vevoquery = pm.newQuery(Vevo.class);
+			vevoquery.setFilter("this.rovidnev == providnev");
+			vevoquery.declareParameters("String providnev");
 
 			String tipus = "";
 			String ujtipus = "";
@@ -2549,7 +2562,8 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if ((list1 != null) && (!list1.isEmpty())) {
 				for (Kosar l : list1) {
 					Cedula cedula = new Cedula(cedulasorszam, l.getVevo(),
-							ujtipus, l.getElado(), new Date());
+							ujtipus, l.getElado(), befizet, befizeteur,
+							befizetusd, new Date());
 					pm.makePersistent(cedula);
 					pm.deletePersistent(l);
 				}
@@ -2557,11 +2571,27 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			if (ujtipus.equals(Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES)) {
 				Fizetes fizetes = new Fizetes(cedulasorszam, vevo,
-						Constants.FIZETES_ELORENDELT, elado, fizet, fizeteur,
-						fizetusd, new Date(), Boolean.FALSE);
+						Constants.FIZETES_ELORENDELT, elado, befizet, befizeteur,
+						befizetusd, new Date(), Boolean.FALSE);
 				pm.makePersistent(fizetes);
-			}
 
+				@SuppressWarnings("unchecked")
+				List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery).execute(
+						vevo);
+				if ((vevolist != null) && (!vevolist.isEmpty())) {
+					 float egyenleghuf = vevolist.get(0).getEgyenleghuf();
+					 egyenleghuf = egyenleghuf + (befizet - fizet);
+					 vevolist.get(0).setEgyenleghuf(egyenleghuf);  
+					 float egyenlegeur = vevolist.get(0).getEgyenlegeur();
+					 egyenlegeur = egyenlegeur + (befizeteur - fizeteur);	 
+					 vevolist.get(0).setEgyenlegeur(egyenlegeur); 
+					 float egyenlegusd = vevolist.get(0).getEgyenlegusd();
+					 egyenlegusd = egyenlegusd + (befizetusd - fizetusd);	 
+					 vevolist.get(0).setEgyenlegusd(egyenlegusd); 				 
+				}			
+
+			}
+			
 			pm.flush();
 
 			boolean flush = false;
@@ -2663,7 +2693,34 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return fizetesek;
 	}
 
-	public String createZaras(String penztaros)
+	public ZarasEgyenlegSer getElozoZaras()
+			throws IllegalArgumentException, SQLExceptionSer {
+			
+		ZarasEgyenlegSer zarasEgyenlegSer = new ZarasEgyenlegSer();
+		zarasEgyenlegSer.setEgyenlegeur(new Float(0));
+		zarasEgyenlegSer.setEgyenlegusd(new Float(0));
+		zarasEgyenlegSer.setEgyenleghuf(new Float(0));
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			Query query = pm.newQuery(Zaras.class);
+			query.setOrdering("zaras desc");
+			@SuppressWarnings("unchecked")
+			List<Zaras> list = (List<Zaras>) pm.newQuery(query).execute();
+			if ((list != null) && (!list.isEmpty())) {
+				zarasEgyenlegSer.setEgyenlegeur(list.get(0).getEgyenlegeur());
+				zarasEgyenlegSer.setEgyenlegusd(list.get(0).getEgyenlegusd());
+				zarasEgyenlegSer.setEgyenleghuf(list.get(0).getEgyenleghuf());
+			}
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return zarasEgyenlegSer;
+	}
+	
+	public String createZaras(String penztaros,Float egyenleghuf,Float egyenlegeur, Float egyenlegusd, Float kivethuf, Float kiveteur, Float kivetusd)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		String cedulasorszam = "";
@@ -2689,19 +2746,29 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			@SuppressWarnings("unchecked")
 			List<Fizetes> list = (List<Fizetes>) pm.newQuery(query).execute();
 			int count = 0;
+			float fizet = 0;
+			float fizeteur = 0;
+			float fizetusd = 0;
 			if ((list != null) && (!list.isEmpty())) {
 				for (Fizetes l : list) {
 					Zarasfizetes zarasFizetes = new Zarasfizetes(cedulasorszam,
 							l.getCedula(), l.getVevo(), l.getTipus(),
 							l.getPenztaros(), l.getFizet(), l.getFizeteur(),
 							l.getFizetusd(), l.getDatum());
+					fizet = fizet + l.getFizet();
+					fizeteur = fizeteur + l.getFizeteur();
+					fizetusd = fizetusd + l.getFizetusd();
 					pm.makePersistent(zarasFizetes);
 					pm.deletePersistent(l);
 					count++;
 				}
 			}
 
-			Zaras zaras = new Zaras(cedulasorszam, penztaros, new Date());
+			egyenleghuf = egyenleghuf + fizet;
+			egyenlegeur = egyenlegeur + fizeteur;
+			egyenlegusd = egyenlegusd + fizetusd;
+			
+			Zaras zaras = new Zaras(cedulasorszam, penztaros, kivethuf, kiveteur, kivetusd, egyenleghuf-kivethuf, egyenlegeur-kiveteur, egyenlegusd-kivetusd, new Date());
 			pm.makePersistent(zaras);
 			pm.flush();
 
@@ -2824,6 +2891,14 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 								.getNev());
 					}
 
+					zarasSer.setKivethuf(l.getKivethuf());
+					zarasSer.setKiveteur(l.getKiveteur());
+					zarasSer.setKivetusd(l.getKivetusd());
+					
+					zarasSer.setEgyenleghuf(l.getEgyenleghuf());
+					zarasSer.setEgyenlegeur(l.getEgyenlegeur());
+					zarasSer.setEgyenlegusd(l.getEgyenlegusd());
+					
 					zarasSer.setDatum(new Date(l.getDatum().getTime()));
 
 					zarasok.add(zarasSer);
@@ -2839,4 +2914,140 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return zarasok;
 	}
 
+	public String createTorlesztes(String penztaros,String vevo, Float torleszthuf, Float torleszteur, Float torlesztusd)  throws IllegalArgumentException,
+			SQLExceptionSer {
+
+		String cedulasorszam = "";
+	
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+
+			Query sorszamQuery = pm.newQuery(Sorszam.class);
+			sorszamQuery.setFilter("this.tipus == ptipus");
+			sorszamQuery.declareParameters("String ptipus");
+			@SuppressWarnings("unchecked")
+			List<Sorszam> sorszamList = (List<Sorszam>) pm.newQuery(
+					sorszamQuery).execute(Constants.CEDULA_TORLESZTES);
+			if ((sorszamList != null) && (!sorszamList.isEmpty())) {
+				for (Sorszam l : sorszamList) {
+					l.setCedula(new BigInteger(l.getCedula()).add(
+							BigInteger.ONE).toString());
+					cedulasorszam = l.getCedula();
+				}
+			}
+			
+			Query vevoquery = pm.newQuery(Vevo.class);
+			vevoquery.setFilter("this.rovidnev == providnev");
+			vevoquery.declareParameters("String providnev");
+			@SuppressWarnings("unchecked")
+			List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery).execute(
+					vevo);
+			if ((vevolist != null) && (!vevolist.isEmpty())) {
+				 float egyenleghuf = vevolist.get(0).getEgyenleghuf();
+				 egyenleghuf = egyenleghuf + torleszthuf;
+				 vevolist.get(0).setEgyenleghuf(egyenleghuf);  
+				 float egyenlegeur = vevolist.get(0).getEgyenlegeur();
+				 egyenlegeur = egyenlegeur + torleszteur;	 
+				 vevolist.get(0).setEgyenlegeur(egyenlegeur); 
+				 float egyenlegusd = vevolist.get(0).getEgyenlegusd();
+				 egyenlegusd = egyenlegusd + torlesztusd;	 
+				 vevolist.get(0).setEgyenlegusd(egyenlegusd); 				 
+			}					
+			
+			Fizetes fizetes = new Fizetes(cedulasorszam, vevo,
+					Constants.FIZETES_TORLESZTES, penztaros, torleszthuf, torleszteur,
+					torlesztusd, new Date(), Boolean.FALSE);
+			pm.makePersistent(fizetes);
+
+			pm.flush();
+
+			boolean flush = false;
+			
+			while (!flush) {
+				Query query1 = pm.newQuery(Fizetes.class);
+				query1.setFilter("(this.cedula == pcedula)");
+				query1.declareParameters("String pcedula");
+				@SuppressWarnings("unchecked")
+				List<Zarasfizetes> list1 = (List<Zarasfizetes>) pm.newQuery(
+						query1).execute(cedulasorszam);
+				if ((list1 != null) && (!list1.isEmpty())) {
+					flush = true;
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+		
+		return cedulasorszam;
+	}	
+	
+	public List<FizetesSer> getTorlesztesek()  throws IllegalArgumentException,SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<FizetesSer> torlesztesek = new ArrayList<FizetesSer>();
+
+		try {
+			Query query = pm.newQuery(Fizetes.class);
+			query.setFilter("(this.tipus == ptipus)");
+			query.declareParameters("String ptipus");
+			@SuppressWarnings("unchecked")
+			List<Fizetes> list = (List<Fizetes>) pm.newQuery(query)
+					.execute(Constants.FIZETES_TORLESZTES);
+			if (!list.isEmpty()) {
+				for (Fizetes l : list) {
+					FizetesSer fizetesSer = new FizetesSer();
+					fizetesSer.setCedula(l.getCedula());
+					fizetesSer.setFizet(l.getFizet());
+					fizetesSer.setFizeteur(l.getFizeteur());
+					fizetesSer.setFizetusd(l.getFizetusd());
+					torlesztesek.add(fizetesSer);
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return torlesztesek;
+	}	
+
+	public List<FizetesSer> getTorlesztes(String cedula)  throws IllegalArgumentException,SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<FizetesSer> torlesztes = new ArrayList<FizetesSer>();
+
+		try {
+			Query query = pm.newQuery(Fizetes.class);
+			query.setFilter("(this.cedula == pcedula) && (this.tipus == ptipus)");
+			query.declareParameters("String pcedula,String ptipus");
+			@SuppressWarnings("unchecked")
+			List<Fizetes> list = (List<Fizetes>) pm.newQuery(query)
+					.execute(cedula, Constants.FIZETES_TORLESZTES);
+			if (!list.isEmpty()) {
+				for (Fizetes l : list) {
+					FizetesSer fizetesSer = new FizetesSer();
+					fizetesSer.setCedula(l.getCedula());
+					fizetesSer.setFizet(l.getFizet());
+					fizetesSer.setFizeteur(l.getFizeteur());
+					fizetesSer.setFizetusd(l.getFizetusd());
+					torlesztes.add(fizetesSer);
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return torlesztes;
+	}	
+	
 }

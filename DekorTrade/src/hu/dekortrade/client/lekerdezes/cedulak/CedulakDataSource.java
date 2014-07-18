@@ -16,6 +16,7 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceEnumField;
+import com.smartgwt.client.data.fields.DataSourceFloatField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
@@ -37,6 +38,7 @@ public class CedulakDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceTextField(CedulakConstants.CEDULA_CEDULA,
 				cedulaLabels.cedula());
+		field.setPrimaryKey(true);
 		addField(field);
 
 		field = new DataSourceEnumField(CedulakConstants.CEDULA_STATUS,
@@ -60,6 +62,18 @@ public class CedulakDataSource extends GwtRpcDataSource {
 				cedulaLabels.eladonev());
 		addField(field);
 
+		field = new DataSourceFloatField(CedulakConstants.CEDULA_BEFIZETHUF,
+				cedulaLabels.befizet());
+		addField(field);
+
+		field = new DataSourceFloatField(CedulakConstants.CEDULA_BEFIZETEUR,
+				cedulaLabels.befizeteur());
+		addField(field);
+
+		field = new DataSourceFloatField(CedulakConstants.CEDULA_BEFIZETUSD,
+				cedulaLabels.befizetusd());
+		addField(field);
+
 		field = new DataSourceDateField(CedulakConstants.CEDULA_DATUM,
 				cedulaLabels.datum());
 		addField(field);
@@ -69,7 +83,8 @@ public class CedulakDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getCedula(vevo, menu,
+		dekorTradeService.getCedula(vevo, menu,request.getCriteria().getAttributeAsString(
+				CedulakConstants.CEDULA_STATUS),
 				new AsyncCallback<List<CedulaSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -122,6 +137,9 @@ public class CedulakDataSource extends GwtRpcDataSource {
 		to.setAttribute(CedulakConstants.CEDULA_VEVONEV, from.getVevonev());
 		to.setAttribute(CedulakConstants.CEDULA_ELADO, from.getElado());
 		to.setAttribute(CedulakConstants.CEDULA_ELADONEV, from.getEladonev());
+		to.setAttribute(CedulakConstants.CEDULA_BEFIZETHUF, from.getBefizethuf());
+		to.setAttribute(CedulakConstants.CEDULA_BEFIZETEUR, from.getBefizeteur());
+		to.setAttribute(CedulakConstants.CEDULA_BEFIZETUSD, from.getBefizetusd());
 		to.setAttribute(CedulakConstants.CEDULA_DATUM, from.getDatum());
 	}
 

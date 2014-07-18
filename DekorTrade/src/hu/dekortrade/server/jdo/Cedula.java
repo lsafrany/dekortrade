@@ -21,14 +21,26 @@ public class Cedula {
 	private String elado;
 
 	@Persistent
+	private Float befizethuf;
+
+	@Persistent
+	private Float befizeteur;
+
+	@Persistent
+	private Float befizetusd;
+
+	@Persistent
 	private Date datum;
 
-	public Cedula(String cedula, String rovidnev, String status, String elado,
+	public Cedula(String cedula, String rovidnev, String status, String elado, Float befizethuf, Float befizeteur, Float befizetusd,
 			Date datum) {
 		this.cedula = cedula;
 		this.rovidnev = rovidnev;
 		this.status = status;
 		this.elado = elado;
+		this.befizethuf = befizethuf;
+		this.befizeteur = befizeteur;
+		this.befizetusd = befizetusd;
 		this.datum = datum;
 	}
 
@@ -70,6 +82,30 @@ public class Cedula {
 
 	public void setElado(String elado) {
 		this.elado = elado;
+	}
+
+	public Float getBefizethuf() {
+		return befizethuf;
+	}
+
+	public void setBefizethuf(Float befizethuf) {
+		this.befizethuf = befizethuf;
+	}
+
+	public Float getBefizeteur() {
+		return befizeteur;
+	}
+
+	public void setBefizeteur(Float befizeteur) {
+		this.befizeteur = befizeteur;
+	}
+
+	public Float getBefizetusd() {
+		return befizetusd;
+	}
+
+	public void setBefizetusd(Float befizetusd) {
+		this.befizetusd = befizetusd;
 	}
 
 }

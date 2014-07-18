@@ -8,6 +8,9 @@ public class CedulakConstants {
 	public static final String CEDULA_STATUS = "cedula_status";
 	public static final String CEDULA_ELADO = "cedula_elado";
 	public static final String CEDULA_ELADONEV = "cedula_eladonev";
+	public static final String CEDULA_BEFIZETHUF = "cedula_befizethuf";
+	public static final String CEDULA_BEFIZETEUR = "cedula_befizeteur";
+	public static final String CEDULA_BEFIZETUSD = "cedula_befizetusd";
 	public static final String CEDULA_DATUM = "cedula_datum";
 
 	public static final String CEDULACIKK_CEDULA = "cedulacikk_cedula";

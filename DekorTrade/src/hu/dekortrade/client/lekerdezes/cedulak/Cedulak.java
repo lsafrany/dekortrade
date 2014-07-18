@@ -29,6 +29,8 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -55,6 +57,31 @@ public class Cedulak {
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
 
+		final HLayout selectLayout = new HLayout();
+		selectLayout.setAlign(Alignment.CENTER);
+		selectLayout.setHeight("3%");
+		selectLayout.setWidth("70%");
+
+		final DynamicForm form = new DynamicForm();
+		form.setHeight("40%");
+		form.setNumCols(2);
+		form.setColWidths("40%", "*");
+
+		final SelectItem cedulatipus = new SelectItem();  
+		cedulatipus.setTitle(cedulaLabels.cedulatipus());
+		cedulatipus.setValueMap(ClientConstants.getCedulaTipus()); 
+		
+		form.setFields(cedulatipus);
+		
+		HLayout selectokButtonLayout = new HLayout();
+		selectokButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		final IButton selectokIButton = new IButton(commonLabels.filter());
+		selectokButtonLayout.setAlign(Alignment.CENTER);
+		selectokButtonLayout.addMember(selectokIButton);
+		
+		selectLayout.addMember(form);
+		selectLayout.addMember(selectokButtonLayout);
+		
 		VLayout cedulaLayout = new VLayout();
 		cedulaLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
@@ -99,8 +126,7 @@ public class Cedulak {
 		cedulaGrid.setCanSort(false);
 		cedulaGrid.setShowAllRecords(true);
 		cedulaGrid.setDataSource(cedulaDataSource);
-		cedulaGrid.setAutoFetchData(true);
-
+	
 		ListGridField cedulaGridField = new ListGridField(
 				CedulakConstants.CEDULA_CEDULA);
 		cedulaGridField.setWidth("10%");
@@ -165,6 +191,7 @@ public class Cedulak {
 			buttonsLayout.addMember(cancelButtonLayout);
 		}
 
+		cedulaLayout.addMember(selectLayout);
 		cedulaLayout.addMember(cedulaGrid);
 		cedulaLayout.addMember(buttonsLayout);
 
@@ -268,12 +295,25 @@ public class Cedulak {
 		middleLayout.addMember(cedulaLayout);
 		middleLayout.addMember(cedulacikkLayout);
 
+		selectokIButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				cedulaGrid.invalidateCache();
+				Criteria criteria = new Criteria();
+				criteria.setAttribute(CedulakConstants.CEDULA_STATUS,cedulatipus.getValueAsString());
+				cedulaGrid.fetchData(criteria);
+				cedulacikkGrid.setData(new ListGridRecord[] {});
+				selectIButton.setDisabled(true);
+			}
+		});
+
 		if (menu.equals(Constants.MENU_LEKERDEZES_CEDULAK)
 				|| menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
 			refreshIButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					cedulaGrid.invalidateCache();
-					cedulaGrid.fetchData();
+					Criteria criteria = new Criteria();
+					criteria.setAttribute(CedulakConstants.CEDULA_STATUS,cedulatipus.getValueAsString());
+					cedulaGrid.fetchData(criteria);
 					cedulacikkGrid.setData(new ListGridRecord[] {});
 					selectIButton.setDisabled(true);
 				}
@@ -302,7 +342,14 @@ public class Cedulak {
 							cedulaGrid.getSelectedRecord().getAttribute(
 									CedulakConstants.CEDULA_STATUS),
 							cedulaGrid.getSelectedRecord().getAttribute(
-									CedulakConstants.CEDULA_VEVONEV), menu));
+									CedulakConstants.CEDULA_VEVONEV), 									
+							cedulaGrid.getSelectedRecord().getAttributeAsFloat(
+									CedulakConstants.CEDULA_BEFIZETHUF), 
+							cedulaGrid.getSelectedRecord().getAttributeAsFloat(
+									CedulakConstants.CEDULA_BEFIZETEUR), 
+							cedulaGrid.getSelectedRecord().getAttributeAsFloat(
+									CedulakConstants.CEDULA_BEFIZETUSD), 
+									menu));
 				}
 				if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)
 						|| menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
@@ -382,7 +429,13 @@ public class Cedulak {
 						cedulaGrid.getSelectedRecord().getAttribute(
 								CedulakConstants.CEDULA_STATUS));
 				cedulacikkGrid.fetchData(criteria);
-				selectIButton.setDisabled(false);
+				
+				if ((menu.equals(Constants.MENU_LEKERDEZES_CEDULAK)) && (cedulaGrid.getSelectedRecord().getAttribute(CedulakConstants.CEDULA_STATUS).equals(Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES))) {
+					selectIButton.setDisabled(true);
+				}
+				else {
+					selectIButton.setDisabled(false);
+				}	
 			}
 		});
 
@@ -410,7 +463,7 @@ public class Cedulak {
 
 	}
 
-	public Canvas printCedula(String cedula, String tipus, String vevonev,
+	public Canvas printCedula(String cedula, String tipus, String vevonev, Float befizet, Float befizeteur, Float befizetusd,
 			final String menu) {
 		DisplayRequest.counterInit();
 
@@ -524,7 +577,7 @@ public class Cedulak {
 		HLayout usdCurrLabelLayout = new HLayout();
 		usdCurrLabelLayout.setAlign(Alignment.CENTER);
 		usdCurrLabelLayout.setWidth("50%");
-		Label usdCurrLabel = new Label("USD :");
+		Label usdCurrLabel = new Label(cedulaLabels.fizetusd());
 		usdCurrLabel.setAlign(Alignment.CENTER);
 		usdCurrLabelLayout.addMember(usdCurrLabel);
 
@@ -538,6 +591,27 @@ public class Cedulak {
 		fizetLayout.addMember(usdCurrLabelLayout);
 		fizetLayout.addMember(usdLabelLayout);
 
+		HLayout befizetLayout = new HLayout();
+		befizetLayout.setHeight("3%");
+		befizetLayout.setWidth("100%");
+
+		HLayout beusdCurrLabelLayout = new HLayout();
+		beusdCurrLabelLayout.setAlign(Alignment.CENTER);
+		beusdCurrLabelLayout.setWidth("50%");
+		Label beusdCurrLabel = new Label(cedulaLabels.befizetusd());
+		beusdCurrLabel.setAlign(Alignment.CENTER);
+		beusdCurrLabelLayout.addMember(beusdCurrLabel);
+
+		HLayout beusdLabelLayout = new HLayout();
+		beusdLabelLayout.setAlign(Alignment.CENTER);
+		beusdLabelLayout.setWidth("50%");
+		final Label beusdLabel = new Label(befizetusd == null ? "" : befizetusd.toString());
+		beusdLabel.setAlign(Alignment.CENTER);
+		beusdLabelLayout.addMember(beusdLabel);
+
+		befizetLayout.addMember(beusdCurrLabelLayout);
+		befizetLayout.addMember(beusdLabelLayout);
+		
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -562,6 +636,10 @@ public class Cedulak {
 		middleLayout1.addMember(titleLayout);
 		middleLayout1.addMember(cedulacikkLayout);
 		middleLayout1.addMember(fizetLayout);
+		
+		if (tipus.equals(Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES)) {	
+			middleLayout1.addMember(befizetLayout);
+		}
 		middleLayout.addMember(middleLayout1);
 		middleLayout.addMember(buttonsLayout);
 

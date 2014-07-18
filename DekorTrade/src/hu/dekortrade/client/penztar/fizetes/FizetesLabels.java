@@ -6,4 +6,9 @@ public interface FizetesLabels extends Constants {
 
 	String kosar();
 
+	String befizetes();
+	String befizet();
+	String befizeteur();
+	String befizetusd();
+
 }

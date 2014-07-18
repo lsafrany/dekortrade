@@ -7,6 +7,7 @@ import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.client.lekerdezes.cedulak.Cedulak;
+import hu.dekortrade.client.penztar.torlesztes.Torlesztes;
 import hu.dekortrade.client.rendeles.elorendeles.Elorendeles;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
@@ -29,6 +30,8 @@ import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.validator.IsFloatValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
@@ -45,6 +48,8 @@ public class Vevo {
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
+	private IsFloatValidator isFloatValidator = new IsFloatValidator();
+	
 	public Canvas get(final String menu) {
 		DisplayRequest.counterInit();
 
@@ -163,8 +168,9 @@ public class Vevo {
 
 		vevoLayout.addMember(vevoGrid);
 		vevoLayout.addMember(buttonsLayout);
-
+	
 		final IButton selectOKButton = new IButton(commonLabels.select());
+		final IButton torlesztButton = new IButton(vevoLabels.torlesztes());
 
 		if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)
 				|| menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
@@ -176,13 +182,30 @@ public class Vevo {
 			selectOKButtonLayout
 					.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 			selectOKButtonLayout.setAlign(Alignment.CENTER);
-			selectOKButton.disable();
+				selectOKButton.disable();
 			selectOKButtonLayout.addMember(selectOKButton);
 
 			buttonsLayout2.addMember(selectOKButtonLayout);
 
 			vevoLayout.addMember(buttonsLayout2);
 
+		}
+
+		if (menu.equals(Constants.MENU_PENZTAR_TORLESZTES)) {
+			HLayout buttonsLayout2 = new HLayout();
+			buttonsLayout2.setHeight("3%");
+			buttonsLayout2.setWidth("70%");
+
+			HLayout torlesztButtonLayout = new HLayout();
+			torlesztButtonLayout
+					.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+			torlesztButtonLayout.setAlign(Alignment.CENTER);
+			torlesztButton.disable();
+			torlesztButtonLayout.addMember(torlesztButton);
+
+			buttonsLayout2.addMember(torlesztButtonLayout);
+
+			vevoLayout.addMember(buttonsLayout2);			
 		}
 
 		middleLayout.addMember(vevoLayout);
@@ -201,6 +224,13 @@ public class Vevo {
 					selectOKButton.setDisabled(false);
 				}
 
+				if (menu.equals(Constants.MENU_PENZTAR_TORLESZTES)) {
+					torlesztButton.setDisabled(false);
+				}
+				else  {
+					torlesztButton.setDisabled(true);
+				}
+						
 				if (vevoGrid.getSelectedRecord().getAttributeAsBoolean(
 						VevoConstants.VEVO_INTERNET))
 					jelszoButton.setDisabled(false);
@@ -257,6 +287,122 @@ public class Vevo {
 					}
 				});
 
+			}
+		});
+
+		torlesztButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				final Window winModal = new Window();
+				winModal.setWidth(300);
+				winModal.setHeight(150);
+				winModal.setTitle(vevoLabels.torlesztes());
+				winModal.setShowMinimizeButton(false);
+				winModal.setShowCloseButton(false);
+				winModal.setIsModal(true);
+				winModal.setShowModalMask(true);
+				winModal.centerInPage();
+				
+				final DynamicForm form = new DynamicForm();
+				form.setHeight("40%");
+				form.setNumCols(2);
+				form.setColWidths("40%", "*");
+		
+				final TextItem torleszt = new TextItem();   
+				torleszt.setTitle(vevoLabels.torleszt());
+				torleszt.setValue("0");
+				torleszt.setValidators(isFloatValidator);
+
+				final TextItem torleszteur = new TextItem();   
+				torleszteur.setTitle(vevoLabels.torleszteur());
+				torleszteur.setValue("0");
+				torleszteur.setValidators(isFloatValidator);
+
+				final TextItem torlesztusd = new TextItem();   
+				torlesztusd.setTitle(vevoLabels.torlesztusd());
+				torlesztusd.setValue("0");
+				torlesztusd.setValidators(isFloatValidator);
+				
+				form.setFields(torleszt,torleszteur,torlesztusd);
+		
+				final HLayout buttonsLayout = new HLayout();
+				buttonsLayout.setWidth100();
+
+				HLayout okLayout = new HLayout();
+				okLayout.setAlign(Alignment.CENTER);
+				IButton okIButton = new IButton(commonLabels.ok());
+				okIButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+							
+						SC.ask(commonLabels.sure(), new BooleanCallback() {
+							public void execute(Boolean value) {
+								if (value != null && value) {
+									DisplayRequest.startRequest();
+												
+									final Float tmpbefizet = new Float(torleszt.getValueAsString());
+									final Float tmpbefizeteur = new Float(torleszteur.getValueAsString());
+									final Float tmpbefizetusd = new Float(torlesztusd.getValueAsString());
+									
+									dekorTradeService.createTorlesztes(
+											UserInfo.userId,
+											vevoGrid.getSelectedRecord().getAttributeAsString(
+													VevoConstants.VEVO_ROVIDNEV),
+											tmpbefizet,
+											tmpbefizeteur,
+											tmpbefizetusd,
+											new AsyncCallback<String>() {
+												public void onFailure(
+														Throwable caught) {
+													DisplayRequest.serverResponse();
+													if (caught instanceof SQLExceptionSer)
+														SC.warn(commonLabels
+																.server_sqlerror()
+																+ " : "
+																+ caught.getMessage());
+													else
+														SC.warn(commonLabels
+																.server_error());
+												}
+
+												public void onSuccess(String result1) {
+													DisplayRequest.serverResponse();
+													winModal.destroy();
+													Torlesztes torlesztes = new Torlesztes();
+													middleLayout
+															.removeMembers(middleLayout
+																	.getMembers());
+													middleLayout.addMember(torlesztes.printTorlesztes(
+															result1,vevoGrid.getSelectedRecord().getAttributeAsString(
+																	VevoConstants.VEVO_NEV),Constants.MENU_PENZTAR_TORLESZTES));
+												}
+											});
+
+								}
+							}
+						});
+					}
+				});
+				okLayout.addMember(okIButton);
+				
+				HLayout cancelLayout = new HLayout();
+				cancelLayout.setAlign(Alignment.CENTER);
+				IButton cancelIButton = new IButton(commonLabels.cancel());
+				cancelIButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						winModal.destroy();
+					}
+				});
+				cancelLayout.addMember(cancelIButton);
+
+				buttonsLayout.addMember(okLayout);
+				buttonsLayout.addMember(cancelLayout);
+				
+				winModal.addItem(form);
+				winModal.addItem(buttonsLayout);
+				
+				winModal.show();
+			
+				
 			}
 		});
 
@@ -384,6 +530,6 @@ public class Vevo {
 		winModal.addItem(buttonsLayout);
 		winModal.show();
 
-	}
-
+	}	
+	
 }

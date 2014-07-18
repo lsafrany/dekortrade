@@ -29,4 +29,15 @@ public interface ZarasLabels extends Constants {
 	String elorendeltfizetes();
 
 	String zaras();
+	
+	String zaraskivet();
+	
+	String kivet();
+
+	String kiveteur();
+
+	String kivetusd();
+
+	String torlesztes();
+	
 }

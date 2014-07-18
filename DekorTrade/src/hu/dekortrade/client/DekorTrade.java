@@ -5,7 +5,7 @@ import hu.dekortrade.client.lekerdezes.Lekerdezes;
 import hu.dekortrade.client.penztar.Penztar;
 import hu.dekortrade.client.raktar.Raktar;
 import hu.dekortrade.client.rendeles.Rendeles;
-import hu.dekortrade.client.srendszer.Rendszer;
+import hu.dekortrade.client.rendszer.Rendszer;
 import hu.dekortrade.client.torzsadat.Torzsadat;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;

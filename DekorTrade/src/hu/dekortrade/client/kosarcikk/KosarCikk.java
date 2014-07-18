@@ -629,14 +629,14 @@ public class KosarCikk {
 														.printCedula(
 																result,
 																Constants.CEDULA_STATUSZ_ELORENDELT,
-																vevonev, menu));
+																vevonev, null,null, null, menu));
 											}
 										});
 							}
 
 							if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
 								dekorTradeService.kosarToCedula(elado, vevo,
-										menu, cedula,
+										menu, cedula,null,null,null,
 										new AsyncCallback<String>() {
 											public void onFailure(
 													Throwable caught) {

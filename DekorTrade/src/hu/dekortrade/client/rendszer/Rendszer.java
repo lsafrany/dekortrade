@@ -1,4 +1,4 @@
-package hu.dekortrade.client.srendszer;
+package hu.dekortrade.client.rendszer;
 
 import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DisplayRequest;

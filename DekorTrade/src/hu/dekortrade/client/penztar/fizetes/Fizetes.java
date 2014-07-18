@@ -28,8 +28,12 @@ import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.validator.IsFloatValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
@@ -44,10 +48,12 @@ public class Fizetes {
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private FizetesLabels cashPayLabels = GWT.create(FizetesLabels.class);
+	private FizetesLabels fizetesLabels = GWT.create(FizetesLabels.class);
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
+	private IsFloatValidator isFloatValidator = new IsFloatValidator();
+	
 	public Canvas get() {
 		DisplayRequest.counterInit();
 
@@ -157,7 +163,7 @@ public class Fizetes {
 			});
 
 			final ListGrid kosarGrid = new ListGrid();
-			kosarGrid.setTitle(cashPayLabels.kosar());
+			kosarGrid.setTitle(fizetesLabels.kosar());
 			kosarGrid.setWidth("60%");
 			kosarGrid.setShowHeaderContextMenu(false);
 			kosarGrid.setShowHeaderMenuButton(false);
@@ -288,52 +294,125 @@ public class Fizetes {
 
 			okButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					SC.ask(commonLabels.sure(), new BooleanCallback() {
-						public void execute(Boolean value) {
-							if (value != null && value) {
-								DisplayRequest.startRequest();
-								dekorTradeService.kosarToCedula(
-										UserInfo.userId, result.getVevo(),
-										Constants.MENU_PENZTAR_FIZETES,
-										result.getCedula(),
-										new AsyncCallback<String>() {
-											public void onFailure(
-													Throwable caught) {
-												DisplayRequest.serverResponse();
-												if (caught instanceof SQLExceptionSer)
-													SC.warn(commonLabels
-															.server_sqlerror()
-															+ " : "
-															+ caught.getMessage());
-												else
-													SC.warn(commonLabels
-															.server_error());
-											}
+								
+					final Window winModal = new Window();
+					winModal.setWidth(300);
+					winModal.setHeight(150);
+					winModal.setTitle(fizetesLabels.befizetes());
+					winModal.setShowMinimizeButton(false);
+					winModal.setShowCloseButton(false);
+					winModal.setIsModal(true);
+					winModal.setShowModalMask(true);
+					winModal.centerInPage();
+					
+					final DynamicForm form = new DynamicForm();
+					form.setHeight("40%");
+					form.setNumCols(2);
+					form.setColWidths("40%", "*");
+			
+					final TextItem befizet = new TextItem();   
+					befizet.setTitle(fizetesLabels.befizet());
+					befizet.setValue("0");
+					befizet.setValidators(isFloatValidator);
 
-											public void onSuccess(String result1) {
-												DisplayRequest.serverResponse();
+					final TextItem befizeteur = new TextItem();   
+					befizeteur.setTitle(fizetesLabels.befizeteur());
+					befizeteur.setValue("0");
+					befizeteur.setValidators(isFloatValidator);
 
-												middleLayout
-														.removeMembers(middleLayout
-																.getMembers());
-												Cedulak cedula = new Cedulak();
-												middleLayout.addMember(cedula.printCedula(
-														result.getCedula(),
-														Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
-														result.getVevonev(),
-														Constants.MENU_PENZTAR_FIZETES));
-											}
-										});
+					final TextItem befizetusd = new TextItem();   
+					befizetusd.setTitle(fizetesLabels.befizetusd());
+					befizetusd.setValue(usdLabel.getContents());
+					befizetusd.setValidators(isFloatValidator);
+					
+					form.setFields(befizet,befizeteur,befizetusd);
+			
+					final HLayout buttonsLayout = new HLayout();
+					buttonsLayout.setWidth100();
 
-							}
+					HLayout okLayout = new HLayout();
+					okLayout.setAlign(Alignment.CENTER);
+					IButton okIButton = new IButton(commonLabels.ok());
+					okIButton.addClickHandler(new ClickHandler() {
+						public void onClick(ClickEvent event) {
+								
+							SC.ask(commonLabels.sure(), new BooleanCallback() {
+								public void execute(Boolean value) {
+									if (value != null && value) {
+										DisplayRequest.startRequest();
+													
+										final Float tmpbefizet = new Float(befizet.getValueAsString());
+										final Float tmpbefizeteur = new Float(befizeteur.getValueAsString());
+										final Float tmpbefizetusd = new Float(befizetusd.getValueAsString());
+										
+										dekorTradeService.kosarToCedula(
+												UserInfo.userId, result.getVevo(),
+												Constants.MENU_PENZTAR_FIZETES,
+												result.getCedula(),tmpbefizet,
+												tmpbefizeteur,tmpbefizetusd,
+												new AsyncCallback<String>() {
+													public void onFailure(
+															Throwable caught) {
+														DisplayRequest.serverResponse();
+														if (caught instanceof SQLExceptionSer)
+															SC.warn(commonLabels
+																	.server_sqlerror()
+																	+ " : "
+																	+ caught.getMessage());
+														else
+															SC.warn(commonLabels
+																	.server_error());
+													}
 
+													public void onSuccess(String result1) {
+														DisplayRequest.serverResponse();
+														winModal.destroy();
+														middleLayout
+																.removeMembers(middleLayout
+																		.getMembers());
+														Cedulak cedula = new Cedulak();
+														middleLayout.addMember(cedula.printCedula(
+																result.getCedula(),
+																Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
+																result.getVevonev(),
+																tmpbefizet,
+																tmpbefizeteur,
+																tmpbefizetusd,
+																Constants.MENU_PENZTAR_FIZETES));
+													}
+												});
+
+									}
+								}
+							});
 						}
 					});
+					okLayout.addMember(okIButton);
+					
+					HLayout cancelLayout = new HLayout();
+					cancelLayout.setAlign(Alignment.CENTER);
+					IButton cancelIButton = new IButton(commonLabels.cancel());
+					cancelIButton.addClickHandler(new ClickHandler() {
+						public void onClick(ClickEvent event) {
+							winModal.destroy();
+						}
+					});
+					cancelLayout.addMember(cancelIButton);
+
+					buttonsLayout.addMember(okLayout);
+					buttonsLayout.addMember(cancelLayout);
+					
+					winModal.addItem(form);
+					winModal.addItem(buttonsLayout);
+					
+					winModal.show();
+				
+					
 				}
 			});
 
 		}
-
+	
 		return middleLayout;
 
 	}

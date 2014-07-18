@@ -39,6 +39,8 @@ public class ZarasConstants {
 			fizetestipus = new LinkedHashMap<String, String>();
 			fizetestipus.put(Constants.FIZETES_ELORENDELT,
 					cashCloseLabels.elorendeltfizetes());
+			fizetestipus.put(Constants.FIZETES_TORLESZTES,
+					cashCloseLabels.torlesztes());
 		}
 		return fizetestipus;
 	}

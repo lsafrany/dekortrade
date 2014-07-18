@@ -64,9 +64,11 @@ public class Init extends HttpServlet {
 			Sorszam elorendeltsorszam = new Sorszam("0",
 					Constants.CEDULA_RENDELES);
 			Sorszam zarassorszam = new Sorszam("0", Constants.CEDULA_ZARAS);
+			Sorszam torlesztessorszam = new Sorszam("0", Constants.CEDULA_TORLESZTES);		
 			pm.makePersistent(elorendeltsorszam);
 			pm.makePersistent(zarassorszam);
-
+			pm.makePersistent(torlesztessorszam);
+			
 			out.append("<h1>Zaras</h1>");
 
 			Query zarasQuery = pm.newQuery(Zaras.class);

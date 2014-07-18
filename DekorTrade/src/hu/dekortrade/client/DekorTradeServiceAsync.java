@@ -18,6 +18,7 @@ import hu.dekortrade.shared.serialized.UploadSer;
 import hu.dekortrade.shared.serialized.UserSer;
 import hu.dekortrade.shared.serialized.VevoKosarSer;
 import hu.dekortrade.shared.serialized.VevoSer;
+import hu.dekortrade.shared.serialized.ZarasEgyenlegSer;
 import hu.dekortrade.shared.serialized.ZarasSer;
 
 import java.util.List;
@@ -147,7 +148,7 @@ public interface DekorTradeServiceAsync {
 	void createCedula(String elado, String vevo, String menu,
 			AsyncCallback<String> asyncCallback);
 
-	void getCedula(String vevo, String menu,
+	void getCedula(String vevo, String menu, String tipus,
 			AsyncCallback<List<CedulaSer>> asyncCallback);
 
 	void getCedulacikk(String cedula, String tipus,
@@ -156,15 +157,24 @@ public interface DekorTradeServiceAsync {
 	void cedulaToKosar(String elado, String vevo, String menu, String cedula,
 			AsyncCallback<String> asyncCallback);
 
-	void kosarToCedula(String elado, String vevo, String menu, String cedula,
+	void kosarToCedula(String elado, String vevo, String menu, String cedula,Float befizet, Float befizeteur, Float befizetusd,
 			AsyncCallback<String> asyncCallback);
 
 	void getFizetes(AsyncCallback<List<FizetesSer>> asyncCallback);
 
-	void createZaras(String penztaros, AsyncCallback<String> asyncCallback);
+	void getElozoZaras(AsyncCallback<ZarasEgyenlegSer> asyncCallback);
+
+	void createZaras(String penztaros,Float egyenleghuf,Float egyenlegeur, Float egyenlegusd, Float kivethuf, Float kiveteur, Float kivetusd, AsyncCallback<String> asyncCallback);
 
 	void getZarasFizetes(String zaras,
 			AsyncCallback<List<FizetesSer>> asyncCallback);
 
 	void getZaras(AsyncCallback<List<ZarasSer>> asyncCallback);
+
+	void createTorlesztes(String penztaros,String vevo,Float torleszthuf, Float torleszteur, Float torlesztusd, AsyncCallback<String> asyncCallback);
+
+	void getTorlesztesek(AsyncCallback<List<FizetesSer>> asyncCallback);
+
+	void getTorlesztes(String cedula, AsyncCallback<List<FizetesSer>> asyncCallback);
+
 }

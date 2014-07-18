@@ -14,6 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceFloatField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
@@ -30,7 +31,7 @@ public class ZarasokDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceTextField(ZarasokConstants.ZARAS_ZARAS,
 				zarasLabels.zaras());
-		field.setHidden(true);
+		field.setPrimaryKey(true);
 		addField(field);
 
 		field = new DataSourceTextField(ZarasokConstants.ZARAS_PENZTAROS,
@@ -40,6 +41,30 @@ public class ZarasokDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceTextField(ZarasokConstants.ZARAS_PENZTAROSNEV,
 				zarasLabels.penztaros());
+		addField(field);
+
+		field = new DataSourceFloatField(ZarasokConstants.ZARAS_KIVETHUF,
+				zarasLabels.kivethuf());
+		addField(field);
+	
+		field = new DataSourceFloatField(ZarasokConstants.ZARAS_KIVETEUR,
+				zarasLabels.kiveteur());
+		addField(field);
+
+		field = new DataSourceFloatField(ZarasokConstants.ZARAS_KIVETUSD,
+				zarasLabels.kivetusd());
+		addField(field);
+
+		field = new DataSourceFloatField(ZarasokConstants.ZARAS_EGYENLEGHUF,
+				zarasLabels.egyenleghuf());
+		addField(field);
+	
+		field = new DataSourceFloatField(ZarasokConstants.ZARAS_EGYENLEGEUR,
+				zarasLabels.egyenlegeur());
+		addField(field);
+
+		field = new DataSourceFloatField(ZarasokConstants.ZARAS_EGYENLEGUSD,
+				zarasLabels.egyenlegusd());
 		addField(field);
 
 		field = new DataSourceTextField(ZarasokConstants.ZARAS_DATUM,
@@ -99,6 +124,21 @@ public class ZarasokDataSource extends GwtRpcDataSource {
 		to.setAttribute(ZarasokConstants.ZARAS_PENZTAROS, from.getPenztaros());
 		to.setAttribute(ZarasokConstants.ZARAS_PENZTAROSNEV,
 				from.getPenztarosnev());
+		
+		to.setAttribute(ZarasokConstants.ZARAS_KIVETHUF,
+				from.getKivethuf());
+		to.setAttribute(ZarasokConstants.ZARAS_KIVETEUR,
+				from.getKiveteur());
+		to.setAttribute(ZarasokConstants.ZARAS_KIVETUSD,
+				from.getKivetusd());
+
+		to.setAttribute(ZarasokConstants.ZARAS_EGYENLEGHUF,
+				from.getEgyenleghuf());
+		to.setAttribute(ZarasokConstants.ZARAS_EGYENLEGEUR,
+				from.getEgyenlegeur());
+		to.setAttribute(ZarasokConstants.ZARAS_EGYENLEGUSD,
+				from.getEgyenlegusd());
+		
 		to.setAttribute(ZarasokConstants.ZARAS_DATUM, from.getDatum());
 	}
 }

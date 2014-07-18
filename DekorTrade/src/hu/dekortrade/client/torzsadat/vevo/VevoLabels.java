@@ -51,4 +51,12 @@ public interface VevoLabels extends Constants {
 	String export();
 
 	String magyarorszag();
+	
+	String torlesztes();
+
+	String torleszt();
+	
+	String torleszteur();
+	
+	String torlesztusd();
 }

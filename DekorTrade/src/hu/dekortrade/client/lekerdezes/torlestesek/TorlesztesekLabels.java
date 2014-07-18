@@ -4,6 +4,11 @@ import com.google.gwt.i18n.client.Constants;
 
 public interface TorlesztesekLabels extends Constants {
 
-	String fejlesztes_alatt();
+	String torlesztesek ();
+	
+	String cedula ();
+	String torleszt ();
+	String torleszteur ();
+	String torlesztusd ();
 
 }

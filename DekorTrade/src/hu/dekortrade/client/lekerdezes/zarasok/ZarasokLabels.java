@@ -8,6 +8,18 @@ public interface ZarasokLabels extends Constants {
 
 	String penztaros();
 
+	String kivethuf();
+	
+	String kiveteur();
+	
+	String kivetusd();
+	
+	String egyenleghuf();
+
+	String egyenlegeur();
+	
+	String egyenlegusd();
+	
 	String datum();
 
 }

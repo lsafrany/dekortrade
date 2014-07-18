@@ -16,6 +16,7 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
@@ -92,6 +93,8 @@ public class Zarasok {
 		zarasGrid.setShowAllRecords(true);
 		zarasGrid.setDataSource(zarasDataSource);
 		zarasGrid.setAutoFetchData(true);
+		zarasGrid.setCanExpandRecords(true);
+		zarasGrid.setExpansionMode(ExpansionMode.DETAILS);
 
 		ListGridField zarasGridField = new ListGridField(
 				ZarasokConstants.ZARAS_ZARAS);
@@ -275,7 +278,14 @@ public class Zarasok {
 				middleLayout.addMember(zaras.printZaras(
 						zarasGrid.getSelectedRecord().getAttribute(
 								ZarasokConstants.ZARAS_ZARAS),
-						Constants.MENU_LEKERDEZES_ZARASOK));
+						Constants.MENU_LEKERDEZES_ZARASOK,
+						zarasGrid.getSelectedRecord().getAttributeAsFloat(
+								ZarasokConstants.ZARAS_KIVETHUF),
+						zarasGrid.getSelectedRecord().getAttributeAsFloat(
+								ZarasokConstants.ZARAS_KIVETEUR),
+						zarasGrid.getSelectedRecord().getAttributeAsFloat(
+								ZarasokConstants.ZARAS_KIVETUSD))						
+						);
 
 			}
 		});

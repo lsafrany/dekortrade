@@ -9,6 +9,7 @@ import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.client.lekerdezes.zarasok.Zarasok;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
+import hu.dekortrade.shared.serialized.ZarasEgyenlegSer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.NumberFormat;
@@ -24,8 +25,12 @@ import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.validator.IsFloatValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
@@ -40,14 +45,72 @@ public class Zaras {
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
-	private ZarasLabels cashCloseLabels = GWT.create(ZarasLabels.class);
+	private ZarasLabels zarasLabels = GWT.create(ZarasLabels.class);
 
+	private IsFloatValidator isFloatValidator = new IsFloatValidator();
+	
 	public Canvas get() {
 		DisplayRequest.counterInit();
 
 		final HLayout middleLayout = new HLayout();
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
+
+		final VLayout loadLayout = new VLayout();
+		loadLayout.setAlign(Alignment.CENTER);
+
+		Label loadLabel = new Label(commonLabels.loading());
+		loadLabel.setAlign(Alignment.CENTER);
+		loadLayout.addMember(loadLabel);
+
+		middleLayout.addMember(loadLayout);
+
+		DisplayRequest.startRequest();
+		dekorTradeService.getElozoZaras(new AsyncCallback<ZarasEgyenlegSer>() {
+			public void onFailure(Throwable caught) {
+				DisplayRequest.serverResponse();
+				if (caught instanceof SQLExceptionSer)
+					SC.warn(commonLabels.server_sqlerror() + " : "
+							+ caught.getMessage());
+				else
+					SC.warn(commonLabels.server_error());
+			}
+
+			public void onSuccess(final ZarasEgyenlegSer result) {
+				DisplayRequest.serverResponse();
+				middleLayout.removeMembers(middleLayout.getMembers());
+				middleLayout.addMember(process(result));
+			}
+		});
+		return middleLayout;
+
+	}
+
+	public Canvas process(final ZarasEgyenlegSer zarasEgyenlegSer) {
+		DisplayRequest.counterInit();
+
+		final HLayout middleLayout = new HLayout();
+		middleLayout.setAlign(Alignment.CENTER);
+		middleLayout.setStyleName("middle");
+
+		HLayout elozoLayout = new HLayout();
+		elozoLayout.setHeight("3%");
+		elozoLayout.setWidth("80%");
+
+		HLayout elozousdCurrLabelLayout = new HLayout();
+		elozousdCurrLabelLayout.setWidth("80%");
+		Label elozousdCurrLabel = new Label("USD :");
+		elozousdCurrLabel.setAlign(Alignment.CENTER);
+		elozousdCurrLabelLayout.addMember(elozousdCurrLabel);
+
+		HLayout elozousdLabelLayout = new HLayout();
+		elozousdLabelLayout.setWidth("20%");
+		final Label elozousdLabel = new Label(zarasEgyenlegSer.getEgyenlegusd().toString());
+		elozousdLabel.setAlign(Alignment.CENTER);
+		elozousdLabelLayout.addMember(elozousdLabel);
+
+		elozoLayout.addMember(elozousdCurrLabelLayout);
+		elozoLayout.addMember(elozousdLabelLayout);
 
 		VLayout fizetesLayout = new VLayout();
 		fizetesLayout.setDefaultLayoutAlign(Alignment.CENTER);
@@ -85,7 +148,7 @@ public class Zaras {
 		});
 
 		final ListGrid fizetesGrid = new ListGrid();
-		fizetesGrid.setTitle(cashCloseLabels.fizetes());
+		fizetesGrid.setTitle(zarasLabels.fizetes());
 		fizetesGrid.setWidth("80%");
 		fizetesGrid.setShowHeaderContextMenu(false);
 		fizetesGrid.setShowHeaderMenuButton(false);
@@ -170,6 +233,7 @@ public class Zaras {
 		buttonsLayout.addMember(refreshButtonLayout);
 		buttonsLayout.addMember(okButtonLayout);
 
+		fizetesLayout.addMember(elozoLayout);
 		fizetesLayout.addMember(fizetesGrid);
 		fizetesLayout.addMember(fizetLayout);
 		fizetesLayout.addMember(buttonsLayout);
@@ -209,38 +273,111 @@ public class Zaras {
 
 		okIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				SC.ask(commonLabels.sure(), new BooleanCallback() {
-					public void execute(Boolean value) {
-						if (value != null && value) {
-							DisplayRequest.startRequest();
-							dekorTradeService.createZaras(UserInfo.userId,
-									new AsyncCallback<String>() {
-										public void onFailure(Throwable caught) {
-											DisplayRequest.serverResponse();
-											if (caught instanceof SQLExceptionSer)
-												SC.warn(commonLabels
-														.server_sqlerror()
-														+ " : "
-														+ caught.getMessage());
-											else
-												SC.warn(commonLabels
-														.server_error());
-										}
+							
+				final Window winModal = new Window();
+				winModal.setWidth(300);
+				winModal.setHeight(150);
+				winModal.setTitle(zarasLabels.zaraskivet());
+				winModal.setShowMinimizeButton(false);
+				winModal.setShowCloseButton(false);
+				winModal.setIsModal(true);
+				winModal.setShowModalMask(true);
+				winModal.centerInPage();
+				
+				final DynamicForm form = new DynamicForm();
+				form.setHeight("40%");
+				form.setNumCols(2);
+				form.setColWidths("40%", "*");
+		
+				final TextItem kivet = new TextItem();   
+				kivet.setTitle(zarasLabels.kivet());
+				kivet.setValue("0");
+				kivet.setValidators(isFloatValidator);
 
-										public void onSuccess(String result) {
-											DisplayRequest.serverResponse();
-											middleLayout
-													.removeMembers(middleLayout
-															.getMembers());
-											middleLayout
-													.addMember(printZaras(
-															result,
-															Constants.MENU_PENZTAR_ZARAS));
-										}
-									});
-						}
+				final TextItem kiveteur = new TextItem();   
+				kiveteur.setTitle(zarasLabels.kiveteur());
+				kiveteur.setValue("0");
+				kiveteur.setValidators(isFloatValidator);
+
+				final TextItem kivetusd = new TextItem();   
+				kivetusd.setTitle(zarasLabels.kivetusd());
+				kivetusd.setValue(usdLabel.getContents());
+				kivetusd.setValidators(isFloatValidator);
+				
+				form.setFields(kivet,kiveteur,kivetusd);		
+		
+				final HLayout buttonsLayout = new HLayout();
+				buttonsLayout.setWidth100();
+
+				HLayout okLayout = new HLayout();
+				okLayout.setAlign(Alignment.CENTER);
+				IButton okIButton = new IButton(commonLabels.ok());
+				okIButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+							
+						SC.ask(commonLabels.sure(), new BooleanCallback() {
+							public void execute(Boolean value) {
+								if (value != null && value) {
+									DisplayRequest.startRequest();
+									dekorTradeService.createZaras(UserInfo.userId,zarasEgyenlegSer.getEgyenleghuf(),
+											zarasEgyenlegSer.getEgyenlegeur(),
+											zarasEgyenlegSer.getEgyenlegusd(),
+											new Float(kivet.getValueAsString()),
+											new Float(kiveteur.getValueAsString()),
+											new Float(kivetusd.getValueAsString()),
+											new AsyncCallback<String>() {
+												public void onFailure(Throwable caught) {
+													DisplayRequest.serverResponse();
+													if (caught instanceof SQLExceptionSer)
+														SC.warn(commonLabels
+																.server_sqlerror()
+																+ " : "
+																+ caught.getMessage());
+													else
+														SC.warn(commonLabels
+																.server_error());
+												}
+	
+												public void onSuccess(String result) {
+													DisplayRequest.serverResponse();
+													winModal.destroy();
+													middleLayout
+															.removeMembers(middleLayout
+																	.getMembers());
+													middleLayout
+															.addMember(printZaras(
+																	result,
+																	Constants.MENU_PENZTAR_ZARAS,new Float(kivet.getValueAsString()),
+																	new Float(kiveteur.getValueAsString()),
+																	new Float(kivetusd.getValueAsString())));
+												}
+											});
+								}
+							}
+						});
 					}
 				});
+				okLayout.addMember(okIButton);
+				
+				HLayout cancelLayout = new HLayout();
+				cancelLayout.setAlign(Alignment.CENTER);
+				IButton cancelIButton = new IButton(commonLabels.cancel());
+				cancelIButton.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						winModal.destroy();
+					}
+				});
+				cancelLayout.addMember(cancelIButton);
+
+				buttonsLayout.addMember(okLayout);
+				buttonsLayout.addMember(cancelLayout);
+				
+				winModal.addItem(form);
+				winModal.addItem(buttonsLayout);
+				
+				winModal.show();
+			
+				
 			}
 		});
 
@@ -248,7 +385,7 @@ public class Zaras {
 
 	}
 
-	public Canvas printZaras(final String zaras, final String menu) {
+	public Canvas printZaras(final String zaras, final String menu, Float kivethuf,Float kiveteur, Float kivetusd) {
 		DisplayRequest.counterInit();
 
 		final VLayout middleLayout = new VLayout();
@@ -262,7 +399,7 @@ public class Zaras {
 		titleLayout.setHeight("3%");
 		titleLayout.setWidth("100%");
 
-		Label titleLabel = new Label(zaras + " - " + cashCloseLabels.zaras());
+		Label titleLabel = new Label(zaras + " - " + zarasLabels.zaras());
 		titleLabel.setAlign(Alignment.CENTER);
 		titleLabel.setWidth("100%");
 		titleLayout.addMember(titleLabel);
@@ -304,7 +441,7 @@ public class Zaras {
 		});
 
 		final ListGrid fizetesGrid = new ListGrid();
-		fizetesGrid.setTitle(cashCloseLabels.fizetes());
+		fizetesGrid.setTitle(zarasLabels.fizetes());
 		fizetesGrid.setWidth("80%");
 		fizetesGrid.setShowHeaderContextMenu(false);
 		fizetesGrid.setShowHeaderMenuButton(false);
@@ -354,7 +491,7 @@ public class Zaras {
 
 		HLayout usdCurrLabelLayout = new HLayout();
 		usdCurrLabelLayout.setWidth("80%");
-		Label usdCurrLabel = new Label("USD :");
+		Label usdCurrLabel = new Label(zarasLabels.fizetusd());
 		usdCurrLabel.setAlign(Alignment.CENTER);
 		usdCurrLabelLayout.addMember(usdCurrLabel);
 
@@ -366,6 +503,25 @@ public class Zaras {
 
 		fizetLayout.addMember(usdCurrLabelLayout);
 		fizetLayout.addMember(usdLabelLayout);
+
+		HLayout kivetLayout = new HLayout();
+		kivetLayout.setHeight("3%");
+		kivetLayout.setWidth("80%");
+
+		HLayout kivetusdCurrLabelLayout = new HLayout();
+		kivetusdCurrLabelLayout.setWidth("80%");
+		Label kivetusdCurrLabel = new Label(zarasLabels.kivetusd());
+		kivetusdCurrLabel.setAlign(Alignment.CENTER);
+		kivetusdCurrLabelLayout.addMember(kivetusdCurrLabel);
+
+		HLayout kivetusdLabelLayout = new HLayout();
+		kivetusdLabelLayout.setWidth("20%");
+		final Label kivetusdLabel = new Label(kivetusd.toString());
+		kivetusdLabel.setAlign(Alignment.CENTER);
+		kivetusdLabelLayout.addMember(kivetusdLabel);
+
+		kivetLayout.addMember(kivetusdCurrLabelLayout);
+		kivetLayout.addMember(kivetusdLabelLayout);
 
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
@@ -391,6 +547,7 @@ public class Zaras {
 		fizetesLayout.addMember(titleLayout);
 		fizetesLayout.addMember(fizetesGrid);
 		fizetesLayout.addMember(fizetLayout);
+		fizetesLayout.addMember(kivetLayout);
 		fizetesLayout.addMember(buttonsLayout);
 
 		middleLayout.addMember(fizetesLayout);
