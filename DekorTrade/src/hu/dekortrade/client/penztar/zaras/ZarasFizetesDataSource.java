@@ -25,7 +25,7 @@ public class ZarasFizetesDataSource extends GwtRpcDataSource {
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private ZarasLabels cashCloseLabels = GWT.create(ZarasLabels.class);
+	private ZarasLabels zarasLabels = GWT.create(ZarasLabels.class);
 
 	private String zaras = "";
 
@@ -36,45 +36,49 @@ public class ZarasFizetesDataSource extends GwtRpcDataSource {
 		DataSourceField field;
 
 		field = new DataSourceTextField(ZarasConstants.ZARASFIZETES_CEDULA,
-				cashCloseLabels.cedula());
+				zarasLabels.cedula());
 		addField(field);
 
 		field = new DataSourceTextField(ZarasConstants.ZARASFIZETES_VEVO,
-				cashCloseLabels.vevo());
+				zarasLabels.vevo());
 		addField(field);
 
 		field = new DataSourceTextField(ZarasConstants.ZARASFIZETES_VEVONEV,
-				cashCloseLabels.vevonev());
+				zarasLabels.vevonev());
 		addField(field);
 
 		field = new DataSourceEnumField(ZarasConstants.ZARASFIZETES_TIPUS,
-				cashCloseLabels.tipus());
+				zarasLabels.tipus());
 		field.setValueMap(ZarasConstants.getFizetesTipus());
 		addField(field);
-
+		
+		field = new DataSourceTextField(ZarasConstants.ZARASFIZETES_MEGJEGYZES,
+				zarasLabels.megjegyzes());
+		addField(field);
+	
 		field = new DataSourceTextField(ZarasConstants.ZARASFIZETES_PENZTAROS,
-				cashCloseLabels.penztaros());
+				zarasLabels.penztaros());
 		addField(field);
 
 		field = new DataSourceTextField(
 				ZarasConstants.ZARASFIZETES_PENZTAROSNEV,
-				cashCloseLabels.penztarosnev());
+				zarasLabels.penztarosnev());
 		addField(field);
 
 		field = new DataSourceFloatField(ZarasConstants.ZARASFIZETES_FIZET,
-				cashCloseLabels.fizet());
+				zarasLabels.fizet());
 		addField(field);
 
 		field = new DataSourceFloatField(ZarasConstants.ZARASFIZETES_FIZETEUR,
-				cashCloseLabels.fizeteur());
+				zarasLabels.fizeteur());
 		addField(field);
 
 		field = new DataSourceFloatField(ZarasConstants.ZARASFIZETES_FIZETUSD,
-				cashCloseLabels.fizetusd());
+				zarasLabels.fizetusd());
 		addField(field);
 
 		field = new DataSourceDateField(ZarasConstants.ZARASFIZETES_DATUM,
-				cashCloseLabels.datum());
+				zarasLabels.datum());
 		addField(field);
 
 	}
@@ -133,6 +137,7 @@ public class ZarasFizetesDataSource extends GwtRpcDataSource {
 		to.setAttribute(ZarasConstants.ZARASFIZETES_VEVO, from.getVevo());
 		to.setAttribute(ZarasConstants.ZARASFIZETES_VEVONEV, from.getVevonev());
 		to.setAttribute(ZarasConstants.ZARASFIZETES_TIPUS, from.getTipus());
+		to.setAttribute(ZarasConstants.ZARASFIZETES_MEGJEGYZES, from.getMegjegyzes());
 		to.setAttribute(ZarasConstants.ZARASFIZETES_PENZTAROS,
 				from.getPenztaros());
 		to.setAttribute(ZarasConstants.ZARASFIZETES_PENZTAROSNEV,

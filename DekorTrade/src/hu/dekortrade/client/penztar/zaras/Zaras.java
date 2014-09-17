@@ -149,7 +149,7 @@ public class Zaras {
 
 		final ListGrid fizetesGrid = new ListGrid();
 		fizetesGrid.setTitle(zarasLabels.fizetes());
-		fizetesGrid.setWidth("80%");
+		fizetesGrid.setWidth("90%");
 		fizetesGrid.setShowHeaderContextMenu(false);
 		fizetesGrid.setShowHeaderMenuButton(false);
 		fizetesGrid.setCanSort(false);
@@ -166,11 +166,15 @@ public class Zaras {
 
 		ListGridField tipusGridField = new ListGridField(
 				ZarasConstants.FIZETES_TIPUS);
-		tipusGridField.setWidth("15%");
+		tipusGridField.setWidth("10%");
+
+		ListGridField megjegyzesGridField = new ListGridField(
+				ZarasConstants.FIZETES_MEGJEGYZES);
+		megjegyzesGridField.setWidth("20%");
 
 		ListGridField penztarosGridField = new ListGridField(
 				ZarasConstants.FIZETES_PENZTAROSNEV);
-		penztarosGridField.setWidth("20%");
+		penztarosGridField.setWidth("10%");
 
 		ListGridField fizetGridField = new ListGridField(
 				ZarasConstants.FIZETES_FIZET);
@@ -188,7 +192,7 @@ public class Zaras {
 				ZarasConstants.FIZETES_DATUM);
 		datumGridField.setWidth("10%");
 
-		fizetesGrid.setFields(cedulaGridField, vevoGridField, tipusGridField,
+		fizetesGrid.setFields(cedulaGridField, vevoGridField, tipusGridField, megjegyzesGridField,
 				penztarosGridField, fizetGridField, fizeteurGridField,
 				fizetusdGridField, datumGridField);
 
@@ -266,8 +270,9 @@ public class Zaras {
 				} else {
 					okIButton.setDisabled(true);
 				}
+				
 				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizetusd));
+						fizetusd).replaceAll(",", "."));
 			}
 		});
 
@@ -289,17 +294,20 @@ public class Zaras {
 				form.setNumCols(2);
 				form.setColWidths("40%", "*");
 		
-				final TextItem kivet = new TextItem();   
+				final TextItem kivet = new TextItem();
+				kivet.setName("kivet");
 				kivet.setTitle(zarasLabels.kivet());
 				kivet.setValue("0");
 				kivet.setValidators(isFloatValidator);
 
 				final TextItem kiveteur = new TextItem();   
+				kiveteur.setName("kiveteur");
 				kiveteur.setTitle(zarasLabels.kiveteur());
 				kiveteur.setValue("0");
 				kiveteur.setValidators(isFloatValidator);
 
 				final TextItem kivetusd = new TextItem();   
+				kivetusd.setName("kivetusd");
 				kivetusd.setTitle(zarasLabels.kivetusd());
 				kivetusd.setValue(usdLabel.getContents());
 				kivetusd.setValidators(isFloatValidator);
@@ -319,12 +327,17 @@ public class Zaras {
 							public void execute(Boolean value) {
 								if (value != null && value) {
 									DisplayRequest.startRequest();
+														
+									final float tmpkivet = new Float(kivet.getValueAsString());
+									final float tmpkiveteur = new Float(kiveteur.getValueAsString());
+									final float tmpkivetusd = new Float(kivetusd.getValueAsString());
+
 									dekorTradeService.createZaras(UserInfo.userId,zarasEgyenlegSer.getEgyenleghuf(),
 											zarasEgyenlegSer.getEgyenlegeur(),
 											zarasEgyenlegSer.getEgyenlegusd(),
-											new Float(kivet.getValueAsString()),
-											new Float(kiveteur.getValueAsString()),
-											new Float(kivetusd.getValueAsString()),
+											tmpkivet,
+											tmpkiveteur,
+											tmpkivetusd,
 											new AsyncCallback<String>() {
 												public void onFailure(Throwable caught) {
 													DisplayRequest.serverResponse();
@@ -347,9 +360,9 @@ public class Zaras {
 													middleLayout
 															.addMember(printZaras(
 																	result,
-																	Constants.MENU_PENZTAR_ZARAS,new Float(kivet.getValueAsString()),
-																	new Float(kiveteur.getValueAsString()),
-																	new Float(kivetusd.getValueAsString())));
+																	Constants.MENU_PENZTAR_ZARAS,tmpkivet,
+																	tmpkiveteur,
+																	tmpkivetusd));
 												}
 											});
 								}
@@ -459,7 +472,11 @@ public class Zaras {
 
 		ListGridField tipusGridField = new ListGridField(
 				ZarasConstants.ZARASFIZETES_TIPUS);
-		tipusGridField.setWidth("15%");
+		tipusGridField.setWidth("10%");
+
+		ListGridField megjegyzesGridField = new ListGridField(
+				ZarasConstants.ZARASFIZETES_MEGJEGYZES);
+		megjegyzesGridField.setWidth("10%");
 
 		ListGridField penztarosGridField = new ListGridField(
 				ZarasConstants.ZARASFIZETES_PENZTAROSNEV);
@@ -481,7 +498,7 @@ public class Zaras {
 				ZarasConstants.ZARASFIZETES_DATUM);
 		datumGridField.setWidth("10%");
 
-		fizetesGrid.setFields(cedulaGridField, vevoGridField, tipusGridField,
+		fizetesGrid.setFields(cedulaGridField, vevoGridField, tipusGridField,  megjegyzesGridField,
 				penztarosGridField, fizetGridField, fizeteurGridField,
 				fizetusdGridField, datumGridField);
 
@@ -566,7 +583,7 @@ public class Zaras {
 
 				}
 				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizet));
+						fizet).replaceAll(",", "."));
 			}
 		});
 

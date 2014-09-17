@@ -50,6 +50,10 @@ public class ZarasokFizetesDataSource extends GwtRpcDataSource {
 		field.setValueMap(ZarasConstants.getFizetesTipus());
 		addField(field);
 
+		field = new DataSourceTextField(ZarasConstants.ZARASFIZETES_MEGJEGYZES,
+				cashCloseLabels.megjegyzes());
+		addField(field);
+
 		field = new DataSourceTextField(ZarasConstants.ZARASFIZETES_PENZTAROS,
 				cashCloseLabels.penztaros());
 		addField(field);
@@ -132,6 +136,7 @@ public class ZarasokFizetesDataSource extends GwtRpcDataSource {
 		to.setAttribute(ZarasConstants.ZARASFIZETES_VEVO, from.getVevo());
 		to.setAttribute(ZarasConstants.ZARASFIZETES_VEVONEV, from.getVevonev());
 		to.setAttribute(ZarasConstants.ZARASFIZETES_TIPUS, from.getTipus());
+		to.setAttribute(ZarasConstants.ZARASFIZETES_MEGJEGYZES, from.getMegjegyzes());
 		to.setAttribute(ZarasConstants.ZARASFIZETES_PENZTAROS,
 				from.getPenztaros());
 		to.setAttribute(ZarasConstants.ZARASFIZETES_PENZTAROSNEV,

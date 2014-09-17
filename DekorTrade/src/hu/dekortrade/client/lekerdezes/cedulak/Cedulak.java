@@ -61,16 +61,16 @@ public class Cedulak {
 		selectLayout.setAlign(Alignment.CENTER);
 		selectLayout.setHeight("3%");
 		selectLayout.setWidth("70%");
-
+					
 		final DynamicForm form = new DynamicForm();
-		form.setHeight("40%");
+		form.setWidth("40%");
 		form.setNumCols(2);
 		form.setColWidths("40%", "*");
 
 		final SelectItem cedulatipus = new SelectItem();  
 		cedulatipus.setTitle(cedulaLabels.cedulatipus());
 		cedulatipus.setValueMap(ClientConstants.getCedulaTipus()); 
-		
+		cedulatipus.setAllowEmptyValue(true);
 		form.setFields(cedulatipus);
 		
 		HLayout selectokButtonLayout = new HLayout();
@@ -127,6 +127,15 @@ public class Cedulak {
 		cedulaGrid.setShowAllRecords(true);
 		cedulaGrid.setDataSource(cedulaDataSource);
 	
+		if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
+			Criteria criteria = new Criteria();
+			criteria.setAttribute(CedulakConstants.CEDULA_STATUS,Constants.CEDULA_STATUSZ_ELORENDELT);
+			cedulaGrid.fetchData(criteria);
+		}
+		if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+			cedulaGrid.setAutoFetchData(true);
+		}
+		
 		ListGridField cedulaGridField = new ListGridField(
 				CedulakConstants.CEDULA_CEDULA);
 		cedulaGridField.setWidth("10%");
@@ -191,7 +200,9 @@ public class Cedulak {
 			buttonsLayout.addMember(cancelButtonLayout);
 		}
 
-		cedulaLayout.addMember(selectLayout);
+		if (menu.equals(Constants.MENU_LEKERDEZES_CEDULAK)) {
+			cedulaLayout.addMember(selectLayout);
+		}
 		cedulaLayout.addMember(cedulaGrid);
 		cedulaLayout.addMember(buttonsLayout);
 
@@ -238,7 +249,7 @@ public class Cedulak {
 		cedulacikkGrid.setCanSort(false);
 		cedulacikkGrid.setShowAllRecords(true);
 		cedulacikkGrid.setDataSource(cedulacikkDataSource);
-
+		
 		ListGridField cikkszamGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_CIKKSZAM);
 
@@ -455,7 +466,7 @@ public class Cedulak {
 
 				}
 				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizetusd));
+						fizetusd).replaceAll(",", "."));
 			}
 		});
 
@@ -605,7 +616,8 @@ public class Cedulak {
 		HLayout beusdLabelLayout = new HLayout();
 		beusdLabelLayout.setAlign(Alignment.CENTER);
 		beusdLabelLayout.setWidth("50%");
-		final Label beusdLabel = new Label(befizetusd == null ? "" : befizetusd.toString());
+		final Label beusdLabel = new Label(befizetusd == null ? "" : NumberFormat.getFormat("#.0000").format(
+				befizetusd).replaceAll(",", "."));    			
 		beusdLabel.setAlign(Alignment.CENTER);
 		beusdLabelLayout.addMember(beusdLabel);
 
@@ -659,7 +671,7 @@ public class Cedulak {
 
 				}
 				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizet));
+						fizet).replaceAll(",", "."));
 			}
 		});
 

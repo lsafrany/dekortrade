@@ -29,7 +29,6 @@ import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.validator.IsIntegerValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
@@ -71,7 +70,7 @@ public class Order {
 
 //		final VLayout ctorzsLayout = new VLayout();
 		ctorzsLayout.setStyleName("middle");
-		ctorzsLayout.setWidth("65%");
+		ctorzsLayout.setWidth("60%");
 			
 		getFotipus();
 		
@@ -124,19 +123,23 @@ public class Order {
 		ListGridField cikkszamGridField = new ListGridField(
 				OrderConstants.KOSAR_CIKKSZAM);
 
+		ListGridField szinkodGridField = new ListGridField(
+				OrderConstants.KOSAR_SZINKOD);
+		szinkodGridField.setWidth("20%");
+
 		ListGridField exportkartonGridField = new ListGridField(
 				OrderConstants.KOSAR_EXPORTKARTON);
 		exportkartonGridField.setWidth("20%");
 
 		ListGridField kiskartonGridField = new ListGridField(
 				OrderConstants.KOSAR_KISKARTON);
-		kiskartonGridField.setWidth("20%");
+		kiskartonGridField.setWidth("15%");
 
 		ListGridField darabGridField = new ListGridField(
 				OrderConstants.KOSAR_DARAB);
-		darabGridField.setWidth("20%");
+		darabGridField.setWidth("15%");
 
-		kosarGrid.setFields(cikkszamGridField, exportkartonGridField, kiskartonGridField, darabGridField);
+		kosarGrid.setFields(cikkszamGridField, szinkodGridField, exportkartonGridField, kiskartonGridField, darabGridField);
 
 		HLayout buttons1Layout = new HLayout();
 		buttons1Layout.setAlign(Alignment.CENTER);
@@ -184,7 +187,7 @@ public class Order {
 
 				final Window winModal = new Window();
 				winModal.setWidth(400);
-				winModal.setHeight(180);
+				winModal.setHeight(200);
 				winModal.setTitle(orderLabels.rendeles());
 				winModal.setShowMinimizeButton(false);
 				winModal.setShowCloseButton(false);
@@ -200,9 +203,12 @@ public class Order {
 
 				int found = 0;
 				for (int i = 0; i < kosarGrid.getRecords().length; i++) {
-					if (kosarGrid.getRecord(i)
+					if ( (kosarGrid.getRecord(i)
 							.getAttribute(OrderConstants.KOSAR_CIKKSZAM)
-							.equals(getCikkszam())) {
+							.equals(getCikkszam())) &&  
+							(kosarGrid.getRecord(i)
+									.getAttribute(OrderConstants.KOSAR_SZINKOD)
+									.equals(getCikkszam())) ) {
 						found = i;
 						i = kosarGrid.getRecords().length;
 					}
@@ -215,8 +221,13 @@ public class Order {
 
 				kosarEditForm.getField(OrderConstants.KOSAR_CIKKSZAM).setValue(
 						getCikkszam());
+				kosarEditForm.getField(OrderConstants.KOSAR_SZINKOD).setValue(
+						getSzinkod());
 				kosarEditForm.getField(OrderConstants.KOSAR_CIKKSZAM)
 						.setCanEdit(false);
+				kosarEditForm.getField(OrderConstants.KOSAR_SZINKOD)
+						.setCanEdit(false);
+			
 				kosarEditForm.getField(OrderConstants.KOSAR_EXPORTKARTON)
 						.setValidateOnChange(true);
 				kosarEditForm.getField(OrderConstants.KOSAR_EXPORTKARTON)
@@ -502,26 +513,7 @@ public class Order {
 		ctorzsFormLayout.setHeight("3%");
 		ctorzsFormLayout.setAlign(Alignment.CENTER);
 		ctorzsFormLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
-
-		final DynamicForm ctorzsForm = new DynamicForm();
-		ctorzsForm.setWidth("60%");
-		ctorzsForm.setNumCols(2);
-		ctorzsForm.setColWidths("50%", "*");
-
-		final TextItem cikkszamItem = new TextItem();
-		cikkszamItem.setTitle(orderLabels.cikk_cikkszam());
-		cikkszamItem.setLength(15);
-
-		ctorzsForm.setFields(cikkszamItem);
-
-		HLayout szuresIButtonLayout = new HLayout();	
-		final IButton szuresIButton = new IButton(commonLabels.filter());
-		szuresIButton.setDisabled(true);
-		szuresIButtonLayout.addMember(szuresIButton);
 	
-		ctorzsFormLayout.addMember(ctorzsForm);
-		ctorzsFormLayout.addMember(szuresIButtonLayout);
-
 		HLayout ctorzsGridLayout = new HLayout();
 		ctorzsGridLayout.setAlign(Alignment.CENTER);
 
@@ -560,15 +552,13 @@ public class Order {
 		final TileGrid ctorzsGrid = new TileGrid();  
 		ctorzsGrid.setTitle(orderLabels.ctorzs());
 		ctorzsGrid.setTileWidth(200);  
-		ctorzsGrid.setTileHeight(240);  
+		ctorzsGrid.setTileHeight(260);  
 		ctorzsGrid.setCanReorderTiles(true);  
 		ctorzsGrid.setShowAllRecords(true);  
 		ctorzsGrid.setDataSource(ctorzsDataSource);  
 		ctorzsGrid.setAnimateTileChange(true);  		  
 		Criteria criteria = new Criteria();
 		criteria.setAttribute(OrderConstants.CTORZS_PAGE, page);
-		criteria.setAttribute(OrderConstants.CIKK_CIKKSZAM,
-				cikkszamItem.getValueAsString());
 		criteria.setAttribute(OrderConstants.CIKK_FOTIPUS,
 				fotipus);
 		criteria.setAttribute(OrderConstants.CIKK_ALTIPUS,
@@ -584,7 +574,14 @@ public class Order {
                 return orderLabels.cikk_cikkszam() + " : " + value;  
             }
         });  
-		 
+
+		DetailViewerField szinkodField = new DetailViewerField(OrderConstants.CIKK_SZINKOD);  	
+		szinkodField.setDetailFormatter(new DetailFormatter() {  
+            public String format(Object value, Record record, DetailViewerField field) {  
+                return orderLabels.cikk_szinkod() + " : " + value;  
+            }
+        });  
+
 		DetailViewerField arField = new DetailViewerField(OrderConstants.CIKK_AR);  	
 		arField.setDetailFormatter(new DetailFormatter() {  
             public String format(Object value, Record record, DetailViewerField field) {  
@@ -613,7 +610,7 @@ public class Order {
             }
         });  
 		
-		ctorzsGrid.setFields(pictureField,cikkszamField,arField,kiskartonField,darabField,terfogatField);
+		ctorzsGrid.setFields(pictureField,cikkszamField,szinkodField,arField,kiskartonField,darabField,terfogatField);
 		ctorzsGrid.fetchData(criteria);		
 		
 		ctorzsGridLayout.addMember(ctorzsGrid);
@@ -658,41 +655,17 @@ public class Order {
 			}
 		});
 		
-		szuresIButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				ctorzsGrid.invalidateCache();
-				Criteria criteria = new Criteria();
-				page = 0;
-				criteria.setAttribute(OrderConstants.CTORZS_PAGE, page);
-				criteria.setAttribute(OrderConstants.CIKK_CIKKSZAM,
-						cikkszamItem.getValueAsString());
-				criteria.setAttribute(OrderConstants.CIKK_FOTIPUS,
-						fotipus);
-				criteria.setAttribute(OrderConstants.CIKK_ALTIPUS,
-						altipus);				
-				ctorzsGrid.fetchData(criteria);
-				szuresIButton.setDisabled(true);
-				previousIButton.setDisabled(true);
-				nextIButton.setDisabled(true);
-				kosarAddIButton.setDisabled(true);
-				pageLabel.setContents("");
-			}
-		});
-
 		previousIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				ctorzsGrid.invalidateCache();
 				Criteria criteria = new Criteria();
 				page = page - 1;
 				criteria.setAttribute(OrderConstants.CTORZS_PAGE, page);
-				criteria.setAttribute(OrderConstants.CIKK_CIKKSZAM,
-						cikkszamItem.getValueAsString());
 				criteria.setAttribute(OrderConstants.CIKK_FOTIPUS,
 						fotipus);
 				criteria.setAttribute(OrderConstants.CIKK_ALTIPUS,
 						altipus);				
 				ctorzsGrid.fetchData(criteria);
-				szuresIButton.setDisabled(true);
 				previousIButton.setDisabled(true);
 				nextIButton.setDisabled(true);
 				kosarAddIButton.setDisabled(true);
@@ -706,14 +679,11 @@ public class Order {
 				Criteria criteria = new Criteria();
 				page = page + 1;
 				criteria.setAttribute(OrderConstants.CTORZS_PAGE, page);
-				criteria.setAttribute(OrderConstants.CIKK_CIKKSZAM,
-						cikkszamItem.getValueAsString());
 				criteria.setAttribute(OrderConstants.CIKK_FOTIPUS,
 						fotipus);
 				criteria.setAttribute(OrderConstants.CIKK_ALTIPUS,
 						altipus);				
 				ctorzsGrid.fetchData(criteria);
-				szuresIButton.setDisabled(true);
 				previousIButton.setDisabled(true);
 				nextIButton.setDisabled(true);
 				kosarAddIButton.setDisabled(true);
@@ -743,7 +713,6 @@ public class Order {
 				}
 				if (page > 0)
 					previousIButton.setDisabled(false);
-				szuresIButton.setDisabled(false);
 			}
 
 		});
@@ -839,4 +808,8 @@ public class Order {
 		return cikkszam;
 	}
 
+	public String getSzinkod() {
+		return szinkod;
+	}
+	
 }

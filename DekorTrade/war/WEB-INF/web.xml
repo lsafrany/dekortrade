@@ -10,11 +10,6 @@
     <servlet-name>initServlet</servlet-name>
     <servlet-class>hu.dekortrade.server.Init</servlet-class>
   </servlet>
- 
-  <servlet>
-    <servlet-name>probaServlet</servlet-name>
-    <servlet-class>hu.dekortrade.server.Proba</servlet-class>
-  </servlet>
   
   <servlet>
     <servlet-name>uploadServlet</servlet-name>
@@ -49,11 +44,6 @@
   <servlet-mapping>
     <servlet-name>initServlet</servlet-name>
     <url-pattern>/dekortrade/init</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>probaServlet</servlet-name>
-    <url-pattern>/dekortrade/proba</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

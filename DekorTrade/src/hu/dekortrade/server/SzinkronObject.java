@@ -1,6 +1,5 @@
 package hu.dekortrade.server;
 
-import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.server.jdo.Cikk;
 import hu.dekortrade.server.jdo.Cikkaltipus;
 import hu.dekortrade.server.jdo.Cikkfotipus;
@@ -16,6 +15,7 @@ import hu.dekortrade.server.sync.KepSzinkron;
 import hu.dekortrade.server.sync.RendeltSzinkron;
 import hu.dekortrade.server.sync.RendeltcikkSzinkron;
 import hu.dekortrade.server.sync.VevoSzinkron;
+import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.SzinkronSer;
 
@@ -204,7 +204,7 @@ public class SzinkronObject {
 			if ((cikklist != null) && (!cikklist.isEmpty())) {
 				for (Cikk l : cikklist) {
 					CikkSzinkron cikkSzinkron = new CikkSzinkron(
-							l.getFotipus(), l.getAltipus(), l.getCikkszam(),
+							l.getFotipus(), l.getAltipus(), l.getCikkszam(), l.getSzinkod(),
 							l.getMegnevezes(), l.getAr(), l.getKiskarton(),
 							l.getDarab(), l.getTerfogat(), l.getBsuly(),
 							l.getNsuly(), l.getKepek(), l.getTorolt());
@@ -322,7 +322,7 @@ public class SzinkronObject {
 				RendeltSzinkron rendeltSzinkron = rendeltSzinkronList.get(i);
 				Rendelt rendelt = new Rendelt(rendeltSzinkron.getRovidnev(),
 						rendeltSzinkron.getRendeles(),
-						ClientConstants.INTERNET_ELORENDEL,
+						Constants.INTERNET_ELORENDEL,
 						rendeltSzinkron.getDatum());
 				pm.makePersistent(rendelt);
 
@@ -337,9 +337,10 @@ public class SzinkronObject {
 							rendeltcikkSzinkron.getRendeles(),
 							rendeltcikkSzinkron.getCikkszam(),
 							rendeltcikkSzinkron.getSzinkod(),
+							Constants.INTERNET_ELORENDEL,
 							rendeltcikkSzinkron.getExportkarton(),
 							rendeltcikkSzinkron.getKiskarton(),
-							rendeltcikkSzinkron.getDarab());
+							rendeltcikkSzinkron.getDarab(),Boolean.FALSE);
 					pm.makePersistent(rendeltcikk);
 				}
 			}

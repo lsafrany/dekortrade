@@ -33,7 +33,7 @@ public interface DekorTrade99Service extends RemoteService {
 	ArrayList<CikkaltipusSer> getCikkaltipus(String fokod)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	ArrayList<CikkSer> getCikk(int page, String cikkszam, String fotipus, String altipus)
+	ArrayList<CikkSer> getCikk(int page, String fotipus, String altipus)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	ArrayList<KosarSer> getKosar(String rovidnev)

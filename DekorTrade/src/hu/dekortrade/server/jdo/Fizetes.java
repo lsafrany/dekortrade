@@ -18,6 +18,9 @@ public class Fizetes {
 	private String tipus;
 
 	@Persistent
+	private String megjegyzes;
+
+	@Persistent
 	private String penztaros;
 
 	@Persistent
@@ -35,12 +38,13 @@ public class Fizetes {
 	@Persistent
 	private boolean szamolt;
 
-	public Fizetes(String cedula, String vevo, String tipus, String penztaros,
+	public Fizetes(String cedula, String vevo, String tipus, String penztaros, String megjegyzes,
 			Float fizet, Float fizeteur, Float fizetusd, Date datum,
 			boolean szamolt) {
 		this.cedula = cedula;
 		this.vevo = vevo;
 		this.tipus = tipus;
+		this.megjegyzes = megjegyzes;
 		this.penztaros = penztaros;
 		this.fizet = fizet;
 		this.fizeteur = fizeteur;
@@ -71,6 +75,14 @@ public class Fizetes {
 
 	public void setTipus(String tipus) {
 		this.tipus = tipus;
+	}
+	
+	public String getMegjegyzes() {
+		return megjegyzes;
+	}
+
+	public void setMegjegyzes(String megjegyzes) {
+		this.megjegyzes = megjegyzes;
 	}
 
 	public String getPenztaros() {

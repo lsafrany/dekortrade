@@ -14,6 +14,8 @@ public class FizetesSer implements IsSerializable {
 
 	private String tipus;
 
+	private String megjegyzes;
+	
 	private String penztaros;
 
 	private String penztarosnev;
@@ -56,6 +58,14 @@ public class FizetesSer implements IsSerializable {
 
 	public void setTipus(String tipus) {
 		this.tipus = tipus;
+	}
+
+	public String getMegjegyzes() {
+		return megjegyzes;
+	}
+
+	public void setMegjegyzes(String megjegyzes) {
+		this.megjegyzes = megjegyzes;
 	}
 
 	public String getPenztaros() {

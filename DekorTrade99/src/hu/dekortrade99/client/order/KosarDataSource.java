@@ -42,6 +42,11 @@ public class KosarDataSource extends GwtRpcDataSource {
 		field.setPrimaryKey(true);
 		addField(field);
 
+		field = new DataSourceTextField(OrderConstants.KOSAR_SZINKOD,
+				orderLabels.kosar_szinkod());
+		field.setPrimaryKey(true);
+		addField(field);
+
 		field = new DataSourceIntegerField(OrderConstants.KOSAR_EXPORTKARTON,
 				orderLabels.kosar_exportkarton());
 		field.setLength(10);
@@ -198,6 +203,7 @@ public class KosarDataSource extends GwtRpcDataSource {
 	private static void copyValues(ListGridRecord from, KosarSer to) {
 		to.setRovidnev(UserInfo.userId);
 		to.setCikkszam(from.getAttribute(OrderConstants.KOSAR_CIKKSZAM));
+		to.setSzinkod(from.getAttribute(OrderConstants.KOSAR_SZINKOD));
 		to.setExportkarton(from
 				.getAttributeAsInt(OrderConstants.KOSAR_EXPORTKARTON));
 		to.setKiskarton(from
@@ -209,6 +215,7 @@ public class KosarDataSource extends GwtRpcDataSource {
 	private static void copyValues(KosarSer from, ListGridRecord to) {
 		to.setAttribute(OrderConstants.KOSAR_ROVIDNEV, from.getRovidnev());
 		to.setAttribute(OrderConstants.KOSAR_CIKKSZAM, from.getCikkszam());
+		to.setAttribute(OrderConstants.KOSAR_SZINKOD, from.getSzinkod());
 		to.setAttribute(OrderConstants.KOSAR_EXPORTKARTON,
 				from.getExportkarton());
 		to.setAttribute(OrderConstants.KOSAR_KISKARTON,

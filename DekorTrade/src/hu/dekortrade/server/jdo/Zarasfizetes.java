@@ -21,6 +21,9 @@ public class Zarasfizetes {
 	private String tipus;
 
 	@Persistent
+	private String megjegyzes;
+
+	@Persistent
 	private String penztaros;
 
 	@Persistent
@@ -35,13 +38,14 @@ public class Zarasfizetes {
 	@Persistent
 	private Date datum;
 
-	public Zarasfizetes(String zaras, String cedula, String vevo, String tipus,
+	public Zarasfizetes(String zaras, String cedula, String vevo, String tipus, String megjegyzes,
 			String penztaros, Float fizet, Float fizeteur, Float fizetusd,
 			Date datum) {
 		this.zaras = zaras;
 		this.cedula = cedula;
 		this.vevo = vevo;
 		this.tipus = tipus;
+		this.megjegyzes = megjegyzes;
 		this.penztaros = penztaros;
 		this.fizet = fizet;
 		this.fizeteur = fizeteur;
@@ -71,6 +75,14 @@ public class Zarasfizetes {
 
 	public void setTipus(String tipus) {
 		this.tipus = tipus;
+	}
+	
+	public String getMegjegyzes() {
+		return megjegyzes;
+	}
+
+	public void setMegjegyzes(String megjegyzes) {
+		this.megjegyzes = megjegyzes;
 	}
 
 	public String getPenztaros() {

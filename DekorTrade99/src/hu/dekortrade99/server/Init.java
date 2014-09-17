@@ -3,6 +3,8 @@
 package hu.dekortrade99.server;
 
 import hu.dekortrade99.server.jdo.Cikk;
+import hu.dekortrade99.server.jdo.Cikkaltipus;
+import hu.dekortrade99.server.jdo.Cikkfotipus;
 import hu.dekortrade99.server.jdo.Kep;
 import hu.dekortrade99.server.jdo.PMF;
 import hu.dekortrade99.server.jdo.Rendelt;
@@ -38,6 +40,16 @@ public class Init extends HttpServlet {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
+			out.append("<h1>Cikkfotipus</h1>");
+			
+			Query cikkfotipusQuery = pm.newQuery(Cikkfotipus.class);
+			cikkfotipusQuery.deletePersistentAll();
+	
+			out.append("<h1>Cikkaltipus</h1>");
+			
+			Query cikkaltipusQuery = pm.newQuery(Cikkaltipus.class);
+			cikkaltipusQuery.deletePersistentAll();
+			
 			out.append("<h1>Cikk</h1>");
 			
 			Query cikkQuery = pm.newQuery(Cikk.class);

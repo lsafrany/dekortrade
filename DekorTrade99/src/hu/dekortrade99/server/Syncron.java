@@ -113,7 +113,7 @@ public class Syncron extends HttpServlet {
 							for (Rendeltcikk l1 : list1) {
 								RendeltcikkSzinkron rendeltcikkSzinkron = new RendeltcikkSzinkron(
 										l1.getRovidnev(), l1.getRendeles(),
-										l1.getCikkszam(), l1.getExportkarton(),
+										l1.getCikkszam(), l1.getSzinkod(), l1.getExportkarton(),
 										l1.getKiskarton(), l1.getDarab());
 								rendeltcikkSzinkronList
 										.add(rendeltcikkSzinkron);
@@ -436,7 +436,7 @@ public class Syncron extends HttpServlet {
 						} else {
 
 							Cikk cikk = new Cikk(l.getFotipus(),
-									l.getAltipus(), l.getCikkszam(),
+									l.getAltipus(), l.getCikkszam(), l.getSzinkod(),
 									l.getMegnevezes(), l.getAr(),
 									l.getKiskarton(), l.getDarab(),
 									l.getTerfogat(), l.getBsuly(),

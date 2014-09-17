@@ -68,7 +68,7 @@ public class Cikktorzs {
 
 	private String sorszam = "";
 
-	public Canvas get(final IButton extIButton) {
+	public Canvas get(final IButton extIButton,final ListGrid beszallitasGrid,final Label title) {
 		DisplayRequest.counterInit();
 
 		final HLayout middleLayout = new HLayout();
@@ -98,7 +98,7 @@ public class Cikktorzs {
 			public void onSuccess(final CikkSelectsSer result) {
 				DisplayRequest.serverResponse();
 				middleLayout.removeMembers(middleLayout.getMembers());
-				middleLayout.addMember(process(extIButton, result));
+				middleLayout.addMember(process(extIButton, result, beszallitasGrid,title));
 			}
 		});
 		return middleLayout;
@@ -106,7 +106,7 @@ public class Cikktorzs {
 	}
 
 	public Canvas process(final IButton extIButton,
-			final CikkSelectsSer cikkSelectsSer) {
+			final CikkSelectsSer cikkSelectsSer, final ListGrid beszallitasGrid,final Label title) {
 
 		DisplayRequest.counterInit();
 
@@ -437,6 +437,19 @@ public class Cikktorzs {
 					kepekIButton.setDisabled(false);
 				else
 					kepekIButton.setDisabled(true);
+				
+				if (beszallitasGrid !=  null) {
+					beszallitasGrid.invalidateCache();
+					beszallitasGrid.fetchData();
+				}	
+				if (title !=  null) {
+					title.setContents(ctorzsGrid.getSelectedRecord().getAttribute(
+						CikktorzsConstants.CIKK_CIKKSZAM)
+						+ " - "
+						+ ctorzsGrid.getSelectedRecord().getAttribute(
+								CikktorzsConstants.CIKK_SZINKOD));
+				}			
+
 			}
 		});
 

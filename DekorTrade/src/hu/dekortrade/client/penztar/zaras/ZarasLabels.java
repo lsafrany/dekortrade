@@ -14,6 +14,8 @@ public interface ZarasLabels extends Constants {
 
 	String tipus();
 
+	String megjegyzes();
+	
 	String penztaros();
 
 	String penztarosnev();
@@ -39,5 +41,7 @@ public interface ZarasLabels extends Constants {
 	String kivetusd();
 
 	String torlesztes();
+	
+	String hazipenztar();
 	
 }

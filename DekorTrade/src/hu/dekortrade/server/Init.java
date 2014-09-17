@@ -2,6 +2,7 @@
 
 package hu.dekortrade.server;
 
+import hu.dekortrade.server.jdo.Beszallitottcikk;
 import hu.dekortrade.server.jdo.Cedula;
 import hu.dekortrade.server.jdo.Cedulacikk;
 import hu.dekortrade.server.jdo.Cikk;
@@ -323,6 +324,9 @@ public class Init extends HttpServlet {
 
 			Query rendeltcikkQuery = pm.newQuery(Rendeltcikk.class);
 			rendeltcikkQuery.deletePersistentAll();
+
+			Query beszallitottcikkQuery = pm.newQuery(Beszallitottcikk.class);
+			beszallitottcikkQuery.deletePersistentAll();
 
 		} finally {
 			pm.close();

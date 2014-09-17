@@ -1,0 +1,5 @@
+C:\JDevelop\Program\eclipse-jee-kepler\plugins\com.google.appengine.eclipse.sdkbundle_1.9.5\appengine-java-sdk-1.9.5\bin\appcfg.cmd vacuum_indexes DekorTrade\war
+C:\JDevelop\Program\eclipse-jee-kepler\plugins\com.google.appengine.eclipse.sdkbundle_1.9.5\appengine-java-sdk-1.9.5\bin\appcfg.cmd update_indexes DekorTrade\war
+
+lsafrany@t-online.hu
+Sashalom16

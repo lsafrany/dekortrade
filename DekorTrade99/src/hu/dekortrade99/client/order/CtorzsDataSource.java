@@ -88,8 +88,6 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 				request.getCriteria().getAttributeAsInt(
 						OrderConstants.CTORZS_PAGE),
 				request.getCriteria().getAttributeAsString(
-						OrderConstants.CIKK_CIKKSZAM),
-				request.getCriteria().getAttributeAsString(
 						OrderConstants.CIKK_FOTIPUS),
 				request.getCriteria().getAttributeAsString(
 								OrderConstants.CIKK_ALTIPUS),

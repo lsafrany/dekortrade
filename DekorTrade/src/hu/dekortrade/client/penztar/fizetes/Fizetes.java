@@ -288,7 +288,7 @@ public class Fizetes {
 
 					}
 					usdLabel.setContents(NumberFormat.getFormat("#.0000")
-							.format(fizet));
+							.format(fizet).replaceAll(",", "."));
 				}
 			});
 

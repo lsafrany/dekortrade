@@ -17,4 +17,5 @@ public class UserInfo {
 		mainMenu.clear();
 		menu.clear();
 	}
+
 }

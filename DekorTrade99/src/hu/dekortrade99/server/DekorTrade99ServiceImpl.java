@@ -189,7 +189,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		return cikkaltipusok;
 	}
 
-	public ArrayList<CikkSer> getCikk(int page, String cikkszam, String fotipus, String altipus)
+	public ArrayList<CikkSer> getCikk(int page, String fotipus, String altipus)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -199,11 +199,6 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			Map<String, String> parameters = new HashMap<String, String>();
 			String filter = "this.torolt == false";
 			String params = "";
-			if (cikkszam != null) {
-				filter = filter + " && this.cikkszam >= pcikkszam";
-				params = params + "String pcikkszam";
-				parameters.put("pcikkszam", cikkszam);
-			}
 			if (fotipus != null) {
 				filter = filter + " && this.fotipus == pfotipus";
 				if (!params.equals(""))
@@ -234,6 +229,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					cikkSer.setFotipus(l.getFotipus());
 					cikkSer.setAltipus(l.getAltipus());
 					cikkSer.setCikkszam(l.getCikkszam());
+					cikkSer.setSzinkod(l.getSzinkod());
 					cikkSer.setMegnevezes(l.getMegnevezes());
 					cikkSer.setAr(l.getAr());
 					cikkSer.setKiskarton(l.getKiskarton());
@@ -365,7 +361,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 			Kosar kosar = new Kosar(kosarSer.getRovidnev(),
-					kosarSer.getCikkszam(), kosarSer.getExportkarton(), kosarSer.getKiskarton(),  kosarSer.getDarab());
+					kosarSer.getCikkszam(), kosarSer.getSzinkod(), kosarSer.getExportkarton(), kosarSer.getKiskarton(),  kosarSer.getDarab());
 			pm.makePersistent(kosar);
 			pm.flush();
 		} catch (Exception e) {
@@ -465,7 +461,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 			if (!list.isEmpty()) {
 				for (Kosar l : list) {
 					Rendeltcikk rendeltcikk = new Rendeltcikk(rovidnev,
-							rendeles, l.getCikkszam(), l.getExportkarton(), l.getKiskarton(), l.getDarab());
+							rendeles, l.getCikkszam(), l.getSzinkod(), l.getExportkarton(), l.getKiskarton(), l.getDarab());
 					pm.makePersistent(rendeltcikk);
 					pm.deletePersistent(l);
 				}

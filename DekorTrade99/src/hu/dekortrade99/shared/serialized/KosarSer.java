@@ -8,6 +8,8 @@ public class KosarSer implements IsSerializable {
 
 	private String cikkszam;
 
+	private String szinkod;
+	
 	private Integer exportkarton;
 
 	private Integer kiskarton;
@@ -28,6 +30,14 @@ public class KosarSer implements IsSerializable {
 
 	public void setCikkszam(String cikkszam) {
 		this.cikkszam = cikkszam;
+	}
+	
+	public String getSzinkod() {
+		return szinkod;
+	}
+
+	public void setSzinkod(String szinkod) {
+		this.szinkod = szinkod;
 	}
 
 	public Integer getExportkarton() {

@@ -189,7 +189,11 @@ public class Zarasok {
 
 		ListGridField tipusGridField = new ListGridField(
 				ZarasConstants.ZARASFIZETES_TIPUS);
-		tipusGridField.setWidth("15%");
+		tipusGridField.setWidth("10%");
+
+		ListGridField megjegyzesGridField = new ListGridField(
+				ZarasConstants.ZARASFIZETES_MEGJEGYZES);
+		megjegyzesGridField.setWidth("10%");
 
 		ListGridField penztarosGridField = new ListGridField(
 				ZarasConstants.ZARASFIZETES_PENZTAROSNEV);
@@ -211,7 +215,7 @@ public class Zarasok {
 				ZarasConstants.ZARASFIZETES_DATUM);
 		dateGridField.setWidth("10%");
 
-		fizetesGrid.setFields(cedulaGridField, vevoGridField, tipusGridField,
+		fizetesGrid.setFields(cedulaGridField, vevoGridField, tipusGridField, megjegyzesGridField,
 				penztarosGridField, fizetGridField, fizeteurGridField,
 				fizetusdGridField, dateGridField);
 
@@ -254,7 +258,7 @@ public class Zarasok {
 
 				}
 				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizetusd));
+						fizetusd).replaceAll(",", "."));
 			}
 		});
 

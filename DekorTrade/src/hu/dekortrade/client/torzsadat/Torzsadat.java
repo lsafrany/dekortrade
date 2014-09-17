@@ -117,7 +117,7 @@ public class Torzsadat {
 				final Cikktorzs cikktorzs = new Cikktorzs();
 
 				if (!selecTab) {
-					tab.setPane(cikktorzs.get(null));
+					tab.setPane(cikktorzs.get(null,null,null));
 					tabSet.selectTab(0);
 					selecTab = true;
 				}
@@ -127,7 +127,7 @@ public class Torzsadat {
 					@Override
 					public void onTabSelected(TabSelectedEvent event) {
 
-						tab.setPane(cikktorzs.get(null));
+						tab.setPane(cikktorzs.get(null,null,null));
 					}
 
 				});

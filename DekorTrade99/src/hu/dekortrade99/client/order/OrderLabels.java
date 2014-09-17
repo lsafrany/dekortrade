@@ -22,6 +22,8 @@ public interface OrderLabels extends Constants {
 	
 	String cikk_cikkszam();
 
+	String cikk_szinkod();
+	
 	String cikk_megnevezes();
 
 	String cikk_ar();
@@ -48,6 +50,8 @@ public interface OrderLabels extends Constants {
 
 	String kosar_cikkszam();
 
+	String kosar_szinkod();
+	
 	String kosar_exportkarton();
 
 	String kosar_kiskarton();

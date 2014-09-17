@@ -1,5 +1,6 @@
 package hu.dekortrade.client;
 
+import hu.dekortrade.shared.serialized.BeszallitottcikkSer;
 import hu.dekortrade.shared.serialized.CedulaSer;
 import hu.dekortrade.shared.serialized.CedulacikkSer;
 import hu.dekortrade.shared.serialized.CikkSelectsSer;
@@ -157,24 +158,42 @@ public interface DekorTradeServiceAsync {
 	void cedulaToKosar(String elado, String vevo, String menu, String cedula,
 			AsyncCallback<String> asyncCallback);
 
-	void kosarToCedula(String elado, String vevo, String menu, String cedula,Float befizet, Float befizeteur, Float befizetusd,
+	void kosarToCedula(String elado, String vevo, String menu, String cedula,
+			Float befizet, Float befizeteur, Float befizetusd,
 			AsyncCallback<String> asyncCallback);
 
 	void getFizetes(AsyncCallback<List<FizetesSer>> asyncCallback);
 
 	void getElozoZaras(AsyncCallback<ZarasEgyenlegSer> asyncCallback);
 
-	void createZaras(String penztaros,Float egyenleghuf,Float egyenlegeur, Float egyenlegusd, Float kivethuf, Float kiveteur, Float kivetusd, AsyncCallback<String> asyncCallback);
+	void createZaras(String penztaros, Float egyenleghuf, Float egyenlegeur,
+			Float egyenlegusd, Float kivethuf, Float kiveteur, Float kivetusd,
+			AsyncCallback<String> asyncCallback);
 
 	void getZarasFizetes(String zaras,
 			AsyncCallback<List<FizetesSer>> asyncCallback);
 
 	void getZaras(AsyncCallback<List<ZarasSer>> asyncCallback);
 
-	void createTorlesztes(String penztaros,String vevo,Float torleszthuf, Float torleszteur, Float torlesztusd, AsyncCallback<String> asyncCallback);
+	void createTorlesztes(String penztaros, String vevo, Float torleszthuf,
+			Float torleszteur, Float torlesztusd,
+			AsyncCallback<String> asyncCallback);
 
 	void getTorlesztesek(AsyncCallback<List<FizetesSer>> asyncCallback);
 
-	void getTorlesztes(String cedula, AsyncCallback<List<FizetesSer>> asyncCallback);
+	void getTorlesztes(String cedula,
+			AsyncCallback<List<FizetesSer>> asyncCallback);
+
+	void getHazi(AsyncCallback<List<FizetesSer>> asyncCallback);
+
+	void addHazi(FizetesSer fizetesSer, AsyncCallback<FizetesSer> asyncCallback);
+
+	void getRendelesSzamolt(String status,AsyncCallback<List<RendeltcikkSer>> asyncCallback);
+
+	void getRendeles(String status,String cikkszam,String szinkod,AsyncCallback<List<RendeltcikkSer>> asyncCallback);
+
+	void megrendeles(RendeltcikkSer rendeltcikkSer,AsyncCallback<RendeltcikkSer> asyncCallback);
+
+	void getBeszallitottcikk(String cikkszam,String szinkod,AsyncCallback<List<BeszallitottcikkSer>> asyncCallback);
 
 }

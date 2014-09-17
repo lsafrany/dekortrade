@@ -27,9 +27,6 @@ public class ClientConstants {
 
 	public static final int CACHE = 3600;
 
-	public static final String INTERNET_IMPORTED = "IMPORTED";
-	public static final String INTERNET_ELORENDEL = "ELORENDEL";
-
 	private static LinkedHashMap<String, String> menu = null;
 
 	public static LinkedHashMap<String, String> getMenu() {
@@ -129,6 +126,24 @@ public class ClientConstants {
 					commonLabels.fizetettelorendeles());
 		}
 		return cedulatipus;
+	}
+
+	private static LinkedHashMap<String, String> rendelesstatus = null;
+
+	public static LinkedHashMap<String, String> getRendelesstatus() {
+
+		if (rendelesstatus == null) {
+			rendelesstatus = new LinkedHashMap<String, String>();
+			rendelesstatus.put(Constants.INTERNET_ELORENDEL,
+					commonLabels.interneteselorendeles());
+			rendelesstatus.put(Constants.INTERNET_IMPORTED,
+					commonLabels.internetesfeldolgozott());
+			rendelesstatus.put(Constants.ELORENDELT_VEGLEGESITETT,
+					commonLabels.elorendelesveglegesitett());
+			rendelesstatus.put(Constants.ELORENDELT_MEGRENDELT,
+					commonLabels.elorendelesmegrendelt());
+		}
+		return rendelesstatus;
 	}
 
 }

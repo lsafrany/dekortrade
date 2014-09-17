@@ -1,5 +1,6 @@
 package hu.dekortrade.client;
 
+import hu.dekortrade.shared.serialized.BeszallitottcikkSer;
 import hu.dekortrade.shared.serialized.CedulaSer;
 import hu.dekortrade.shared.serialized.CedulacikkSer;
 import hu.dekortrade.shared.serialized.CikkSelectsSer;
@@ -176,7 +177,8 @@ public interface DekorTradeService extends RemoteService {
 	String cedulaToKosar(String elado, String vevo, String menu, String cedula)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String kosarToCedula(String elado, String vevo, String menu, String cedula, Float befizet, Float befizeteur, Float befizetusd)
+	String kosarToCedula(String elado, String vevo, String menu, String cedula,
+			Float befizet, Float befizeteur, Float befizetusd)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	List<FizetesSer> getFizetes() throws IllegalArgumentException,
@@ -185,19 +187,36 @@ public interface DekorTradeService extends RemoteService {
 	ZarasEgyenlegSer getElozoZaras() throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	String createZaras(String penztaros,Float egyenleghuf,Float egyenlegeur, Float egyenlegusd, Float kivethuf, Float kiveteur, Float kivetusd) throws IllegalArgumentException,
-			SQLExceptionSer;
+	String createZaras(String penztaros, Float egyenleghuf, Float egyenlegeur,
+			Float egyenlegusd, Float kivethuf, Float kiveteur, Float kivetusd)
+			throws IllegalArgumentException, SQLExceptionSer;
 
 	List<FizetesSer> getZarasFizetes(String zaras)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	List<ZarasSer> getZaras() throws IllegalArgumentException, SQLExceptionSer;
 
-	String createTorlesztes(String penztaros,String vevo, Float torleszthuf, Float torleszteur, Float torlesztusd) 
+	String createTorlesztes(String penztaros, String vevo, Float torleszthuf,
+			Float torleszteur, Float torlesztusd)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	List<FizetesSer> getTorlesztesek() throws IllegalArgumentException, SQLExceptionSer;
+	List<FizetesSer> getTorlesztesek() throws IllegalArgumentException,
+			SQLExceptionSer;
 
-	List<FizetesSer> getTorlesztes(String cedula) throws IllegalArgumentException, SQLExceptionSer;
+	List<FizetesSer> getTorlesztes(String cedula)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	List<FizetesSer> getHazi() throws IllegalArgumentException, SQLExceptionSer;
+
+	FizetesSer addHazi(FizetesSer fizetesSer) throws IllegalArgumentException,
+			SQLExceptionSer;
+
+	List<RendeltcikkSer> getRendelesSzamolt(String status) throws IllegalArgumentException, SQLExceptionSer;
+	
+	List<RendeltcikkSer> getRendeles(String status, String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer;
+
+	RendeltcikkSer megrendeles(RendeltcikkSer rendeltcikkSer) throws IllegalArgumentException, SQLExceptionSer;
+
+	List<BeszallitottcikkSer> getBeszallitottcikk(String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer;
 
 }

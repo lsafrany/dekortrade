@@ -16,6 +16,9 @@ public class Cikk {
 	private String cikkszam;
 
 	@Persistent
+	private String szinkod;
+
+	@Persistent
 	private String megnevezes;
 
 	@Persistent
@@ -42,12 +45,13 @@ public class Cikk {
 	@Persistent
 	private Boolean torolt;
 
-	public Cikk(String fotipus, String altipus, String cikkszam, String megnevezes, Float ar,
+	public Cikk(String fotipus, String altipus, String cikkszam, String szinkod, String megnevezes, Float ar,
 			Integer kiskarton, Integer darab, Float terfogat,
 			Float bsuly, Float nsuly, Integer kepek, Boolean torolt) {
 		this.fotipus = fotipus;
 		this.altipus = altipus;
 		this.cikkszam = cikkszam;
+		this.szinkod = szinkod;
 		this.megnevezes = megnevezes;
 		this.ar = ar;
 		this.kiskarton = kiskarton;
@@ -85,6 +89,14 @@ public class Cikk {
 
 	public void setCikkszam(String cikkszam) {
 		this.cikkszam = cikkszam;
+	}
+	
+	public String getSzinkod() {
+		return szinkod;
+	}
+
+	public void setSzinkod(String szinkod) {
+		this.szinkod = szinkod;
 	}
 
 	public String getMegnevezes() {

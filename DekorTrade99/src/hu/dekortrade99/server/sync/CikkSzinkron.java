@@ -8,6 +8,8 @@ public class CikkSzinkron {
 	
 	private String cikkszam;
 
+	private String szinkod;
+	
 	private String megnevezes;
 
 	private Float ar;
@@ -30,11 +32,13 @@ public class CikkSzinkron {
 		
 	}
 	
-	public CikkSzinkron(String fotipus, String altipus, String cikkszam, String megnevezes, Float ar,
+	public CikkSzinkron(String fotipus, String altipus, String cikkszam, String szinkod, String megnevezes, Float ar,
 			Integer kiskarton, Integer darab, Float terfogat,
 			Float bsuly, Float nsuly, Integer kepek, Boolean torolt) {
 		this.fotipus = fotipus;
 		this.altipus = altipus;
+		this.cikkszam = cikkszam;
+		this.szinkod = szinkod;
 		this.megnevezes = megnevezes;
 		this.ar = ar;
 		this.kiskarton = kiskarton;
@@ -68,6 +72,14 @@ public class CikkSzinkron {
 
 	public void setCikkszam(String cikkszam) {
 		this.cikkszam = cikkszam;
+	}
+
+	public String getSzinkod() {
+		return szinkod;
+	}
+
+	public void setSzinkod(String szinkod) {
+		this.szinkod = szinkod;
 	}
 
 	public String getMegnevezes() {

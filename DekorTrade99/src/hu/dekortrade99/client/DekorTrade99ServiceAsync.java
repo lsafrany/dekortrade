@@ -28,7 +28,7 @@ public interface DekorTrade99ServiceAsync {
 
 	void getCikkaltipus(String fokod,AsyncCallback<ArrayList<CikkaltipusSer>> asyncCallback);
 
-	void getCikk(int page, String cikkszam, String fotipus, String altipus,
+	void getCikk(int page, String fotipus, String altipus,
 			AsyncCallback<ArrayList<CikkSer>> asyncCallback);
 
 	void getKosar(String rovidnev,

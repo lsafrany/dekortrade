@@ -19,6 +19,9 @@ public class Rendeltcikk {
 	private String szinkod;
 
 	@Persistent
+	private String status;
+
+	@Persistent
 	private Integer exportkarton;
 
 	@Persistent
@@ -27,16 +30,21 @@ public class Rendeltcikk {
 	@Persistent
 	private Integer darab;
 
+	@Persistent
+	private boolean szamolt;
+	
 	public Rendeltcikk(String rovidnev, String rendeles, String cikkszam,
-			String szinkod, Integer exportkarton, Integer kiskarton,
-			Integer darab) {
+			String szinkod, String status, Integer exportkarton, Integer kiskarton,
+			Integer darab, boolean szamolt) {
 		this.rovidnev = rovidnev;
 		this.rendeles = rendeles;
 		this.cikkszam = cikkszam;
+		this.status = status;
 		this.szinkod = szinkod;
 		this.exportkarton = exportkarton;
 		this.kiskarton = kiskarton;
 		this.darab = darab;
+		this.szamolt = szamolt;
 	}
 
 	public String getRovidnev() {
@@ -71,6 +79,14 @@ public class Rendeltcikk {
 		this.szinkod = szinkod;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Integer getExportkarton() {
 		return exportkarton;
 	}
@@ -93,6 +109,14 @@ public class Rendeltcikk {
 
 	public void setDarab(Integer darab) {
 		this.darab = darab;
+	}
+
+	public boolean isSzamolt() {
+		return szamolt;
+	}
+
+	public void setSzamolt(boolean szamolt) {
+		this.szamolt = szamolt;
 	}
 
 }

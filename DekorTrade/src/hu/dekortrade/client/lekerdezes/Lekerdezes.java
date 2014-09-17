@@ -65,29 +65,6 @@ public class Lekerdezes {
 				});
 			}
 
-			if (UserInfo.menu.get(i).equals(Constants.MENU_LEKERDEZES_ZARASOK)) {
-
-				final Tab tab = new Tab(commonLabels.menu_lekerdezes_zarasok());
-				tabSet.addTab(tab);
-				final Zarasok zarasok = new Zarasok();
-
-				if (!selecTab) {
-					tab.setPane(zarasok.get());
-					tabSet.selectTab(0);
-					selecTab = true;
-				}
-
-				tab.addTabSelectedHandler(new TabSelectedHandler() {
-
-					@Override
-					public void onTabSelected(TabSelectedEvent event) {
-
-						tab.setPane(zarasok.get());
-					}
-
-				});
-			}
-
 			if (UserInfo.menu.get(i).equals(Constants.MENU_LEKERDEZES_TORLESZTESEK)) {
 
 				final Tab tab = new Tab(commonLabels.menu_lekerdezes_torlesztesek());
@@ -111,6 +88,28 @@ public class Lekerdezes {
 				});
 			}
 
+			if (UserInfo.menu.get(i).equals(Constants.MENU_LEKERDEZES_ZARASOK)) {
+
+				final Tab tab = new Tab(commonLabels.menu_lekerdezes_zarasok());
+				tabSet.addTab(tab);
+				final Zarasok zarasok = new Zarasok();
+
+				if (!selecTab) {
+					tab.setPane(zarasok.get());
+					tabSet.selectTab(0);
+					selecTab = true;
+				}
+
+				tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+					@Override
+					public void onTabSelected(TabSelectedEvent event) {
+
+						tab.setPane(zarasok.get());
+					}
+
+				});
+			}
 
 		}
 

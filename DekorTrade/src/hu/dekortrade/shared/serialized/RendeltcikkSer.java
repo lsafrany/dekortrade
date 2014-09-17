@@ -6,10 +6,16 @@ public class RendeltcikkSer implements IsSerializable {
 
 	private String rovidnev;
 
+	private String nev;
+	
 	private String rendeles;
 
 	private String cikkszam;
 
+	private String szinkod;
+	
+	private String status;
+	
 	private Integer exportkarton;
 
 	private Integer kiskarton;
@@ -22,6 +28,14 @@ public class RendeltcikkSer implements IsSerializable {
 
 	public void setRovidnev(String rovidnev) {
 		this.rovidnev = rovidnev;
+	}
+
+	public String getNev() {
+		return nev;
+	}
+
+	public void setNev(String nev) {
+		this.nev = nev;
 	}
 
 	public String getRendeles() {
@@ -38,6 +52,22 @@ public class RendeltcikkSer implements IsSerializable {
 
 	public void setCikkszam(String cikkszam) {
 		this.cikkszam = cikkszam;
+	}
+
+	public String getSzinkod() {
+		return szinkod;
+	}
+
+	public void setSzinkod(String szinkod) {
+		this.szinkod = szinkod;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Integer getExportkarton() {

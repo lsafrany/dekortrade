@@ -12,6 +12,7 @@ public class ZarasConstants {
 	public static final String FIZETES_VEVO = "fizetes_vevo";
 	public static final String FIZETES_VEVONEV = "fizetes_vevonev";
 	public static final String FIZETES_TIPUS = "fizetes_tipus";
+	public static final String FIZETES_MEGJEGYZES = "fizetes_megjegyzes";
 	public static final String FIZETES_PENZTAROS = "fizetes_penztaros";
 	public static final String FIZETES_PENZTAROSNEV = "fizetes_penztarosnev";
 	public static final String FIZETES_FIZET = "fizetes_fizet";
@@ -24,6 +25,7 @@ public class ZarasConstants {
 	public static final String ZARASFIZETES_VEVO = "zaras_fizetes_vevo";
 	public static final String ZARASFIZETES_VEVONEV = "zaras_fizetes_vevonev";
 	public static final String ZARASFIZETES_TIPUS = "zaras_fizetes_tipus";
+	public static final String ZARASFIZETES_MEGJEGYZES = "zaras_fizetes_megjegyzes";
 	public static final String ZARASFIZETES_PENZTAROS = "zaras_fizetes_penztaros";
 	public static final String ZARASFIZETES_PENZTAROSNEV = "zaras_fizetes_penztarosnev";
 	public static final String ZARASFIZETES_FIZET = "zaras_fizetes_fizet";
@@ -41,6 +43,8 @@ public class ZarasConstants {
 					cashCloseLabels.elorendeltfizetes());
 			fizetestipus.put(Constants.FIZETES_TORLESZTES,
 					cashCloseLabels.torlesztes());
+			fizetestipus.put(Constants.FIZETES_HAZIPENZTAR,
+					cashCloseLabels.hazipenztar());
 		}
 		return fizetestipus;
 	}

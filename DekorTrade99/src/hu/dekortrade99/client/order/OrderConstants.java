@@ -33,6 +33,7 @@ public class OrderConstants {
 
 	public static final String KOSAR_ROVIDNEV = "kosar_rovidnev";
 	public static final String KOSAR_CIKKSZAM = "kosar_cikkszam";
+	public static final String KOSAR_SZINKOD = "kosar_szinkod";
 	public static final String KOSAR_EXPORTKARTON = "kosar_exportkarton";
 	public static final String KOSAR_KISKARTON = "kosar_kiskarton";
 	public static final String KOSAR_DARAB = "kosar_darab";

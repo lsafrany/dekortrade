@@ -272,7 +272,7 @@ public class KosarCikk {
 		kosarLayout.addMember(fizetLayout);
 		kosarLayout.addMember(buttons1Layout);
 
-		rightLayout.addMember(ctorzs.get(addButton));
+		rightLayout.addMember(ctorzs.get(addButton,null,null));
 
 		internetButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -292,7 +292,7 @@ public class KosarCikk {
 				ctorzsButton.setDisabled(true);
 				addButton.setDisabled(true);
 				rightLayout.removeMembers(rightLayout.getMembers());
-				rightLayout.addMember(ctorzs.get(addButton));
+				rightLayout.addMember(ctorzs.get(addButton,null,null));
 			}
 		});
 
@@ -578,7 +578,7 @@ public class KosarCikk {
 
 				}
 				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizetusd));
+						fizetusd).replaceAll(",", "."));
 			}
 		});
 
