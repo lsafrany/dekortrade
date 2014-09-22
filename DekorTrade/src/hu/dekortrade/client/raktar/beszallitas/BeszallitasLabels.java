@@ -17,4 +17,12 @@ public interface BeszallitasLabels extends Constants {
 	String beszallitas_rogzito();
 	String beszallitas_datum();
 
+	String megrendelt_vevo();	
+	String megrendelt_cedula();	
+	String megrendelt_cikkszam();	
+	String megrendelt_szinkod();	
+	String megrendelt_exportkarton();
+	String megrendelt_kiskarton();
+	String megrendelt_darab();
+
 }

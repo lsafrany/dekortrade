@@ -3243,7 +3243,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		try {
 			Query query = pm.newQuery(Rendeltcikk.class);
 			query.setFilter("(this.status == pstatus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.szamolt == true)");
-			query.declareParameters(",String pstatus,String pcikkszam,String pszinkod");
+			query.declareParameters("String pstatus,String pcikkszam,String pszinkod");
 			Map<String, String> parameters = new HashMap<String, String>();
 			parameters.put("pstatus", status);
 			parameters.put("pcikkszam", cikkszam);
@@ -3276,6 +3276,64 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					rendeltcikkSer.setKiskarton(l.getKiskarton());
 					rendeltcikkSer.setDarab(l.getDarab());
 					rendeles.add(rendeltcikkSer);
+					
+				}
+			}
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return rendeles;
+	}
+	
+	public List<RendeltcikkSer> getMegrendelt(String status,String cikkszam,String szinkod)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<RendeltcikkSer> rendeles = new ArrayList<RendeltcikkSer>();
+				
+		try {
+			Query query = pm.newQuery(Rendeltcikk.class);
+			query.setFilter("(this.status == pstatus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
+			query.declareParameters("String pstatus,String pcikkszam,String pszinkod");
+			Map<String, String> parameters = new HashMap<String, String>();
+			parameters.put("pstatus", status);
+			parameters.put("pcikkszam", cikkszam);
+			parameters.put("pszinkod", (szinkod == null ? "" : szinkod));
+			@SuppressWarnings("unchecked")
+			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
+					.executeWithMap(parameters);
+			
+			Query vevoquery = pm.newQuery(Vevo.class);
+			vevoquery.setFilter("this.rovidnev == providnev");
+			vevoquery.declareParameters("String providnev");
+
+			if (!list.isEmpty()) {
+				for (Rendeltcikk l : list) {
+					RendeltcikkSer rendeltcikkSer = new RendeltcikkSer();
+					rendeltcikkSer.setRovidnev(l.getRovidnev());
+					
+					@SuppressWarnings("unchecked")
+					List<Vevo> felhasznalolist = (List<Vevo>) pm
+							.newQuery(vevoquery).execute(
+									l.getRovidnev());
+					if (!felhasznalolist.isEmpty()) {
+						rendeltcikkSer.setNev(felhasznalolist.get(0).getNev());
+					}
+
+					rendeltcikkSer.setRendeles(l.getRendeles());
+					rendeltcikkSer.setCikkszam(l.getCikkszam());
+					rendeltcikkSer.setSzinkod(l.getSzinkod());
+					rendeltcikkSer.setExportkarton(l.getExportkarton());
+					rendeltcikkSer.setKiskarton(l.getKiskarton());
+					rendeltcikkSer.setDarab(l.getDarab());
+					rendeles.add(rendeltcikkSer);
+					l.setSzamolt(Boolean.TRUE);
+					pm.makePersistent(l);		
 				}
 			}
 
@@ -3288,6 +3346,43 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return rendeles;
 	}
 
+	public RendeltcikkSer updateRendeltcikk (RendeltcikkSer rendeltcikkSer)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		
+		try {
+			Query query = pm.newQuery(Rendeltcikk.class);
+			query.setFilter("(this.rendeles == prendeles) && (this.status == pstatus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
+			query.declareParameters("String pcikkszam,String pszinkod,String pstatus");
+			Map<String, String> parameters = new HashMap<String, String>();
+			parameters.put("prendeles", rendeltcikkSer.getRendeles());
+			parameters.put("pcikkszam", rendeltcikkSer.getCikkszam());
+			parameters.put("pszinkod", (rendeltcikkSer.getSzinkod() == null ? "" : rendeltcikkSer.getSzinkod()));
+			parameters.put("pstatus", Constants.ELORENDELT_MEGRENDELT);
+			@SuppressWarnings("unchecked")
+			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
+					.executeWithMap(parameters);
+			
+			if (!list.isEmpty()) {
+				for (Rendeltcikk l : list) {
+					l.setSzamolt(Boolean.FALSE);
+					pm.makePersistent(l);		
+				}
+			}
+
+			pm.flush();
+			
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return rendeltcikkSer;
+	}
+
+	
 	public RendeltcikkSer megrendeles (RendeltcikkSer rendeltcikkSer)
 			throws IllegalArgumentException, SQLExceptionSer {
 

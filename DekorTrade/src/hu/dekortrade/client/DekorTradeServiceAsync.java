@@ -192,6 +192,11 @@ public interface DekorTradeServiceAsync {
 
 	void getRendeles(String status,String cikkszam,String szinkod,AsyncCallback<List<RendeltcikkSer>> asyncCallback);
 
+	void getMegrendelt(String status,String cikkszam,String szinkod,AsyncCallback<List<RendeltcikkSer>> asyncCallback);
+	
+	void updateRendeltcikk(RendeltcikkSer rendeltcikkSer,
+			AsyncCallback<RendeltcikkSer> asyncCallback);
+	
 	void megrendeles(RendeltcikkSer rendeltcikkSer,AsyncCallback<RendeltcikkSer> asyncCallback);
 
 	void getBeszallitottcikk(String cikkszam,String szinkod,AsyncCallback<List<BeszallitottcikkSer>> asyncCallback);

@@ -215,6 +215,11 @@ public interface DekorTradeService extends RemoteService {
 	
 	List<RendeltcikkSer> getRendeles(String status, String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer;
 
+	List<RendeltcikkSer> getMegrendelt(String status, String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer;
+
+	RendeltcikkSer updateRendeltcikk(RendeltcikkSer rendeltcikkSer)
+			throws IllegalArgumentException, SQLExceptionSer;
+
 	RendeltcikkSer megrendeles(RendeltcikkSer rendeltcikkSer) throws IllegalArgumentException, SQLExceptionSer;
 
 	List<BeszallitottcikkSer> getBeszallitottcikk(String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer;
