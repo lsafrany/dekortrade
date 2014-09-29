@@ -17,3 +17,31 @@
   font-weight:normal;
   font-style:italic;
 }	
+
+
+.myRedGridCell,
+.myRedGridCellDark, 
+.myRedGridCellDisabled,
+.myRedGridCellDisabledDark {
+    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:11px; text-overflow:ellipsis;
+    color:black;
+    border-bottom:1px solid #F78181; border-top:1px solid #F78181;
+    background-color:#F78181;
+}
+.myRedGridCellSelected,
+.myRedGridCellSelectedDark {
+    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:11px; text-overflow:ellipsis;
+    color:black;
+    border-bottom:1px solid #FE2E2E; border-top:1px solid #FE2E2E;
+    background-color:#FE2E2E;
+}
+.myRedGridCellOver,
+.myRedGridCellOverDark,
+.myRedGridCellSelectedOver,
+.myRedGridCellSelectedOverDark {
+    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:11px; text-overflow:ellipsis;
+    color:black;
+    border-bottom:1px solid #FA5858; border-top:1px solid #FA5858;
+    background-color:#FA5858;
+}
+

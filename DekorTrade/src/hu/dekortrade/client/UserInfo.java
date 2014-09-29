@@ -12,10 +12,13 @@ public class UserInfo {
 
 	public static ArrayList<String> menu = new ArrayList<String>();
 
+	public static ArrayList<String> jog = new ArrayList<String>();
+	
 	public static void clearValues() {
 		userId = "";
 		mainMenu.clear();
 		menu.clear();
+		jog.clear();
 	}
 
 }

@@ -12,6 +12,7 @@ import hu.dekortrade.shared.serialized.FizetesSer;
 import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.KosarSer;
+import hu.dekortrade.shared.serialized.RaktarSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SzinkronSer;
@@ -188,17 +189,30 @@ public interface DekorTradeServiceAsync {
 
 	void addHazi(FizetesSer fizetesSer, AsyncCallback<FizetesSer> asyncCallback);
 
-	void getRendelesSzamolt(String status,AsyncCallback<List<RendeltcikkSer>> asyncCallback);
+	void getRendelesSzamolt(String status,
+			AsyncCallback<List<RendeltcikkSer>> asyncCallback);
 
-	void getRendeles(String status,String cikkszam,String szinkod,AsyncCallback<List<RendeltcikkSer>> asyncCallback);
+	void getRendeles(String status, String cikkszam, String szinkod,
+			AsyncCallback<List<RendeltcikkSer>> asyncCallback);
 
-	void getMegrendelt(String status,String cikkszam,String szinkod,AsyncCallback<List<RendeltcikkSer>> asyncCallback);
-	
+	void getMegrendelt(String status, String cikkszam, String szinkod,
+			AsyncCallback<List<RendeltcikkSer>> asyncCallback);
+
 	void updateRendeltcikk(RendeltcikkSer rendeltcikkSer,
 			AsyncCallback<RendeltcikkSer> asyncCallback);
-	
-	void megrendeles(RendeltcikkSer rendeltcikkSer,AsyncCallback<RendeltcikkSer> asyncCallback);
 
-	void getBeszallitottcikk(String cikkszam,String szinkod,AsyncCallback<List<BeszallitottcikkSer>> asyncCallback);
+	void megrendeles(RendeltcikkSer rendeltcikkSer,
+			AsyncCallback<RendeltcikkSer> asyncCallback);
+
+	void getBeszallitottcikk(String cikkszam, String szinkod,
+			AsyncCallback<List<BeszallitottcikkSer>> asyncCallback);
+
+	void addBeszallitottcikk(BeszallitottcikkSer beszallitottcikkSer,
+			AsyncCallback<BeszallitottcikkSer> asyncCallback);
+
+	void getRaktar(int page, String fotipus, String altipus, String cikkszam,
+			AsyncCallback<List<RaktarSer>> asyncCallback);
+
+	void updateRaktar(String rovancs,String userId,RaktarSer raktarSer, AsyncCallback<RaktarSer> asyncCallback);
 
 }

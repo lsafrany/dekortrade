@@ -12,6 +12,7 @@ public class BeszallitasConstants {
 	public static final String BESZALLITAS_MEGRENDDARAB = "beszallitas_megrenddarab";
 	public static final String BESZALLITAS_ROGZITO = "beszallitas_rogzito";
 	public static final String BESZALLITAS_DATUM = "beszallitas_datum";
+	public static final String BESZALLITAS_ROVANCS = "beszallitas_rovancs";
 	
 	public static final String MEGRENDELT_NEV = "megrendelt_nev";
 	public static final String MEGRENDELT_RENDELES = "megrendelt_rendeles";

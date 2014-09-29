@@ -122,6 +122,15 @@ public class Cikk {
 	@Persistent
 	private Boolean torolt;
 
+	@Persistent
+	private Long keszlet;
+
+	@Persistent
+	private Long rendelt;
+	
+	@Persistent
+	private String helykod;
+	
 	public Cikk(String fotipus, String altipus, String gyarto,
 			String gyartocikkszam, String cikkszam, String szinkod,
 			Date felviteltol, Date felvitelig, Date lejarattol, Date lejaratig,
@@ -131,8 +140,8 @@ public class Cikk {
 			Float ar, Float areur, Float arszoro, Integer kiskarton,
 			Integer darab, Float terfogat, Float terfogatlab, Float bsuly,
 			Float nsuly, String leiras, String megjegyzes, Boolean akcios,
-			String mertekegyseg, Integer kepek, Boolean szinkron, Boolean torolt) {
-		this.fotipus = fotipus;
+			String mertekegyseg, Integer kepek, Boolean szinkron, Boolean torolt, Long keszlet, Long rendelt, String helykod) {
+		this.fotipus = fotipus; 
 		this.altipus = altipus;
 		this.gyarto = gyarto;
 		this.gyartocikkszam = gyartocikkszam;
@@ -170,6 +179,9 @@ public class Cikk {
 		this.kepek = kepek;
 		this.szinkron = szinkron;
 		this.torolt = torolt;
+		this.keszlet = keszlet;
+		this.rendelt = rendelt;
+		this.helykod = helykod;
 	}
 
 	public String getFotipus() {
@@ -474,6 +486,30 @@ public class Cikk {
 
 	public void setTorolt(Boolean torolt) {
 		this.torolt = torolt;
+	}
+
+	public Long getKeszlet() {
+		return keszlet;
+	}
+
+	public void setKeszlet(Long keszlet) {
+		this.keszlet = keszlet;
+	}
+
+	public Long getRendelt() {
+		return rendelt;
+	}
+
+	public void setRendelt(Long rendelt) {
+		this.rendelt = rendelt;
+	}
+
+	public String getHelykod() {
+		return helykod;
+	}
+
+	public void setHelykod(String helykod) {
+		this.helykod = helykod;
 	}
 
 }

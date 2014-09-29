@@ -26,6 +26,8 @@ public class BeszallitottcikkSer implements IsSerializable {
 
 	private Date datum;
 
+	private Boolean rovancs;
+	
 	public String getCikkszam() {
 		return cikkszam;
 	}
@@ -104,6 +106,14 @@ public class BeszallitottcikkSer implements IsSerializable {
 
 	public void setDatum(Date datum) {
 		this.datum = datum;
+	}
+
+	public Boolean getRovancs() {
+		return rovancs;
+	}
+
+	public void setRovancs(Boolean rovancs) {
+		this.rovancs = rovancs;
 	}
 
 }

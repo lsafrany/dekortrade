@@ -16,6 +16,7 @@ import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
@@ -204,9 +205,7 @@ public class Beszallitas {
 				editForm.getField(BeszallitasConstants.BESZALLITAS_DATUM).hide();
 				editForm.editNewRecord();
 
-				formLayout.addMember(editForm);
-				
-				
+				formLayout.addMember(editForm);		
 
 				final MegRendeltCikkDataSource megRendeltCikkDataSource = new MegRendeltCikkDataSource() {
 					protected Object transformRequest(DSRequest dsRequest) {
@@ -255,7 +254,7 @@ public class Beszallitas {
 				megrendeltGrid.setDataSource(megRendeltCikkDataSource);
 				Criteria criteria = new Criteria();
 				criteria.setAttribute(BeszallitasConstants.MEGRENDELT_CIKKSZAM, ctorzs.getSelectedRecord().getAttribute(CikktorzsConstants.CIKK_CIKKSZAM));
-				criteria.setAttribute(BeszallitasConstants.MEGRENDELT_SZINKOD, ctorzs.getSelectedRecord().getAttribute(CikktorzsConstants.CIKK_SZINKOD));
+				criteria.setAttribute(BeszallitasConstants.MEGRENDELT_SZINKOD, ctorzs.getSelectedRecord().getAttribute(CikktorzsConstants.CIKK_SZINKOD) );
 				megrendeltGrid.fetchData(criteria);
 							
 				
@@ -309,13 +308,19 @@ public class Beszallitas {
 				IButton saveIButton = new IButton(commonLabels.save());
 				saveIButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						editForm.saveData(new DSCallback() {
-							public void execute(DSResponse response, Object rawData,
-									DSRequest request) {
-								if (response.getStatus() == DSResponse.STATUS_SUCCESS)
-									winModal.destroy();
+						SC.ask(commonLabels.sure(), new BooleanCallback() {
+							public void execute(Boolean value) {
+								if (value != null && value) {	
+									editForm.saveData(new DSCallback() {
+										public void execute(DSResponse response, Object rawData,
+												DSRequest request) {
+											if (response.getStatus() == DSResponse.STATUS_SUCCESS)
+												winModal.destroy();
+										}
+									});									
+								}
 							}
-						});
+						});												
 					}
 				});
 				saveLayout.addMember(saveIButton);
@@ -365,7 +370,11 @@ public class Beszallitas {
 												BeszallitasConstants.MEGRENDELT_DARAB);
 							}
 						}
-						
+					
+						editForm.getField(BeszallitasConstants.BESZALLITAS_EXPORTKARTON).setValue(0);
+						editForm.getField(BeszallitasConstants.BESZALLITAS_KISKARTON).setValue(0);
+						editForm.getField(BeszallitasConstants.BESZALLITAS_DARAB).setValue(0);
+		
 						editForm.getField(BeszallitasConstants.BESZALLITAS_MEGRENDEXPORTKARTON).setValue(exp);
 						editForm.getField(BeszallitasConstants.BESZALLITAS_MEGRENDKISKARTON).setValue(kk);
 						editForm.getField(BeszallitasConstants.BESZALLITAS_MEGRENDDARAB).setValue(db);

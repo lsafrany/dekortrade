@@ -360,6 +360,8 @@ public class DekorTrade implements EntryPoint {
 
 						UserInfo.menu = userSer.getMenu();
 
+						UserInfo.jog = userSer.getJog();
+						
 						UserInfo.defaultTab = userSer.getDefultTab();
 
 						if ((password != null)

@@ -41,6 +41,8 @@ public class Constants {
 	public static final String MENU_LEKERDEZES_TORLESZTESEK = "MENU7_LEKERDEZES2_TORLESZTESEK";
 	public static final String MENU_LEKERDEZES_ZARASOK = "MENU7_LEKERDEZES3_ZARASOK";
 	
+	public static final String JOG_ROVANCS = "ROVANCS";
+	
 	public static final String ERROR = "error";
 	public static final String LOADING = "loading";
 	public static final String LOADED = "loaded";
@@ -62,10 +64,12 @@ public class Constants {
 	public static final String CEDULA_RENDELES = "RENDELES";
 	public static final String CEDULA_ZARAS = "ZARAS";
 	public static final String CEDULA_TORLESZTES = "TORLESZTES";
-
+	public static final String CEDULA_RAKTAR = "RAKTAR";
+	
 	public static final String INTERNET_IMPORTED = "IMPORTED";
 	public static final String INTERNET_ELORENDEL = "ELORENDEL";
 	public static final String ELORENDELT_VEGLEGESITETT = "VEGLEGESITETT";
 	public static final String ELORENDELT_MEGRENDELT = "MEGRENDELT";
+	public static final String ELORENDELT_BEERKEZETT = "BEERKEZETT";
 
 }

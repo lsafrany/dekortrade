@@ -35,6 +35,7 @@ import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.KosarSer;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
+import hu.dekortrade.shared.serialized.RaktarSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
@@ -131,6 +132,9 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				if ((list != null) && (!list.isEmpty())) {
 					int tabindex = 0;
 					for (Jog l : list) {
+						if (l.getNev().equals(Constants.MENU_RENDSZER)) {
+							userSer.getJog().add(l.getNev());
+						}
 						if ((l.getNev().equals(Constants.MENU_RENDSZER))
 
 						|| (l.getNev().equals(Constants.MENU_TORZSADAT))
@@ -586,6 +590,11 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			lekerdezesmenu3jogSer.setJog(Boolean.FALSE);
 			jog.add(lekerdezesmenu3jogSer);
 
+			JogSer rovancsjogSer = new JogSer();
+			rovancsjogSer.setNev(Constants.JOG_ROVANCS);
+			rovancsjogSer.setJog(Boolean.FALSE);
+			jog.add(rovancsjogSer);
+
 			Query query = pm.newQuery(Jog.class);
 			query.setFilter("rovidnev == providnev");
 			query.declareParameters("String providnev");
@@ -948,7 +957,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Cikk.class);
 			query.declareParameters(params);
 			query.setFilter(filter);
-			query.setOrdering("cikkszam");
+			query.setOrdering("cikkszam,szinkod");
 			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
 					* Constants.FETCH_SIZE);
 			@SuppressWarnings("unchecked")
@@ -956,48 +965,48 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					parameters);
 			if (!list.isEmpty()) {
 				for (Cikk l : list) {
-					CikkSer cikkSer = new CikkSer();
-					cikkSer.setFotipus(l.getFotipus());
-					cikkSer.setAltipus(l.getAltipus());
-					cikkSer.setGyarto(l.getGyarto());
-					cikkSer.setGyartocikkszam(l.getGyartocikkszam());
-					cikkSer.setSzinkod(l.getSzinkod());
-					cikkSer.setCikkszam(l.getCikkszam());
-					cikkSer.setFelviteltol(l.getFelviteltol() == null ? null
+					CikkSer raktarSer = new CikkSer();
+					raktarSer.setFotipus(l.getFotipus());
+					raktarSer.setAltipus(l.getAltipus());
+					raktarSer.setGyarto(l.getGyarto());
+					raktarSer.setGyartocikkszam(l.getGyartocikkszam());
+					raktarSer.setSzinkod(l.getSzinkod());
+					raktarSer.setCikkszam(l.getCikkszam());
+					raktarSer.setFelviteltol(l.getFelviteltol() == null ? null
 							: new Date(l.getFelviteltol().getTime()));
-					cikkSer.setFelvitelig(l.getFelvitelig() == null ? null
+					raktarSer.setFelvitelig(l.getFelvitelig() == null ? null
 							: new Date(l.getFelvitelig().getTime()));
-					cikkSer.setLejarattol(l.getLejarattol() == null ? null
+					raktarSer.setLejarattol(l.getLejarattol() == null ? null
 							: new Date(l.getLejarattol().getTime()));
-					cikkSer.setLejaratig(l.getLejaratig() == null ? null
+					raktarSer.setLejaratig(l.getLejaratig() == null ? null
 							: new Date(l.getLejaratig().getTime()));
-					cikkSer.setMegnevezes(l.getMegnevezes());
-					cikkSer.setVamtarifaszam(l.getVamtarifaszam());
-					cikkSer.setFob(l.getFob());
-					cikkSer.setSzallitas(l.getSzallitas());
-					cikkSer.setDdu(l.getDdu());
-					cikkSer.setErsz(l.getErsz());
-					cikkSer.setElorar(l.getElorar());
-					cikkSer.setUjfob(l.getUjfob());
-					cikkSer.setUjszallitas(l.getUjszallitas());
-					cikkSer.setUjddu(l.getUjddu());
-					cikkSer.setUjersz(l.getUjersz());
-					cikkSer.setUjelorar(l.getUjelorar());
-					cikkSer.setAr(l.getAr());
-					cikkSer.setAreur(l.getAreur());
-					cikkSer.setArszorzo(l.getArszorzo());
-					cikkSer.setKiskarton(l.getKiskarton());
-					cikkSer.setDarab(l.getDarab());
-					cikkSer.setTerfogat(l.getTerfogat());
-					cikkSer.setTerfogatlab(l.getTerfogatlab());
-					cikkSer.setBsuly(l.getBsuly());
-					cikkSer.setNsuly(l.getNsuly());
-					cikkSer.setLeiras(l.getLeiras());
-					cikkSer.setMegjegyzes(l.getMegjegyzes());
-					cikkSer.setAkcios(l.getAkcios());
-					cikkSer.setMertekegyseg(l.getMertekegyseg());
-					cikkSer.setKepek(l.getKepek());
-					cikk.add(cikkSer);
+					raktarSer.setMegnevezes(l.getMegnevezes());
+					raktarSer.setVamtarifaszam(l.getVamtarifaszam());
+					raktarSer.setFob(l.getFob());
+					raktarSer.setSzallitas(l.getSzallitas());
+					raktarSer.setDdu(l.getDdu());
+					raktarSer.setErsz(l.getErsz());
+					raktarSer.setElorar(l.getElorar());
+					raktarSer.setUjfob(l.getUjfob());
+					raktarSer.setUjszallitas(l.getUjszallitas());
+					raktarSer.setUjddu(l.getUjddu());
+					raktarSer.setUjersz(l.getUjersz());
+					raktarSer.setUjelorar(l.getUjelorar());
+					raktarSer.setAr(l.getAr());
+					raktarSer.setAreur(l.getAreur());
+					raktarSer.setArszorzo(l.getArszorzo());
+					raktarSer.setKiskarton(l.getKiskarton());
+					raktarSer.setDarab(l.getDarab());
+					raktarSer.setTerfogat(l.getTerfogat());
+					raktarSer.setTerfogatlab(l.getTerfogatlab());
+					raktarSer.setBsuly(l.getBsuly());
+					raktarSer.setNsuly(l.getNsuly());
+					raktarSer.setLeiras(l.getLeiras());
+					raktarSer.setMegjegyzes(l.getMegjegyzes());
+					raktarSer.setAkcios(l.getAkcios());
+					raktarSer.setMertekegyseg(l.getMertekegyseg());
+					raktarSer.setKepek(l.getKepek());
+					cikk.add(raktarSer);
 				}
 			}
 		} catch (Exception e) {
@@ -1009,7 +1018,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cikk;
 	}
 
-	public CikkSer addCikk(CikkSer cikkSer) throws IllegalArgumentException,
+	public CikkSer addCikk(CikkSer raktarSer) throws IllegalArgumentException,
 			SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -1019,37 +1028,38 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			query.declareParameters("String pcikkszam,String pszinkod");
 			@SuppressWarnings("unchecked")
 			List<Cikk> list = (List<Cikk>) pm.newQuery(query).execute(
-					cikkSer.getCikkszam(), cikkSer.getSzinkod());
+					raktarSer.getCikkszam(), raktarSer.getSzinkod());
 			if ((list != null) && (!list.isEmpty())) {
 				throw new Exception(Constants.EXISTSID);
 			} else {
-				Cikk cikk = new Cikk(cikkSer.getFotipus(),
-						cikkSer.getAltipus(), cikkSer.getGyarto(),
-						cikkSer.getGyartocikkszam(), cikkSer.getCikkszam(),
-						cikkSer.getSzinkod() == null ? "" : cikkSer
+				Cikk cikk = new Cikk(raktarSer.getFotipus(),
+						raktarSer.getAltipus(), raktarSer.getGyarto(),
+						raktarSer.getGyartocikkszam(), raktarSer.getCikkszam(),
+						raktarSer.getSzinkod() == null ? "" : raktarSer
 								.getSzinkod(),
-						cikkSer.getFelviteltol() == null ? null : new Date(
-								cikkSer.getFelviteltol().getTime()),
-						cikkSer.getFelvitelig() == null ? null : new Date(
-								cikkSer.getFelvitelig().getTime()),
-						cikkSer.getLejarattol() == null ? null : new Date(
-								cikkSer.getLejarattol().getTime()),
-						cikkSer.getLejaratig() == null ? null : new Date(
-								cikkSer.getLejaratig().getTime()),
-						cikkSer.getMegnevezes(), cikkSer.getVamtarifaszam(),
-						cikkSer.getFob(), cikkSer.getSzallitas(),
-						cikkSer.getDdu(), cikkSer.getErsz(),
-						cikkSer.getElorar(), cikkSer.getUjfob(),
-						cikkSer.getUjszallitas(), cikkSer.getUjddu(),
-						cikkSer.getUjersz(), cikkSer.getUjelorar(),
-						cikkSer.getAr(), cikkSer.getAreur(),
-						cikkSer.getArszorzo(), cikkSer.getKiskarton(),
-						cikkSer.getDarab(), cikkSer.getTerfogat(),
-						cikkSer.getTerfogatlab(), cikkSer.getBsuly(),
-						cikkSer.getNsuly(), cikkSer.getLeiras(),
-						cikkSer.getMegjegyzes(), cikkSer.getAkcios(),
-						cikkSer.getMertekegyseg(), new Integer(0),
-						Boolean.FALSE, Boolean.FALSE);
+						raktarSer.getFelviteltol() == null ? null : new Date(
+								raktarSer.getFelviteltol().getTime()),
+						raktarSer.getFelvitelig() == null ? null : new Date(
+								raktarSer.getFelvitelig().getTime()),
+						raktarSer.getLejarattol() == null ? null : new Date(
+								raktarSer.getLejarattol().getTime()),
+						raktarSer.getLejaratig() == null ? null : new Date(
+								raktarSer.getLejaratig().getTime()),
+						raktarSer.getMegnevezes(),
+						raktarSer.getVamtarifaszam(), raktarSer.getFob(),
+						raktarSer.getSzallitas(), raktarSer.getDdu(),
+						raktarSer.getErsz(), raktarSer.getElorar(),
+						raktarSer.getUjfob(), raktarSer.getUjszallitas(),
+						raktarSer.getUjddu(), raktarSer.getUjersz(),
+						raktarSer.getUjelorar(), raktarSer.getAr(),
+						raktarSer.getAreur(), raktarSer.getArszorzo(),
+						raktarSer.getKiskarton(), raktarSer.getDarab(),
+						raktarSer.getTerfogat(), raktarSer.getTerfogatlab(),
+						raktarSer.getBsuly(), raktarSer.getNsuly(),
+						raktarSer.getLeiras(), raktarSer.getMegjegyzes(),
+						raktarSer.getAkcios(), raktarSer.getMertekegyseg(),
+						new Integer(0), Boolean.FALSE, Boolean.FALSE, 0L, 0L,
+						"");
 				pm.makePersistent(cikk);
 			}
 			pm.flush();
@@ -1059,11 +1069,11 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return cikkSer;
+		return raktarSer;
 	}
 
-	public CikkSer updateCikk(CikkSer cikkSer) throws IllegalArgumentException,
-			SQLExceptionSer {
+	public CikkSer updateCikk(CikkSer raktarSer)
+			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
@@ -1073,49 +1083,49 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			query.declareParameters("String pcikkszam");
 			@SuppressWarnings("unchecked")
 			List<Cikk> list = (List<Cikk>) pm.newQuery(query).execute(
-					cikkSer.getCikkszam());
+					raktarSer.getCikkszam());
 			if ((list != null) && (!list.isEmpty())) {
 				for (Cikk l : list) {
-					l.setFotipus(cikkSer.getFotipus());
-					l.setAltipus(cikkSer.getAltipus());
-					l.setGyarto(cikkSer.getGyarto());
-					l.setGyartocikkszam(cikkSer.getGyartocikkszam());
-					l.setCikkszam(cikkSer.getCikkszam());
-					l.setSzinkod(cikkSer.getSzinkod());
-					l.setFelviteltol(cikkSer.getFelviteltol() == null ? null
-							: new Date(cikkSer.getFelviteltol().getTime()));
-					l.setFelvitelig(cikkSer.getFelvitelig() == null ? null
-							: new Date(cikkSer.getFelvitelig().getTime()));
-					l.setLejarattol(cikkSer.getLejarattol() == null ? null
-							: new Date(cikkSer.getLejarattol().getTime()));
-					l.setLejaratig(cikkSer.getLejaratig() == null ? null
-							: new Date(cikkSer.getLejaratig().getTime()));
-					l.setMegnevezes(cikkSer.getMegnevezes());
-					l.setVamtarifaszam(cikkSer.getVamtarifaszam());
-					l.setFob(cikkSer.getFob());
-					l.setSzallitas(cikkSer.getSzallitas());
-					l.setDdu(cikkSer.getDdu());
-					l.setErsz(cikkSer.getErsz());
-					l.setElorar(cikkSer.getElorar());
-					l.setUjfob(cikkSer.getUjfob());
-					l.setUjszallitas(cikkSer.getUjszallitas());
-					l.setUjddu(cikkSer.getUjddu());
-					l.setUjersz(cikkSer.getUjersz());
-					l.setUjelorar(cikkSer.getUjelorar());
-					l.setAr(cikkSer.getAr());
-					l.setAreur(cikkSer.getAreur());
-					l.setArszorzo(cikkSer.getArszorzo());
-					l.setKiskarton(cikkSer.getKiskarton());
-					l.setDarab(cikkSer.getDarab());
-					l.setTerfogat(cikkSer.getTerfogat());
-					l.setTerfogatlab(cikkSer.getTerfogatlab());
-					l.setBsuly(cikkSer.getBsuly());
-					l.setNsuly(cikkSer.getNsuly());
-					l.setLeiras(cikkSer.getLeiras());
-					l.setMegjegyzes(cikkSer.getMegjegyzes());
-					l.setAkcios(cikkSer.getAkcios());
-					l.setMertekegyseg(cikkSer.getMertekegyseg());
-					l.setKepek(cikkSer.getKepek());
+					l.setFotipus(raktarSer.getFotipus());
+					l.setAltipus(raktarSer.getAltipus());
+					l.setGyarto(raktarSer.getGyarto());
+					l.setGyartocikkszam(raktarSer.getGyartocikkszam());
+					l.setCikkszam(raktarSer.getCikkszam());
+					l.setSzinkod(raktarSer.getSzinkod());
+					l.setFelviteltol(raktarSer.getFelviteltol() == null ? null
+							: new Date(raktarSer.getFelviteltol().getTime()));
+					l.setFelvitelig(raktarSer.getFelvitelig() == null ? null
+							: new Date(raktarSer.getFelvitelig().getTime()));
+					l.setLejarattol(raktarSer.getLejarattol() == null ? null
+							: new Date(raktarSer.getLejarattol().getTime()));
+					l.setLejaratig(raktarSer.getLejaratig() == null ? null
+							: new Date(raktarSer.getLejaratig().getTime()));
+					l.setMegnevezes(raktarSer.getMegnevezes());
+					l.setVamtarifaszam(raktarSer.getVamtarifaszam());
+					l.setFob(raktarSer.getFob());
+					l.setSzallitas(raktarSer.getSzallitas());
+					l.setDdu(raktarSer.getDdu());
+					l.setErsz(raktarSer.getErsz());
+					l.setElorar(raktarSer.getElorar());
+					l.setUjfob(raktarSer.getUjfob());
+					l.setUjszallitas(raktarSer.getUjszallitas());
+					l.setUjddu(raktarSer.getUjddu());
+					l.setUjersz(raktarSer.getUjersz());
+					l.setUjelorar(raktarSer.getUjelorar());
+					l.setAr(raktarSer.getAr());
+					l.setAreur(raktarSer.getAreur());
+					l.setArszorzo(raktarSer.getArszorzo());
+					l.setKiskarton(raktarSer.getKiskarton());
+					l.setDarab(raktarSer.getDarab());
+					l.setTerfogat(raktarSer.getTerfogat());
+					l.setTerfogatlab(raktarSer.getTerfogatlab());
+					l.setBsuly(raktarSer.getBsuly());
+					l.setNsuly(raktarSer.getNsuly());
+					l.setLeiras(raktarSer.getLeiras());
+					l.setMegjegyzes(raktarSer.getMegjegyzes());
+					l.setAkcios(raktarSer.getAkcios());
+					l.setMertekegyseg(raktarSer.getMertekegyseg());
+					l.setKepek(raktarSer.getKepek());
 					l.setSzinkron(Boolean.FALSE);
 				}
 			}
@@ -1126,11 +1136,11 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return cikkSer;
+		return raktarSer;
 	}
 
-	public CikkSer removeCikk(CikkSer cikkSer) throws IllegalArgumentException,
-			SQLExceptionSer {
+	public CikkSer removeCikk(CikkSer raktarSer)
+			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
@@ -1140,7 +1150,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			query.declareParameters("String pcikkszam");
 			@SuppressWarnings("unchecked")
 			List<Cikk> list = (List<Cikk>) pm.newQuery(query).execute(
-					cikkSer.getCikkszam());
+					raktarSer.getCikkszam());
 			if ((list != null) && (!list.isEmpty())) {
 				for (Cikk l : list) {
 					l.setSzinkron(Boolean.FALSE);
@@ -1154,7 +1164,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 
-		return cikkSer;
+		return raktarSer;
 	}
 
 	public List<RendeltSer> getRendelt() throws IllegalArgumentException,
@@ -3191,13 +3201,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						cikkszam = l.getCikkszam();
 						szinkod = l.getSzinkod();
 					}
-					if ((cikkszam.equals(l.getCikkszam()) && (szinkod.equals(l.getSzinkod())))) {
+					if ((cikkszam.equals(l.getCikkszam()) && (szinkod.equals(l
+							.getSzinkod())))) {
 						exp = l.getExportkarton();
 						kk = l.getKiskarton();
 						db = (l.getDarab());
 						kiirt = false;
-					}
-					else {
+					} else {
 						RendeltcikkSer rendeltcikkSer = new RendeltcikkSer();
 						rendeltcikkSer.setCikkszam(cikkszam);
 						rendeltcikkSer.setSzinkod(szinkod);
@@ -3208,7 +3218,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						cikkszam = l.getCikkszam();
 						szinkod = l.getSzinkod();
 						kiirt = true;
-					}					
+					}
 					l.setSzamolt(Boolean.TRUE);
 					pm.makePersistent(l);
 				}
@@ -3233,13 +3243,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return rendeles;
 	}
 
-	public List<RendeltcikkSer> getRendeles(String status,String cikkszam,String szinkod)
-			throws IllegalArgumentException, SQLExceptionSer {
+	public List<RendeltcikkSer> getRendeles(String status, String cikkszam,
+			String szinkod) throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		ArrayList<RendeltcikkSer> rendeles = new ArrayList<RendeltcikkSer>();
-				
+
 		try {
 			Query query = pm.newQuery(Rendeltcikk.class);
 			query.setFilter("(this.status == pstatus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.szamolt == true)");
@@ -3251,7 +3261,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			@SuppressWarnings("unchecked")
 			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
 					.executeWithMap(parameters);
-			
+
 			Query vevoquery = pm.newQuery(Vevo.class);
 			vevoquery.setFilter("this.rovidnev == providnev");
 			vevoquery.declareParameters("String providnev");
@@ -3260,11 +3270,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				for (Rendeltcikk l : list) {
 					RendeltcikkSer rendeltcikkSer = new RendeltcikkSer();
 					rendeltcikkSer.setRovidnev(l.getRovidnev());
-					
+
 					@SuppressWarnings("unchecked")
-					List<Vevo> felhasznalolist = (List<Vevo>) pm
-							.newQuery(vevoquery).execute(
-									l.getRovidnev());
+					List<Vevo> felhasznalolist = (List<Vevo>) pm.newQuery(
+							vevoquery).execute(l.getRovidnev());
 					if (!felhasznalolist.isEmpty()) {
 						rendeltcikkSer.setNev(felhasznalolist.get(0).getNev());
 					}
@@ -3276,7 +3285,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					rendeltcikkSer.setKiskarton(l.getKiskarton());
 					rendeltcikkSer.setDarab(l.getDarab());
 					rendeles.add(rendeltcikkSer);
-					
+
 				}
 			}
 
@@ -3288,14 +3297,14 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 		return rendeles;
 	}
-	
-	public List<RendeltcikkSer> getMegrendelt(String status,String cikkszam,String szinkod)
-			throws IllegalArgumentException, SQLExceptionSer {
+
+	public List<RendeltcikkSer> getMegrendelt(String status, String cikkszam,
+			String szinkod) throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		ArrayList<RendeltcikkSer> rendeles = new ArrayList<RendeltcikkSer>();
-				
+
 		try {
 			Query query = pm.newQuery(Rendeltcikk.class);
 			query.setFilter("(this.status == pstatus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
@@ -3307,7 +3316,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			@SuppressWarnings("unchecked")
 			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
 					.executeWithMap(parameters);
-			
+
 			Query vevoquery = pm.newQuery(Vevo.class);
 			vevoquery.setFilter("this.rovidnev == providnev");
 			vevoquery.declareParameters("String providnev");
@@ -3316,11 +3325,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				for (Rendeltcikk l : list) {
 					RendeltcikkSer rendeltcikkSer = new RendeltcikkSer();
 					rendeltcikkSer.setRovidnev(l.getRovidnev());
-					
+
 					@SuppressWarnings("unchecked")
-					List<Vevo> felhasznalolist = (List<Vevo>) pm
-							.newQuery(vevoquery).execute(
-									l.getRovidnev());
+					List<Vevo> felhasznalolist = (List<Vevo>) pm.newQuery(
+							vevoquery).execute(l.getRovidnev());
 					if (!felhasznalolist.isEmpty()) {
 						rendeltcikkSer.setNev(felhasznalolist.get(0).getNev());
 					}
@@ -3333,7 +3341,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					rendeltcikkSer.setDarab(l.getDarab());
 					rendeles.add(rendeltcikkSer);
 					l.setSzamolt(Boolean.TRUE);
-					pm.makePersistent(l);		
+					pm.makePersistent(l);
 				}
 			}
 
@@ -3346,70 +3354,74 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return rendeles;
 	}
 
-	public RendeltcikkSer updateRendeltcikk (RendeltcikkSer rendeltcikkSer)
+	public RendeltcikkSer updateRendeltcikk(RendeltcikkSer rendeltraktarSer)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		
+
 		try {
 			Query query = pm.newQuery(Rendeltcikk.class);
 			query.setFilter("(this.rendeles == prendeles) && (this.status == pstatus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
 			query.declareParameters("String pcikkszam,String pszinkod,String pstatus");
 			Map<String, String> parameters = new HashMap<String, String>();
-			parameters.put("prendeles", rendeltcikkSer.getRendeles());
-			parameters.put("pcikkszam", rendeltcikkSer.getCikkszam());
-			parameters.put("pszinkod", (rendeltcikkSer.getSzinkod() == null ? "" : rendeltcikkSer.getSzinkod()));
+			parameters.put("prendeles", rendeltraktarSer.getRendeles());
+			parameters.put("pcikkszam", rendeltraktarSer.getCikkszam());
+			parameters.put("pszinkod",
+					(rendeltraktarSer.getSzinkod() == null ? ""
+							: rendeltraktarSer.getSzinkod()));
 			parameters.put("pstatus", Constants.ELORENDELT_MEGRENDELT);
 			@SuppressWarnings("unchecked")
 			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
 					.executeWithMap(parameters);
-			
+
 			if (!list.isEmpty()) {
 				for (Rendeltcikk l : list) {
 					l.setSzamolt(Boolean.FALSE);
-					pm.makePersistent(l);		
+					pm.makePersistent(l);
 				}
 			}
 
 			pm.flush();
-			
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
 		}
 
-		return rendeltcikkSer;
+		return rendeltraktarSer;
 	}
 
-	
-	public RendeltcikkSer megrendeles (RendeltcikkSer rendeltcikkSer)
+	public RendeltcikkSer megrendeles(RendeltcikkSer rendeltcikkSer)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		
+
 		try {
 			Query query = pm.newQuery(Rendeltcikk.class);
 			query.setFilter("(this.status == pstatus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.szamolt == true)");
-			query.declareParameters("String pcikkszam,String pszinkod,String pstatus");
+			query.declareParameters("String pstatus,String pcikkszam,String pszinkod");
 			Map<String, String> parameters = new HashMap<String, String>();
 			parameters.put("pcikkszam", rendeltcikkSer.getCikkszam());
-			parameters.put("pszinkod", (rendeltcikkSer.getSzinkod() == null ? "" : rendeltcikkSer.getSzinkod()));
+			parameters.put(
+					"pszinkod",
+					(rendeltcikkSer.getSzinkod() == null ? "" : rendeltcikkSer
+							.getSzinkod()));
 			parameters.put("pstatus", Constants.ELORENDELT_VEGLEGESITETT);
 			@SuppressWarnings("unchecked")
 			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
 					.executeWithMap(parameters);
-			
+
 			if (!list.isEmpty()) {
 				for (Rendeltcikk l : list) {
 					l.setStatus(Constants.ELORENDELT_MEGRENDELT);
 					l.setSzamolt(Boolean.FALSE);
-					pm.makePersistent(l);		
+					pm.makePersistent(l);
 				}
 			}
 
 			pm.flush();
-			
+
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -3419,21 +3431,20 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return rendeltcikkSer;
 	}
 
-	public List<BeszallitottcikkSer> getBeszallitottcikk(String cikkszam,String szinkod)
-			throws IllegalArgumentException, SQLExceptionSer {
+	public List<BeszallitottcikkSer> getBeszallitottcikk(String cikkszam,
+			String szinkod) throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		ArrayList<BeszallitottcikkSer> beszallitottcikk = new ArrayList<BeszallitottcikkSer>();
-				
 		try {
-			
+
 			Query query = pm.newQuery(Beszallitottcikk.class);
 			query.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
 			query.declareParameters("String pcikkszam,String pszinkod");
 			@SuppressWarnings("unchecked")
-			List<Beszallitottcikk> list = (List<Beszallitottcikk>) pm.newQuery(query)
-					.execute(cikkszam,szinkod);
+			List<Beszallitottcikk> list = (List<Beszallitottcikk>) pm.newQuery(
+					query).execute(cikkszam, (szinkod == null ? "" : szinkod));
 			if (!list.isEmpty()) {
 				for (Beszallitottcikk l : list) {
 					BeszallitottcikkSer beszallitottcikkSer = new BeszallitottcikkSer();
@@ -3442,11 +3453,15 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					beszallitottcikkSer.setExportkarton(l.getExportkarton());
 					beszallitottcikkSer.setKiskarton(l.getKiskarton());
 					beszallitottcikkSer.setDarab(l.getDarab());
-					beszallitottcikkSer.setMegrendexportkarton(l.getMegrendexportkarton());
-					beszallitottcikkSer.setMegrendkiskarton(l.getMegrendkiskarton());
+					beszallitottcikkSer.setMegrendexportkarton(l
+							.getMegrendexportkarton());
+					beszallitottcikkSer.setMegrendkiskarton(l
+							.getMegrendkiskarton());
 					beszallitottcikkSer.setMegrenddarab(l.getMegrenddarab());
 					beszallitottcikkSer.setRogzito(l.getRogzito());
-					beszallitottcikkSer.setDatum(new Date(l.getDatum().getTime()));
+					beszallitottcikkSer.setDatum(new Date(l.getDatum()
+							.getTime()));
+					beszallitottcikkSer.setRovancs(l.getRovancs());
 					beszallitottcikk.add(beszallitottcikkSer);
 				}
 			}
@@ -3457,6 +3472,250 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		}
 
 		return beszallitottcikk;
+	}
+
+	public BeszallitottcikkSer addBeszallitottcikk(
+			BeszallitottcikkSer beszallitottraktarSer)
+			throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+
+			Beszallitottcikk beszallitottcikk = new Beszallitottcikk(
+					beszallitottraktarSer.getCikkszam(),
+					beszallitottraktarSer.getSzinkod(),
+					beszallitottraktarSer.getExportkarton(),
+					beszallitottraktarSer.getKiskarton(),
+					beszallitottraktarSer.getDarab(),
+					beszallitottraktarSer.getMegrendexportkarton(),
+					beszallitottraktarSer.getMegrendkiskarton(),
+					beszallitottraktarSer.getMegrenddarab(),
+					beszallitottraktarSer.getRogzito(), new Date(),
+					Boolean.FALSE);
+
+			pm.makePersistent(beszallitottcikk);
+
+			Query query = pm.newQuery(Rendeltcikk.class);
+			query.setFilter("(this.status == pstatus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.szamolt == true)");
+			query.declareParameters("String pstatus,String pcikkszam,String pszinkod");
+			Map<String, String> parameters = new HashMap<String, String>();
+			parameters.put("pcikkszam", beszallitottcikk.getCikkszam());
+			parameters.put("pszinkod",
+					(beszallitottcikk.getSzinkod() == null ? ""
+							: beszallitottcikk.getSzinkod()));
+			parameters.put("pstatus", Constants.ELORENDELT_MEGRENDELT);
+			@SuppressWarnings("unchecked")
+			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
+					.executeWithMap(parameters);
+
+			if (!list.isEmpty()) {
+				for (Rendeltcikk l : list) {
+					l.setStatus(Constants.ELORENDELT_BEERKEZETT);
+					l.setSzamolt(Boolean.FALSE);
+					pm.makePersistent(l);
+				}
+			}
+
+			Query cikkquery = pm.newQuery(Cikk.class);
+			cikkquery
+					.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
+			cikkquery.declareParameters("String pcikkszam,String pszinkod");
+
+			@SuppressWarnings("unchecked")
+			List<Cikk> cikklist = (List<Cikk>) pm.newQuery(cikkquery).execute(
+					beszallitottcikk.getCikkszam(),
+					(beszallitottcikk.getSzinkod() == null ? ""
+							: beszallitottcikk.getSzinkod()));
+
+			if (!cikklist.isEmpty()) {
+				for (Cikk l : cikklist) {
+
+					l.setKeszlet(l.getKeszlet()
+							+ ((beszallitottcikk.getExportkarton()
+									* l.getKiskarton() * l.getDarab()) + (beszallitottcikk
+									.getKiskarton()) * l.getDarab())
+							+ beszallitottcikk.getDarab());
+
+					l.setRendelt(l.getRendelt()
+							+ ((beszallitottcikk.getMegrendexportkarton()
+									* l.getKiskarton() * l.getDarab()) + (beszallitottcikk
+									.getMegrendkiskarton()) * l.getDarab())
+							+ beszallitottcikk.getMegrenddarab());
+
+					pm.makePersistent(l);
+				}
+			}
+
+			pm.flush();
+
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return beszallitottraktarSer;
+	}
+
+	public List<RaktarSer> getRaktar(int page, String fotipus, String altipus,
+			String cikkszam) throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<RaktarSer> raktar = new ArrayList<RaktarSer>();
+		try {
+			Map<String, String> parameters = new HashMap<String, String>();
+			String filter = "(this.torolt == false) && (this.keszlet > 0)";
+			String params = "";
+			if (cikkszam != null) {
+				filter = filter + " && (this.cikkszam >= pcikkszam)";
+				params = params + "String pcikkszam";
+				parameters.put("pcikkszam", cikkszam);
+			}
+			if (fotipus != null) {
+				filter = filter + " && (this.fotipus == pfotipus)";
+				if (!params.equals(""))
+					params = params + ",";
+				params = params + "String pfotipus";
+				parameters.put("pfotipus", fotipus);
+			}
+
+			if (altipus != null) {
+				filter = filter + " && (this.altipus == paltipus)";
+				if (!params.equals(""))
+					params = params + ",";
+				params = params + "String paltipus";
+				parameters.put("paltipus", altipus);
+			}
+
+			Query query = pm.newQuery(Cikk.class);
+			query.declareParameters(params);
+			query.setFilter(filter);
+			query.setOrdering("keszlet,cikkszam,szinkod");
+			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
+					* Constants.FETCH_SIZE);
+			@SuppressWarnings("unchecked")
+			List<Cikk> list = (List<Cikk>) pm.newQuery(query).executeWithMap(
+					parameters);
+			if (!list.isEmpty()) {
+				long exp;
+				long kk;
+				long darab;
+				long keszlet;
+				for (Cikk l : list) {
+					RaktarSer raktarSer = new RaktarSer();
+					raktarSer.setFotipus(l.getFotipus());
+					raktarSer.setAltipus(l.getAltipus());
+					raktarSer.setSzinkod(l.getSzinkod());
+					raktarSer.setCikkszam(l.getCikkszam());
+					raktarSer.setMegnevezes(l.getMegnevezes());
+					raktarSer.setElorar(l.getElorar());
+					raktarSer.setAr(l.getAr());
+					raktarSer.setAreur(l.getAreur());
+					raktarSer.setKiskarton(l.getKiskarton());
+					raktarSer.setDarab(l.getDarab());
+					raktarSer.setTerfogat(l.getTerfogat());
+					raktarSer.setTerfogatlab(l.getTerfogatlab());
+					raktarSer.setBsuly(l.getBsuly());
+					raktarSer.setNsuly(l.getNsuly());
+					raktarSer.setLeiras(l.getLeiras());
+					raktarSer.setMegjegyzes(l.getMegjegyzes());
+					raktarSer.setMertekegyseg(l.getMertekegyseg());
+
+					keszlet = l.getKeszlet();
+					exp = l.getKeszlet() / (l.getKiskarton() * l.getDarab());
+					keszlet = keszlet - (exp * l.getKiskarton() * l.getDarab());
+					kk = keszlet / l.getDarab();
+					darab = keszlet - (kk * l.getDarab());
+
+					raktarSer.setKexportkarton(exp);
+					raktarSer.setKkiskarton(kk);
+					raktarSer.setKdarab(darab);
+
+					keszlet = l.getRendelt();
+					exp = l.getKeszlet() / (l.getKiskarton() * l.getDarab());
+					keszlet = keszlet - (exp * l.getKiskarton() * l.getDarab());
+					kk = keszlet / l.getDarab();
+					darab = keszlet - (kk * l.getDarab());
+
+					raktarSer.setMexportkarton(exp);
+					raktarSer.setMkiskarton(kk);
+					raktarSer.setMdarab(darab);
+
+					raktarSer.setHelykod(l.getHelykod());
+					raktar.add(raktarSer);
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return raktar;
+	}
+
+	public RaktarSer updateRaktar(String rovancs, String userId,
+			RaktarSer raktarSer) throws IllegalArgumentException,
+			SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+
+			Query cikkquery = pm.newQuery(Cikk.class);
+			cikkquery
+					.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
+			cikkquery.declareParameters("String pcikkszam,String pszinkod");
+
+			@SuppressWarnings("unchecked")
+			List<Cikk> cikklist = (List<Cikk>) pm.newQuery(cikkquery).execute(
+					raktarSer.getCikkszam(),
+					(raktarSer.getSzinkod() == null ? "" : raktarSer
+							.getSzinkod()));
+
+			if (!cikklist.isEmpty()) {
+				for (Cikk l : cikklist) {
+					if (rovancs.equals("")) {
+						l.setHelykod(raktarSer.getHelykod());
+						pm.makePersistent(l);
+					} else {
+						l.setKeszlet(((raktarSer.getKexportkarton()
+								* l.getKiskarton() * l.getDarab()) + (raktarSer
+								.getKkiskarton()) * l.getDarab())
+								+ raktarSer.getKdarab());
+
+						l.setRendelt(((raktarSer.getMexportkarton()
+								* l.getKiskarton() * l.getDarab()) + (raktarSer
+								.getMkiskarton()) * l.getDarab())
+								+ raktarSer.getMdarab());
+
+						pm.makePersistent(l);
+						
+						Beszallitottcikk beszallitottcikk = new Beszallitottcikk(
+								raktarSer.getCikkszam(),
+								raktarSer.getSzinkod(),
+								raktarSer.getKexportkarton().intValue(),
+								raktarSer.getKkiskarton().intValue(),
+								raktarSer.getKdarab().intValue(),
+								raktarSer.getMexportkarton().intValue(),
+								raktarSer.getMkiskarton().intValue(),
+								raktarSer.getMdarab().intValue(),
+								userId, new Date(),
+								Boolean.TRUE);
+						
+						pm.makePersistent(beszallitottcikk);
+					}
+				}
+			}
+
+			pm.flush();
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return raktarSer;
 	}
 
 }

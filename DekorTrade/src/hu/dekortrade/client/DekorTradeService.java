@@ -13,6 +13,7 @@ import hu.dekortrade.shared.serialized.GyartoSer;
 import hu.dekortrade.shared.serialized.JogSer;
 import hu.dekortrade.shared.serialized.KosarSer;
 import hu.dekortrade.shared.serialized.LoginExceptionSer;
+import hu.dekortrade.shared.serialized.RaktarSer;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.RendeltcikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
@@ -211,17 +212,32 @@ public interface DekorTradeService extends RemoteService {
 	FizetesSer addHazi(FizetesSer fizetesSer) throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	List<RendeltcikkSer> getRendelesSzamolt(String status) throws IllegalArgumentException, SQLExceptionSer;
-	
-	List<RendeltcikkSer> getRendeles(String status, String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer;
+	List<RendeltcikkSer> getRendelesSzamolt(String status)
+			throws IllegalArgumentException, SQLExceptionSer;
 
-	List<RendeltcikkSer> getMegrendelt(String status, String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer;
+	List<RendeltcikkSer> getRendeles(String status, String cikkszam,
+			String szinkod) throws IllegalArgumentException, SQLExceptionSer;
+
+	List<RendeltcikkSer> getMegrendelt(String status, String cikkszam,
+			String szinkod) throws IllegalArgumentException, SQLExceptionSer;
 
 	RendeltcikkSer updateRendeltcikk(RendeltcikkSer rendeltcikkSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	RendeltcikkSer megrendeles(RendeltcikkSer rendeltcikkSer) throws IllegalArgumentException, SQLExceptionSer;
+	RendeltcikkSer megrendeles(RendeltcikkSer rendeltcikkSer)
+			throws IllegalArgumentException, SQLExceptionSer;
 
-	List<BeszallitottcikkSer> getBeszallitottcikk(String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer;
+	List<BeszallitottcikkSer> getBeszallitottcikk(String cikkszam,
+			String szinkod) throws IllegalArgumentException, SQLExceptionSer;
+
+	BeszallitottcikkSer addBeszallitottcikk(
+			BeszallitottcikkSer beszallitottcikkSer)
+			throws IllegalArgumentException, SQLExceptionSer;
+
+	List<RaktarSer> getRaktar(int page, String fotipus, String altipus,
+			String cikkszam) throws IllegalArgumentException, SQLExceptionSer;
+
+	RaktarSer updateRaktar(String rovancs,String userId,RaktarSer raktarSer) throws IllegalArgumentException,
+			SQLExceptionSer;
 
 }

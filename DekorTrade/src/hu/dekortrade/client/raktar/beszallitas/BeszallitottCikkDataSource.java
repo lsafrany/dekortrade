@@ -4,16 +4,19 @@ import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
+import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.shared.serialized.BeszallitottcikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceBooleanField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
@@ -70,6 +73,10 @@ public class BeszallitottCikkDataSource extends GwtRpcDataSource {
 				beszallitasLabels.beszallitas_datum());
 		addField(field);
 
+		field = new DataSourceBooleanField(BeszallitasConstants.BESZALLITAS_ROVANCS,
+				beszallitasLabels.beszallitas_rovancs());
+		field.setHidden(true);
+		addField(field);
 	}
 
 	@Override
@@ -108,6 +115,35 @@ public class BeszallitottCikkDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeAdd(final String requestId, final DSRequest request,
 			final DSResponse response) {
+			
+		JavaScriptObject data = request.getData();
+		ListGridRecord rec = new ListGridRecord(data);
+		BeszallitottcikkSer beszallitottcikkSer = new BeszallitottcikkSer();
+		beszallitottcikkSer.setRogzito(UserInfo.userId);
+		beszallitottcikkSer.setRovancs(Boolean.FALSE);
+		copyValues(rec, beszallitottcikkSer);
+		dekorTradeService.addBeszallitottcikk(beszallitottcikkSer, new AsyncCallback<BeszallitottcikkSer>() {
+			public void onFailure(Throwable caught) {
+				if (caught instanceof SQLExceptionSer)
+					response.setAttribute(ClientConstants.SERVER_SQLERROR,
+							caught.getMessage());
+				else
+					response.setAttribute(ClientConstants.SERVER_ERROR,
+							ClientConstants.SERVER_ERROR);
+				response.setStatus(DSResponse.STATUS_FAILURE);
+				processResponse(requestId, response);
+			}
+
+			public void onSuccess(BeszallitottcikkSer result) {
+				ListGridRecord[] list = new ListGridRecord[1];
+				ListGridRecord newRec = new ListGridRecord();
+				copyValues(result, newRec);
+				list[0] = newRec;
+				response.setData(list);
+				processResponse(requestId, response);
+			}
+		});
+
 	}
 
 	@Override
@@ -131,6 +167,26 @@ public class BeszallitottCikkDataSource extends GwtRpcDataSource {
 		to.setAttribute(BeszallitasConstants.BESZALLITAS_MEGRENDDARAB, from.getMegrenddarab());
 		to.setAttribute(BeszallitasConstants.BESZALLITAS_ROGZITO, from.getRogzito());
 		to.setAttribute(BeszallitasConstants.BESZALLITAS_DATUM, from.getDatum());		
+		to.setAttribute(BeszallitasConstants.BESZALLITAS_ROVANCS, from.getRovancs());		
+		
+		if (from.getRovancs().booleanValue()) {
+			to.set_baseStyle("myRedGridCell");			
+		}
+
+	}
+
+	private static void copyValues(ListGridRecord from, BeszallitottcikkSer to) {
+		to.setCikkszam(from.getAttributeAsString(BeszallitasConstants.BESZALLITAS_CIKKSZAM));
+		to.setSzinkod(from.getAttributeAsString(BeszallitasConstants.BESZALLITAS_SZINKOD));
+		to.setExportkarton(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_EXPORTKARTON));
+		to.setKiskarton(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_KISKARTON));	
+		to.setDarab(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_DARAB));	
+		to.setMegrendexportkarton(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDEXPORTKARTON));	
+		to.setMegrendkiskarton(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDKISKARTON));	
+		to.setMegrenddarab(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDDARAB));	
+		to.setRogzito(from.getAttributeAsString(BeszallitasConstants.BESZALLITAS_ROGZITO));	
+		to.setDatum(from.getAttributeAsDate(BeszallitasConstants.BESZALLITAS_DATUM));	
+		to.setRovancs(from.getAttributeAsBoolean(BeszallitasConstants.BESZALLITAS_ROVANCS));	
 	}
 
 }

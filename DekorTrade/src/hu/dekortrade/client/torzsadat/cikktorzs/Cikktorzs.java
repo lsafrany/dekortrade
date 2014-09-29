@@ -5,6 +5,7 @@ import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.client.raktar.beszallitas.BeszallitasConstants;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
@@ -261,7 +262,8 @@ public class Cikktorzs {
 		pageLabel.setWidth("100px");
 
 		final IButton nextIButton = new IButton("&gt;&gt;");
-
+		nextIButton.setDisabled(true);
+		
 		prevnextLayout.addMember(previousIButton);
 		prevnextLayout.addMember(pageLabel);
 		prevnextLayout.addMember(nextIButton);
@@ -438,9 +440,14 @@ public class Cikktorzs {
 				else
 					kepekIButton.setDisabled(true);
 				
-				if (beszallitasGrid !=  null) {
+				if (beszallitasGrid != null) {
 					beszallitasGrid.invalidateCache();
-					beszallitasGrid.fetchData();
+					Criteria criteria = new Criteria();
+					criteria.setAttribute(BeszallitasConstants.BESZALLITAS_CIKKSZAM, 
+							ctorzsGrid.getSelectedRecord().getAttribute(CikktorzsConstants.CIKK_CIKKSZAM));
+					criteria.setAttribute(BeszallitasConstants.BESZALLITAS_SZINKOD, 
+							ctorzsGrid.getSelectedRecord().getAttribute(CikktorzsConstants.CIKK_SZINKOD));
+					beszallitasGrid.fetchData(criteria);
 				}	
 				if (title !=  null) {
 					title.setContents(ctorzsGrid.getSelectedRecord().getAttribute(

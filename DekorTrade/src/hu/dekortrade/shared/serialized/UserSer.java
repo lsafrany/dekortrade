@@ -16,6 +16,8 @@ public class UserSer implements IsSerializable {
 
 	private ArrayList<String> menu = new ArrayList<String>();
 
+	private ArrayList<String> jog = new ArrayList<String>();
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -54,6 +56,14 @@ public class UserSer implements IsSerializable {
 
 	public void setMenu(ArrayList<String> menu) {
 		this.menu = menu;
+	}
+
+	public ArrayList<String> getJog() {
+		return jog;
+	}
+
+	public void setJog(ArrayList<String> jog) {
+		this.jog = jog;
 	}
 
 }

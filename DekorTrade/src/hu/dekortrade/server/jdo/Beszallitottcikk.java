@@ -38,10 +38,13 @@ public class Beszallitottcikk {
 	@Persistent
 	private Date datum;
 	
+	@Persistent
+	private Boolean rovancs;
+
 	public Beszallitottcikk(String cikkszam, String szinkod, 
 			Integer exportkarton, Integer kiskarton, Integer darab, 
 			Integer megrendexportkarton, Integer megrendkiskarton, Integer megrenddarab, 
-			String rogzito, Date datum) {
+			String rogzito, Date datum, Boolean rovancs) {
 		this.cikkszam = cikkszam;
 		this.szinkod = szinkod;
 		this.exportkarton = exportkarton;
@@ -52,6 +55,7 @@ public class Beszallitottcikk {
 		this.megrenddarab = megrenddarab;
 		this.rogzito = rogzito;
 		this.datum = datum;
+		this.rovancs = rovancs;
 	}
 
 	public String getCikkszam() {
@@ -133,4 +137,13 @@ public class Beszallitottcikk {
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
+
+	public Boolean getRovancs() {
+		return rovancs;
+	}
+
+	public void setRovancs(Boolean rovancs) {
+		this.rovancs = rovancs;
+	}
+
 }

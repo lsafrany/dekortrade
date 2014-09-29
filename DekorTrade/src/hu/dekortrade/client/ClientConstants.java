@@ -87,6 +87,8 @@ public class ClientConstants {
 					commonLabels.menu_lekerdezes_zarasok());
 			menu.put(Constants.MENU_LEKERDEZES_TORLESZTESEK,
 					commonLabels.menu_lekerdezes_torlesztesek());
+			menu.put(Constants.JOG_ROVANCS,
+					commonLabels.jog_rovancs());
 
 		}
 

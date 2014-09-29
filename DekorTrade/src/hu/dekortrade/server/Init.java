@@ -66,9 +66,11 @@ public class Init extends HttpServlet {
 					Constants.CEDULA_RENDELES);
 			Sorszam zarassorszam = new Sorszam("0", Constants.CEDULA_ZARAS);
 			Sorszam torlesztessorszam = new Sorszam("0", Constants.CEDULA_TORLESZTES);		
+			Sorszam raktarsorszam = new Sorszam("0", Constants.CEDULA_RAKTAR);		
 			pm.makePersistent(elorendeltsorszam);
 			pm.makePersistent(zarassorszam);
 			pm.makePersistent(torlesztessorszam);
+			pm.makePersistent(raktarsorszam);
 			
 			out.append("<h1>Zaras</h1>");
 
@@ -181,7 +183,7 @@ public class Init extends HttpServlet {
 									fields[6]), new Float(fields[7]),
 							new Float(0), new Float(fields[8]), new Float(
 									fields[9]), null, null, Boolean.FALSE,
-							"DB", 0, Boolean.FALSE, Boolean.FALSE);
+							"DB", 0, Boolean.FALSE, Boolean.FALSE,0L,0L,"");
 					pm.makePersistent(cikk);
 					counter++;
 				}
@@ -261,6 +263,8 @@ public class Init extends HttpServlet {
 			Jog csabijog27 = new Jog("Csabi", Constants.MENU_PENZTAR_HAZI);
 			Jog csabijog28 = new Jog("Csabi", Constants.MENU_PENZTAR_ZARAS);
 
+			Jog csabijog29 = new Jog("Csabi", Constants.JOG_ROVANCS);
+			
 			Jog tamasjog1 = new Jog("Tamás", Constants.MENU_PENZTAR);
 
 			pm.makePersistent(szilvijog1);
@@ -294,6 +298,7 @@ public class Init extends HttpServlet {
 			pm.makePersistent(csabijog26);
 			pm.makePersistent(csabijog27);
 			pm.makePersistent(csabijog28);
+			pm.makePersistent(csabijog29);
 			
 			pm.makePersistent(tamasjog1);
 
