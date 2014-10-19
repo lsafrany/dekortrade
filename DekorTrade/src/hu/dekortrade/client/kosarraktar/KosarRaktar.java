@@ -1,21 +1,21 @@
-package hu.dekortrade.client.kosarcikk;
+package hu.dekortrade.client.kosarraktar;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
+import hu.dekortrade.client.UserInfo;
+import hu.dekortrade.client.eladas.Eladas;
+import hu.dekortrade.client.kosarcikk.KosarCikkDataSource;
+import hu.dekortrade.client.kosarcikk.KosarConstants;
 import hu.dekortrade.client.lekerdezes.cedulak.Cedulak;
-import hu.dekortrade.client.rendeles.elorendeles.Elorendeles;
-import hu.dekortrade.client.rendeles.veglegites.Veglegesites;
-import hu.dekortrade.client.rendelles.internet.Internet;
-import hu.dekortrade.client.torzsadat.cikktorzs.Cikktorzs;
-import hu.dekortrade.client.torzsadat.cikktorzs.CikktorzsConstants;
+import hu.dekortrade.client.raktar.kesztlet.Keszlet;
+import hu.dekortrade.client.raktar.kesztlet.KeszletConstants;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSCallback;
 import com.smartgwt.client.data.DSRequest;
@@ -37,28 +37,24 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.validator.IsIntegerValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
-import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
-import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
-import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class KosarCikk {
+public class KosarRaktar {
 
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private KosarCikkLabels kosarCikkLabels = GWT.create(KosarCikkLabels.class);
+	private KosarRaktarLabels kosarRaktarLabels = GWT.create(KosarRaktarLabels.class);
 
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
 
-	private Internet internetOrder = new Internet();
+	private Keszlet keszlet = new Keszlet();
 
-	private Cikktorzs ctorzs = new Cikktorzs();
-
-	private boolean ctorzsSelect = true;
-
+	private Eladas eladas = new Eladas();
+	
+	private boolean keszletSelect = true;
+	
 	public Canvas get(final String cedula, final String elado,
 			final String vevo, final String vevonev, final String vevotipus,
 			final String menu) {
@@ -76,10 +72,10 @@ public class KosarCikk {
 		titleLayout.setHeight("3%");
 
 		Label titleLabel = new Label();
-		if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
+		if (menu.equals(Constants.MENU_ELADAS)) {
 			titleLabel.setContents(vevonev);
 		}
-		if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
 			titleLabel.setContents(cedula + " : " + vevonev);
 		}
 		titleLabel.setAlign(Alignment.CENTER);
@@ -145,7 +141,7 @@ public class KosarCikk {
 		});
 
 		final ListGrid kosarGrid = new ListGrid();
-		kosarGrid.setTitle(kosarCikkLabels.kosar());
+		kosarGrid.setTitle(kosarRaktarLabels.kosar());
 		kosarGrid.setWidth("90%");
 		kosarGrid.setShowHeaderContextMenu(false);
 		kosarGrid.setShowHeaderMenuButton(false);
@@ -186,19 +182,22 @@ public class KosarCikk {
 		kosarGrid.setFields(cikkszamGridField, szinkodGridField,
 				exportkartonGridField, kiskartonGridField, darabGridField);
 
-		HLayout ctorzsButtonLayout = new HLayout();
-		ctorzsButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
-		final IButton ctorzsButton = new IButton(kosarCikkLabels.kosar_ctorzs());
-		ctorzsButton.setDisabled(true);
-		ctorzsButtonLayout.setAlign(Alignment.CENTER);
-		ctorzsButtonLayout.addMember(ctorzsButton);
+		HLayout keszletButtonLayout = new HLayout();
+		keszletButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		final IButton keszletButton = new IButton(kosarRaktarLabels.kosar_keszlet());
+		keszletButton.setDisabled(true);
+		keszletButtonLayout.setAlign(Alignment.CENTER);
+		keszletButtonLayout.addMember(keszletButton);
 
-		HLayout internetButtonLayout = new HLayout();
-		internetButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
-		final IButton internetButton = new IButton(kosarCikkLabels.kosar_internet());
-		internetButtonLayout.setAlign(Alignment.CENTER);
-		internetButtonLayout.addMember(internetButton);
+		HLayout rendelesButtonLayout = new HLayout();
+		rendelesButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		final IButton rendelesButton = new IButton(kosarRaktarLabels.kosar_rendeles());
+		rendelesButtonLayout.setAlign(Alignment.CENTER);
+		rendelesButtonLayout.addMember(rendelesButton);
 
+// TODO : Megrendelés és státuszállítás
+		rendelesButton.setDisabled(true);
+		
 		HLayout addButtonLayout = new HLayout();
 		addButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		final IButton addButton = new IButton("<");
@@ -206,8 +205,10 @@ public class KosarCikk {
 		addButtonLayout.setAlign(Alignment.CENTER);
 		addButtonLayout.addMember(addButton);
 
-		selectLayout.addMember(ctorzsButtonLayout);
-		selectLayout.addMember(internetButtonLayout);
+		if (menu.equals(Constants.MENU_ELADAS)) {
+			selectLayout.addMember(keszletButtonLayout);
+			selectLayout.addMember(rendelesButtonLayout);
+		}
 		selectLayout.addMember(addButtonLayout);
 
 		HLayout fizetLayout = new HLayout();
@@ -233,6 +234,12 @@ public class KosarCikk {
 		buttons1Layout.setHeight("3%");
 		buttons1Layout.setWidth("90%");
 
+		HLayout okButtonLayout = new HLayout();
+		okButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
+		IButton okButton = new IButton(commonLabels.ok());
+		okButtonLayout.setAlign(Alignment.CENTER);
+		okButtonLayout.addMember(okButton);
+
 		HLayout deleteButtonLayout = new HLayout();
 		deleteButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		final IButton deleteButton = new IButton(commonLabels.delete());
@@ -240,26 +247,9 @@ public class KosarCikk {
 		deleteButtonLayout.setAlign(Alignment.CENTER);
 		deleteButtonLayout.addMember(deleteButton);
 
-		HLayout okButtonLayout = new HLayout();
-		okButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
-		IButton okButton = new IButton(commonLabels.ok());
-		okButtonLayout.setAlign(Alignment.CENTER);
-		okButtonLayout.addMember(okButton);
-
-		HLayout elvetButtonLayout = new HLayout();
-		IButton elvetButton = new IButton(commonLabels.cancel());
-		if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
-			elvetButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
-			elvetButtonLayout.setAlign(Alignment.CENTER);
-			elvetButtonLayout.addMember(elvetButton);
-		}
-
 		buttons1Layout.addMember(okButtonLayout);
 		buttons1Layout.addMember(deleteButtonLayout);
-		if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
-			buttons1Layout.addMember(elvetButtonLayout);
-		}
-
+		
 		middleLayout.addMember(middleLayout1);
 		middleLayout1.addMember(leftLayout);
 		middleLayout1.addMember(selectLayout);
@@ -272,79 +262,36 @@ public class KosarCikk {
 		kosarLayout.addMember(fizetLayout);
 		kosarLayout.addMember(buttons1Layout);
 
-		rightLayout.addMember(ctorzs.get(addButton,null,null));
+		rightLayout.addMember(keszlet.get(menu,addButton));
 
-		internetButton.addClickHandler(new ClickHandler() {
+		rendelesButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ctorzsSelect = false;
-				internetButton.setDisabled(true);
-				ctorzsButton.setDisabled(false);
-				addButton.setDisabled(true);
+				rendelesButton.setDisabled(true);
+				keszletButton.setDisabled(false);
 				rightLayout.removeMembers(rightLayout.getMembers());
-				rightLayout.addMember(internetOrder.get(addButton));
+				rightLayout.addMember(eladas.rendeles(vevo));
 			}
 		});
 
-		ctorzsButton.addClickHandler(new ClickHandler() {
+		keszletButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ctorzsSelect = true;
-				internetButton.setDisabled(false);
-				ctorzsButton.setDisabled(true);
-				addButton.setDisabled(true);
+				keszletSelect = true;
+				rendelesButton.setDisabled(false);
+				keszletButton.setDisabled(true);
 				rightLayout.removeMembers(rightLayout.getMembers());
-				rightLayout.addMember(ctorzs.get(addButton,null,null));
+				rightLayout.addMember(keszlet.get(menu,addButton));
 			}
 		});
 
-		if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
-			elvetButton.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					SC.ask(commonLabels.sure(), new BooleanCallback() {
-						public void execute(Boolean value) {
-							if (value != null && value) {
-								DisplayRequest.startRequest();
-								dekorTradeService.removeKosar(elado, vevo,
-										menu, cedula,
-										new AsyncCallback<String>() {
-											public void onFailure(
-													Throwable caught) {
-												DisplayRequest.serverResponse();
-												if (caught instanceof SQLExceptionSer)
-													SC.warn(commonLabels
-															.server_sqlerror()
-															+ " : "
-															+ caught.getMessage());
-												else
-													SC.warn(commonLabels
-															.server_error());
-											}
-
-											public void onSuccess(String result) {
-												DisplayRequest.serverResponse();
-												middleLayout
-														.removeMembers(middleLayout
-																.getMembers());
-												Elorendeles preOrder = new Elorendeles();
-												middleLayout.addMember(preOrder
-														.get());
-											}
-										});
-							}
-						}
-					});
-
-				}
-			});
-		}
-
+		
 		addButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				if (ctorzsSelect) {
+				if (keszletSelect) {
 					final Window winModal = new Window();
 					winModal.setWidth(500);
 					winModal.setHeight(230);
-					winModal.setTitle(kosarCikkLabels.kosar_cikkszam());
+					winModal.setTitle(kosarRaktarLabels.kosar_cikkszam());
 					winModal.setShowMinimizeButton(false);
 					winModal.setShowCloseButton(false);
 					winModal.setIsModal(true);
@@ -360,15 +307,15 @@ public class KosarCikk {
 					int found = 0;
 					for (int i = 0; i < kosarGrid.getRecords().length; i++) {
 						if ((kosarGrid.getRecord(i).getAttribute(
-								KosarConstants.KOSAR_CIKKSZAM).equals(ctorzs
+								KosarConstants.KOSAR_CIKKSZAM).equals(keszlet
 								.getSelectedRecord().getAttribute(
-										CikktorzsConstants.CIKK_CIKKSZAM)))
+										KeszletConstants.KESZLET_CIKKSZAM)))
 								&& (kosarGrid.getRecord(i).getAttribute(
 										KosarConstants.KOSAR_SZINKOD)
-										.equals(ctorzs
+										.equals(keszlet
 												.getSelectedRecord()
 												.getAttribute(
-														CikktorzsConstants.CIKK_SZINKOD)))) {
+														KeszletConstants.KESZLET_SZINKOD)))) {
 							found = i;
 							i = kosarGrid.getRecords().length;
 						}
@@ -381,21 +328,21 @@ public class KosarCikk {
 
 					kosarEditForm.getField(KosarConstants.KOSAR_CIKKSZAM)
 							.setValue(
-									ctorzs.getSelectedRecord().getAttribute(
-											CikktorzsConstants.CIKK_CIKKSZAM));
+									keszlet.getSelectedRecord().getAttribute(
+											KeszletConstants.KESZLET_CIKKSZAM));
 					kosarEditForm.getField(KosarConstants.KOSAR_CIKKSZAM)
 							.setCanEdit(false);
 					kosarEditForm.getField(KosarConstants.KOSAR_SZINKOD)
 							.setValue(
-									ctorzs.getSelectedRecord().getAttribute(
-											CikktorzsConstants.CIKK_SZINKOD));
+									keszlet.getSelectedRecord().getAttribute(
+											KeszletConstants.KESZLET_SZINKOD));
 					kosarEditForm.getField(KosarConstants.KOSAR_SZINKOD)
 							.setCanEdit(false);
 					kosarEditForm
 							.getField(KosarConstants.KOSAR_MEGNEVEZES)
 							.setValue(
-									ctorzs.getSelectedRecord().getAttribute(
-											CikktorzsConstants.CIKK_MEGNEVEZES));
+									keszlet.getSelectedRecord().getAttribute(
+											KeszletConstants.KESZLET_MEGNEVEZES));
 					kosarEditForm.getField(KosarConstants.KOSAR_MEGNEVEZES)
 							.setCanEdit(false);
 					kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON)
@@ -410,9 +357,9 @@ public class KosarCikk {
 					kosarEditForm
 							.getField(KosarConstants.KOSAR_ARUSD)
 							.setValue(
-									ctorzs.getSelectedRecord()
+									keszlet.getSelectedRecord()
 											.getAttributeAsFloat(
-													CikktorzsConstants.CIKK_ELORAR));
+													KeszletConstants.KESZLET_ELORAR));
 					kosarEditForm.getField(KosarConstants.KOSAR_ARUSD)
 							.setVisible(false);
 
@@ -469,24 +416,24 @@ public class KosarCikk {
 
 							int ckk = 0;
 							int cdb = 0;
-							if (ctorzs.getSelectedRecord().getAttributeAsInt(
-									CikktorzsConstants.CIKK_KISKARTON) != null)
-								ckk = ctorzs
+							if (keszlet.getSelectedRecord().getAttributeAsInt(
+									KeszletConstants.KESZLET_KISKARTON) != null)
+								ckk = keszlet
 										.getSelectedRecord()
 										.getAttributeAsInt(
-												CikktorzsConstants.CIKK_KISKARTON);
-							if (ctorzs.getSelectedRecord().getAttributeAsInt(
-									CikktorzsConstants.CIKK_DARAB) != null)
-								cdb = ctorzs.getSelectedRecord()
+												KeszletConstants.KESZLET_KISKARTON);
+							if (keszlet.getSelectedRecord().getAttributeAsInt(
+									KeszletConstants.KESZLET_DARAB) != null)
+								cdb = keszlet.getSelectedRecord()
 										.getAttributeAsInt(
-												CikktorzsConstants.CIKK_DARAB);
+												KeszletConstants.KESZLET_DARAB);
 
 							float elarar = 0;
-							if (ctorzs.getSelectedRecord().getAttributeAsFloat(
-									CikktorzsConstants.CIKK_ELORAR) != null)
-								elarar = ctorzs.getSelectedRecord()
+							if (keszlet.getSelectedRecord().getAttributeAsFloat(
+									KeszletConstants.KESZLET_ELORAR) != null)
+								elarar = keszlet.getSelectedRecord()
 										.getAttributeAsFloat(
-												CikktorzsConstants.CIKK_ELORAR);
+												KeszletConstants.KESZLET_ELORAR);
 
 							float fizet = (float) (((((ckk * cdb) * exp)
 									+ (cdb * kk) + db) * elarar) * 0.2);
@@ -517,81 +464,7 @@ public class KosarCikk {
 					winModal.addItem(buttonsLayout);
 					winModal.show();
 				} else {
-					SC.ask(commonLabels.sure(), new BooleanCallback() {
-						public void execute(Boolean value) {
-							if (value != null && value) {
-								DisplayRequest.startRequest();
-								dekorTradeService.importInternet(elado, vevo,
-										internetOrder.getRendeles(),
-										new AsyncCallback<String>() {
-											public void onFailure(
-													Throwable caught) {
-												DisplayRequest.serverResponse();
-												if (caught instanceof SQLExceptionSer)
-													SC.warn(commonLabels
-															.server_sqlerror()
-															+ " : "
-															+ caught.getMessage());
-												else
-													SC.warn(commonLabels
-															.server_error());
-											}
-
-											public void onSuccess(String result) {
-												DisplayRequest.serverResponse();
-
-												kosarGrid.invalidateCache();
-												kosarGrid.fetchData();
-
-												rightLayout
-														.removeMembers(rightLayout
-																.getMembers());
-												rightLayout
-														.addMember(internetOrder
-																.get(addButton));
-											}
-										});
-							}
-						}
-					});
 				}
-			}
-		});
-
-		kosarGrid.addRecordClickHandler(new RecordClickHandler() {
-			public void onRecordClick(RecordClickEvent event) {
-				deleteButton.setDisabled(false);
-			}
-		});
-
-		kosarGrid.addDataArrivedHandler(new DataArrivedHandler() {
-			public void onDataArrived(DataArrivedEvent event) {
-
-				float fizetusd = 0;
-				for (int i = 0; i < kosarGrid.getRecords().length; i++) {
-					if (kosarGrid.getRecord(i).getAttribute(
-							KosarConstants.KOSAR_FIZETUSD) != null) {
-						fizetusd = fizetusd
-								+ kosarGrid.getRecord(i).getAttributeAsFloat(
-										KosarConstants.KOSAR_FIZETUSD);
-					}
-
-				}
-				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizetusd).replaceAll(",", "."));
-			}
-		});
-
-		deleteButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SC.ask(commonLabels.sure(), new BooleanCallback() {
-					public void execute(Boolean value) {
-						if (value != null && value) {
-							kosarGrid.removeSelectedData();
-							deleteButton.setDisabled(true);
-						}
-					}
-				});
 			}
 		});
 
@@ -602,7 +475,7 @@ public class KosarCikk {
 						if (value != null && value) {
 							DisplayRequest.startRequest();
 
-							if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
+							if (menu.equals(Constants.MENU_ELADAS)) {
 								dekorTradeService.createCedula(elado, vevo,
 										menu, new AsyncCallback<String>() {
 											public void onFailure(
@@ -628,16 +501,23 @@ public class KosarCikk {
 												middleLayout.addMember(cedula
 														.printCedula(
 																result,
-																Constants.CEDULA_STATUSZ_ELORENDELT,
+																Constants.CEDULA_STATUSZ_ELADOTT,
 																vevonev, null,null, null, menu));
 											}
 										});
 							}
 
-							if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
-																
-								dekorTradeService.kosarToCedula(elado, vevo,
-										menu, cedula, Constants.CEDULA_STATUSZ_VEGLEGESIT, Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES, null,null,null,
+							if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+								
+								final Float tmpbefizet = new Float("0");
+								final Float tmpbefizeteur = new Float(usdLabel.getContents());
+								final Float tmpbefizetusd = new Float("0");
+
+								dekorTradeService.kosarToCedula(
+										UserInfo.userId, vevo,
+										Constants.MENU_RAKTAR_KIADAS, Constants.CEDULA_STATUSZ_KIADAS, Constants.CEDULA_STATUSZ_KIADOTT,
+										cedula,tmpbefizet,
+										tmpbefizeteur,tmpbefizetusd,
 										new AsyncCallback<String>() {
 											public void onFailure(
 													Throwable caught) {
@@ -652,27 +532,31 @@ public class KosarCikk {
 															.server_error());
 											}
 
-											public void onSuccess(String result) {
+											public void onSuccess(String result1) {
 												DisplayRequest.serverResponse();
-
 												middleLayout
 														.removeMembers(middleLayout
 																.getMembers());
-												Veglegesites finalizeOrder = new Veglegesites();
-												middleLayout
-														.addMember(finalizeOrder
-																.get());
+												Cedulak cedulak = new Cedulak();
+												middleLayout.addMember(cedulak.printCedula(
+														cedula,
+														Constants.CEDULA_STATUSZ_KIADOTT,
+														vevonev,
+														tmpbefizet,
+														tmpbefizeteur,
+														tmpbefizetusd,
+														Constants.MENU_RAKTAR_KIADAS));
 											}
 										});
+
 							}
-
+	
 						}
-
 					}
 				});
 			}
 		});
-
+		
 		return middleLayout;
 	}
 

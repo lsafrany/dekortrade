@@ -10,6 +10,7 @@ public class InternetConstants {
 	public static final String INTERNETRENDELTCIKK_ROVIDNEV = "internetrendeltcikk_rovidnev";
 	public static final String INTERNETRENDELTCIKK_RENDELES = "internetrendeltcikk_rendeles";
 	public static final String INTERNETRENDELTCIKK_CIKKSZAM = "internetrendeltcikk_cikkszam";
+	public static final String INTERNETRENDELTCIKK_SZINKOD = "internetrendeltcikk_szinkod";
 	public static final String INTERNETRENDELTCIKK_EXPORTKARTON = "internetrendeltcikk_exportkarton";
 	public static final String INTERNETRENDELTCIKK_KISKARTON = "internetrendeltcikk_kiskarton";
 	public static final String INTERNETRENDELTCIKK_DARAB = "internetrendeltcikk_darab";

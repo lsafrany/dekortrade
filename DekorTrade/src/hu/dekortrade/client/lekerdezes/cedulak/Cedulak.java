@@ -6,7 +6,10 @@ import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.UserInfo;
+import hu.dekortrade.client.eladas.Eladas;
+import hu.dekortrade.client.kosarraktar.KosarRaktar;
 import hu.dekortrade.client.penztar.fizetes.Fizetes;
+import hu.dekortrade.client.raktar.kiadas.Kiadas;
 import hu.dekortrade.client.rendeles.veglegites.Veglegesites;
 import hu.dekortrade.client.torzsadat.vevo.Vevo;
 import hu.dekortrade.shared.Constants;
@@ -132,7 +135,7 @@ public class Cedulak {
 			criteria.setAttribute(CedulakConstants.CEDULA_STATUS,Constants.CEDULA_STATUSZ_ELORENDELT);
 			cedulaGrid.fetchData(criteria);
 		}
-		if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+		if ((menu.equals(Constants.MENU_PENZTAR_FIZETES)) || (menu.equals(Constants.MENU_RAKTAR_KIADAS))) {
 			cedulaGrid.setAutoFetchData(true);
 		}
 		
@@ -156,7 +159,7 @@ public class Cedulak {
 		datumGridField.setWidth("15%");
 
 		cedulaGrid.setFields(cedulaGridField, statusGridField, vevoGridField,
-				eladoGridField, datumGridField);
+				eladoGridField, datumGridField);			
 
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
@@ -168,7 +171,7 @@ public class Cedulak {
 		IButton refreshIButton = new IButton(commonLabels.refresh());
 
 		if (menu.equals(Constants.MENU_LEKERDEZES_CEDULAK)
-				|| menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+				|| menu.equals(Constants.MENU_PENZTAR_FIZETES) || menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
 			refreshButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 			refreshButtonLayout.setAlign(Alignment.CENTER);
 			refreshButtonLayout.addMember(refreshIButton);
@@ -191,7 +194,7 @@ public class Cedulak {
 		}
 
 		if (menu.equals(Constants.MENU_LEKERDEZES_CEDULAK)
-				|| menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+				|| menu.equals(Constants.MENU_PENZTAR_FIZETES) || menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
 			buttonsLayout.addMember(refreshButtonLayout);
 		}
 		buttonsLayout.addMember(selectButtonLayout);
@@ -318,7 +321,7 @@ public class Cedulak {
 		});
 
 		if (menu.equals(Constants.MENU_LEKERDEZES_CEDULAK)
-				|| menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+				|| menu.equals(Constants.MENU_PENZTAR_FIZETES) || menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
 			refreshIButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					cedulaGrid.invalidateCache();
@@ -363,12 +366,32 @@ public class Cedulak {
 									menu));
 				}
 				if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)
-						|| menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+						|| menu.equals(Constants.MENU_PENZTAR_FIZETES) || menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
 
 					SC.ask(commonLabels.sure(), new BooleanCallback() {
 						public void execute(Boolean value) {
 							if (value != null && value) {
 								DisplayRequest.startRequest();
+								
+								String tipus = "";						
+								if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
+									tipus = Constants.CEDULA_STATUSZ_ELORENDELT;
+								}
+								if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+									tipus = Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES;
+								}
+
+								if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+									tipus = Constants.CEDULA_STATUSZ_ELADOTT;
+								}
+					
+								if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+									tipus = cedulaGrid
+											.getSelectedRecord()
+											.getAttribute(
+													CedulakConstants.CEDULA_STATUS);
+								}
+							
 								dekorTradeService
 										.cedulaToKosar(
 												UserInfo.userId,
@@ -377,6 +400,7 @@ public class Cedulak {
 														.getAttribute(
 																CedulakConstants.CEDULA_VEVO),
 												menu,
+												tipus,
 												cedulaGrid
 														.getSelectedRecord()
 														.getAttribute(
@@ -418,6 +442,19 @@ public class Cedulak {
 																	.addMember(cashPay
 																			.get());
 														}
+														if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+															middleLayout
+																	.removeMembers(middleLayout
+																			.getMembers());
+															KosarRaktar kosarRaktar = new KosarRaktar();
+															middleLayout
+																	.addMember(kosarRaktar.get(cedulaGrid.getSelectedRecord().getAttribute(CedulakConstants.CEDULA_CEDULA),UserInfo.userId,
+																			cedulaGrid.getSelectedRecord().getAttribute(CedulakConstants.CEDULA_VEVO), 
+																			cedulaGrid.getSelectedRecord().getAttribute(CedulakConstants.CEDULA_VEVONEV),
+																			cedulaGrid.getSelectedRecord().getAttribute(CedulakConstants.CEDULA_VEVOTIPUS),
+																			Constants.MENU_RAKTAR_KIADAS));
+														}														
+														
 													}
 												});
 							}
@@ -690,6 +727,14 @@ public class Cedulak {
 				if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
 					Fizetes cashPay = new Fizetes();
 					middleLayout.addMember(cashPay.get());
+				}
+				if (menu.equals(Constants.MENU_ELADAS)) {
+					Eladas eladas = new Eladas();
+					middleLayout.addMember(eladas.get());
+				}
+				if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+					Kiadas kiadas = new Kiadas();
+					middleLayout.addMember(kiadas.get());
 				}
 			}
 		});

@@ -150,7 +150,7 @@ public class Internet {
 
 		final ListGrid rendeltcikkGrid = new ListGrid();
 		rendeltcikkGrid.setTitle(internetorderLabels.rendeltcikk());
-		rendeltcikkGrid.setWidth("60%");
+		rendeltcikkGrid.setWidth("80%");
 		rendeltcikkGrid.setShowHeaderContextMenu(false);
 		rendeltcikkGrid.setShowHeaderMenuButton(false);
 		rendeltcikkGrid.setCanSort(false);
@@ -159,6 +159,10 @@ public class Internet {
 
 		ListGridField cikkszamGridField = new ListGridField(
 				InternetConstants.INTERNETRENDELTCIKK_CIKKSZAM);
+
+		ListGridField szinkodGridField = new ListGridField(
+				InternetConstants.INTERNETRENDELTCIKK_SZINKOD);
+		szinkodGridField.setWidth("10%");
 
 		ListGridField exportkartonGridField = new ListGridField(
 				InternetConstants.INTERNETRENDELTCIKK_EXPORTKARTON);
@@ -172,7 +176,7 @@ public class Internet {
 				InternetConstants.INTERNETRENDELTCIKK_DARAB);
 		darabGridField.setWidth("20%");
 
-		rendeltcikkGrid.setFields(cikkszamGridField, exportkartonGridField,
+		rendeltcikkGrid.setFields(cikkszamGridField, szinkodGridField, exportkartonGridField,
 				kiskartonGridField, darabGridField);
 
 		rendeltcikkLayout.addMember(rendeltcikkGrid);

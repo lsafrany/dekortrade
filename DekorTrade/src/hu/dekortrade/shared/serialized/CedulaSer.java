@@ -12,6 +12,8 @@ public class CedulaSer implements IsSerializable {
 
 	private String vevonev;
 
+	private String vevotipus;
+	
 	private String status;
 
 	private String elado;
@@ -49,6 +51,14 @@ public class CedulaSer implements IsSerializable {
 	public void setVevonev(String vevonev) {
 		this.vevonev = vevonev;
 	}
+		
+	public String getVevotipus() {
+		return vevotipus;
+	}
+
+	public void setVevotipus(String vevotipus) {
+		this.vevotipus = vevotipus;
+	}
 
 	public String getStatus() {
 		return status;
@@ -61,7 +71,7 @@ public class CedulaSer implements IsSerializable {
 	public String getElado() {
 		return elado;
 	}
-
+	
 	public void setElado(String elado) {
 		this.elado = elado;
 	}

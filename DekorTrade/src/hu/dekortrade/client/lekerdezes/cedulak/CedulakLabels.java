@@ -10,6 +10,8 @@ public interface CedulakLabels extends Constants {
 
 	String vevonev();
 
+	String vevotipus();
+	
 	String status();
 
 	String elado();

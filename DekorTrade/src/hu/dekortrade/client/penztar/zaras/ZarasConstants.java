@@ -45,6 +45,8 @@ public class ZarasConstants {
 					cashCloseLabels.torlesztes());
 			fizetestipus.put(Constants.FIZETES_HAZIPENZTAR,
 					cashCloseLabels.hazipenztar());
+			fizetestipus.put(Constants.FIZETES_FIZETES,
+					cashCloseLabels.fizetes());
 		}
 		return fizetestipus;
 	}

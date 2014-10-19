@@ -54,12 +54,18 @@ public class Constants {
 	public static final String CEDULA_STATUSZ_ELORENDELT = "ELORENDELT";
 	public static final String CEDULA_STATUSZ_VEGLEGESIT = "VEGLEGESIT";
 	public static final String CEDULA_STATUSZ_FIZETENDO_ELORENDELES = "FIZETENDO_ELORENDELES";
-	public static final String CEDULA_STATUSZ_ELORENDELES_FIZETES = "CEDULA_STATUS_ELORENDELES_FIZETES";
+	public static final String CEDULA_STATUSZ_ELORENDELES_FIZETES = "ELORENDELES_FIZETES";
 	public static final String CEDULA_STATUSZ_FIZETETT_ELORENDELES = "FIZETETT_ELORENDELES";
-
+	public static final String CEDULA_STATUSZ_ELADOTT = "ELADOTT";
+	public static final String CEDULA_STATUSZ_KIADAS = "KIADAS";
+	public static final String CEDULA_STATUSZ_KIADOTT = "KIADOTT";
+	public static final String CEDULA_STATUSZ_FIZETES = "FIZETES";
+	public static final String CEDULA_STATUSZ_FIZETETT = "FIZETETT";
+	
 	public static final String FIZETES_ELORENDELT = "FIZETES_ELORENDELT";
 	public static final String FIZETES_TORLESZTES = "FIZETES_TORLESZTES";
 	public static final String FIZETES_HAZIPENZTAR = "FIZETES_HAZIPENZTAR";
+	public static final String FIZETES_FIZETES = "FIZETES_FIZETES";
 	
 	public static final String CEDULA_RENDELES = "RENDELES";
 	public static final String CEDULA_ZARAS = "ZARAS";

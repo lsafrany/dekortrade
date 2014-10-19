@@ -1,8 +1,8 @@
-package hu.dekortrade.client.kosarcikk;
+package hu.dekortrade.client.kosarraktar;
 
 import com.google.gwt.i18n.client.Constants;
 
-public interface KosarLabels extends Constants {
+public interface KosarRaktarLabels extends Constants {
 
 	String kosar();
 
@@ -36,8 +36,8 @@ public interface KosarLabels extends Constants {
 
 	String koasr_fizetusd();
 
-	String kosar_ctorzs();
+	String kosar_keszlet();
 
-	String kosar_internet();
+	String kosar_rendeles();
 
 }

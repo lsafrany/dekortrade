@@ -156,10 +156,10 @@ public interface DekorTradeServiceAsync {
 	void getCedulacikk(String cedula, String tipus,
 			AsyncCallback<List<CedulacikkSer>> asyncCallback);
 
-	void cedulaToKosar(String elado, String vevo, String menu, String cedula,
+	void cedulaToKosar(String elado, String vevo, String menu, String tipus, String cedula,
 			AsyncCallback<String> asyncCallback);
 
-	void kosarToCedula(String elado, String vevo, String menu, String cedula,
+	void kosarToCedula(String elado, String vevo, String menu, String tipus, String ujtipus, String cedula,
 			Float befizet, Float befizeteur, Float befizetusd,
 			AsyncCallback<String> asyncCallback);
 
@@ -214,5 +214,8 @@ public interface DekorTradeServiceAsync {
 			AsyncCallback<List<RaktarSer>> asyncCallback);
 
 	void updateRaktar(String rovancs,String userId,RaktarSer raktarSer, AsyncCallback<RaktarSer> asyncCallback);
+
+	void getRendeles(String vevo,
+			AsyncCallback<List<RendeltcikkSer>> asyncCallback);
 
 }

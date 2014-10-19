@@ -126,6 +126,12 @@ public class ClientConstants {
 					commonLabels.elorendelesfizetes());
 			cedulatipus.put(Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
 					commonLabels.fizetettelorendeles());
+			cedulatipus.put(Constants.CEDULA_STATUSZ_ELADOTT,
+					commonLabels.eladott());
+			cedulatipus.put(Constants.CEDULA_STATUSZ_KIADOTT,
+					commonLabels.kiadott());
+			cedulatipus.put(Constants.CEDULA_STATUSZ_FIZETETT,
+					commonLabels.fizetett());
 		}
 		return cedulatipus;
 	}

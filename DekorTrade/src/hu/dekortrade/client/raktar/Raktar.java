@@ -70,7 +70,7 @@ public class Raktar {
 				final Keszlet keszlet = new Keszlet();
 
 				if (!selecTab) {
-					tab.setPane(keszlet.get());
+					tab.setPane(keszlet.get(Constants.MENU_RAKTAR_KESZLET,null));
 					tabSet.selectTab(0);
 					selecTab = true;
 				}
@@ -80,7 +80,7 @@ public class Raktar {
 					@Override
 					public void onTabSelected(TabSelectedEvent event) {
 
-						tab.setPane(keszlet.get());
+						tab.setPane(keszlet.get(Constants.MENU_RAKTAR_KESZLET,null));
 					}
 
 				});

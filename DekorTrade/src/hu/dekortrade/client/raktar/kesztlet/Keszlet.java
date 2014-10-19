@@ -57,7 +57,7 @@ public class Keszlet {
 
 	private String rovancs = "";
 	
-	public Canvas get() {
+	public Canvas get(final String menu, final IButton extIButton) {
 		DisplayRequest.counterInit();
 
 		final HLayout middleLayout = new HLayout();
@@ -87,13 +87,13 @@ public class Keszlet {
 			public void onSuccess(final CikkSelectsSer result) {
 				DisplayRequest.serverResponse();
 				middleLayout.removeMembers(middleLayout.getMembers());
-				middleLayout.addMember(process(result));
+				middleLayout.addMember(process(menu,extIButton,result));
 			}
 		});
 		return middleLayout;
 	}
 
-	public Canvas process(final CikkSelectsSer cikkSelectsSer) {
+	public Canvas process(final String menu, final IButton extIButton, final CikkSelectsSer cikkSelectsSer) {
 
 		DisplayRequest.counterInit();
 
@@ -271,7 +271,9 @@ public class Keszlet {
 		keszletLayout.addMember(keszletFormLayout);
 		keszletLayout.addMember(keszletGridLayout);
 		keszletLayout.addMember(prevnextLayout);
-		keszletLayout.addMember(buttonsLayout);
+		if (menu.equals(Constants.MENU_RAKTAR_KESZLET)) {
+			keszletLayout.addMember(buttonsLayout);
+		}
 
 		middleLayout.addMember(keszletLayout);
 
@@ -375,6 +377,7 @@ public class Keszlet {
 			public void onRecordClick(RecordClickEvent event) {
 				rovancsButton.setDisabled(false);
 				helykodButton.setDisabled(false);
+				if (extIButton != null) extIButton.setDisabled(false);
 				selectedRecord = keszletGrid.getSelectedRecord();
 			}
 		});

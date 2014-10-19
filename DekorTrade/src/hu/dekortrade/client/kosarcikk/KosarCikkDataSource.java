@@ -28,7 +28,7 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private KosarLabels kosarLabels = GWT.create(KosarLabels.class);
+	private KosarCikkLabels kosarCikkLabels = GWT.create(KosarCikkLabels.class);
 
 	private String cedula = null;
 	private String elado = null;
@@ -50,7 +50,13 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 			this.tipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
 		}
 		if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
-			this.tipus = Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES;
+			this.tipus = "";
+		}
+		if (menu.equals(Constants.MENU_ELADAS)) {
+			this.tipus = Constants.CEDULA_STATUSZ_ELADOTT;
+		}
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+			this.tipus = Constants.CEDULA_STATUSZ_KIADAS;
 		}
 
 		TextItem textItem = new TextItem();
@@ -59,69 +65,69 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		DataSourceField field;
 
 		field = new DataSourceTextField(KosarConstants.KOSAR_ELADO,
-				kosarLabels.kosar_elado());
+				kosarCikkLabels.kosar_elado());
 		field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceTextField(KosarConstants.KOSAR_VEVO,
-				kosarLabels.kosar_vevo());
+				kosarCikkLabels.kosar_vevo());
 		field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceTextField(KosarConstants.KOSAR_TIPUS,
-				kosarLabels.kosar_tipus());
+				kosarCikkLabels.kosar_tipus());
 		field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceTextField(KosarConstants.KOSAR_CIKKSZAM,
-				kosarLabels.kosar_cikkszam());
+				kosarCikkLabels.kosar_cikkszam());
 		field.setPrimaryKey(true);
 		addField(field);
 
 		field = new DataSourceTextField(KosarConstants.KOSAR_SZINKOD,
-				kosarLabels.kosar_szinkod());
+				kosarCikkLabels.kosar_szinkod());
 		field.setPrimaryKey(true);
 		addField(field);
 
 		field = new DataSourceTextField(KosarConstants.KOSAR_MEGNEVEZES,
-				kosarLabels.kosar_megnevezes());
+				kosarCikkLabels.kosar_megnevezes());
 		field.setEditorProperties(textItem);
 		addField(field);
 
 		field = new DataSourceIntegerField(KosarConstants.KOSAR_EXPORTKARTON,
-				kosarLabels.kosar_exportkarton());
+				kosarCikkLabels.kosar_exportkarton());
 		addField(field);
 
 		field = new DataSourceIntegerField(KosarConstants.KOSAR_KISKARTON,
-				kosarLabels.kosar_kiskarton());
+				kosarCikkLabels.kosar_kiskarton());
 		addField(field);
 
 		field = new DataSourceIntegerField(KosarConstants.KOSAR_DARAB,
-				kosarLabels.kosar_darab());
+				kosarCikkLabels.kosar_darab());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_AR,
-				kosarLabels.koasr_ar());
+				kosarCikkLabels.koasr_ar());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_AREUR,
-				kosarLabels.koasr_areur());
+				kosarCikkLabels.koasr_areur());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_ARUSD,
-				kosarLabels.koasr_arusd());
+				kosarCikkLabels.koasr_arusd());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZET,
-				kosarLabels.koasr_fizet());
+				kosarCikkLabels.koasr_fizet());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZETEUR,
-				kosarLabels.koasr_fizeteur());
+				kosarCikkLabels.koasr_fizeteur());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZETUSD,
-				kosarLabels.koasr_fizetusd());
+				kosarCikkLabels.koasr_fizetusd());
 		addField(field);
 
 	}

@@ -38,7 +38,7 @@ public class Fizetes {
 	@Persistent
 	private boolean szamolt;
 
-	public Fizetes(String cedula, String vevo, String tipus, String penztaros, String megjegyzes,
+	public Fizetes(String cedula, String vevo, String tipus, String megjegyzes,String penztaros,
 			Float fizet, Float fizeteur, Float fizetusd, Date datum,
 			boolean szamolt) {
 		this.cedula = cedula;

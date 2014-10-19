@@ -1686,45 +1686,90 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Kosarcikk.class);
 
 			if (vevo != null) {
-				String tipus = "";
-				if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
-					tipus = Constants.CEDULA_STATUSZ_ELORENDELT;
-				}
-				if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
-					tipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
-				}
+			
 				if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
-					tipus = Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES;
-				}
+					
+					query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && ( (this.tipus == ptipus1) || (this.tipus == ptipus2) )");
+					query.declareParameters("String pelado,String pvevo,String ptipus1,String ptipus2");
+					
+					Map<String, String> parameters = new HashMap<String, String>();
+					parameters.put("pelado", elado);
+					parameters.put("pvevo", vevo);
+					parameters.put("ptipus1", Constants.CEDULA_STATUSZ_FIZETES);
+					parameters.put("ptipus2", Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES);
+					@SuppressWarnings("unchecked")
+					List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
+							.executeWithMap(parameters);
+					if (!list.isEmpty()) {
+						for (Kosarcikk l : list) {
+							KosarSer kosarSer = new KosarSer();
+							kosarSer.setCikkszam(l.getCikkszam());
+							kosarSer.setSzinkod(l.getSzinkod());
+							kosarSer.setTipus(l.getTipus());
+							@SuppressWarnings("unchecked")
+							List<Cikk> cikklist = (List<Cikk>) pm.newQuery(
+									cikkquery).execute(l.getCikkszam(),
+									l.getSzinkod());
+							if (!cikklist.isEmpty()) {
+								kosarSer.setMegnevezes(cikklist.get(0)
+										.getMegnevezes());
+								kosarSer.setArusd(cikklist.get(0).getElorar());
+							}
 
-				query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
-				query.declareParameters("String pelado,String pvevo,String ptipus");
-				@SuppressWarnings("unchecked")
-				List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
-						.execute(elado, vevo, tipus);
-				if (!list.isEmpty()) {
-					for (Kosarcikk l : list) {
-						KosarSer kosarSer = new KosarSer();
-						kosarSer.setCikkszam(l.getCikkszam());
-						kosarSer.setSzinkod(l.getSzinkod());
-
-						@SuppressWarnings("unchecked")
-						List<Cikk> cikklist = (List<Cikk>) pm.newQuery(
-								cikkquery).execute(l.getCikkszam(),
-								l.getSzinkod());
-						if (!cikklist.isEmpty()) {
-							kosarSer.setMegnevezes(cikklist.get(0)
-									.getMegnevezes());
-							kosarSer.setArusd(cikklist.get(0).getElorar());
+							kosarSer.setExportkarton(l.getExportkarton());
+							kosarSer.setKiskarton(l.getKiskarton());
+							kosarSer.setDarab(l.getDarab());
+							kosarSer.setFizetusd(l.getFizetusd());
+							kosar.add(kosarSer);
 						}
-
-						kosarSer.setExportkarton(l.getExportkarton());
-						kosarSer.setKiskarton(l.getKiskarton());
-						kosarSer.setDarab(l.getDarab());
-						kosarSer.setFizetusd(l.getFizetusd());
-						kosar.add(kosarSer);
 					}
-				}
+
+				} 
+				else {
+					
+					String tipus = "";
+					if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
+						tipus = Constants.CEDULA_STATUSZ_ELORENDELT;
+					}
+					if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
+						tipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
+					}
+					if (menu.equals(Constants.MENU_ELADAS)) {
+						tipus = Constants.CEDULA_STATUSZ_ELADOTT;
+					}
+					if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+						tipus = Constants.CEDULA_STATUSZ_KIADAS;
+					}
+					
+					query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
+					query.declareParameters("String pelado,String pvevo,String ptipus");
+					@SuppressWarnings("unchecked")
+					List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
+							.execute(elado, vevo, tipus);
+					if (!list.isEmpty()) {
+						for (Kosarcikk l : list) {
+							KosarSer kosarSer = new KosarSer();
+							kosarSer.setCikkszam(l.getCikkszam());
+							kosarSer.setSzinkod(l.getSzinkod());
+							kosarSer.setTipus(l.getTipus());
+							@SuppressWarnings("unchecked")
+							List<Cikk> cikklist = (List<Cikk>) pm.newQuery(
+									cikkquery).execute(l.getCikkszam(),
+									l.getSzinkod());
+							if (!cikklist.isEmpty()) {
+								kosarSer.setMegnevezes(cikklist.get(0)
+										.getMegnevezes());
+								kosarSer.setArusd(cikklist.get(0).getElorar());
+							}
+	
+							kosarSer.setExportkarton(l.getExportkarton());
+							kosarSer.setKiskarton(l.getKiskarton());
+							kosarSer.setDarab(l.getDarab());
+							kosarSer.setFizetusd(l.getFizetusd());
+							kosar.add(kosarSer);
+						}
+					}
+				} 			
 			} else {
 				@SuppressWarnings("unchecked")
 				List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
@@ -1776,40 +1821,74 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
-			String tipus = "";
-			if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
-				tipus = Constants.CEDULA_STATUSZ_ELORENDELT;
-			}
-			if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
-				tipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
-			}
-
 			if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
-				tipus = Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES;
+	
+				Query query = pm.newQuery(Kosar.class);
+				query.setFilter("(this.elado == pelado) && ( (this.tipus == ptipus1) || (this.tipus == ptipus2) )");
+				query.declareParameters("String pelado,String ptipus1,String ptipus2");
+				@SuppressWarnings("unchecked")
+				List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(elado,
+						Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES,Constants.CEDULA_STATUSZ_FIZETES);
+				if ((list != null) && (!list.isEmpty())) {
+					ret = new VevoKosarSer();
+					for (Kosar l : list) {
+						ret.setVevo(l.getVevo());
+						ret.setCedula(l.getCedula());
+					}
+					if (ret.getVevo() != null) {
+						Query query1 = pm.newQuery(Vevo.class);
+						query1.setFilter("this.rovidnev == pvevo");
+						query1.declareParameters("String pvevo");
+						@SuppressWarnings("unchecked")
+						List<Vevo> list1 = (List<Vevo>) pm.newQuery(query1)
+								.execute(ret.getVevo());
+						for (Vevo l1 : list1) {
+							ret.setVevonev(l1.getNev());
+							ret.setVevotipus(l1.getTipus());
+						}
+					}
+				}				
 			}
 
-			Query query = pm.newQuery(Kosar.class);
-			query.setFilter("(this.elado == pelado) && (this.tipus == ptipus)");
-			query.declareParameters("String pelado,String ptipus");
-			@SuppressWarnings("unchecked")
-			List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(elado,
-					tipus);
-			if ((list != null) && (!list.isEmpty())) {
-				ret = new VevoKosarSer();
-				for (Kosar l : list) {
-					ret.setVevo(l.getVevo());
-					ret.setCedula(l.getCedula());
+			else {
+				
+				String tipus = "";
+				if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)) {
+					tipus = Constants.CEDULA_STATUSZ_ELORENDELT;
 				}
-				if (ret.getVevo() != null) {
-					Query query1 = pm.newQuery(Vevo.class);
-					query1.setFilter("this.rovidnev == pvevo");
-					query1.declareParameters("String pvevo");
-					@SuppressWarnings("unchecked")
-					List<Vevo> list1 = (List<Vevo>) pm.newQuery(query1)
-							.execute(ret.getVevo());
-					for (Vevo l1 : list1) {
-						ret.setVevonev(l1.getNev());
-						ret.setVevotipus(l1.getTipus());
+				if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
+					tipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
+				}
+				if (menu.equals(Constants.MENU_ELADAS)) {
+					tipus = Constants.CEDULA_STATUSZ_ELADOTT;
+				}
+				if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+					tipus = Constants.CEDULA_STATUSZ_KIADAS;
+				}
+
+				Query query = pm.newQuery(Kosar.class);
+				query.setFilter("(this.elado == pelado) && (this.tipus == ptipus)");
+				query.declareParameters("String pelado,String ptipus");
+				@SuppressWarnings("unchecked")
+				List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(elado,
+						tipus);
+				if ((list != null) && (!list.isEmpty())) {
+					ret = new VevoKosarSer();
+					for (Kosar l : list) {
+						ret.setVevo(l.getVevo());
+						ret.setCedula(l.getCedula());
+					}
+					if (ret.getVevo() != null) {
+						Query query1 = pm.newQuery(Vevo.class);
+						query1.setFilter("this.rovidnev == pvevo");
+						query1.declareParameters("String pvevo");
+						@SuppressWarnings("unchecked")
+						List<Vevo> list1 = (List<Vevo>) pm.newQuery(query1)
+								.execute(ret.getVevo());
+						for (Vevo l1 : list1) {
+							ret.setVevonev(l1.getNev());
+							ret.setVevotipus(l1.getTipus());
+						}
 					}
 				}
 			}
@@ -1836,7 +1915,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
 				tipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
 			}
-
+			if (menu.equals(Constants.MENU_ELADAS)) {
+				tipus = Constants.CEDULA_STATUSZ_ELADOTT;
+			}
+			
 			Kosar kosar = new Kosar(elado, vevo, tipus, cedula);
 			pm.makePersistent(kosar);
 			pm.flush();
@@ -1875,6 +1957,9 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			}
 			if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
 				tipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
+			}
+			if (menu.equals(Constants.MENU_ELADAS)) {
+				tipus = Constants.CEDULA_STATUSZ_ELADOTT;
 			}
 
 			Query query = pm.newQuery(Kosarcikk.class);
@@ -2184,13 +2269,19 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		try {
 
 			String tipus = Constants.CEDULA_STATUSZ_ELORENDELT;
-
+			String sorszamtipus = Constants.CEDULA_RENDELES;
+			
+			if (menu.equals(Constants.MENU_ELADAS)) {
+				tipus = Constants.CEDULA_STATUSZ_ELADOTT;
+				sorszamtipus = Constants.CEDULA_RAKTAR;
+			}
+			
 			Query sorszamQuery = pm.newQuery(Sorszam.class);
 			sorszamQuery.setFilter("this.tipus == ptipus");
 			sorszamQuery.declareParameters("String ptipus");
 			@SuppressWarnings("unchecked")
 			List<Sorszam> sorszamList = (List<Sorszam>) pm.newQuery(
-					sorszamQuery).execute(Constants.CEDULA_RENDELES);
+					sorszamQuery).execute(sorszamtipus);
 			if ((sorszamList != null) && (!sorszamList.isEmpty())) {
 				for (Sorszam l : sorszamList) {
 					l.setCedula(new BigInteger(l.getCedula()).add(
@@ -2299,11 +2390,17 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if (vevo == null) {
 
 				if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
+					query.setFilter("(this.status == pstatus1) || (this.status == pstatus2)");
+					query.declareParameters("String pstatus1,String pstatus2");
+
+					list = (List<Cedula>) pm.newQuery(query).execute(Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES,Constants.CEDULA_STATUSZ_KIADOTT);	
+					
+				} else if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {			
 					query.setFilter("(this.status == pstatus)");
 					query.declareParameters("String pstatus");
 
-					status = Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES;
-					list = (List<Cedula>) pm.newQuery(query).execute(status);
+					status = Constants.CEDULA_STATUSZ_ELADOTT;
+					list = (List<Cedula>) pm.newQuery(query).execute(status);	
 				} else if ((menu.equals(Constants.MENU_LEKERDEZES_CEDULAK))
 						&& (tipus != null)) {
 
@@ -2316,6 +2413,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					list = (List<Cedula>) pm.newQuery(query).execute();
 				}
 			} else {
+				
 				query.setFilter("(this.rovidnev == providnev) && (this.status == pstatus)");
 				query.declareParameters("String providnev,String pstatus");
 
@@ -2335,6 +2433,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 							.execute(l.getRovidnev());
 					if (!vevolist.isEmpty()) {
 						cedulaSer.setVevonev(vevolist.get(0).getNev());
+						cedulaSer.setVevotipus(vevolist.get(0).getTipus());
 					}
 
 					cedulaSer.setStatus(l.getStatus());
@@ -2422,25 +2521,27 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cedulacikk;
 	}
 
-	public String cedulaToKosar(String elado, String vevo, String menu,
+	public String cedulaToKosar(String elado, String vevo, String menu, String tipus,
 			String cedula) throws IllegalArgumentException, SQLExceptionSer {
 
 		String cedulasorszam = "";
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
-			String tipus = "";
 			String ujtipus = "";
-			if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
-				tipus = Constants.CEDULA_STATUSZ_ELORENDELT;
+			if (tipus.equals(Constants.CEDULA_STATUSZ_ELORENDELT)) {
 				ujtipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
 			}
-
-			if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
-				tipus = Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES;
+			else if (tipus.equals(Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES)) {
 				ujtipus = Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES;
 			}
-
+			else if (tipus.equals(Constants.CEDULA_STATUSZ_ELADOTT)) {
+				ujtipus = Constants.CEDULA_STATUSZ_KIADAS;
+			}
+			else if (tipus.equals(Constants.CEDULA_STATUSZ_KIADOTT)) {
+				ujtipus = Constants.CEDULA_STATUSZ_FIZETES;
+			}
+	
 			Query query = pm.newQuery(Cedulacikk.class);
 			query.setFilter("(this.cedula == pcedula) && (this.status == pstatus)");
 			query.declareParameters("String pcedula,String pstatus");
@@ -2517,7 +2618,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return cedulasorszam;
 	}
 
-	public String kosarToCedula(String elado, String vevo, String menu,
+	public String kosarToCedula(String elado, String vevo, String menu, String tipus, String ujtipus,
 			String cedulasorszam, Float befizet, Float befizeteur,
 			Float befizetusd) throws IllegalArgumentException, SQLExceptionSer {
 
@@ -2527,19 +2628,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query vevoquery = pm.newQuery(Vevo.class);
 			vevoquery.setFilter("this.rovidnev == providnev");
 			vevoquery.declareParameters("String providnev");
-
-			String tipus = "";
-			String ujtipus = "";
-			if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
-				tipus = Constants.CEDULA_STATUSZ_VEGLEGESIT;
-				ujtipus = Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES;
-			}
-
-			if (menu.equals(Constants.MENU_PENZTAR_FIZETES)) {
-				tipus = Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES;
-				ujtipus = Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES;
-			}
-
+						
 			Query query = pm.newQuery(Kosarcikk.class);
 			query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
 			query.declareParameters("String pelado,String pvevo,String ptipus");
@@ -2617,7 +2706,30 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					egyenlegusd = egyenlegusd + (befizetusd - fizetusd);
 					vevolist.get(0).setEgyenlegusd(egyenlegusd);
 				}
+					
+			}
 
+			if (ujtipus.equals(Constants.CEDULA_STATUSZ_FIZETETT)) {
+				Fizetes fizetes = new Fizetes(cedulasorszam, vevo,
+						Constants.FIZETES_FIZETES, "", elado, befizet,
+						befizeteur, befizetusd, new Date(), Boolean.FALSE);
+				pm.makePersistent(fizetes);
+
+				@SuppressWarnings("unchecked")
+				List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery)
+						.execute(vevo);
+				if ((vevolist != null) && (!vevolist.isEmpty())) {
+					float egyenleghuf = vevolist.get(0).getEgyenleghuf();
+					egyenleghuf = egyenleghuf + (befizet - fizet);
+					vevolist.get(0).setEgyenleghuf(egyenleghuf);
+					float egyenlegeur = vevolist.get(0).getEgyenlegeur();
+					egyenlegeur = egyenlegeur + (befizeteur - fizeteur);
+					vevolist.get(0).setEgyenlegeur(egyenlegeur);
+					float egyenlegusd = vevolist.get(0).getEgyenlegusd();
+					egyenlegusd = egyenlegusd + (befizetusd - fizetusd);
+					vevolist.get(0).setEgyenlegusd(egyenlegusd);
+				}
+					
 			}
 
 			pm.flush();
@@ -3716,6 +3828,40 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		}
 
 		return raktarSer;
+	}
+	
+	public List<RendeltcikkSer> getRendeles(String vevo) throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<RendeltcikkSer> rendeles = new ArrayList<RendeltcikkSer>();
+		try {
+
+			Query query = pm.newQuery(Rendeltcikk.class);
+			query.setFilter("(this.rovidnev == pvevo) && (this.status == pstatus)");
+			query.declareParameters("String pvevo,String pstatus");
+			@SuppressWarnings("unchecked")
+			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(
+					query).execute(vevo,Constants.ELORENDELT_BEERKEZETT);
+			if (!list.isEmpty()) {
+				for (Rendeltcikk l : list) {
+					RendeltcikkSer rendeltcikkSer = new RendeltcikkSer();
+					rendeltcikkSer.setRendeles(l.getRendeles());
+					rendeltcikkSer.setCikkszam(l.getCikkszam());
+					rendeltcikkSer.setSzinkod(l.getSzinkod());
+					rendeltcikkSer.setExportkarton(l.getExportkarton());
+					rendeltcikkSer.setKiskarton(l.getKiskarton());
+					rendeltcikkSer.setDarab(l.getDarab());
+					rendeles.add(rendeltcikkSer);
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return rendeles;
 	}
 
 }

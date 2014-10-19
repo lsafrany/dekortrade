@@ -6,6 +6,7 @@ import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.UserInfo;
+import hu.dekortrade.client.eladas.Eladas;
 import hu.dekortrade.client.lekerdezes.cedulak.Cedulak;
 import hu.dekortrade.client.penztar.torlesztes.Torlesztes;
 import hu.dekortrade.client.rendeles.elorendeles.Elorendeles;
@@ -173,7 +174,7 @@ public class Vevo {
 		final IButton torlesztButton = new IButton(vevoLabels.torlesztes());
 
 		if (menu.equals(Constants.MENU_RENDELES_ELORENDELES)
-				|| menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
+				|| menu.equals(Constants.MENU_RENDELES_VEGLEGESITES) || menu.equals(Constants.MENU_ELADAS)) {
 			HLayout buttonsLayout2 = new HLayout();
 			buttonsLayout2.setHeight("3%");
 			buttonsLayout2.setWidth("70%");
@@ -449,6 +450,34 @@ public class Vevo {
 								}
 							});
 				}
+				
+				if (menu.equals(Constants.MENU_ELADAS)) {
+					dekorTradeService.addKosar(
+							UserInfo.userId,
+							vevoGrid.getSelectedRecord().getAttribute(
+									VevoConstants.VEVO_ROVIDNEV), menu, "",
+							new AsyncCallback<String>() {
+								public void onFailure(Throwable caught) {
+									DisplayRequest.serverResponse();
+									if (caught instanceof SQLExceptionSer)
+										SC.warn(commonLabels.server_sqlerror()
+												+ " : " + caught.getMessage());
+									else
+										SC.warn(commonLabels.server_error());
+								}
+
+								public void onSuccess(String result) {
+									DisplayRequest.serverResponse();
+									middleLayout.removeMembers(middleLayout
+											.getMembers());
+									Eladas eladas = new Eladas();
+									middleLayout.addMember(eladas.get());
+								}
+							});
+				}
+			
+				
+				
 				if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
 					middleLayout.removeMembers(middleLayout.getMembers());
 					Cedulak cedula = new Cedulak();

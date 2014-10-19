@@ -54,6 +54,10 @@ public class CedulakDataSource extends GwtRpcDataSource {
 				cedulaLabels.vevonev());
 		addField(field);
 
+		field = new DataSourceTextField(CedulakConstants.CEDULA_VEVOTIPUS,
+				cedulaLabels.vevotipus());
+		addField(field);
+
 		field = new DataSourceTextField(CedulakConstants.CEDULA_ELADO,
 				cedulaLabels.elado());
 		addField(field);
@@ -135,6 +139,7 @@ public class CedulakDataSource extends GwtRpcDataSource {
 		to.setAttribute(CedulakConstants.CEDULA_STATUS, from.getStatus());
 		to.setAttribute(CedulakConstants.CEDULA_VEVO, from.getRovidnev());
 		to.setAttribute(CedulakConstants.CEDULA_VEVONEV, from.getVevonev());
+		to.setAttribute(CedulakConstants.CEDULA_VEVOTIPUS, from.getVevotipus());
 		to.setAttribute(CedulakConstants.CEDULA_ELADO, from.getElado());
 		to.setAttribute(CedulakConstants.CEDULA_ELADONEV, from.getEladonev());
 		to.setAttribute(CedulakConstants.CEDULA_BEFIZETHUF, from.getBefizethuf());

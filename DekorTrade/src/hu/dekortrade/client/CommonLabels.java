@@ -104,6 +104,12 @@ public interface CommonLabels extends Constants {
 
 	String fizetettelorendeles();
 
+	String eladott();
+	
+	String kiadott();
+	
+	String fizetett();
+	
 	String interneteselorendeles();	
 	
 	String internetesfeldolgozott();

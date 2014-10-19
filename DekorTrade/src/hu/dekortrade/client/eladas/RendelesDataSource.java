@@ -1,4 +1,4 @@
-package hu.dekortrade.client.rendelles.internet;
+package hu.dekortrade.client.eladas;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
@@ -18,53 +18,45 @@ import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class InternetRendeltcikkDataSource extends GwtRpcDataSource {
+public class RendelesDataSource extends GwtRpcDataSource {
 
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private InternetLabels internetorderLabels = GWT
-			.create(InternetLabels.class);
+	private EladasLabels eladasLabels = GWT.create(EladasLabels.class);
 
-	public InternetRendeltcikkDataSource() {
+	private String vevo = null;
+
+	public RendelesDataSource(String vevo) {
+		this.vevo = vevo;
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(
-				InternetConstants.INTERNETRENDELTCIKK_ROVIDNEV,
-				internetorderLabels.rendelt_rovidnev());
-		field.setHidden(true);
+		field = new DataSourceTextField(EladasConstants.RENDELES_RENDELES,
+				eladasLabels.rendeles());
+		addField(field);
+		field.setPrimaryKey(true);
+		
+		field = new DataSourceTextField(EladasConstants.RENDELES_CIKKSZAM,
+				eladasLabels.rendeles_cikkszam());
+		field.setPrimaryKey(true);
 		addField(field);
 
-		field = new DataSourceTextField(
-				InternetConstants.INTERNETRENDELTCIKK_RENDELES,
-				internetorderLabels.rendelt_rendeles());
-		field.setHidden(true);
+		field = new DataSourceTextField(EladasConstants.RENDELES_SZINKOD,
+				eladasLabels.rendeles_szinkod());
+		field.setPrimaryKey(true);
 		addField(field);
 
-		field = new DataSourceTextField(
-				InternetConstants.INTERNETRENDELTCIKK_CIKKSZAM,
-				internetorderLabels.rendelt_cikkszam());
+		field = new DataSourceIntegerField(EladasConstants.RENDELES_EXPORTKARTON,
+				eladasLabels.rendeles_exportkarton());
 		addField(field);
 
-		field = new DataSourceTextField(
-				InternetConstants.INTERNETRENDELTCIKK_SZINKOD,
-				internetorderLabels.rendelt_szinkod());
+		field = new DataSourceIntegerField(EladasConstants.RENDELES_KISKARTON,
+				eladasLabels.rendeles_kiskarton());
 		addField(field);
 
-		field = new DataSourceIntegerField(
-				InternetConstants.INTERNETRENDELTCIKK_EXPORTKARTON,
-				internetorderLabels.rendelt_exportkarton());
-		addField(field);
-
-		field = new DataSourceIntegerField(
-				InternetConstants.INTERNETRENDELTCIKK_KISKARTON,
-				internetorderLabels.rendelt_kiskarton());
-		addField(field);
-
-		field = new DataSourceIntegerField(
-				InternetConstants.INTERNETRENDELTCIKK_DARAB,
-				internetorderLabels.rendelt_darab());
+		field = new DataSourceIntegerField(EladasConstants.RENDELES_DARAB,
+				eladasLabels.rendeles_darab());
 		addField(field);
 
 	}
@@ -72,11 +64,7 @@ public class InternetRendeltcikkDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getRendeltcikk(
-				request.getCriteria().getAttributeAsString(
-						InternetConstants.INTERNETRENDELTCIKK_ROVIDNEV),
-				request.getCriteria().getAttributeAsString(
-						InternetConstants.INTERNETRENDELTCIKK_RENDELES),
+		dekorTradeService.getRendeles(this.vevo,
 				new AsyncCallback<List<RendeltcikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -110,34 +98,28 @@ public class InternetRendeltcikkDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeAdd(final String requestId, final DSRequest request,
 			final DSResponse response) {
+
 	}
 
 	@Override
 	protected void executeUpdate(final String requestId,
 			final DSRequest request, final DSResponse response) {
+
 	}
 
 	@Override
 	protected void executeRemove(final String requestId,
 			final DSRequest request, final DSResponse response) {
+
 	}
 
 	private static void copyValues(RendeltcikkSer from, ListGridRecord to) {
-		to.setAttribute(InternetConstants.INTERNETRENDELTCIKK_ROVIDNEV,
-				from.getRovidnev());
-		to.setAttribute(InternetConstants.INTERNETRENDELTCIKK_RENDELES,
-				from.getRendeles());
-		to.setAttribute(InternetConstants.INTERNETRENDELTCIKK_CIKKSZAM,
-				from.getCikkszam());
-		to.setAttribute(InternetConstants.INTERNETRENDELTCIKK_SZINKOD,
-				from.getSzinkod());
-		to.setAttribute(InternetConstants.INTERNETRENDELTCIKK_EXPORTKARTON,
+		to.setAttribute(EladasConstants.RENDELES_RENDELES, from.getRendeles());
+		to.setAttribute(EladasConstants.RENDELES_CIKKSZAM, from.getCikkszam());
+		to.setAttribute(EladasConstants.RENDELES_SZINKOD, from.getSzinkod());
+		to.setAttribute(EladasConstants.RENDELES_EXPORTKARTON,
 				from.getExportkarton());
-		to.setAttribute(InternetConstants.INTERNETRENDELTCIKK_KISKARTON,
-				from.getKiskarton());
-		to.setAttribute(InternetConstants.INTERNETRENDELTCIKK_DARAB,
-				from.getDarab());
-
+		to.setAttribute(EladasConstants.RENDELES_KISKARTON, from.getKiskarton());
+		to.setAttribute(EladasConstants.RENDELES_DARAB, from.getDarab());
 	}
-
 }

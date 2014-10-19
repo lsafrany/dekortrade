@@ -4,6 +4,10 @@ import com.google.gwt.i18n.client.Constants;
 
 public interface KiadasLabels extends Constants {
 
-	String fejlesztes_alatt();
+	String kosar();
 
+	String befizetes();
+	String befizet();
+	String befizeteur();
+	String befizetusd();
 }

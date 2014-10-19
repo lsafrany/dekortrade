@@ -5,6 +5,7 @@ public class CedulakConstants {
 	public static final String CEDULA_CEDULA = "cedula_cedula";
 	public static final String CEDULA_VEVO = "cedula_vevo";
 	public static final String CEDULA_VEVONEV = "cedula_vevonev";
+	public static final String CEDULA_VEVOTIPUS = "cedula_vevotipus";
 	public static final String CEDULA_STATUS = "cedula_status";
 	public static final String CEDULA_ELADO = "cedula_elado";
 	public static final String CEDULA_ELADONEV = "cedula_eladonev";

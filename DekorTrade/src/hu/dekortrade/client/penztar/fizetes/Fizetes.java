@@ -345,43 +345,85 @@ public class Fizetes {
 										final Float tmpbefizeteur = new Float(befizeteur.getValueAsString());
 										final Float tmpbefizetusd = new Float(befizetusd.getValueAsString());
 										
-										dekorTradeService.kosarToCedula(
-												UserInfo.userId, result.getVevo(),
-												Constants.MENU_PENZTAR_FIZETES,
-												result.getCedula(),tmpbefizet,
-												tmpbefizeteur,tmpbefizetusd,
-												new AsyncCallback<String>() {
-													public void onFailure(
-															Throwable caught) {
-														DisplayRequest.serverResponse();
-														if (caught instanceof SQLExceptionSer)
-															SC.warn(commonLabels
-																	.server_sqlerror()
-																	+ " : "
-																	+ caught.getMessage());
-														else
-															SC.warn(commonLabels
-																	.server_error());
-													}
+										if (kosarGrid.getSelectedRecord().getAttributeAsString(KosarConstants.KOSAR_TIPUS).equals(Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES)) {
+											dekorTradeService.kosarToCedula(
+													UserInfo.userId, result.getVevo(),
+													Constants.MENU_PENZTAR_FIZETES,Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES,Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
+													result.getCedula(),tmpbefizet,
+													tmpbefizeteur,tmpbefizetusd,
+													new AsyncCallback<String>() {
+														public void onFailure(
+																Throwable caught) {
+															DisplayRequest.serverResponse();
+															if (caught instanceof SQLExceptionSer)
+																SC.warn(commonLabels
+																		.server_sqlerror()
+																		+ " : "
+																		+ caught.getMessage());
+															else
+																SC.warn(commonLabels
+																		.server_error());
+														}
+	
+														public void onSuccess(String result1) {
+															DisplayRequest.serverResponse();
+															winModal.destroy();
+															middleLayout
+																	.removeMembers(middleLayout
+																			.getMembers());
+															Cedulak cedulak = new Cedulak();
+															middleLayout.addMember(cedulak.printCedula(
+																	result.getCedula(),
+																	Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
+																	result.getVevonev(),
+																	tmpbefizet,
+																	tmpbefizeteur,
+																	tmpbefizetusd,
+																	Constants.MENU_PENZTAR_FIZETES));
+														}
+													});
+											}
+										
+										if (kosarGrid.getSelectedRecord().getAttributeAsString(KosarConstants.KOSAR_TIPUS).equals(Constants.CEDULA_STATUSZ_FIZETES)) {
+											dekorTradeService.kosarToCedula(
+													UserInfo.userId, result.getVevo(),
+													Constants.MENU_PENZTAR_FIZETES,Constants.CEDULA_STATUSZ_FIZETES,Constants.CEDULA_STATUSZ_FIZETETT,
+													result.getCedula(),tmpbefizet,
+													tmpbefizeteur,tmpbefizetusd,
+													new AsyncCallback<String>() {
+														public void onFailure(
+																Throwable caught) {
+															DisplayRequest.serverResponse();
+															if (caught instanceof SQLExceptionSer)
+																SC.warn(commonLabels
+																		.server_sqlerror()
+																		+ " : "
+																		+ caught.getMessage());
+															else
+																SC.warn(commonLabels
+																		.server_error());
+														}
+	
+														public void onSuccess(String result1) {
+															DisplayRequest.serverResponse();
+															winModal.destroy();
+															middleLayout
+																	.removeMembers(middleLayout
+																			.getMembers());
+															Cedulak cedulak = new Cedulak();
+															middleLayout.addMember(cedulak.printCedula(
+																	result.getCedula(),
+																	Constants.CEDULA_STATUSZ_FIZETETT,
+																	result.getVevonev(),
+																	tmpbefizet,
+																	tmpbefizeteur,
+																	tmpbefizetusd,
+																	Constants.MENU_PENZTAR_FIZETES));
+														}
+													});
+											}
 
-													public void onSuccess(String result1) {
-														DisplayRequest.serverResponse();
-														winModal.destroy();
-														middleLayout
-																.removeMembers(middleLayout
-																		.getMembers());
-														Cedulak cedula = new Cedulak();
-														middleLayout.addMember(cedula.printCedula(
-																result.getCedula(),
-																Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
-																result.getVevonev(),
-																tmpbefizet,
-																tmpbefizeteur,
-																tmpbefizetusd,
-																Constants.MENU_PENZTAR_FIZETES));
-													}
-												});
-
+									
 									}
 								}
 							});

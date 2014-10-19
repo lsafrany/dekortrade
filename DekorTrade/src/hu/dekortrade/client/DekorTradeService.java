@@ -175,10 +175,10 @@ public interface DekorTradeService extends RemoteService {
 	List<CedulacikkSer> getCedulacikk(String cedula, String tipus)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String cedulaToKosar(String elado, String vevo, String menu, String cedula)
+	String cedulaToKosar(String elado, String vevo, String menu, String tipus, String cedula)
 			throws IllegalArgumentException, SQLExceptionSer;
 
-	String kosarToCedula(String elado, String vevo, String menu, String cedula,
+	String kosarToCedula(String elado, String vevo, String menu, String tipus, String ujtipus, String cedula,
 			Float befizet, Float befizeteur, Float befizetusd)
 			throws IllegalArgumentException, SQLExceptionSer;
 
@@ -239,5 +239,7 @@ public interface DekorTradeService extends RemoteService {
 
 	RaktarSer updateRaktar(String rovancs,String userId,RaktarSer raktarSer) throws IllegalArgumentException,
 			SQLExceptionSer;
+
+	List<RendeltcikkSer> getRendeles(String vevo) throws IllegalArgumentException, SQLExceptionSer;
 
 }
