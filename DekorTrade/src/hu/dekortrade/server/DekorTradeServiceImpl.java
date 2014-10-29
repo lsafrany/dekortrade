@@ -957,7 +957,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Cikk.class);
 			query.declareParameters(params);
 			query.setFilter(filter);
-			query.setOrdering("cikkszam,szinkod");
+//			query.setOrdering("cikkszam,szinkod");
 			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
 					* Constants.FETCH_SIZE);
 			@SuppressWarnings("unchecked")
@@ -2385,7 +2385,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			List<Cedula> list = null;
 			Query query = pm.newQuery(Cedula.class);
-			query.setOrdering("cedula");
+//			query.setOrdering("cedula");
 			String status = "";
 			if (vevo == null) {
 
@@ -3297,7 +3297,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Rendeltcikk.class);
 			query.setFilter("(this.status == pstatus)");
 			query.declareParameters("String pstatus");
-			query.setOrdering("cikkszam,szinkod");
+//			query.setOrdering("cikkszam,szinkod");
 			@SuppressWarnings("unchecked")
 			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
 					.execute(status);
@@ -3677,7 +3677,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		ArrayList<RaktarSer> raktar = new ArrayList<RaktarSer>();
 		try {
 			Map<String, String> parameters = new HashMap<String, String>();
-			String filter = "(this.torolt == false) && (this.keszlet > 0)";
+			String filter = "(this.torolt == false)";
 			String params = "";
 			if (cikkszam != null) {
 				filter = filter + " && (this.cikkszam >= pcikkszam)";
@@ -3703,7 +3703,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Cikk.class);
 			query.declareParameters(params);
 			query.setFilter(filter);
-			query.setOrdering("keszlet,cikkszam,szinkod");
+//			query.setOrdering("keszlet,cikkszam,szinkod");
 			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
 					* Constants.FETCH_SIZE);
 			@SuppressWarnings("unchecked")
@@ -3715,47 +3715,49 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				long darab;
 				long keszlet;
 				for (Cikk l : list) {
-					RaktarSer raktarSer = new RaktarSer();
-					raktarSer.setFotipus(l.getFotipus());
-					raktarSer.setAltipus(l.getAltipus());
-					raktarSer.setSzinkod(l.getSzinkod());
-					raktarSer.setCikkszam(l.getCikkszam());
-					raktarSer.setMegnevezes(l.getMegnevezes());
-					raktarSer.setElorar(l.getElorar());
-					raktarSer.setAr(l.getAr());
-					raktarSer.setAreur(l.getAreur());
-					raktarSer.setKiskarton(l.getKiskarton());
-					raktarSer.setDarab(l.getDarab());
-					raktarSer.setTerfogat(l.getTerfogat());
-					raktarSer.setTerfogatlab(l.getTerfogatlab());
-					raktarSer.setBsuly(l.getBsuly());
-					raktarSer.setNsuly(l.getNsuly());
-					raktarSer.setLeiras(l.getLeiras());
-					raktarSer.setMegjegyzes(l.getMegjegyzes());
-					raktarSer.setMertekegyseg(l.getMertekegyseg());
-
-					keszlet = l.getKeszlet();
-					exp = l.getKeszlet() / (l.getKiskarton() * l.getDarab());
-					keszlet = keszlet - (exp * l.getKiskarton() * l.getDarab());
-					kk = keszlet / l.getDarab();
-					darab = keszlet - (kk * l.getDarab());
-
-					raktarSer.setKexportkarton(exp);
-					raktarSer.setKkiskarton(kk);
-					raktarSer.setKdarab(darab);
-
-					keszlet = l.getRendelt();
-					exp = l.getKeszlet() / (l.getKiskarton() * l.getDarab());
-					keszlet = keszlet - (exp * l.getKiskarton() * l.getDarab());
-					kk = keszlet / l.getDarab();
-					darab = keszlet - (kk * l.getDarab());
-
-					raktarSer.setMexportkarton(exp);
-					raktarSer.setMkiskarton(kk);
-					raktarSer.setMdarab(darab);
-
-					raktarSer.setHelykod(l.getHelykod());
-					raktar.add(raktarSer);
+					if (l.getKeszlet()> 0) {
+						RaktarSer raktarSer = new RaktarSer();
+						raktarSer.setFotipus(l.getFotipus());
+						raktarSer.setAltipus(l.getAltipus());
+						raktarSer.setSzinkod(l.getSzinkod());
+						raktarSer.setCikkszam(l.getCikkszam());
+						raktarSer.setMegnevezes(l.getMegnevezes());
+						raktarSer.setElorar(l.getElorar());
+						raktarSer.setAr(l.getAr());
+						raktarSer.setAreur(l.getAreur());
+						raktarSer.setKiskarton(l.getKiskarton());
+						raktarSer.setDarab(l.getDarab());
+						raktarSer.setTerfogat(l.getTerfogat());
+						raktarSer.setTerfogatlab(l.getTerfogatlab());
+						raktarSer.setBsuly(l.getBsuly());
+						raktarSer.setNsuly(l.getNsuly());
+						raktarSer.setLeiras(l.getLeiras());
+						raktarSer.setMegjegyzes(l.getMegjegyzes());
+						raktarSer.setMertekegyseg(l.getMertekegyseg());
+	
+						keszlet = l.getKeszlet();
+						exp = l.getKeszlet() / (l.getKiskarton() * l.getDarab());
+						keszlet = keszlet - (exp * l.getKiskarton() * l.getDarab());
+						kk = keszlet / l.getDarab();
+						darab = keszlet - (kk * l.getDarab());
+	
+						raktarSer.setKexportkarton(exp);
+						raktarSer.setKkiskarton(kk);
+						raktarSer.setKdarab(darab);
+	
+						keszlet = l.getRendelt();
+						exp = l.getKeszlet() / (l.getKiskarton() * l.getDarab());
+						keszlet = keszlet - (exp * l.getKiskarton() * l.getDarab());
+						kk = keszlet / l.getDarab();
+						darab = keszlet - (kk * l.getDarab());
+	
+						raktarSer.setMexportkarton(exp);
+						raktarSer.setMkiskarton(kk);
+						raktarSer.setMdarab(darab);
+	
+						raktarSer.setHelykod(l.getHelykod());
+						raktar.add(raktarSer);
+					}
 				}
 			}
 		} catch (Exception e) {
