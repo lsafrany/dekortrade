@@ -267,6 +267,7 @@ public class Forgalom {
 		HLayout eladasButtonLayout = new HLayout();
 		eladasButtonLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		final IButton eladasButton = new IButton(forgalomLabels.eladas());
+		eladasButton.setDisabled(true);
 		eladasButtonLayout.setAlign(Alignment.CENTER);
 		eladasButtonLayout.addMember(eladasButton);
 

@@ -71,7 +71,9 @@ public class Order {
 //		final VLayout ctorzsLayout = new VLayout();
 		ctorzsLayout.setStyleName("middle");
 		ctorzsLayout.setWidth("60%");
-			
+		
+		ctorzsLayout.removeMembers(ctorzsLayout.getMembers());
+		
 		getFotipus();
 		
 		VLayout kosarLayout = new VLayout();
@@ -650,6 +652,7 @@ public class Order {
 
 		backIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				kosarAddIButton.setDisabled(false);
 				ctorzsLayout.removeMembers(ctorzsLayout.getMembers());		
 				getAltipus(fotipus);	
 			}
@@ -727,9 +730,10 @@ public class Order {
 					szinkod = ctorzsGrid.getSelectedRecord().getAttribute(
 							OrderConstants.CIKK_SZINKOD);
 
+					
 					if ((ctorzsGrid.getSelectedRecord().getAttribute(OrderConstants.CIKK_KEPEK) != null) && 
 							(!ctorzsGrid.getSelectedRecord().getAttribute(OrderConstants.CIKK_KEPEK).equals("0"))) {
-						
+							
 					Window winModal = new Window();
 					winModal.setWidth(800);
 					winModal.setHeight(800);

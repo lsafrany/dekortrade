@@ -44,6 +44,11 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 		field.setPrimaryKey(true);
 		addField(field);
 
+		field = new DataSourceTextField(OrderConstants.CIKK_SZINKOD,
+				orderLabels.cikk_szinkod());
+		field.setPrimaryKey(true);
+		addField(field);
+
 		field = new DataSourceTextField(OrderConstants.CIKK_MEGNEVEZES,
 				orderLabels.cikk_megnevezes());
 		addField(field);
@@ -137,17 +142,18 @@ public class CtorzsDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(CikkSer from, ListGridRecord to) {
-//		to.setAttribute(OrderConstants.CIKK_FOTIPUS, from.getFotipus());
-//		to.setAttribute(OrderConstants.CIKK_ALTIPUS, from.getAltipus());
+		to.setAttribute(OrderConstants.CIKK_FOTIPUS, from.getFotipus());
+		to.setAttribute(OrderConstants.CIKK_ALTIPUS, from.getAltipus());
 		to.setAttribute(OrderConstants.CIKK_CIKKSZAM, from.getCikkszam());
-//		to.setAttribute(OrderConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
+		to.setAttribute(OrderConstants.CIKK_SZINKOD, from.getSzinkod());
+		to.setAttribute(OrderConstants.CIKK_MEGNEVEZES, from.getMegnevezes());
 		to.setAttribute(OrderConstants.CIKK_AR, from.getAr());
 		to.setAttribute(OrderConstants.CIKK_KISKARTON, from.getKiskarton());
 		to.setAttribute(OrderConstants.CIKK_DARAB, from.getDarab());
 		to.setAttribute(OrderConstants.CIKK_TERFOGAT, from.getTerfogat());
 		to.setAttribute(OrderConstants.CIKK_BSULY, from.getBsuly());
 		to.setAttribute(OrderConstants.CIKK_NSULY, from.getNsuly());
-//		to.setAttribute(OrderConstants.CIKK_KEPEK, from.getKepek());
+		to.setAttribute(OrderConstants.CIKK_KEPEK, from.getKepek());
 		if (from.getKepek() > 0)
 			to.setAttribute(OrderConstants.CIKK_KEP, GWT.getModuleBaseURL()+ "download?ctorzs=" + from.getCikkszam());
 	}

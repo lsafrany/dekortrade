@@ -379,11 +379,11 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 			Query query = pm.newQuery(Kosar.class);
-			query.setFilter("(this.rovidnev == providnev) && (this.cikkszam == pcikkszam)");
-			query.declareParameters("String providnev,String pcikkszam");
+			query.setFilter("(this.rovidnev == providnev) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
+			query.declareParameters("String providnev,String pcikkszam,String pszinkod");
 			@SuppressWarnings("unchecked")
 			List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(
-					kosarSer.getRovidnev(), kosarSer.getCikkszam());
+					kosarSer.getRovidnev(), kosarSer.getCikkszam(), kosarSer.getSzinkod());
 			if (!list.isEmpty()) {
 				for (Kosar l : list) {
 					l.setExportkarton(kosarSer.getExportkarton());
@@ -408,11 +408,11 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 		try {
 
 			Query query = pm.newQuery(Kosar.class);
-			query.setFilter("(this.rovidnev == providnev) && (this.cikkszam == pcikkszam)");
-			query.declareParameters("String providnev,String pcikkszam");
+			query.setFilter("(this.rovidnev == providnev) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
+			query.declareParameters("String providnev,String pcikkszam,String pszinkod");
 			@SuppressWarnings("unchecked")
 			List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(
-					kosarSer.getRovidnev(), kosarSer.getCikkszam());
+					kosarSer.getRovidnev(), kosarSer.getCikkszam(), kosarSer.getSzinkod() );
 			if (!list.isEmpty()) {
 				for (Kosar l : list) {
 					pm.deletePersistent(l);
