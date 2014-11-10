@@ -16,7 +16,6 @@ import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DSRequest;
@@ -24,6 +23,7 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -86,6 +86,7 @@ public class Cedulak {
 		selectLayout.addMember(selectokButtonLayout);
 		
 		VLayout cedulaLayout = new VLayout();
+		cedulaLayout.setWidth("35%");
 		cedulaLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
 		final CedulakDataSource cedulaDataSource = new CedulakDataSource(vevo,
@@ -129,7 +130,9 @@ public class Cedulak {
 		cedulaGrid.setCanSort(false);
 		cedulaGrid.setShowAllRecords(true);
 		cedulaGrid.setDataSource(cedulaDataSource);
-	
+		cedulaGrid.setCanExpandRecords(true);
+		cedulaGrid.setExpansionMode(ExpansionMode.DETAILS);
+
 		if (menu.equals(Constants.MENU_RENDELES_VEGLEGESITES)) {
 			Criteria criteria = new Criteria();
 			criteria.setAttribute(CedulakConstants.CEDULA_STATUS,Constants.CEDULA_STATUSZ_ELORENDELT);
@@ -143,23 +146,15 @@ public class Cedulak {
 				CedulakConstants.CEDULA_CEDULA);
 		cedulaGridField.setWidth("10%");
 
-		ListGridField statusGridField = new ListGridField(
-				CedulakConstants.CEDULA_STATUS);
-		statusGridField.setWidth("20%");
-
 		ListGridField vevoGridField = new ListGridField(
 				CedulakConstants.CEDULA_VEVONEV);
-
-		ListGridField eladoGridField = new ListGridField(
-				CedulakConstants.CEDULA_ELADONEV);
-		eladoGridField.setWidth("15%");
 
 		ListGridField datumGridField = new ListGridField(
 				CedulakConstants.CEDULA_DATUM);
 		datumGridField.setWidth("15%");
 
-		cedulaGrid.setFields(cedulaGridField, statusGridField, vevoGridField,
-				eladoGridField, datumGridField);			
+		cedulaGrid.setFields(cedulaGridField, vevoGridField,
+				datumGridField);			
 
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
@@ -252,7 +247,9 @@ public class Cedulak {
 		cedulacikkGrid.setCanSort(false);
 		cedulacikkGrid.setShowAllRecords(true);
 		cedulacikkGrid.setDataSource(cedulacikkDataSource);
-		
+		cedulacikkGrid.setCanExpandRecords(true);
+		cedulacikkGrid.setExpansionMode(ExpansionMode.DETAILS);
+	
 		ListGridField cikkszamGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_CIKKSZAM);
 
@@ -262,7 +259,7 @@ public class Cedulak {
 
 		ListGridField exportkartonGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_EXPORTKARTON);
-		exportkartonGridField.setWidth("20%");
+		exportkartonGridField.setWidth("10%");
 
 		ListGridField kiskartonGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_KISKARTON);
@@ -272,17 +269,21 @@ public class Cedulak {
 				CedulakConstants.CEDULACIKK_DARAB);
 		darabGridField.setWidth("10%");
 
-		ListGridField arusdGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_ARUSD);
-		arusdGridField.setWidth("10%");
-
 		ListGridField fizetusdGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_FIZETUSD);
 		fizetusdGridField.setWidth("10%");
 
+		ListGridField fizeteurGridField = new ListGridField(
+				CedulakConstants.CEDULACIKK_FIZETEUR);
+		fizeteurGridField.setWidth("10%");
+
+		ListGridField fizetGridField = new ListGridField(
+				CedulakConstants.CEDULACIKK_FIZET);
+		fizetGridField.setWidth("10%");
+
 		cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
 				exportkartonGridField, kiskartonGridField, darabGridField,
-				arusdGridField, fizetusdGridField);
+				fizetusdGridField, fizeteurGridField, fizetGridField);
 
 		cedulacikkLayout.addMember(cedulacikkGrid);
 
@@ -291,19 +292,50 @@ public class Cedulak {
 		fizetLayout.setWidth("90%");
 
 		HLayout usdCurrLabelLayout = new HLayout();
-		usdCurrLabelLayout.setWidth("70%");
+		usdCurrLabelLayout.setWidth("15%");
 		Label usdCurrLabel = new Label("USD :");
 		usdCurrLabel.setAlign(Alignment.CENTER);
 		usdCurrLabelLayout.addMember(usdCurrLabel);
 
 		HLayout usdLabelLayout = new HLayout();
-		usdLabelLayout.setWidth("30%");
+		usdLabelLayout.setWidth("15%");
 		final Label usdLabel = new Label("0");
 		usdLabel.setAlign(Alignment.CENTER);
 		usdLabelLayout.addMember(usdLabel);
 
+		HLayout eurCurrLabelLayout = new HLayout();
+		eurCurrLabelLayout.setWidth("15%");
+		Label eurCurrLabel = new Label("EUR :");
+		eurCurrLabel.setAlign(Alignment.CENTER);
+		eurCurrLabelLayout.addMember(eurCurrLabel);
+
+		HLayout eurLabelLayout = new HLayout();
+		eurLabelLayout.setWidth("15%");
+		final Label eurLabel = new Label("0");
+		eurLabel.setAlign(Alignment.CENTER);
+		eurLabelLayout.addMember(eurLabel);
+
+		HLayout ftCurrLabelLayout = new HLayout();
+		ftCurrLabelLayout.setWidth("15%");
+		Label ftCurrLabel = new Label("Ft :");
+		ftCurrLabel.setAlign(Alignment.CENTER);
+		ftCurrLabelLayout.addMember(ftCurrLabel);
+
+		HLayout ftLabelLayout = new HLayout();
+		ftLabelLayout.setWidth("15%");
+		final Label ftLabel = new Label("0");
+		ftLabel.setAlign(Alignment.CENTER);
+		ftLabelLayout.addMember(ftLabel);
+
 		fizetLayout.addMember(usdCurrLabelLayout);
 		fizetLayout.addMember(usdLabelLayout);
+
+		fizetLayout.addMember(eurCurrLabelLayout);
+		fizetLayout.addMember(eurLabelLayout);
+
+		fizetLayout.addMember(ftCurrLabelLayout);
+		fizetLayout.addMember(ftLabelLayout);
+
 		cedulacikkLayout.addMember(fizetLayout);
 
 		middleLayout.addMember(cedulaLayout);
@@ -357,11 +389,11 @@ public class Cedulak {
 									CedulakConstants.CEDULA_STATUS),
 							cedulaGrid.getSelectedRecord().getAttribute(
 									CedulakConstants.CEDULA_VEVONEV), 									
-							cedulaGrid.getSelectedRecord().getAttributeAsFloat(
+							cedulaGrid.getSelectedRecord().getAttributeAsDouble(
 									CedulakConstants.CEDULA_BEFIZETHUF), 
-							cedulaGrid.getSelectedRecord().getAttributeAsFloat(
+							cedulaGrid.getSelectedRecord().getAttributeAsDouble(
 									CedulakConstants.CEDULA_BEFIZETEUR), 
-							cedulaGrid.getSelectedRecord().getAttributeAsFloat(
+							cedulaGrid.getSelectedRecord().getAttributeAsDouble(
 									CedulakConstants.CEDULA_BEFIZETUSD), 
 									menu));
 				}
@@ -491,6 +523,8 @@ public class Cedulak {
 			public void onDataArrived(DataArrivedEvent event) {
 
 				float fizetusd = 0;
+				float fizeteur = 0;
+				float fizet = 0;
 				for (int i = 0; i < cedulacikkGrid.getRecords().length; i++) {
 					if (cedulacikkGrid.getRecord(i).getAttribute(
 							CedulakConstants.CEDULACIKK_FIZETUSD) != null) {
@@ -500,10 +534,28 @@ public class Cedulak {
 										.getAttributeAsFloat(
 												CedulakConstants.CEDULACIKK_FIZETUSD);
 					}
-
+					if (cedulacikkGrid.getRecord(i).getAttribute(
+							CedulakConstants.CEDULACIKK_FIZETEUR) != null) {
+						fizeteur = fizeteur
+								+ cedulacikkGrid
+										.getRecord(i)
+										.getAttributeAsFloat(
+												CedulakConstants.CEDULACIKK_FIZETEUR);
+					}
+					if (cedulacikkGrid.getRecord(i).getAttribute(
+							CedulakConstants.CEDULACIKK_FIZET) != null) {
+						fizet = fizet
+								+ cedulacikkGrid
+										.getRecord(i)
+										.getAttributeAsFloat(
+												CedulakConstants.CEDULACIKK_FIZET);
+					}
 				}
-				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizetusd).replaceAll(",", "."));
+
+				usdLabel.setContents(Float.valueOf(fizetusd).toString());		
+				eurLabel.setContents(Float.valueOf(fizeteur).toString());		
+				ftLabel.setContents(Float.valueOf(fizet).toString());		
+				
 			}
 		});
 
@@ -511,7 +563,7 @@ public class Cedulak {
 
 	}
 
-	public Canvas printCedula(String cedula, String tipus, String vevonev, Float befizet, Float befizeteur, Float befizetusd,
+	public Canvas printCedula(String cedula, String tipus, String vevonev, Double befizet, Double befizeteur, Double befizetusd,
 			final String menu) {
 		DisplayRequest.counterInit();
 
@@ -606,38 +658,82 @@ public class Cedulak {
 
 		ListGridField arusdGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_ARUSD);
-		arusdGridField.setWidth("15%");
+		arusdGridField.setWidth("10%");
 
 		ListGridField fizetusdGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_FIZETUSD);
-		fizetusdGridField.setWidth("15%");
+		fizetusdGridField.setWidth("10%");
+
+		ListGridField fizeteurGridField = new ListGridField(
+				CedulakConstants.CEDULACIKK_FIZETEUR);
+		fizeteurGridField.setWidth("10%");
+
+		ListGridField fizetGridField = new ListGridField(
+				CedulakConstants.CEDULACIKK_FIZET);
+		fizetGridField.setWidth("10%");
 
 		cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
 				exportkartonGridField, kiskartonGridField, darabGridField,
-				arusdGridField, fizetusdGridField);
+				arusdGridField, fizetusdGridField, fizeteurGridField, fizetGridField);
 
 		cedulacikkLayout.addMember(cedulacikkGrid);
 
 		HLayout fizetLayout = new HLayout();
+		fizetLayout.setAlign(Alignment.CENTER);
+		fizetLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
 		fizetLayout.setHeight("3%");
 		fizetLayout.setWidth("100%");
 
 		HLayout usdCurrLabelLayout = new HLayout();
 		usdCurrLabelLayout.setAlign(Alignment.CENTER);
-		usdCurrLabelLayout.setWidth("50%");
+		usdCurrLabelLayout.setWidth("15%");
 		Label usdCurrLabel = new Label(cedulaLabels.fizetusd());
 		usdCurrLabel.setAlign(Alignment.CENTER);
 		usdCurrLabelLayout.addMember(usdCurrLabel);
 
 		HLayout usdLabelLayout = new HLayout();
 		usdLabelLayout.setAlign(Alignment.CENTER);
-		usdLabelLayout.setWidth("50%");
+		usdLabelLayout.setWidth("15%");
 		final Label usdLabel = new Label("0");
 		usdLabel.setAlign(Alignment.CENTER);
 		usdLabelLayout.addMember(usdLabel);
 
+		HLayout eurCurrLabelLayout = new HLayout();
+		eurCurrLabelLayout.setAlign(Alignment.CENTER);
+		eurCurrLabelLayout.setWidth("15%");
+		Label eurCurrLabel = new Label(cedulaLabels.fizeteur());
+		eurCurrLabel.setAlign(Alignment.CENTER);
+		eurCurrLabelLayout.addMember(eurCurrLabel);
+
+		HLayout eurLabelLayout = new HLayout();
+		eurLabelLayout.setAlign(Alignment.CENTER);
+		eurLabelLayout.setWidth("15%");
+		final Label eurLabel = new Label("0");
+		eurLabel.setAlign(Alignment.CENTER);
+		eurLabelLayout.addMember(eurLabel);
+		
+		HLayout ftCurrLabelLayout = new HLayout();
+		ftCurrLabelLayout.setAlign(Alignment.CENTER);
+		ftCurrLabelLayout.setWidth("15%");
+		Label ftCurrLabel = new Label(cedulaLabels.fizet());
+		ftCurrLabel.setAlign(Alignment.CENTER);
+		ftCurrLabelLayout.addMember(ftCurrLabel);
+
+		HLayout ftLabelLayout = new HLayout();
+		ftLabelLayout.setAlign(Alignment.CENTER);
+		ftLabelLayout.setWidth("15%");
+		final Label ftLabel = new Label("0");
+		ftLabel.setAlign(Alignment.CENTER);
+		ftLabelLayout.addMember(ftLabel);		
+		
 		fizetLayout.addMember(usdCurrLabelLayout);
 		fizetLayout.addMember(usdLabelLayout);
+		
+		fizetLayout.addMember(eurCurrLabelLayout);
+		fizetLayout.addMember(eurLabelLayout);
+
+		fizetLayout.addMember(ftCurrLabelLayout);
+		fizetLayout.addMember(ftLabelLayout);
 
 		HLayout befizetLayout = new HLayout();
 		befizetLayout.setHeight("3%");
@@ -645,22 +741,55 @@ public class Cedulak {
 
 		HLayout beusdCurrLabelLayout = new HLayout();
 		beusdCurrLabelLayout.setAlign(Alignment.CENTER);
-		beusdCurrLabelLayout.setWidth("50%");
+		beusdCurrLabelLayout.setWidth("15%");
 		Label beusdCurrLabel = new Label(cedulaLabels.befizetusd());
 		beusdCurrLabel.setAlign(Alignment.CENTER);
 		beusdCurrLabelLayout.addMember(beusdCurrLabel);
 
 		HLayout beusdLabelLayout = new HLayout();
 		beusdLabelLayout.setAlign(Alignment.CENTER);
-		beusdLabelLayout.setWidth("50%");
-		final Label beusdLabel = new Label(befizetusd == null ? "" : NumberFormat.getFormat("#.0000").format(
-				befizetusd).replaceAll(",", "."));    			
+		beusdLabelLayout.setWidth("15%");
+		final Label beusdLabel = new Label(befizetusd == null ? "0" : befizetusd.toString());    			
 		beusdLabel.setAlign(Alignment.CENTER);
 		beusdLabelLayout.addMember(beusdLabel);
 
+		HLayout beeurCurrLabelLayout = new HLayout();
+		beeurCurrLabelLayout.setAlign(Alignment.CENTER);
+		beeurCurrLabelLayout.setWidth("15%");
+		Label beeurCurrLabel = new Label(cedulaLabels.befizeteur());
+		beeurCurrLabel.setAlign(Alignment.CENTER);
+		beeurCurrLabelLayout.addMember(beeurCurrLabel);
+
+		HLayout beeurLabelLayout = new HLayout();
+		beeurLabelLayout.setAlign(Alignment.CENTER);
+		beeurLabelLayout.setWidth("15%");
+		final Label beeurLabel = new Label(befizeteur == null ? "0" : befizeteur.toString());   				
+		beeurLabel.setAlign(Alignment.CENTER);
+		beeurLabelLayout.addMember(beeurLabel);
+		
+		HLayout beftCurrLabelLayout = new HLayout();
+		beftCurrLabelLayout.setAlign(Alignment.CENTER);
+		beftCurrLabelLayout.setWidth("15%");
+		Label beftCurrLabel = new Label(cedulaLabels.befizet());
+		beftCurrLabel.setAlign(Alignment.CENTER);
+		beftCurrLabelLayout.addMember(beftCurrLabel);
+
+		HLayout beftLabelLayout = new HLayout();
+		beftLabelLayout.setAlign(Alignment.CENTER);
+		beftLabelLayout.setWidth("15%");
+		final Label beftLabel = new Label(befizet == null ?  "0" : befizet.toString());   
+		beftLabel.setAlign(Alignment.CENTER);
+		beftLabelLayout.addMember(beftLabel);
+
 		befizetLayout.addMember(beusdCurrLabelLayout);
 		befizetLayout.addMember(beusdLabelLayout);
-		
+
+		befizetLayout.addMember(beeurCurrLabelLayout);
+		befizetLayout.addMember(beeurLabelLayout);
+
+		befizetLayout.addMember(beftCurrLabelLayout);
+		befizetLayout.addMember(beftLabelLayout);
+				
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setDefaultLayoutAlign(VerticalAlignment.CENTER);
@@ -686,7 +815,7 @@ public class Cedulak {
 		middleLayout1.addMember(cedulacikkLayout);
 		middleLayout1.addMember(fizetLayout);
 		
-		if (tipus.equals(Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES)) {	
+		if (tipus.equals(Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES) || tipus.equals(Constants.CEDULA_STATUSZ_FIZETETT)) {	
 			middleLayout1.addMember(befizetLayout);
 		}
 		middleLayout.addMember(middleLayout1);
@@ -695,20 +824,40 @@ public class Cedulak {
 		cedulacikkGrid.addDataArrivedHandler(new DataArrivedHandler() {
 			public void onDataArrived(DataArrivedEvent event) {
 
+				float fizetusd = 0;
+				float fizeteur = 0;
 				float fizet = 0;
 				for (int i = 0; i < cedulacikkGrid.getRecords().length; i++) {
 					if (cedulacikkGrid.getRecord(i).getAttribute(
 							CedulakConstants.CEDULACIKK_FIZETUSD) != null) {
-						fizet = fizet
+						fizetusd = fizetusd
 								+ cedulacikkGrid
 										.getRecord(i)
 										.getAttributeAsFloat(
 												CedulakConstants.CEDULACIKK_FIZETUSD);
 					}
-
+					if (cedulacikkGrid.getRecord(i).getAttribute(
+							CedulakConstants.CEDULACIKK_FIZETEUR) != null) {
+						fizetusd = fizetusd
+								+ cedulacikkGrid
+										.getRecord(i)
+										.getAttributeAsFloat(
+												CedulakConstants.CEDULACIKK_FIZETEUR);
+					}
+					if (cedulacikkGrid.getRecord(i).getAttribute(
+							CedulakConstants.CEDULACIKK_FIZET) != null) {
+						fizet = fizet
+								+ cedulacikkGrid
+										.getRecord(i)
+										.getAttributeAsFloat(
+												CedulakConstants.CEDULACIKK_FIZET);
+					}
 				}
-				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizet).replaceAll(",", "."));
+			
+				usdLabel.setContents(Float.valueOf(fizetusd).toString());
+				eurLabel.setContents(Float.valueOf(fizeteur).toString());
+				ftLabel.setContents(Float.valueOf(fizet).toString());
+				
 			}
 		});
 

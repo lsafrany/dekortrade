@@ -18,7 +18,7 @@ public class GyartoSer implements IsSerializable {
 
 	private String szamlaszam;
 
-	private Float egyenleg;
+	private Double egyenleg;
 
 	private String kedvezmeny;
 
@@ -80,11 +80,11 @@ public class GyartoSer implements IsSerializable {
 		this.szamlaszam = szamlaszam;
 	}
 
-	public Float getEgyenleg() {
+	public Double getEgyenleg() {
 		return egyenleg;
 	}
 
-	public void setEgyenleg(Float egyenleg) {
+	public void setEgyenleg(Double egyenleg) {
 		this.egyenleg = egyenleg;
 	}
 

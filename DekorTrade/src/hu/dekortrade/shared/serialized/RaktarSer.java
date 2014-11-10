@@ -14,23 +14,23 @@ public class RaktarSer implements IsSerializable {
 
 	private String megnevezes;
 
-	private Float elorar;
+	private Double elorar;
 
-	private Float ar;
+	private Double ar;
 
-	private Float areur;
+	private Double areur;
 
 	private Integer kiskarton;
 
 	private Integer darab;
 
-	private Float terfogat;
+	private Double terfogat;
 
-	private Float terfogatlab;
+	private Double terfogatlab;
 
-	private Float bsuly;
+	private Double bsuly;
 
-	private Float nsuly;
+	private Double nsuly;
 
 	private String leiras;
 
@@ -92,27 +92,27 @@ public class RaktarSer implements IsSerializable {
 		this.megnevezes = megnevezes;
 	}
 
-	public Float getElorar() {
+	public Double getElorar() {
 		return elorar;
 	}
 
-	public void setElorar(Float elorar) {
+	public void setElorar(Double elorar) {
 		this.elorar = elorar;
 	}
 
-	public Float getAr() {
+	public Double getAr() {
 		return ar;
 	}
 
-	public void setAr(Float ar) {
+	public void setAr(Double ar) {
 		this.ar = ar;
 	}
 
-	public Float getAreur() {
+	public Double getAreur() {
 		return areur;
 	}
 
-	public void setAreur(Float areur) {
+	public void setAreur(Double areur) {
 		this.areur = areur;
 	}
 
@@ -132,35 +132,35 @@ public class RaktarSer implements IsSerializable {
 		this.darab = darab;
 	}
 
-	public Float getTerfogat() {
+	public Double getTerfogat() {
 		return terfogat;
 	}
 
-	public void setTerfogat(Float terfogat) {
+	public void setTerfogat(Double terfogat) {
 		this.terfogat = terfogat;
 	}
 
-	public Float getTerfogatlab() {
+	public Double getTerfogatlab() {
 		return terfogatlab;
 	}
 
-	public void setTerfogatlab(Float terfogatlab) {
+	public void setTerfogatlab(Double terfogatlab) {
 		this.terfogatlab = terfogatlab;
 	}
 
-	public Float getBsuly() {
+	public Double getBsuly() {
 		return bsuly;
 	}
 
-	public void setBsuly(Float bsuly) {
+	public void setBsuly(Double bsuly) {
 		this.bsuly = bsuly;
 	}
 
-	public Float getNsuly() {
+	public Double getNsuly() {
 		return nsuly;
 	}
 
-	public void setNsuly(Float nsuly) {
+	public void setNsuly(Double nsuly) {
 		this.nsuly = nsuly;
 	}
 

@@ -4,6 +4,7 @@ import hu.dekortrade.client.CommonLabels;
 import hu.dekortrade.client.DisplayRequest;
 import hu.dekortrade.client.UserInfo;
 import hu.dekortrade.client.lekerdezes.cedulak.Cedulak;
+import hu.dekortrade.client.lekerdezes.forgalom.Forgalom;
 import hu.dekortrade.client.lekerdezes.torlestesek.Torlesztesek;
 import hu.dekortrade.client.lekerdezes.zarasok.Zarasok;
 import hu.dekortrade.shared.Constants;
@@ -106,6 +107,29 @@ public class Lekerdezes {
 					public void onTabSelected(TabSelectedEvent event) {
 
 						tab.setPane(zarasok.get());
+					}
+
+				});
+			}
+
+			if (UserInfo.menu.get(i).equals(Constants.MENU_LEKERDEZES_FORGALOM)) {
+
+				final Tab tab = new Tab(commonLabels.menu_lekerdezes_forgalom());
+				tabSet.addTab(tab);
+				final Forgalom forgalom = new Forgalom();
+
+				if (!selecTab) {
+					tab.setPane(forgalom.get());
+					tabSet.selectTab(0);
+					selecTab = true;
+				}
+
+				tab.addTabSelectedHandler(new TabSelectedHandler() {
+
+					@Override
+					public void onTabSelected(TabSelectedEvent event) {
+
+						tab.setPane(forgalom.get());
 					}
 
 				});

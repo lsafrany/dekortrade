@@ -20,11 +20,11 @@ public class CedulaSer implements IsSerializable {
 
 	private String eladonev;
 
-	private Float befizethuf;
+	private Double befizethuf;
 
-	private Float befizeteur;
+	private Double befizeteur;
 
-	private Float befizetusd;
+	private Double befizetusd;
 	
 	private Date datum;
 
@@ -84,27 +84,27 @@ public class CedulaSer implements IsSerializable {
 		this.eladonev = eladonev;
 	}
 
-	public Float getBefizethuf() {
+	public Double getBefizethuf() {
 		return befizethuf;
 	}
 
-	public void setBefizethuf(Float befizethuf) {
+	public void setBefizethuf(Double befizethuf) {
 		this.befizethuf = befizethuf;
 	}
 
-	public Float getBefizeteur() {
+	public Double getBefizeteur() {
 		return befizeteur;
 	}
 
-	public void setBefizeteur(Float befizeteur) {
+	public void setBefizeteur(Double befizeteur) {
 		this.befizeteur = befizeteur;
 	}
 
-	public Float getBefizetusd() {
+	public Double getBefizetusd() {
 		return befizetusd;
 	}
 
-	public void setBefizetusd(Float befizetusd) {
+	public void setBefizetusd(Double befizetusd) {
 		this.befizetusd = befizetusd;
 	}
 

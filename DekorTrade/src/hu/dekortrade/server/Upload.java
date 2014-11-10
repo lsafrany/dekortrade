@@ -53,7 +53,7 @@ public class Upload extends HttpServlet {
 
 				Query query = pm.newQuery(Kep.class);
 				query.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.torolt == false)");
-				query.declareParameters("String pcikkszam");
+				query.declareParameters("String pcikkszam, String pszinkod");
 				@SuppressWarnings("unchecked")
 				List<Kep> list = (List<Kep>) pm.newQuery(query).execute(
 						cikkszam, szinkod);

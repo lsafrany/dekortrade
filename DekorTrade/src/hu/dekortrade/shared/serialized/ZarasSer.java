@@ -12,17 +12,17 @@ public class ZarasSer implements IsSerializable {
 
 	private String penztarosnev;
 
-	private Float kivetusd;
+	private Double kivetusd;
 
-	private Float kiveteur;
+	private Double kiveteur;
 
-	private Float kivethuf;
+	private Double kivethuf;
 
-	private Float egyenlegusd;
+	private Double egyenlegusd;
 
-	private Float egyenlegeur;
+	private Double egyenlegeur;
 
-	private Float egyenleghuf;
+	private Double egyenleghuf;
 
 	private Date datum;
 
@@ -50,51 +50,51 @@ public class ZarasSer implements IsSerializable {
 		this.penztarosnev = penztarosnev;
 	}
 		
-	public Float getKivetusd() {
+	public Double getKivetusd() {
 		return kivetusd;
 	}
 
-	public void setKivetusd(Float kivetusd) {
+	public void setKivetusd(Double kivetusd) {
 		this.kivetusd = kivetusd;
 	}
 
-	public Float getKiveteur() {
+	public Double getKiveteur() {
 		return kiveteur;
 	}
 
-	public void setKiveteur(Float kiveteur) {
+	public void setKiveteur(Double kiveteur) {
 		this.kiveteur = kiveteur;
 	}
 
-	public Float getKivethuf() {
+	public Double getKivethuf() {
 		return kivethuf;
 	}
 
-	public void setKivethuf(Float kivethuf) {
+	public void setKivethuf(Double kivethuf) {
 		this.kivethuf = kivethuf;
 	}
 
-	public Float getEgyenlegusd() {
+	public Double getEgyenlegusd() {
 		return egyenlegusd;
 	}
 
-	public void setEgyenlegusd(Float egyenlegusd) {
+	public void setEgyenlegusd(Double egyenlegusd) {
 		this.egyenlegusd = egyenlegusd;
 	}
 
-	public Float getEgyenlegeur() {
+	public Double getEgyenlegeur() {
 		return egyenlegeur;
 	}
 
-	public void setEgyenlegeur(Float egyenlegeur) {
+	public void setEgyenlegeur(Double egyenlegeur) {
 		this.egyenlegeur = egyenlegeur;
 	}
 
-	public Float getEgyenleghuf() {
+	public Double getEgyenleghuf() {
 		return egyenleghuf;
 	}
 
-	public void setEgyenleghuf(Float egyenleghuf) {
+	public void setEgyenleghuf(Double egyenleghuf) {
 		this.egyenleghuf = egyenleghuf;
 	}
 

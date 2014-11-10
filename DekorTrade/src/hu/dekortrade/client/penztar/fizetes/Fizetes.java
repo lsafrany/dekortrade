@@ -13,7 +13,6 @@ import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.VevoKosarSer;
 
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
@@ -94,7 +93,7 @@ public class Fizetes {
 
 	}
 
-	public Canvas process(final VevoKosarSer result) {
+	public Canvas process(final VevoKosarSer vevoKosarSer) {
 
 		DisplayRequest.counterInit();
 
@@ -102,9 +101,9 @@ public class Fizetes {
 		middleLayout.setAlign(Alignment.CENTER);
 		middleLayout.setStyleName("middle");
 
-		if (result == null) {
-			Cedulak cedula = new Cedulak();
-			middleLayout.addMember(cedula.get(null,
+		if (vevoKosarSer == null) {
+			Cedulak cedulak = new Cedulak();
+			middleLayout.addMember(cedulak.get(null,
 					Constants.MENU_PENZTAR_FIZETES));
 		} else {
 
@@ -119,8 +118,8 @@ public class Fizetes {
 			titleLayout.setStyleName("middle");
 			titleLayout.setHeight("3%");
 
-			Label titleLabel = new Label(result.getCedula() + " : "
-					+ result.getVevonev());
+			Label titleLabel = new Label(vevoKosarSer.getCedula() + " : "
+					+ vevoKosarSer.getVevonev());
 			titleLabel.setAlign(Alignment.CENTER);
 			titleLabel.setWidth("60%");
 			titleLayout.addMember(titleLabel);
@@ -129,7 +128,7 @@ public class Fizetes {
 			kosarLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
 			final KosarCikkDataSource kosarCikkDataSource = new KosarCikkDataSource(
-					result.getCedula(), UserInfo.userId, result.getVevo(),
+					vevoKosarSer.getCedula(), UserInfo.userId, vevoKosarSer.getVevo(),
 					Constants.MENU_PENZTAR_FIZETES) {
 
 				protected Object transformRequest(DSRequest dsRequest) {
@@ -193,15 +192,6 @@ public class Fizetes {
 					KosarConstants.KOSAR_DARAB);
 			darabGridField.setWidth("10%");
 
-			kosarCikkDataSource.getField(KosarConstants.KOSAR_AR).setCanView(
-					false);
-			kosarCikkDataSource.getField(KosarConstants.KOSAR_AREUR)
-					.setCanView(false);
-			kosarCikkDataSource.getField(KosarConstants.KOSAR_FIZET)
-					.setCanView(false);
-			kosarCikkDataSource.getField(KosarConstants.KOSAR_FIZETEUR)
-					.setCanView(false);
-
 			kosarGrid.setFields(cikkszamGridField, szinkodGridField,
 					exportkartonGridField, kiskartonGridField, darabGridField);
 
@@ -212,19 +202,49 @@ public class Fizetes {
 			fizetLayout.setWidth("60%");
 
 			HLayout usdCurrLabelLayout = new HLayout();
-			usdCurrLabelLayout.setWidth("70%");
+			usdCurrLabelLayout.setWidth("15%");
 			Label usdCurrLabel = new Label("USD :");
 			usdCurrLabel.setAlign(Alignment.CENTER);
 			usdCurrLabelLayout.addMember(usdCurrLabel);
 
 			HLayout usdLabelLayout = new HLayout();
-			usdLabelLayout.setWidth("30%");
+			usdLabelLayout.setWidth("15%");
 			final Label usdLabel = new Label("0");
 			usdLabel.setAlign(Alignment.CENTER);
 			usdLabelLayout.addMember(usdLabel);
 
+			HLayout eurCurrLabelLayout = new HLayout();
+			eurCurrLabelLayout.setWidth("15%");
+			Label eurCurrLabel = new Label("EUR :");
+			eurCurrLabel.setAlign(Alignment.CENTER);
+			eurCurrLabelLayout.addMember(eurCurrLabel);
+
+			HLayout eurLabelLayout = new HLayout();
+			eurLabelLayout.setWidth("15%");
+			final Label eurLabel = new Label("0");
+			eurLabel.setAlign(Alignment.CENTER);
+			eurLabelLayout.addMember(eurLabel);
+
+			HLayout ftCurrLabelLayout = new HLayout();
+			ftCurrLabelLayout.setWidth("15%");
+			Label ftCurrLabel = new Label("Ft :");
+			ftCurrLabel.setAlign(Alignment.CENTER);
+			ftCurrLabelLayout.addMember(ftCurrLabel);
+
+			HLayout ftLabelLayout = new HLayout();
+			ftLabelLayout.setWidth("15%");
+			final Label ftLabel = new Label("0");
+			ftLabel.setAlign(Alignment.CENTER);
+			ftLabelLayout.addMember(ftLabel);
+
 			fizetLayout.addMember(usdCurrLabelLayout);
 			fizetLayout.addMember(usdLabelLayout);
+			
+			fizetLayout.addMember(eurCurrLabelLayout);
+			fizetLayout.addMember(eurLabelLayout);
+
+			fizetLayout.addMember(ftCurrLabelLayout);
+			fizetLayout.addMember(ftLabelLayout);
 
 			HLayout buttons1Layout = new HLayout();
 			buttons1Layout.setHeight("3%");
@@ -275,20 +295,40 @@ public class Fizetes {
 			kosarGrid.addDataArrivedHandler(new DataArrivedHandler() {
 				public void onDataArrived(DataArrivedEvent event) {
 
+					float fizetusd = 0;
+					float fizeteur = 0;
 					float fizet = 0;
 					for (int i = 0; i < kosarGrid.getRecords().length; i++) {
 						if (kosarGrid.getRecord(i).getAttribute(
 								KosarConstants.KOSAR_FIZETUSD) != null) {
-							fizet = fizet
+							fizetusd = fizetusd
 									+ kosarGrid
 											.getRecord(i)
 											.getAttributeAsFloat(
 													KosarConstants.KOSAR_FIZETUSD);
 						}
-
+						if (kosarGrid.getRecord(i).getAttribute(
+								KosarConstants.KOSAR_FIZETEUR) != null) {
+							fizeteur = fizeteur
+									+ kosarGrid
+											.getRecord(i)
+											.getAttributeAsFloat(
+													KosarConstants.KOSAR_FIZETEUR);
+						}
+						if (kosarGrid.getRecord(i).getAttribute(
+								KosarConstants.KOSAR_FIZET) != null) {
+							fizet = fizet
+									+ kosarGrid
+											.getRecord(i)
+											.getAttributeAsFloat(
+													KosarConstants.KOSAR_FIZET);
+						}
 					}
-					usdLabel.setContents(NumberFormat.getFormat("#.0000")
-							.format(fizet).replaceAll(",", "."));
+			
+					usdLabel.setContents(Float.valueOf(fizetusd).toString());
+					eurLabel.setContents(Float.valueOf(fizeteur).toString());
+					ftLabel.setContents(Float.valueOf(fizet).toString());
+					
 				}
 			});
 
@@ -309,23 +349,23 @@ public class Fizetes {
 					form.setHeight("40%");
 					form.setNumCols(2);
 					form.setColWidths("40%", "*");
+
+					final TextItem befizetusdtxt = new TextItem();   
+					befizetusdtxt.setTitle(fizetesLabels.befizetusd());
+					befizetusdtxt.setValue(usdLabel.getContents());
+					befizetusdtxt.setValidators(isFloatValidator);
+	
+					final TextItem befizeteurtxt = new TextItem();   
+					befizeteurtxt.setTitle(fizetesLabels.befizeteur());
+					befizeteurtxt.setValue(eurLabel.getContents());
+					befizeteurtxt.setValidators(isFloatValidator);
 			
-					final TextItem befizet = new TextItem();   
-					befizet.setTitle(fizetesLabels.befizet());
-					befizet.setValue("0");
-					befizet.setValidators(isFloatValidator);
+					final TextItem befizettxt = new TextItem();   
+					befizettxt.setTitle(fizetesLabels.befizet());
+					befizettxt.setValue(ftLabel.getContents());
+					befizettxt.setValidators(isFloatValidator);
 
-					final TextItem befizeteur = new TextItem();   
-					befizeteur.setTitle(fizetesLabels.befizeteur());
-					befizeteur.setValue("0");
-					befizeteur.setValidators(isFloatValidator);
-
-					final TextItem befizetusd = new TextItem();   
-					befizetusd.setTitle(fizetesLabels.befizetusd());
-					befizetusd.setValue(usdLabel.getContents());
-					befizetusd.setValidators(isFloatValidator);
-					
-					form.setFields(befizet,befizeteur,befizetusd);
+					form.setFields(befizettxt,befizeteurtxt,befizetusdtxt);
 			
 					final HLayout buttonsLayout = new HLayout();
 					buttonsLayout.setWidth100();
@@ -340,16 +380,17 @@ public class Fizetes {
 								public void execute(Boolean value) {
 									if (value != null && value) {
 										DisplayRequest.startRequest();
-													
-										final Float tmpbefizet = new Float(befizet.getValueAsString());
-										final Float tmpbefizeteur = new Float(befizeteur.getValueAsString());
-										final Float tmpbefizetusd = new Float(befizetusd.getValueAsString());
-										
-										if (kosarGrid.getSelectedRecord().getAttributeAsString(KosarConstants.KOSAR_TIPUS).equals(Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES)) {
+																					
+										final double tmpbefizet = Double.parseDouble(befizettxt.getValueAsString());
+										final double tmpbefizeteur = Double.parseDouble(befizeteurtxt.getValueAsString());
+										final double tmpbefizetusd = Double.parseDouble(befizetusdtxt.getValueAsString());
+																					
+										if (vevoKosarSer.getCedulatipus().equals(Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES)) {
+																						
 											dekorTradeService.kosarToCedula(
-													UserInfo.userId, result.getVevo(),
+													UserInfo.userId, vevoKosarSer.getVevo(),
 													Constants.MENU_PENZTAR_FIZETES,Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES,Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
-													result.getCedula(),tmpbefizet,
+													vevoKosarSer.getCedula(),tmpbefizet,
 													tmpbefizeteur,tmpbefizetusd,
 													new AsyncCallback<String>() {
 														public void onFailure(
@@ -373,9 +414,9 @@ public class Fizetes {
 																			.getMembers());
 															Cedulak cedulak = new Cedulak();
 															middleLayout.addMember(cedulak.printCedula(
-																	result.getCedula(),
+																	vevoKosarSer.getCedula(),
 																	Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
-																	result.getVevonev(),
+																	vevoKosarSer.getVevonev(),
 																	tmpbefizet,
 																	tmpbefizeteur,
 																	tmpbefizetusd,
@@ -384,11 +425,12 @@ public class Fizetes {
 													});
 											}
 										
-										if (kosarGrid.getSelectedRecord().getAttributeAsString(KosarConstants.KOSAR_TIPUS).equals(Constants.CEDULA_STATUSZ_FIZETES)) {
+										if (vevoKosarSer.getCedulatipus().equals(Constants.CEDULA_STATUSZ_FIZETES)) {
+											
 											dekorTradeService.kosarToCedula(
-													UserInfo.userId, result.getVevo(),
+													UserInfo.userId, vevoKosarSer.getVevo(),
 													Constants.MENU_PENZTAR_FIZETES,Constants.CEDULA_STATUSZ_FIZETES,Constants.CEDULA_STATUSZ_FIZETETT,
-													result.getCedula(),tmpbefizet,
+													vevoKosarSer.getCedula(),tmpbefizet,
 													tmpbefizeteur,tmpbefizetusd,
 													new AsyncCallback<String>() {
 														public void onFailure(
@@ -412,9 +454,9 @@ public class Fizetes {
 																			.getMembers());
 															Cedulak cedulak = new Cedulak();
 															middleLayout.addMember(cedulak.printCedula(
-																	result.getCedula(),
+																	vevoKosarSer.getCedula(),
 																	Constants.CEDULA_STATUSZ_FIZETETT,
-																	result.getVevonev(),
+																	vevoKosarSer.getVevonev(),
 																	tmpbefizet,
 																	tmpbefizeteur,
 																	tmpbefizetusd,

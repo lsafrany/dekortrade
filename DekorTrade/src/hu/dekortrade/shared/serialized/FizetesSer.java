@@ -20,11 +20,11 @@ public class FizetesSer implements IsSerializable {
 
 	private String penztarosnev;
 
-	private Float fizet;
+	private Double fizet;
 
-	private Float fizeteur;
+	private Double fizeteur;
 
-	private Float fizetusd;
+	private Double fizetusd;
 
 	private Date datum;
 
@@ -84,27 +84,27 @@ public class FizetesSer implements IsSerializable {
 		this.penztarosnev = penztarosnev;
 	}
 
-	public Float getFizet() {
+	public Double getFizet() {
 		return fizet;
 	}
 
-	public void setFizet(Float fizet) {
+	public void setFizet(Double fizet) {
 		this.fizet = fizet;
 	}
 
-	public Float getFizeteur() {
+	public Double getFizeteur() {
 		return fizeteur;
 	}
 
-	public void setFizeteur(Float fizeteur) {
+	public void setFizeteur(Double fizeteur) {
 		this.fizeteur = fizeteur;
 	}
 
-	public Float getFizetusd() {
+	public Double getFizetusd() {
 		return fizetusd;
 	}
 
-	public void setFizetusd(Float fizetusd) {
+	public void setFizetusd(Double fizetusd) {
 		this.fizetusd = fizetusd;
 	}
 

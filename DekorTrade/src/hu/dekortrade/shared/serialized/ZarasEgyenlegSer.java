@@ -4,33 +4,33 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ZarasEgyenlegSer implements IsSerializable {
 
-	private Float egyenlegusd;
+	private Double egyenlegusd;
 
-	private Float egyenlegeur;
+	private Double egyenlegeur;
 
-	private Float egyenleghuf;
+	private Double egyenleghuf;
 
-	public Float getEgyenlegusd() {
+	public Double getEgyenlegusd() {
 		return egyenlegusd;
 	}
 
-	public void setEgyenlegusd(Float egyenlegusd) {
+	public void setEgyenlegusd(Double egyenlegusd) {
 		this.egyenlegusd = egyenlegusd;
 	}
 
-	public Float getEgyenlegeur() {
+	public Double getEgyenlegeur() {
 		return egyenlegeur;
 	}
 
-	public void setEgyenlegeur(Float egyenlegeur) {
+	public void setEgyenlegeur(Double egyenlegeur) {
 		this.egyenlegeur = egyenlegeur;
 	}
 
-	public Float getEgyenleghuf() {
+	public Double getEgyenleghuf() {
 		return egyenleghuf;
 	}
 
-	public void setEgyenleghuf(Float egyenleghuf) {
+	public void setEgyenleghuf(Double egyenleghuf) {
 		this.egyenleghuf = egyenleghuf;
 	}
 

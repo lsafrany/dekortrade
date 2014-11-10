@@ -1,4 +1,4 @@
-package hu.dekortrade.client.torzsadat.cikktorzs;
+package hu.dekortrade.client.lekerdezes.forgalom;
 
 import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
@@ -35,7 +35,7 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 	private final DekorTradeServiceAsync dekorTradeService = GWT
 			.create(DekorTradeService.class);
 
-	private CikktorzsLabels ctorzsLabels = GWT.create(CikktorzsLabels.class);
+	private ForgalomLabels forgalomLabels = GWT.create(ForgalomLabels.class);
 
 	public CikktorzsDataSource(final LinkedHashMap<String, String> fotipus,
 			final LinkedHashMap<String, String> altipus,
@@ -65,208 +65,208 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 
 		DataSourceField field;
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_FOTIPUS,
-				ctorzsLabels.cikk_fotipus());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_FOTIPUS,
+				forgalomLabels.cikk_fotipus());
 		field.setEditorProperties(fotipusSelectItem);
 		field.setValueMap(fotipus);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_ALTIPUS,
-				ctorzsLabels.cikk_altipus());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_ALTIPUS,
+				forgalomLabels.cikk_altipus());
 		field.setEditorProperties(altipusSelectItem);
 		field.setValueMap(altipus);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_GYARTO,
-				ctorzsLabels.cikk_gyarto());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_GYARTO,
+				forgalomLabels.cikk_gyarto());
 		field.setEditorProperties(gyartoSelectItem);
 		field.setValueMap(gyarto);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_GYARTOCIKKSZAM,
-				ctorzsLabels.cikk_gyartocikkszam());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_GYARTOCIKKSZAM,
+				forgalomLabels.cikk_gyartocikkszam());
 		field.setLength(30);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_CIKKSZAM,
-				ctorzsLabels.cikk_cikkszam());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_CIKKSZAM,
+				forgalomLabels.cikk_cikkszam());
 		field.setPrimaryKey(true);
 		field.setLength(30);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_SZINKOD,
-				ctorzsLabels.cikk_szinkod());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_SZINKOD,
+				forgalomLabels.cikk_szinkod());
 		field.setLength(10);
 		addField(field);
 
-		field = new DataSourceBooleanField(CikktorzsConstants.CIKK_AKCIOS,
-				ctorzsLabels.cikk_akcios());
+		field = new DataSourceBooleanField(ForgalomConstants.CIKK_AKCIOS,
+				forgalomLabels.cikk_akcios());
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_MEGNEVEZES,
-				ctorzsLabels.cikk_megnevezes());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_MEGNEVEZES,
+				forgalomLabels.cikk_megnevezes());
 		field.setLength(60);
 		field.setEditorProperties(textItem);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_VAMTARIFASZAM,
-				ctorzsLabels.cikk_vamtarifaszam());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_VAMTARIFASZAM,
+				forgalomLabels.cikk_vamtarifaszam());
 		field.setLength(30);
 		addField(field);
 
-		field = new DataSourceDateField(CikktorzsConstants.CIKK_FELVITELTOL,
-				ctorzsLabels.cikk_felviteltol());
+		field = new DataSourceDateField(ForgalomConstants.CIKK_FELVITELTOL,
+				forgalomLabels.cikk_felviteltol());
 		field.setEditorProperties(dateItem);
 		addField(field);
 
-		field = new DataSourceDateField(CikktorzsConstants.CIKK_FELVITELIG,
-				ctorzsLabels.cikk_felvitelig());
+		field = new DataSourceDateField(ForgalomConstants.CIKK_FELVITELIG,
+				forgalomLabels.cikk_felvitelig());
 		field.setEditorProperties(dateItem);
 		addField(field);
 
-		field = new DataSourceDateField(CikktorzsConstants.CIKK_LEJARATTOL,
-				ctorzsLabels.cikk_lejarattol());
+		field = new DataSourceDateField(ForgalomConstants.CIKK_LEJARATTOL,
+				forgalomLabels.cikk_lejarattol());
 		field.setEditorProperties(dateItem);
 		addField(field);
 
-		field = new DataSourceDateField(CikktorzsConstants.CIKK_LEJARATIG,
-				ctorzsLabels.cikk_lejaratig());
+		field = new DataSourceDateField(ForgalomConstants.CIKK_LEJARATIG,
+				forgalomLabels.cikk_lejaratig());
 		field.setEditorProperties(dateItem);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_FOB,
-				ctorzsLabels.cikk_fob());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_FOB,
+				forgalomLabels.cikk_fob());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_UJFOB,
-				ctorzsLabels.cikk_ujfob());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_UJFOB,
+				forgalomLabels.cikk_ujfob());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_SZALLITAS,
-				ctorzsLabels.cikk_szallitas());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_SZALLITAS,
+				forgalomLabels.cikk_szallitas());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_UJSZALLITAS,
-				ctorzsLabels.cikk_ujszallitas());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_UJSZALLITAS,
+				forgalomLabels.cikk_ujszallitas());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_DDU,
-				ctorzsLabels.cikk_ddu());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_DDU,
+				forgalomLabels.cikk_ddu());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_UJDDU,
-				ctorzsLabels.cikk_ujddu());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_UJDDU,
+				forgalomLabels.cikk_ujddu());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_ERSZ,
-				ctorzsLabels.cikk_ersz());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_ERSZ,
+				forgalomLabels.cikk_ersz());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_UJERSZ,
-				ctorzsLabels.cikk_ujersz());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_UJERSZ,
+				forgalomLabels.cikk_ujersz());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_ELORAR,
-				ctorzsLabels.cikk_elorar());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_ELORAR,
+				forgalomLabels.cikk_elorar());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_UJELORAR,
-				ctorzsLabels.cikk_ujelorar());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_UJELORAR,
+				forgalomLabels.cikk_ujelorar());
 		field.setLength(12);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_AR,
-				ctorzsLabels.cikk_ar());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_AR,
+				forgalomLabels.cikk_ar());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_AREUR,
-				ctorzsLabels.cikk_areur());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_AREUR,
+				forgalomLabels.cikk_areur());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_ARSZORZO,
-				ctorzsLabels.cikk_arszorzo());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_ARSZORZO,
+				forgalomLabels.cikk_arszorzo());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceIntegerField(CikktorzsConstants.CIKK_KISKARTON,
-				ctorzsLabels.cikk_kiskarton());
+		field = new DataSourceIntegerField(ForgalomConstants.CIKK_KISKARTON,
+				forgalomLabels.cikk_kiskarton());
 		field.setLength(10);
 		field.setValidators(isIntegerValidator);
 		addField(field);
 
-		field = new DataSourceIntegerField(CikktorzsConstants.CIKK_DARAB,
-				ctorzsLabels.cikk_darab());
+		field = new DataSourceIntegerField(ForgalomConstants.CIKK_DARAB,
+				forgalomLabels.cikk_darab());
 		field.setLength(10);
 		field.setValidators(isIntegerValidator);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_MERTEKEGYSEG,
-				ctorzsLabels.cikk_mertekegyseg());
-		field.setValueMap(CikktorzsConstants.getMertekegyseg());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_MERTEKEGYSEG,
+				forgalomLabels.cikk_mertekegyseg());
+		field.setValueMap(ForgalomConstants.getMertekegyseg());
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_TERFOGAT,
-				ctorzsLabels.cikk_terfogat());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_TERFOGAT,
+				forgalomLabels.cikk_terfogat());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_TERFOGATLAB,
-				ctorzsLabels.cikk_terfogatlab());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_TERFOGATLAB,
+				forgalomLabels.cikk_terfogatlab());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_BSULY,
-				ctorzsLabels.cikk_bsuly());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_BSULY,
+				forgalomLabels.cikk_bsuly());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceFloatField(CikktorzsConstants.CIKK_NSULY,
-				ctorzsLabels.cikk_nsuly());
+		field = new DataSourceFloatField(ForgalomConstants.CIKK_NSULY,
+				forgalomLabels.cikk_nsuly());
 		field.setLength(10);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_LEIRAS,
-				ctorzsLabels.cikk_leiras());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_LEIRAS,
+				forgalomLabels.cikk_leiras());
 		field.setLength(200);
 		field.setEditorProperties(textAreaItem);
 		addField(field);
 
-		field = new DataSourceTextField(CikktorzsConstants.CIKK_MEGJEGYZES,
-				ctorzsLabels.cikk_megjegyzes());
+		field = new DataSourceTextField(ForgalomConstants.CIKK_MEGJEGYZES,
+				forgalomLabels.cikk_megjegyzes());
 		field.setLength(200);
 		field.setEditorProperties(textAreaItem);
 		addField(field);
 
-		field = new DataSourceIntegerField(CikktorzsConstants.CIKK_KEPEK,
-				ctorzsLabels.cikk_kepek());
+		field = new DataSourceIntegerField(ForgalomConstants.CIKK_KEPEK,
+				forgalomLabels.cikk_kepek());
 		field.setCanEdit(false);
 		addField(field);
 
@@ -277,13 +277,13 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 			final DSRequest request, final DSResponse response) {
 		dekorTradeService.getCikk(
 				request.getCriteria().getAttributeAsInt(
-						CikktorzsConstants.CTORZS_PAGE),
+						ForgalomConstants.CTORZS_PAGE),
 				request.getCriteria().getAttributeAsString(
-						CikktorzsConstants.CIKK_FOTIPUS),
+						ForgalomConstants.CIKK_FOTIPUS),
 				request.getCriteria().getAttributeAsString(
-						CikktorzsConstants.CIKK_ALTIPUS),
+						ForgalomConstants.CIKK_ALTIPUS),
 				request.getCriteria().getAttributeAsString(
-						CikktorzsConstants.CIKK_CIKKSZAM),
+						ForgalomConstants.CIKK_CIKKSZAM),
 				new AsyncCallback<List<CikkSer>>() {
 					public void onFailure(Throwable caught) {
 						if (caught instanceof SQLExceptionSer)
@@ -412,109 +412,109 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 	}
 
 	private static void copyValues(CikkSer from, ListGridRecord to) {
-		to.setAttribute(CikktorzsConstants.CIKK_FOTIPUS, from.getFotipus());
-		to.setAttribute(CikktorzsConstants.CIKK_ALTIPUS, from.getAltipus());
-		to.setAttribute(CikktorzsConstants.CIKK_GYARTO, from.getGyarto());
-		to.setAttribute(CikktorzsConstants.CIKK_GYARTOCIKKSZAM,
+		to.setAttribute(ForgalomConstants.CIKK_FOTIPUS, from.getFotipus());
+		to.setAttribute(ForgalomConstants.CIKK_ALTIPUS, from.getAltipus());
+		to.setAttribute(ForgalomConstants.CIKK_GYARTO, from.getGyarto());
+		to.setAttribute(ForgalomConstants.CIKK_GYARTOCIKKSZAM,
 				from.getGyartocikkszam());
-		to.setAttribute(CikktorzsConstants.CIKK_CIKKSZAM, from.getCikkszam());
-		to.setAttribute(CikktorzsConstants.CIKK_SZINKOD, from.getSzinkod());
-		to.setAttribute(CikktorzsConstants.CIKK_FELVITELTOL,
+		to.setAttribute(ForgalomConstants.CIKK_CIKKSZAM, from.getCikkszam());
+		to.setAttribute(ForgalomConstants.CIKK_SZINKOD, from.getSzinkod());
+		to.setAttribute(ForgalomConstants.CIKK_FELVITELTOL,
 				from.getFelviteltol());
-		to.setAttribute(CikktorzsConstants.CIKK_FELVITELIG,
+		to.setAttribute(ForgalomConstants.CIKK_FELVITELIG,
 				from.getFelvitelig());
-		to.setAttribute(CikktorzsConstants.CIKK_LEJARATTOL,
+		to.setAttribute(ForgalomConstants.CIKK_LEJARATTOL,
 				from.getLejarattol());
-		to.setAttribute(CikktorzsConstants.CIKK_LEJARATIG, from.getLejaratig());
-		to.setAttribute(CikktorzsConstants.CIKK_MEGNEVEZES,
+		to.setAttribute(ForgalomConstants.CIKK_LEJARATIG, from.getLejaratig());
+		to.setAttribute(ForgalomConstants.CIKK_MEGNEVEZES,
 				from.getMegnevezes());
-		to.setAttribute(CikktorzsConstants.CIKK_VAMTARIFASZAM,
+		to.setAttribute(ForgalomConstants.CIKK_VAMTARIFASZAM,
 				from.getVamtarifaszam());
-		to.setAttribute(CikktorzsConstants.CIKK_FOB, from.getFob());
-		to.setAttribute(CikktorzsConstants.CIKK_SZALLITAS, from.getSzallitas());
-		to.setAttribute(CikktorzsConstants.CIKK_DDU, from.getDdu());
-		to.setAttribute(CikktorzsConstants.CIKK_ERSZ, from.getErsz());
-		to.setAttribute(CikktorzsConstants.CIKK_ELORAR, from.getElorar());
-		to.setAttribute(CikktorzsConstants.CIKK_UJFOB, from.getUjfob());
-		to.setAttribute(CikktorzsConstants.CIKK_UJSZALLITAS,
+		to.setAttribute(ForgalomConstants.CIKK_FOB, from.getFob());
+		to.setAttribute(ForgalomConstants.CIKK_SZALLITAS, from.getSzallitas());
+		to.setAttribute(ForgalomConstants.CIKK_DDU, from.getDdu());
+		to.setAttribute(ForgalomConstants.CIKK_ERSZ, from.getErsz());
+		to.setAttribute(ForgalomConstants.CIKK_ELORAR, from.getElorar());
+		to.setAttribute(ForgalomConstants.CIKK_UJFOB, from.getUjfob());
+		to.setAttribute(ForgalomConstants.CIKK_UJSZALLITAS,
 				from.getUjszallitas());
-		to.setAttribute(CikktorzsConstants.CIKK_UJDDU, from.getUjddu());
-		to.setAttribute(CikktorzsConstants.CIKK_UJERSZ, from.getUjersz());
-		to.setAttribute(CikktorzsConstants.CIKK_UJELORAR, from.getUjelorar());
-		to.setAttribute(CikktorzsConstants.CIKK_AR, from.getAr());
-		to.setAttribute(CikktorzsConstants.CIKK_AREUR, from.getAreur());
-		to.setAttribute(CikktorzsConstants.CIKK_ARSZORZO, from.getArszorzo());
-		to.setAttribute(CikktorzsConstants.CIKK_KISKARTON, from.getKiskarton());
-		to.setAttribute(CikktorzsConstants.CIKK_DARAB, from.getDarab());
-		to.setAttribute(CikktorzsConstants.CIKK_MERTEKEGYSEG,
+		to.setAttribute(ForgalomConstants.CIKK_UJDDU, from.getUjddu());
+		to.setAttribute(ForgalomConstants.CIKK_UJERSZ, from.getUjersz());
+		to.setAttribute(ForgalomConstants.CIKK_UJELORAR, from.getUjelorar());
+		to.setAttribute(ForgalomConstants.CIKK_AR, from.getAr());
+		to.setAttribute(ForgalomConstants.CIKK_AREUR, from.getAreur());
+		to.setAttribute(ForgalomConstants.CIKK_ARSZORZO, from.getArszorzo());
+		to.setAttribute(ForgalomConstants.CIKK_KISKARTON, from.getKiskarton());
+		to.setAttribute(ForgalomConstants.CIKK_DARAB, from.getDarab());
+		to.setAttribute(ForgalomConstants.CIKK_MERTEKEGYSEG,
 				from.getMertekegyseg());
-		to.setAttribute(CikktorzsConstants.CIKK_TERFOGAT, from.getTerfogat());
-		to.setAttribute(CikktorzsConstants.CIKK_TERFOGATLAB,
+		to.setAttribute(ForgalomConstants.CIKK_TERFOGAT, from.getTerfogat());
+		to.setAttribute(ForgalomConstants.CIKK_TERFOGATLAB,
 				from.getTerfogatlab());
-		to.setAttribute(CikktorzsConstants.CIKK_BSULY, from.getBsuly());
-		to.setAttribute(CikktorzsConstants.CIKK_NSULY, from.getNsuly());
-		to.setAttribute(CikktorzsConstants.CIKK_LEIRAS, from.getLeiras());
-		to.setAttribute(CikktorzsConstants.CIKK_MEGJEGYZES,
+		to.setAttribute(ForgalomConstants.CIKK_BSULY, from.getBsuly());
+		to.setAttribute(ForgalomConstants.CIKK_NSULY, from.getNsuly());
+		to.setAttribute(ForgalomConstants.CIKK_LEIRAS, from.getLeiras());
+		to.setAttribute(ForgalomConstants.CIKK_MEGJEGYZES,
 				from.getMegjegyzes());
-		to.setAttribute(CikktorzsConstants.CIKK_KEPEK, from.getKepek());
+		to.setAttribute(ForgalomConstants.CIKK_KEPEK, from.getKepek());
 	}
 
 	private static void copyValues(ListGridRecord from, CikkSer to) {
 		to.setFotipus(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_FOTIPUS));
+				.getAttributeAsString(ForgalomConstants.CIKK_FOTIPUS));
 		to.setAltipus(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_ALTIPUS));
-		to.setGyarto(from.getAttributeAsString(CikktorzsConstants.CIKK_GYARTO));
+				.getAttributeAsString(ForgalomConstants.CIKK_ALTIPUS));
+		to.setGyarto(from.getAttributeAsString(ForgalomConstants.CIKK_GYARTO));
 		to.setGyartocikkszam(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_GYARTOCIKKSZAM));
+				.getAttributeAsString(ForgalomConstants.CIKK_GYARTOCIKKSZAM));
 		to.setCikkszam(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_CIKKSZAM));
+				.getAttributeAsString(ForgalomConstants.CIKK_CIKKSZAM));
 		to.setSzinkod(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_SZINKOD));
+				.getAttributeAsString(ForgalomConstants.CIKK_SZINKOD));
 		to.setFelviteltol(from
-				.getAttributeAsDate(CikktorzsConstants.CIKK_FELVITELTOL));
+				.getAttributeAsDate(ForgalomConstants.CIKK_FELVITELTOL));
 		to.setFelvitelig(from
-				.getAttributeAsDate(CikktorzsConstants.CIKK_FELVITELIG));
+				.getAttributeAsDate(ForgalomConstants.CIKK_FELVITELIG));
 		to.setLejarattol(from
-				.getAttributeAsDate(CikktorzsConstants.CIKK_LEJARATTOL));
+				.getAttributeAsDate(ForgalomConstants.CIKK_LEJARATTOL));
 		to.setLejaratig(from
-				.getAttributeAsDate(CikktorzsConstants.CIKK_LEJARATIG));
+				.getAttributeAsDate(ForgalomConstants.CIKK_LEJARATIG));
 		to.setMegnevezes(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_MEGNEVEZES));
+				.getAttributeAsString(ForgalomConstants.CIKK_MEGNEVEZES));
 		to.setVamtarifaszam(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_VAMTARIFASZAM));
-		to.setFob(from.getAttributeAsDouble(CikktorzsConstants.CIKK_FOB));
+				.getAttributeAsString(ForgalomConstants.CIKK_VAMTARIFASZAM));
+		to.setFob(from.getAttributeAsDouble(ForgalomConstants.CIKK_FOB));
 		to.setSzallitas(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_SZALLITAS));
-		to.setDdu(from.getAttributeAsDouble(CikktorzsConstants.CIKK_DDU));
-		to.setErsz(from.getAttributeAsDouble(CikktorzsConstants.CIKK_ERSZ));
-		to.setElorar(from.getAttributeAsDouble(CikktorzsConstants.CIKK_ELORAR));
-		to.setUjfob(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJFOB));
+				.getAttributeAsDouble(ForgalomConstants.CIKK_SZALLITAS));
+		to.setDdu(from.getAttributeAsDouble(ForgalomConstants.CIKK_DDU));
+		to.setErsz(from.getAttributeAsDouble(ForgalomConstants.CIKK_ERSZ));
+		to.setElorar(from.getAttributeAsDouble(ForgalomConstants.CIKK_ELORAR));
+		to.setUjfob(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJFOB));
 		to.setUjszallitas(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_UJSZALLITAS));
-		to.setUjddu(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJDDU));
-		to.setUjersz(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJERSZ));
+				.getAttributeAsDouble(ForgalomConstants.CIKK_UJSZALLITAS));
+		to.setUjddu(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJDDU));
+		to.setUjersz(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJERSZ));
 		to.setUjelorar(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_UJELORAR));
-		to.setAr(from.getAttributeAsDouble(CikktorzsConstants.CIKK_AR));
-		to.setAreur(from.getAttributeAsDouble(CikktorzsConstants.CIKK_AREUR));
+				.getAttributeAsDouble(ForgalomConstants.CIKK_UJELORAR));
+		to.setAr(from.getAttributeAsDouble(ForgalomConstants.CIKK_AR));
+		to.setAreur(from.getAttributeAsDouble(ForgalomConstants.CIKK_AREUR));
 		to.setArszorzo(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_ARSZORZO));
+				.getAttributeAsDouble(ForgalomConstants.CIKK_ARSZORZO));
 		to.setKiskarton(from
-				.getAttributeAsInt(CikktorzsConstants.CIKK_KISKARTON));
-		to.setDarab(from.getAttributeAsInt(CikktorzsConstants.CIKK_DARAB));
+				.getAttributeAsInt(ForgalomConstants.CIKK_KISKARTON));
+		to.setDarab(from.getAttributeAsInt(ForgalomConstants.CIKK_DARAB));
 		to.setMertekegyseg(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_MERTEKEGYSEG));
+				.getAttributeAsString(ForgalomConstants.CIKK_MERTEKEGYSEG));
 		to.setTerfogat(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_TERFOGAT));
+				.getAttributeAsDouble(ForgalomConstants.CIKK_TERFOGAT));
 		to.setTerfogatlab(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_TERFOGATLAB));
-		to.setBsuly(from.getAttributeAsDouble(CikktorzsConstants.CIKK_BSULY));
-		to.setNsuly(from.getAttributeAsDouble(CikktorzsConstants.CIKK_NSULY));
-		to.setLeiras(from.getAttributeAsString(CikktorzsConstants.CIKK_LEIRAS));
+				.getAttributeAsDouble(ForgalomConstants.CIKK_TERFOGATLAB));
+		to.setBsuly(from.getAttributeAsDouble(ForgalomConstants.CIKK_BSULY));
+		to.setNsuly(from.getAttributeAsDouble(ForgalomConstants.CIKK_NSULY));
+		to.setLeiras(from.getAttributeAsString(ForgalomConstants.CIKK_LEIRAS));
 		to.setMegjegyzes(from
-				.getAttributeAsString(CikktorzsConstants.CIKK_MEGJEGYZES));
-		to.setKepek(from.getAttributeAsInt(CikktorzsConstants.CIKK_KEPEK));
+				.getAttributeAsString(ForgalomConstants.CIKK_MEGJEGYZES));
+		to.setKepek(from.getAttributeAsInt(ForgalomConstants.CIKK_KEPEK));
 	}
 
 	private ListGridRecord getEditedRecord(DSRequest request) {

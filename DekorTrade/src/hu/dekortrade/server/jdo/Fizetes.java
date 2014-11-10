@@ -24,13 +24,13 @@ public class Fizetes {
 	private String penztaros;
 
 	@Persistent
-	private Float fizet;
+	private Double fizet;
 
 	@Persistent
-	private Float fizeteur;
+	private Double fizeteur;
 
 	@Persistent
-	private Float fizetusd;
+	private Double fizetusd;
 
 	@Persistent
 	private Date datum;
@@ -39,7 +39,7 @@ public class Fizetes {
 	private boolean szamolt;
 
 	public Fizetes(String cedula, String vevo, String tipus, String megjegyzes,String penztaros,
-			Float fizet, Float fizeteur, Float fizetusd, Date datum,
+			Double fizet, Double fizeteur, Double fizetusd, Date datum,
 			boolean szamolt) {
 		this.cedula = cedula;
 		this.vevo = vevo;
@@ -93,27 +93,27 @@ public class Fizetes {
 		this.penztaros = penztaros;
 	}
 
-	public Float getFizet() {
+	public Double getFizet() {
 		return fizet;
 	}
 
-	public void setFizet(Float fizet) {
+	public void setFizet(Double fizet) {
 		this.fizet = fizet;
 	}
 
-	public Float getFizeteur() {
+	public Double getFizeteur() {
 		return fizeteur;
 	}
 
-	public void setFizeteur(Float fizeteur) {
+	public void setFizeteur(Double fizeteur) {
 		this.fizeteur = fizeteur;
 	}
 
-	public Float getFizetusd() {
+	public Double getFizetusd() {
 		return fizetusd;
 	}
 
-	public void setFizetusd(Float fizetusd) {
+	public void setFizetusd(Double fizetusd) {
 		this.fizetusd = fizetusd;
 	}
 

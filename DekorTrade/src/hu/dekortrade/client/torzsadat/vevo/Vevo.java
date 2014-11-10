@@ -340,9 +340,9 @@ public class Vevo {
 								if (value != null && value) {
 									DisplayRequest.startRequest();
 												
-									final Float tmpbefizet = new Float(torleszt.getValueAsString());
-									final Float tmpbefizeteur = new Float(torleszteur.getValueAsString());
-									final Float tmpbefizetusd = new Float(torlesztusd.getValueAsString());
+									final Double tmpbefizet = new Double(torleszt.getValueAsString());
+									final Double tmpbefizeteur = new Double(torleszteur.getValueAsString());
+									final Double tmpbefizetusd = new Double(torlesztusd.getValueAsString());
 									
 									dekorTradeService.createTorlesztes(
 											UserInfo.userId,

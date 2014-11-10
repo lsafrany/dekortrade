@@ -22,13 +22,13 @@ public class Kosarcikk {
 	private String szinkod;
 
 	@Persistent
-	private Float ar;
+	private Double ar;
 
 	@Persistent
-	private Float areur;
+	private Double areur;
 
 	@Persistent
-	private Float arusd;
+	private Double arusd;
 
 	@Persistent
 	private Integer exportkarton;
@@ -40,21 +40,21 @@ public class Kosarcikk {
 	private Integer darab;
 
 	@Persistent
-	private Float fizet;
+	private Double fizet;
 
 	@Persistent
-	private Float fizeteur;
+	private Double fizeteur;
 
 	@Persistent
-	private Float fizetusd;
+	private Double fizetusd;
 
 	@Persistent
 	private String cedula;
 
 	public Kosarcikk(String elado, String vevo, String tipus, String cikkszam,
-			String szinkod, Float ar, Float areur, Float arusd,
+			String szinkod, Double ar, Double areur, Double arusd,
 			Integer exportkarton, Integer kiskarton, Integer darab,
-			Float fizet, Float fizeteur, Float fizetusd, String cedula) {
+			Double fizet, Double fizeteur, Double fizetusd, String cedula) {
 
 		this.elado = elado;
 		this.vevo = vevo;
@@ -113,27 +113,27 @@ public class Kosarcikk {
 		this.szinkod = szinkod;
 	}
 
-	public Float getAr() {
+	public Double getAr() {
 		return ar;
 	}
 
-	public void setAr(Float ar) {
+	public void setAr(Double ar) {
 		this.ar = ar;
 	}
 
-	public Float getAreur() {
+	public Double getAreur() {
 		return areur;
 	}
 
-	public void setAreur(Float areur) {
+	public void setAreur(Double areur) {
 		this.areur = areur;
 	}
 
-	public Float getArusd() {
+	public Double getArusd() {
 		return arusd;
 	}
 
-	public void setArusd(Float arusd) {
+	public void setArusd(Double arusd) {
 		this.arusd = arusd;
 	}
 
@@ -161,27 +161,27 @@ public class Kosarcikk {
 		this.darab = darab;
 	}
 
-	public Float getFizet() {
+	public Double getFizet() {
 		return fizet;
 	}
 
-	public void setFizet(Float fizet) {
+	public void setFizet(Double fizet) {
 		this.fizet = fizet;
 	}
 
-	public Float getFizeteur() {
+	public Double getFizeteur() {
 		return fizeteur;
 	}
 
-	public void setFizeteur(Float fizeteur) {
+	public void setFizeteur(Double fizeteur) {
 		this.fizeteur = fizeteur;
 	}
 
-	public Float getFizetusd() {
+	public Double getFizetusd() {
 		return fizetusd;
 	}
 
-	public void setFizetusd(Float fizetusd) {
+	public void setFizetusd(Double fizetusd) {
 		this.fizetusd = fizetusd;
 	}
 

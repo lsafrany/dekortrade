@@ -45,43 +45,43 @@ public class Cikk {
 	private String vamtarifaszam;
 
 	@Persistent
-	private Float fob;
+	private Double fob;
 
 	@Persistent
-	private Float szallitas;
+	private Double szallitas;
 
 	@Persistent
-	private Float ddu;
+	private Double ddu;
 
 	@Persistent
-	private Float ersz;
+	private Double ersz;
 
 	@Persistent
-	private Float elorar;
+	private Double elorar;
 
 	@Persistent
-	private Float ujfob;
+	private Double ujfob;
 
 	@Persistent
-	private Float ujszallitas;
+	private Double ujszallitas;
 
 	@Persistent
-	private Float ujddu;
+	private Double ujddu;
 
 	@Persistent
-	private Float ujersz;
+	private Double ujersz;
 
 	@Persistent
-	private Float ujelorar;
+	private Double ujelorar;
 
 	@Persistent
-	private Float ar;
+	private Double ar;
 
 	@Persistent
-	private Float areur;
+	private Double areur;
 
 	@Persistent
-	private Float arszorzo;
+	private Double arszorzo;
 
 	@Persistent
 	private Integer kiskarton;
@@ -90,16 +90,16 @@ public class Cikk {
 	private Integer darab;
 
 	@Persistent
-	private Float terfogat;
+	private Double terfogat;
 
 	@Persistent
-	private Float terfogatlab;
+	private Double terfogatlab;
 
 	@Persistent
-	private Float bsuly;
+	private Double bsuly;
 
 	@Persistent
-	private Float nsuly;
+	private Double nsuly;
 
 	@Persistent
 	private String leiras;
@@ -134,12 +134,12 @@ public class Cikk {
 	public Cikk(String fotipus, String altipus, String gyarto,
 			String gyartocikkszam, String cikkszam, String szinkod,
 			Date felviteltol, Date felvitelig, Date lejarattol, Date lejaratig,
-			String megnevezes, String vamtarifaszam, Float fob,
-			Float szallitas, Float ddu, Float ersz, Float elorar, Float ujfob,
-			Float ujszallitas, Float ujddu, Float ujersz, Float ujelorar,
-			Float ar, Float areur, Float arszoro, Integer kiskarton,
-			Integer darab, Float terfogat, Float terfogatlab, Float bsuly,
-			Float nsuly, String leiras, String megjegyzes, Boolean akcios,
+			String megnevezes, String vamtarifaszam, Double fob,
+			Double szallitas, Double ddu, Double ersz, Double elorar, Double ujfob,
+			Double ujszallitas, Double ujddu, Double ujersz, Double ujelorar,
+			Double ar, Double areur, Double arszoro, Integer kiskarton,
+			Integer darab, Double terfogat, Double terfogatlab, Double bsuly,
+			Double nsuly, String leiras, String megjegyzes, Boolean akcios,
 			String mertekegyseg, Integer kepek, Boolean szinkron, Boolean torolt, Long keszlet, Long rendelt, String helykod) {
 		this.fotipus = fotipus; 
 		this.altipus = altipus;
@@ -280,107 +280,107 @@ public class Cikk {
 		this.vamtarifaszam = vamtarifaszam;
 	}
 
-	public Float getFob() {
+	public Double getFob() {
 		return fob;
 	}
 
-	public void setFob(Float fob) {
+	public void setFob(Double fob) {
 		this.fob = fob;
 	}
 
-	public Float getSzallitas() {
+	public Double getSzallitas() {
 		return szallitas;
 	}
 
-	public void setSzallitas(Float szallitas) {
+	public void setSzallitas(Double szallitas) {
 		this.szallitas = szallitas;
 	}
 
-	public Float getDdu() {
+	public Double getDdu() {
 		return ddu;
 	}
 
-	public void setDdu(Float ddu) {
+	public void setDdu(Double ddu) {
 		this.ddu = ddu;
 	}
 
-	public Float getErsz() {
+	public Double getErsz() {
 		return ersz;
 	}
 
-	public void setErsz(Float ersz) {
+	public void setErsz(Double ersz) {
 		this.ersz = ersz;
 	}
 
-	public Float getElorar() {
+	public Double getElorar() {
 		return elorar;
 	}
 
-	public void setElorar(Float elorar) {
+	public void setElorar(Double elorar) {
 		this.elorar = elorar;
 	}
 
-	public Float getUjfob() {
+	public Double getUjfob() {
 		return ujfob;
 	}
 
-	public void setUjfob(Float ujfob) {
+	public void setUjfob(Double ujfob) {
 		this.ujfob = ujfob;
 	}
 
-	public Float getUjszallitas() {
+	public Double getUjszallitas() {
 		return ujszallitas;
 	}
 
-	public void setUjszallitas(Float ujszallitas) {
+	public void setUjszallitas(Double ujszallitas) {
 		this.ujszallitas = ujszallitas;
 	}
 
-	public Float getUjddu() {
+	public Double getUjddu() {
 		return ujddu;
 	}
 
-	public void setUjddu(Float ujddu) {
+	public void setUjddu(Double ujddu) {
 		this.ujddu = ujddu;
 	}
 
-	public Float getUjersz() {
+	public Double getUjersz() {
 		return ujersz;
 	}
 
-	public void setUjersz(Float ujersz) {
+	public void setUjersz(Double ujersz) {
 		this.ujersz = ujersz;
 	}
 
-	public Float getUjelorar() {
+	public Double getUjelorar() {
 		return ujelorar;
 	}
 
-	public void setUjelorar(Float ujelorar) {
+	public void setUjelorar(Double ujelorar) {
 		this.ujelorar = ujelorar;
 	}
 
-	public Float getAr() {
+	public Double getAr() {
 		return ar;
 	}
 
-	public void setAr(Float ar) {
+	public void setAr(Double ar) {
 		this.ar = ar;
 	}
 
-	public Float getAreur() {
+	public Double getAreur() {
 		return areur;
 	}
 
-	public void setAreur(Float areur) {
+	public void setAreur(Double areur) {
 		this.areur = areur;
 	}
 
-	public Float getArszorzo() {
+	public Double getArszorzo() {
 		return arszorzo;
 	}
 
-	public void setArszorzo(Float arszorzo) {
+	public void setArszorzo(Double arszorzo) {
 		this.arszorzo = arszorzo;
 	}
 
@@ -400,35 +400,35 @@ public class Cikk {
 		this.darab = darab;
 	}
 
-	public Float getTerfogat() {
+	public Double getTerfogat() {
 		return terfogat;
 	}
 
-	public void setTerfogat(Float terfogat) {
+	public void setTerfogat(Double terfogat) {
 		this.terfogat = terfogat;
 	}
 
-	public Float getTerfogatlab() {
+	public Double getTerfogatlab() {
 		return terfogatlab;
 	}
 
-	public void setTerfogatlab(Float terfogatlab) {
+	public void setTerfogatlab(Double terfogatlab) {
 		this.terfogatlab = terfogatlab;
 	}
 
-	public Float getBsuly() {
+	public Double getBsuly() {
 		return bsuly;
 	}
 
-	public void setBsuly(Float bsuly) {
+	public void setBsuly(Double bsuly) {
 		this.bsuly = bsuly;
 	}
 
-	public Float getNsuly() {
+	public Double getNsuly() {
 		return nsuly;
 	}
 
-	public void setNsuly(Float nsuly) {
+	public void setNsuly(Double nsuly) {
 		this.nsuly = nsuly;
 	}
 

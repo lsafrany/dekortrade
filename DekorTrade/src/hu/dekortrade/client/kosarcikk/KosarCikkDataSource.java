@@ -19,7 +19,6 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceFloatField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
-import com.smartgwt.client.util.JSOHelper;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
@@ -205,38 +204,6 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeUpdate(final String requestId,
 			final DSRequest request, final DSResponse response) {
-
-		ListGridRecord rec = getEditedRecord(request);
-		KosarSer kosarSer = new KosarSer();
-		copyValues(rec, kosarSer);
-		kosarSer.setCedula(this.cedula);
-		kosarSer.setElado(this.elado);
-		kosarSer.setVevo(this.vevo);
-		kosarSer.setTipus(this.tipus);
-		dekorTradeService.updateKosarCikk(kosarSer,
-				new AsyncCallback<KosarSer>() {
-					public void onFailure(Throwable caught) {
-						if (caught instanceof SQLExceptionSer)
-							response.setAttribute(
-									ClientConstants.SERVER_SQLERROR,
-									caught.getMessage());
-						else
-							response.setAttribute(ClientConstants.SERVER_ERROR,
-									ClientConstants.SERVER_ERROR);
-						response.setStatus(DSResponse.STATUS_FAILURE);
-						processResponse(requestId, response);
-					}
-
-					public void onSuccess(KosarSer result) {
-						ListGridRecord[] list = new ListGridRecord[1];
-						ListGridRecord updRec = new ListGridRecord();
-						copyValues(result, updRec);
-						list[0] = updRec;
-						response.setData(list);
-						processResponse(requestId, response);
-					}
-				});
-
 	}
 
 	@Override
@@ -310,28 +277,12 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 				.getAttributeAsInt(KosarConstants.KOSAR_EXPORTKARTON));
 		to.setKiskarton(from.getAttributeAsInt(KosarConstants.KOSAR_KISKARTON));
 		to.setDarab(from.getAttributeAsInt(KosarConstants.KOSAR_DARAB));
-		to.setAr(from.getAttributeAsFloat(KosarConstants.KOSAR_AR));
-		to.setAreur(from.getAttributeAsFloat(KosarConstants.KOSAR_AREUR));
-		to.setArusd(from.getAttributeAsFloat(KosarConstants.KOSAR_ARUSD));
-		to.setFizet(from.getAttributeAsFloat(KosarConstants.KOSAR_FIZET));
-		to.setFizeteur(from.getAttributeAsFloat(KosarConstants.KOSAR_FIZETEUR));
-		to.setFizetusd(from.getAttributeAsFloat(KosarConstants.KOSAR_FIZETUSD));
-	}
-
-	private ListGridRecord getEditedRecord(DSRequest request) {
-
-		// Retrieving values before edit
-		JavaScriptObject oldValues = request
-				.getAttributeAsJavaScriptObject("oldValues");
-		// Creating new record for combining old values with changes
-		ListGridRecord newRecord = new ListGridRecord();
-		// Copying properties from old record
-		JSOHelper.apply(oldValues, newRecord.getJsObj());
-		// Retrieving changed values
-		JavaScriptObject data = request.getData();
-		// Apply changes
-		JSOHelper.apply(data, newRecord.getJsObj());
-		return newRecord;
+		to.setAr(from.getAttributeAsDouble(KosarConstants.KOSAR_AR));
+		to.setAreur(from.getAttributeAsDouble(KosarConstants.KOSAR_AREUR));
+		to.setArusd(from.getAttributeAsDouble(KosarConstants.KOSAR_ARUSD));
+		to.setFizet(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZET));
+		to.setFizeteur(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZETEUR));
+		to.setFizetusd(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZETUSD));
 	}
 
 }

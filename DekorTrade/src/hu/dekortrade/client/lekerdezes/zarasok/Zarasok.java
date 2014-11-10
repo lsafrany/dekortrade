@@ -9,7 +9,6 @@ import hu.dekortrade.client.penztar.zaras.ZarasLabels;
 import hu.dekortrade.shared.Constants;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
@@ -224,19 +223,49 @@ public class Zarasok {
 		fizetLayout.setWidth("80%");
 
 		HLayout usdCurrLabelLayout = new HLayout();
-		usdCurrLabelLayout.setWidth("80%");
+		usdCurrLabelLayout.setWidth("15%");
 		Label usdCurrLabel = new Label("USD :");
 		usdCurrLabel.setAlign(Alignment.CENTER);
 		usdCurrLabelLayout.addMember(usdCurrLabel);
 
 		HLayout usdLabelLayout = new HLayout();
-		usdLabelLayout.setWidth("20%");
+		usdLabelLayout.setWidth("15%");
 		final Label usdLabel = new Label("0");
 		usdLabel.setAlign(Alignment.CENTER);
 		usdLabelLayout.addMember(usdLabel);
 
+		HLayout eurCurrLabelLayout = new HLayout();
+		eurCurrLabelLayout.setWidth("15%");
+		Label eurCurrLabel = new Label("EUR :");
+		eurCurrLabel.setAlign(Alignment.CENTER);
+		eurCurrLabelLayout.addMember(eurCurrLabel);
+
+		HLayout eurLabelLayout = new HLayout();
+		eurLabelLayout.setWidth("15%");
+		final Label eurLabel = new Label("0");
+		eurLabel.setAlign(Alignment.CENTER);
+		eurLabelLayout.addMember(eurLabel);
+
+		HLayout ftCurrLabelLayout = new HLayout();
+		ftCurrLabelLayout.setWidth("15%");
+		Label ftCurrLabel = new Label("EUR :");
+		ftCurrLabel.setAlign(Alignment.CENTER);
+		ftCurrLabelLayout.addMember(ftCurrLabel);
+
+		HLayout ftLabelLayout = new HLayout();
+		ftLabelLayout.setWidth("15%");
+		final Label ftLabel = new Label("0");
+		ftLabel.setAlign(Alignment.CENTER);
+		ftLabelLayout.addMember(ftLabel);
+	
 		fizetLayout.addMember(usdCurrLabelLayout);
 		fizetLayout.addMember(usdLabelLayout);
+
+		fizetLayout.addMember(eurCurrLabelLayout);
+		fizetLayout.addMember(eurLabelLayout);
+
+		fizetLayout.addMember(ftCurrLabelLayout);
+		fizetLayout.addMember(ftLabelLayout);
 
 		fizetesLayout.addMember(fizetesGrid);
 		fizetesLayout.addMember(fizetLayout);
@@ -248,6 +277,8 @@ public class Zarasok {
 			public void onDataArrived(DataArrivedEvent event) {
 
 				float fizetusd = 0;
+				float fizeteur = 0;
+				float fizet = 0;
 				for (int i = 0; i < fizetesGrid.getRecords().length; i++) {
 					if (fizetesGrid.getRecord(i).getAttribute(
 							ZarasConstants.ZARASFIZETES_FIZETUSD) != null) {
@@ -255,10 +286,24 @@ public class Zarasok {
 								+ fizetesGrid.getRecord(i).getAttributeAsFloat(
 										ZarasConstants.ZARASFIZETES_FIZETUSD);
 					}
-
+					if (fizetesGrid.getRecord(i).getAttribute(
+							ZarasConstants.ZARASFIZETES_FIZETEUR) != null) {
+						fizeteur = fizeteur
+								+ fizetesGrid.getRecord(i).getAttributeAsFloat(
+										ZarasConstants.ZARASFIZETES_FIZETEUR);
+					}
+					if (fizetesGrid.getRecord(i).getAttribute(
+							ZarasConstants.ZARASFIZETES_FIZET) != null) {
+						fizet = fizet
+								+ fizetesGrid.getRecord(i).getAttributeAsFloat(
+										ZarasConstants.ZARASFIZETES_FIZET);
+					}
 				}
-				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizetusd).replaceAll(",", "."));
+
+				usdLabel.setContents(Float.valueOf(fizetusd).toString());
+				eurLabel.setContents(Float.valueOf(fizeteur).toString());
+				ftLabel.setContents(Float.valueOf(fizet).toString());
+				
 			}
 		});
 
@@ -283,11 +328,11 @@ public class Zarasok {
 						zarasGrid.getSelectedRecord().getAttribute(
 								ZarasokConstants.ZARAS_ZARAS),
 						Constants.MENU_LEKERDEZES_ZARASOK,
-						zarasGrid.getSelectedRecord().getAttributeAsFloat(
+						zarasGrid.getSelectedRecord().getAttributeAsDouble(
 								ZarasokConstants.ZARAS_KIVETHUF),
-						zarasGrid.getSelectedRecord().getAttributeAsFloat(
+						zarasGrid.getSelectedRecord().getAttributeAsDouble(
 								ZarasokConstants.ZARAS_KIVETEUR),
-						zarasGrid.getSelectedRecord().getAttributeAsFloat(
+						zarasGrid.getSelectedRecord().getAttributeAsDouble(
 								ZarasokConstants.ZARAS_KIVETUSD))						
 						);
 

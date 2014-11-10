@@ -40,4 +40,13 @@ public interface KosarRaktarLabels extends Constants {
 
 	String kosar_rendeles();
 
+
+	String artipus();
+	
+	String elorendelo_ar();
+	
+	String export_ar();
+	
+	String piaci_ar();
+
 }

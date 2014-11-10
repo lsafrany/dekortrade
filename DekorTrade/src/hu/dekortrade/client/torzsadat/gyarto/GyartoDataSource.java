@@ -270,7 +270,7 @@ public class GyartoDataSource extends GwtRpcDataSource {
 		to.setSzamlaszam(from
 				.getAttributeAsString(GyartoConstants.GYARTO_SZAMLASZAM));
 		to.setEgyenleg(from
-				.getAttributeAsFloat(GyartoConstants.GYARTO_EGYENLEG));
+				.getAttributeAsDouble(GyartoConstants.GYARTO_EGYENLEG));
 		to.setKedvezmeny(from
 				.getAttributeAsString(GyartoConstants.GYARTO_KEDVEZMENY));
 		to.setMegjegyzes(from

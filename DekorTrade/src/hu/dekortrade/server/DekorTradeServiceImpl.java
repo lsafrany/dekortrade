@@ -29,6 +29,7 @@ import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
 import hu.dekortrade.shared.serialized.CikkfotipusSer;
+import hu.dekortrade.shared.serialized.EladasSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.FizetesSer;
 import hu.dekortrade.shared.serialized.GyartoSer;
@@ -63,6 +64,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -77,7 +79,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"YYYY-MM-DD HH:mm:ss");
-
+	
 	public UserSer getUser(String userId, String password)
 			throws IllegalArgumentException, SQLExceptionSer, LoginExceptionSer {
 
@@ -206,7 +208,9 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 										.equals(Constants.MENU_LEKERDEZES_ZARASOK))
 								|| (l.getNev()
 										.equals(Constants.MENU_LEKERDEZES_TORLESZTESEK))
-
+								|| (l.getNev()
+										.equals(Constants.MENU_LEKERDEZES_FORGALOM))
+										
 						) {
 							userSer.getMenu().add(l.getNev());
 						}
@@ -1834,6 +1838,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					for (Kosar l : list) {
 						ret.setVevo(l.getVevo());
 						ret.setCedula(l.getCedula());
+						ret.setCedulatipus(l.getTipus());
 					}
 					if (ret.getVevo() != null) {
 						Query query1 = pm.newQuery(Vevo.class);
@@ -1923,19 +1928,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.makePersistent(kosar);
 			pm.flush();
 
-			boolean flush = false;
-			while (!flush) {
-				Query query = pm.newQuery(Kosar.class);
-				query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
-				query.declareParameters("String pelado,String pvevo,String ptipus");
-				@SuppressWarnings("unchecked")
-				List<Kosar> list = (List<Kosar>) pm.newQuery(query).execute(
-						elado, vevo, tipus);
-				if ((list != null) && (!list.isEmpty())) {
-					flush = true;
-				}
-			}
-
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
+        	System.out.println("Clearing cache.");
+        	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -1987,16 +1983,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			}
 			pm.flush();
 
-			boolean flush = false;
-			while (!flush) {
-				@SuppressWarnings("unchecked")
-				List<Kosar> list2 = (List<Kosar>) pm.newQuery(query1).execute(
-						elado, vevo, tipus);
-				if ((list2 == null) || (list2.isEmpty())) {
-					flush = true;
-				}
-			}
-
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
+        	System.out.println("Clearing cache.");
+        	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2012,18 +2002,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 
-			Query query = pm.newQuery(Kosarcikk.class);
-			query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
-			query.declareParameters("String pelado,String pvevo,String ptipus");
-			@SuppressWarnings("unchecked")
-			List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
-					.execute(kosarSer.getElado(), kosarSer.getVevo(),
-							kosarSer.getTipus());
-			int count = 0;
-			if ((list != null) && (!list.isEmpty())) {
-				count = list.size();
-			}
-
 			Kosarcikk kosarCikk = new Kosarcikk(kosarSer.getElado(),
 					kosarSer.getVevo(), kosarSer.getTipus(),
 					kosarSer.getCikkszam(), kosarSer.getSzinkod(),
@@ -2035,75 +2013,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.makePersistent(kosarCikk);
 			pm.flush();
 
-			count++;
-			boolean flush = false;
-			while (!flush) {
-				@SuppressWarnings("unchecked")
-				List<Kosarcikk> list1 = (List<Kosarcikk>) pm.newQuery(query)
-						.execute(kosarSer.getElado(), kosarSer.getVevo(),
-								kosarSer.getTipus());
-				System.out.println(count + ":" + list1.size());
-				if ((list1 != null) && (!list1.isEmpty())
-						&& list1.size() == count) {
-					flush = true;
-				}
-			}
-
-		} catch (Exception e) {
-			throw new SQLExceptionSer(e.getMessage());
-		} finally {
-			pm.close();
-		}
-
-		return kosarSer;
-	}
-
-	public KosarSer updateKosarCikk(KosarSer kosarSer)
-			throws IllegalArgumentException, SQLExceptionSer {
-
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {
-
-			Query query = pm.newQuery(Kosarcikk.class);
-			query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
-			query.declareParameters("String pelado,String pvevo,String ptipus,String pcikkszam,String pszinkod");
-			Map<String, String> parameters = new HashMap<String, String>();
-			parameters.put("pelado", kosarSer.getElado());
-			parameters.put("pvevo", kosarSer.getVevo());
-			parameters.put("ptipus", kosarSer.getTipus());
-			parameters.put("pcikkszam", kosarSer.getCikkszam());
-			parameters.put("pszinkod", kosarSer.getSzinkod());
-			@SuppressWarnings("unchecked")
-			List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
-					.executeWithMap(parameters);
-			if ((list != null) && (!list.isEmpty())) {
-				for (Kosarcikk l : list) {
-					l.setExportkarton(kosarSer.getExportkarton());
-					l.setKiskarton(kosarSer.getKiskarton());
-					l.setDarab(kosarSer.getDarab());
-				}
-			}
-
-			pm.flush();
-
-			boolean flush = false;
-			while (!flush) {
-				@SuppressWarnings("unchecked")
-				List<Kosarcikk> list2 = (List<Kosarcikk>) pm.newQuery(query)
-						.executeWithMap(parameters);
-				if ((list2 != null) && (!list2.isEmpty())) {
-					for (Kosarcikk l : list) {
-						if ((l.getExportkarton() == kosarSer.getExportkarton())
-								&& (l.getExportkarton() == kosarSer
-										.getExportkarton())
-								&& (l.getExportkarton() == kosarSer
-										.getExportkarton())) {
-							flush = true;
-						}
-					}
-				}
-			}
-
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
+        	System.out.println("Clearing cache.");
+        	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2118,18 +2031,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-
-			Query query1 = pm.newQuery(Kosarcikk.class);
-			query1.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
-			query1.declareParameters("String pelado,String pvevo,String ptipus");
-			@SuppressWarnings("unchecked")
-			List<Kosarcikk> list1 = (List<Kosarcikk>) pm.newQuery(query1)
-					.execute(kosarSer.getElado(), kosarSer.getVevo(),
-							kosarSer.getTipus());
-			int count = 0;
-			if ((list1 != null) && (!list1.isEmpty())) {
-				count = list1.size();
-			}
 
 			Query query = pm.newQuery(Kosarcikk.class);
 			query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus) && (this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
@@ -2149,20 +2050,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 
-			count--;
-			boolean flush = false;
-			while (!flush) {
-				@SuppressWarnings("unchecked")
-				List<Kosarcikk> list2 = (List<Kosarcikk>) pm.newQuery(query1)
-						.execute(kosarSer.getElado(), kosarSer.getVevo(),
-								kosarSer.getTipus());
-				System.out.println(count + ":" + list2.size());
-				if ((list2 != null) && (!list2.isEmpty())
-						&& list2.size() == count) {
-					flush = true;
-				}
-			}
-
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
+        	System.out.println("Clearing cache.");
+        	
 			pm.flush();
 
 		} catch (Exception e) {
@@ -2226,7 +2117,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 									list1.get(0).getAreur(), list1.get(0)
 											.getElorar(), l.getExportkarton(),
 									l.getKiskarton(), l.getDarab(),
-									new Float(0), new Float(0), new Float(0),
+									new Double(0), new Double(0), new Double(0),
 									rendeles);
 							pm.makePersistent(kosarcikk);
 						}
@@ -2296,7 +2187,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			@SuppressWarnings("unchecked")
 			List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
 					.execute(elado, vevo, tipus);
-			int count = 0;
 			if ((list != null) && (!list.isEmpty())) {
 				for (Kosarcikk l : list) {
 					Cedulacikk cedulacikk = new Cedulacikk(cedulasorszam,
@@ -2306,7 +2196,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 							l.getFizeteur(), l.getFizetusd());
 					pm.makePersistent(cedulacikk);
 					pm.deletePersistent(l);
-					count++;
 				}
 			}
 
@@ -2328,35 +2217,11 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			pm.flush();
 
-			boolean flush = false;
-			while (!flush) {
-				Query query2 = pm.newQuery(Cedula.class);
-				query2.setFilter("(this.cedula == pcedula) && (this.status == pstatus)");
-				query2.declareParameters("String pcedula,String pstatus");
-				@SuppressWarnings("unchecked")
-				List<Cedula> list2 = (List<Cedula>) pm.newQuery(query2)
-						.execute(cedulasorszam, tipus);
-				System.out.println(count + ":" + list2.size());
-				if ((list2 != null) && (!list2.isEmpty())) {
-					flush = true;
-				}
-			}
-			flush = false;
-			while (!flush) {
-				Query query3 = pm.newQuery(Cedulacikk.class);
-				query3.setFilter("(this.cedula == pcedula) && (this.status == pstatus)");
-				query3.declareParameters("String pcedula,String pstatus");
-				@SuppressWarnings("unchecked")
-				List<Cedulacikk> list3 = (List<Cedulacikk>) pm.newQuery(query3)
-						.execute(cedulasorszam, tipus);
-				System.out.println(count + ":" + list3.size());
-				if ((list3 != null) && (!list3.isEmpty())
-						&& list3.size() == count) {
-					flush = true;
-				}
-			}
-
-		} catch (Exception e) {
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
+        	System.out.println("Clearing cache.");
+        	
+			} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
 			pm.close();
@@ -2548,7 +2413,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			@SuppressWarnings("unchecked")
 			List<Cedulacikk> list = (List<Cedulacikk>) pm.newQuery(query)
 					.execute(cedula, tipus);
-			int count = 0;
+
 			if ((list != null) && (!list.isEmpty())) {
 				for (Cedulacikk l : list) {
 					Kosarcikk kosarcikk = new Kosarcikk(elado, vevo, ujtipus,
@@ -2558,7 +2423,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 							l.getFizeteur(), l.getFizetusd(), l.getCedula());
 					pm.makePersistent(kosarcikk);
 					pm.deletePersistent(l);
-					count++;
 				}
 			}
 
@@ -2580,35 +2444,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			pm.flush();
 
-			boolean flush = false;
-			while (!flush) {
-				Query query2 = pm.newQuery(Kosar.class);
-				query2.setFilter("(this.elado == pelado) && (this.tipus == ptipus)");
-				query2.declareParameters("String pelado,String ptipus");
-				@SuppressWarnings("unchecked")
-				List<Kosar> list2 = (List<Kosar>) pm.newQuery(query2).execute(
-						elado, ujtipus);
-				System.out.println(count + ":" + list2.size());
-				if ((list2 != null) && (!list2.isEmpty())) {
-					flush = true;
-				}
-			}
-
-			flush = false;
-			while (!flush) {
-				Query query3 = pm.newQuery(Kosarcikk.class);
-				query3.setFilter("(this.cedula == pcedula) && (this.tipus == ptipus)");
-				query3.declareParameters("String pcedula,String pstatus");
-				@SuppressWarnings("unchecked")
-				List<Kosarcikk> list3 = (List<Kosarcikk>) pm.newQuery(query3)
-						.execute(cedulasorszam, ujtipus);
-				System.out.println(count + ":" + list3.size());
-				if ((list3 != null) && (!list3.isEmpty())
-						&& list3.size() == count) {
-					flush = true;
-				}
-			}
-
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
+        	System.out.println("Clearing cache.");
+        	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2619,26 +2458,29 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 	}
 
 	public String kosarToCedula(String elado, String vevo, String menu, String tipus, String ujtipus,
-			String cedulasorszam, Float befizet, Float befizeteur,
-			Float befizetusd) throws IllegalArgumentException, SQLExceptionSer {
+			String cedulasorszam, Double befizet, Double befizeteur,
+			Double befizetusd) throws IllegalArgumentException, SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-
+			
 			Query vevoquery = pm.newQuery(Vevo.class);
 			vevoquery.setFilter("this.rovidnev == providnev");
 			vevoquery.declareParameters("String providnev");
-						
+		
+			System.out.println(elado);
+			System.out.println(vevo);
+			System.out.println(tipus);
+			
 			Query query = pm.newQuery(Kosarcikk.class);
 			query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
 			query.declareParameters("String pelado,String pvevo,String ptipus");
 			@SuppressWarnings("unchecked")
 			List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
 					.execute(elado, vevo, tipus);
-			float fizet = 0;
-			float fizeteur = 0;
-			float fizetusd = 0;
-			int count = 0;
+			double fizet = 0;
+			double fizeteur = 0;
+			double fizetusd = 0;
 			if ((list != null) && (!list.isEmpty())) {
 				for (Kosarcikk l : list) {
 					Cedulacikk cedulacikk = new Cedulacikk(cedulasorszam,
@@ -2666,10 +2508,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					if (l.getFizetusd() != null)
 						fizetusd = fizetusd + l.getFizetusd();
 					pm.deletePersistent(l);
-					count++;
+
 				}
 			}
-
+			
 			Query query1 = pm.newQuery(Kosar.class);
 			query1.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
 			query1.declareParameters("String pelado,String pvevo,String ptipus");
@@ -2696,13 +2538,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery)
 						.execute(vevo);
 				if ((vevolist != null) && (!vevolist.isEmpty())) {
-					float egyenleghuf = vevolist.get(0).getEgyenleghuf();
+					double egyenleghuf = vevolist.get(0).getEgyenleghuf();
 					egyenleghuf = egyenleghuf + (befizet - fizet);
 					vevolist.get(0).setEgyenleghuf(egyenleghuf);
-					float egyenlegeur = vevolist.get(0).getEgyenlegeur();
+					double egyenlegeur = vevolist.get(0).getEgyenlegeur();
 					egyenlegeur = egyenlegeur + (befizeteur - fizeteur);
 					vevolist.get(0).setEgyenlegeur(egyenlegeur);
-					float egyenlegusd = vevolist.get(0).getEgyenlegusd();
+					double egyenlegusd = vevolist.get(0).getEgyenlegusd();
 					egyenlegusd = egyenlegusd + (befizetusd - fizetusd);
 					vevolist.get(0).setEgyenlegusd(egyenlegusd);
 				}
@@ -2719,49 +2561,25 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery)
 						.execute(vevo);
 				if ((vevolist != null) && (!vevolist.isEmpty())) {
-					float egyenleghuf = vevolist.get(0).getEgyenleghuf();
+					double egyenleghuf = vevolist.get(0).getEgyenleghuf();
 					egyenleghuf = egyenleghuf + (befizet - fizet);
 					vevolist.get(0).setEgyenleghuf(egyenleghuf);
-					float egyenlegeur = vevolist.get(0).getEgyenlegeur();
+					double egyenlegeur = vevolist.get(0).getEgyenlegeur();
 					egyenlegeur = egyenlegeur + (befizeteur - fizeteur);
 					vevolist.get(0).setEgyenlegeur(egyenlegeur);
-					float egyenlegusd = vevolist.get(0).getEgyenlegusd();
+					double egyenlegusd = vevolist.get(0).getEgyenlegusd();
 					egyenlegusd = egyenlegusd + (befizetusd - fizetusd);
 					vevolist.get(0).setEgyenlegusd(egyenlegusd);
 				}
 					
 			}
-
+			
 			pm.flush();
 
-			boolean flush = false;
-			while (!flush) {
-				Query query2 = pm.newQuery(Cedula.class);
-				query2.setFilter("(this.cedula == pcedula) && (this.status == pstatus)");
-				query2.declareParameters("String pcedula,String pstatus");
-				@SuppressWarnings("unchecked")
-				List<Cedula> list2 = (List<Cedula>) pm.newQuery(query2)
-						.execute(cedulasorszam, ujtipus);
-				if ((list2 != null) && (!list2.isEmpty())) {
-					flush = true;
-				}
-			}
-
-			flush = false;
-			while (!flush) {
-				Query query3 = pm.newQuery(Cedulacikk.class);
-				query3.setFilter("(this.cedula == pcedula) && (this.status == pstatus)");
-				query3.declareParameters("String pcedula,String pstatus");
-				@SuppressWarnings("unchecked")
-				List<Cedulacikk> list3 = (List<Cedulacikk>) pm.newQuery(query3)
-						.execute(cedulasorszam, ujtipus);
-				System.out.println(count + ":" + list3.size());
-				if ((list3 != null) && (!list3.isEmpty())
-						&& list3.size() == count) {
-					flush = true;
-				}
-			}
-
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
+        	System.out.println("Clearing cache.");
+        	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2838,9 +2656,9 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			SQLExceptionSer {
 
 		ZarasEgyenlegSer zarasEgyenlegSer = new ZarasEgyenlegSer();
-		zarasEgyenlegSer.setEgyenlegeur(new Float(0));
-		zarasEgyenlegSer.setEgyenlegusd(new Float(0));
-		zarasEgyenlegSer.setEgyenleghuf(new Float(0));
+		zarasEgyenlegSer.setEgyenlegeur(new Double(0));
+		zarasEgyenlegSer.setEgyenlegusd(new Double(0));
+		zarasEgyenlegSer.setEgyenleghuf(new Double(0));
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 			Query query = pm.newQuery(Zaras.class);
@@ -2861,9 +2679,9 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return zarasEgyenlegSer;
 	}
 
-	public String createZaras(String penztaros, Float egyenleghuf,
-			Float egyenlegeur, Float egyenlegusd, Float kivethuf,
-			Float kiveteur, Float kivetusd) throws IllegalArgumentException,
+	public String createZaras(String penztaros, Double egyenleghuf,
+			Double egyenlegeur, Double egyenlegusd, Double kivethuf,
+			Double kiveteur, Double kivetusd) throws IllegalArgumentException,
 			SQLExceptionSer {
 
 		String cedulasorszam = "";
@@ -2888,10 +2706,9 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			query.setFilter("this.szamolt == true");
 			@SuppressWarnings("unchecked")
 			List<Fizetes> list = (List<Fizetes>) pm.newQuery(query).execute();
-			int count = 0;
-			float fizet = 0;
-			float fizeteur = 0;
-			float fizetusd = 0;
+			double fizet = 0;
+			double fizeteur = 0;
+			double fizetusd = 0;
 			if ((list != null) && (!list.isEmpty())) {
 				for (Fizetes l : list) {
 					Zarasfizetes zarasFizetes = new Zarasfizetes(cedulasorszam,
@@ -2903,7 +2720,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					fizetusd = fizetusd + l.getFizetusd();
 					pm.makePersistent(zarasFizetes);
 					pm.deletePersistent(l);
-					count++;
 				}
 			}
 
@@ -2917,21 +2733,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.makePersistent(zaras);
 			pm.flush();
 
-			boolean flush = false;
-			while (!flush) {
-				Query query2 = pm.newQuery(Zarasfizetes.class);
-				query2.setFilter("(this.zaras == pzaras)");
-				query2.declareParameters("String pzaras");
-				@SuppressWarnings("unchecked")
-				List<Zarasfizetes> list2 = (List<Zarasfizetes>) pm.newQuery(
-						query2).execute(cedulasorszam);
-				System.out.println(count + ":" + list2.size());
-				if ((list2 != null) && (!list2.isEmpty())
-						&& (list2.size() == count)) {
-					flush = true;
-				}
-			}
-
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
+        	System.out.println("Clearing cache.");
+        	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -3062,7 +2867,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 	}
 
 	public String createTorlesztes(String penztaros, String vevo,
-			Float torleszthuf, Float torleszteur, Float torlesztusd)
+			Double torleszthuf, Double torleszteur, Double torlesztusd)
 			throws IllegalArgumentException, SQLExceptionSer {
 
 		String cedulasorszam = "";
@@ -3091,13 +2896,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			List<Vevo> vevolist = (List<Vevo>) pm.newQuery(vevoquery).execute(
 					vevo);
 			if ((vevolist != null) && (!vevolist.isEmpty())) {
-				float egyenleghuf = vevolist.get(0).getEgyenleghuf();
+				double egyenleghuf = vevolist.get(0).getEgyenleghuf();
 				egyenleghuf = egyenleghuf + torleszthuf;
 				vevolist.get(0).setEgyenleghuf(egyenleghuf);
-				float egyenlegeur = vevolist.get(0).getEgyenlegeur();
+				double egyenlegeur = vevolist.get(0).getEgyenlegeur();
 				egyenlegeur = egyenlegeur + torleszteur;
 				vevolist.get(0).setEgyenlegeur(egyenlegeur);
-				float egyenlegusd = vevolist.get(0).getEgyenlegusd();
+				double egyenlegusd = vevolist.get(0).getEgyenlegusd();
 				egyenlegusd = egyenlegusd + torlesztusd;
 				vevolist.get(0).setEgyenlegusd(egyenlegusd);
 			}
@@ -3866,4 +3671,40 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return rendeles;
 	}
 
+	public List<EladasSer> getEladas(String cikkszam, String szinkod) throws IllegalArgumentException, SQLExceptionSer {
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+		ArrayList<EladasSer> eladas = new ArrayList<EladasSer>();
+		try {
+
+			System.out.println(cikkszam);
+			System.out.println(szinkod);
+					
+			Query query = pm.newQuery(Cedulacikk.class);
+			query.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.status == '" + Constants.CEDULA_STATUSZ_FIZETETT + "')");
+			query.declareParameters("String pcikkszam,String pszinkod");
+			@SuppressWarnings("unchecked")
+			List<Cedulacikk> list = (List<Cedulacikk>) pm.newQuery(
+					query).execute(cikkszam,szinkod == null ? "" : szinkod);
+			if (!list.isEmpty()) {
+				for (Cedulacikk l : list) {
+					EladasSer eladasSer = new EladasSer();
+					eladasSer.setCedula(l.getCedula());
+					eladasSer.setExportkarton(l.getExportkarton());
+					eladasSer.setKiskarton(l.getKiskarton());
+					eladasSer.setDarab(l.getDarab());
+					eladas.add(eladasSer);
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLExceptionSer(e.getMessage());
+		} finally {
+			pm.close();
+		}
+
+		return eladas;
+	}
+	
+	
 }

@@ -156,9 +156,9 @@ public class HaziDataSource extends GwtRpcDataSource {
 	private static void copyValues(ListGridRecord from, FizetesSer to) {
 		to.setMegjegyzes(from.getAttributeAsString(HaziConstants.HAZI_MEGJEGYZES));
 		to.setPenztaros(UserInfo.userId);
-		to.setFizet(from.getAttributeAsFloat(HaziConstants.HAZI_FIZET));
-		to.setFizeteur(from.getAttributeAsFloat(HaziConstants.HAZI_FIZETEUR));
-		to.setFizetusd(from.getAttributeAsFloat(HaziConstants.HAZI_FIZETUSD));
+		to.setFizet(from.getAttributeAsDouble(HaziConstants.HAZI_FIZET));
+		to.setFizeteur(from.getAttributeAsDouble(HaziConstants.HAZI_FIZETEUR));
+		to.setFizetusd(from.getAttributeAsDouble(HaziConstants.HAZI_FIZETUSD));
 	}
 
 }

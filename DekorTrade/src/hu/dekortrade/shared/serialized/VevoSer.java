@@ -14,23 +14,23 @@ public class VevoSer implements IsSerializable {
 
 	private String elerhetoseg;
 
-	private Float egyenlegusd;
+	private Double egyenlegusd;
 
-	private Float egyenlegeur;
+	private Double egyenlegeur;
 
-	private Float egyenleghuf;
+	private Double egyenleghuf;
 
-	private Float tarolasidij;
+	private Double tarolasidij;
 
-	private Float eloleg;
+	private Double eloleg;
 
 	private String bankszamlaszam;
 
 	private String euadoszam;
 
-	private Float elorarkedvezmeny;
+	private Double elorarkedvezmeny;
 
-	private Float ajanlottarkedvezmeny;
+	private Double ajanlottarkedvezmeny;
 
 	private String orszag;
 
@@ -78,43 +78,43 @@ public class VevoSer implements IsSerializable {
 		this.tipus = tipus;
 	}
 
-	public Float getEgyenlegusd() {
+	public Double getEgyenlegusd() {
 		return egyenlegusd;
 	}
 
-	public void setEgyenlegusd(Float egyenlegusd) {
+	public void setEgyenlegusd(Double egyenlegusd) {
 		this.egyenlegusd = egyenlegusd;
 	}
 
-	public Float getEgyenlegeur() {
+	public Double getEgyenlegeur() {
 		return egyenlegeur;
 	}
 
-	public void setEgyenlegeur(Float egyenlegeur) {
+	public void setEgyenlegeur(Double egyenlegeur) {
 		this.egyenlegeur = egyenlegeur;
 	}
 
-	public Float getEgyenleghuf() {
+	public Double getEgyenleghuf() {
 		return egyenleghuf;
 	}
 
-	public void setEgyenleghuf(Float egyenleghuf) {
+	public void setEgyenleghuf(Double egyenleghuf) {
 		this.egyenleghuf = egyenleghuf;
 	}
 
-	public Float getTarolasidij() {
+	public Double getTarolasidij() {
 		return tarolasidij;
 	}
 
-	public void setTarolasidij(Float tarolasidij) {
+	public void setTarolasidij(Double tarolasidij) {
 		this.tarolasidij = tarolasidij;
 	}
 
-	public Float getEloleg() {
+	public Double getEloleg() {
 		return eloleg;
 	}
 
-	public void setEloleg(Float eloleg) {
+	public void setEloleg(Double eloleg) {
 		this.eloleg = eloleg;
 	}
 
@@ -134,19 +134,19 @@ public class VevoSer implements IsSerializable {
 		this.euadoszam = euadoszam;
 	}
 
-	public Float getElorarkedvezmeny() {
+	public Double getElorarkedvezmeny() {
 		return elorarkedvezmeny;
 	}
 
-	public void setElorarkedvezmeny(Float elorarkedvezmeny) {
+	public void setElorarkedvezmeny(Double elorarkedvezmeny) {
 		this.elorarkedvezmeny = elorarkedvezmeny;
 	}
 
-	public Float getAjanlottarkedvezmeny() {
+	public Double getAjanlottarkedvezmeny() {
 		return ajanlottarkedvezmeny;
 	}
 
-	public void setAjanlottarkedvezmeny(Float ajanlottarkedvezmeny) {
+	public void setAjanlottarkedvezmeny(Double ajanlottarkedvezmeny) {
 		this.ajanlottarkedvezmeny = ajanlottarkedvezmeny;
 	}
 

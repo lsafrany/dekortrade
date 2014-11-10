@@ -340,20 +340,20 @@ public class RaktarDataSource extends GwtRpcDataSource {
 				.getAttributeAsString(KeszletConstants.KESZLET_SZINKOD));
 		to.setMegnevezes(from
 				.getAttributeAsString(KeszletConstants.KESZLET_MEGNEVEZES));
-		to.setElorar(from.getAttributeAsFloat(KeszletConstants.KESZLET_ELORAR));
-		to.setAr(from.getAttributeAsFloat(KeszletConstants.KESZLET_AR));
-		to.setAreur(from.getAttributeAsFloat(KeszletConstants.KESZLET_AREUR));
+		to.setElorar(from.getAttributeAsDouble(KeszletConstants.KESZLET_ELORAR));
+		to.setAr(from.getAttributeAsDouble(KeszletConstants.KESZLET_AR));
+		to.setAreur(from.getAttributeAsDouble(KeszletConstants.KESZLET_AREUR));
 		to.setKiskarton(from
 				.getAttributeAsInt(KeszletConstants.KESZLET_KISKARTON));
 		to.setDarab(from.getAttributeAsInt(KeszletConstants.KESZLET_DARAB));
 		to.setMertekegyseg(from
 				.getAttributeAsString(KeszletConstants.KESZLET_MERTEKEGYSEG));
 		to.setTerfogat(from
-				.getAttributeAsFloat(KeszletConstants.KESZLET_TERFOGAT));
+				.getAttributeAsDouble(KeszletConstants.KESZLET_TERFOGAT));
 		to.setTerfogatlab(from
-				.getAttributeAsFloat(KeszletConstants.KESZLET_TERFOGATLAB));
-		to.setBsuly(from.getAttributeAsFloat(KeszletConstants.KESZLET_BSULY));
-		to.setNsuly(from.getAttributeAsFloat(KeszletConstants.KESZLET_NSULY));
+				.getAttributeAsDouble(KeszletConstants.KESZLET_TERFOGATLAB));
+		to.setBsuly(from.getAttributeAsDouble(KeszletConstants.KESZLET_BSULY));
+		to.setNsuly(from.getAttributeAsDouble(KeszletConstants.KESZLET_NSULY));
 		to.setLeiras(from.getAttributeAsString(KeszletConstants.KESZLET_LEIRAS));
 		to.setMegjegyzes(from
 				.getAttributeAsString(KeszletConstants.KESZLET_MEGJEGYZES));

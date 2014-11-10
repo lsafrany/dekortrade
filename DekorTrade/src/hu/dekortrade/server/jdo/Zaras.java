@@ -15,27 +15,27 @@ public class Zaras {
 	private String penztaros;
 
 	@Persistent
-	private Float kivethuf;
+	private Double kivethuf;
 
 	@Persistent
-	private Float kiveteur;
+	private Double kiveteur;
 
 	@Persistent
-	private Float kivetusd;
+	private Double kivetusd;
 
 	@Persistent
-	private Float egyenleghuf;
+	private Double egyenleghuf;
 
 	@Persistent
-	private Float egyenlegeur;
+	private Double egyenlegeur;
 
 	@Persistent
-	private Float egyenlegusd;
+	private Double egyenlegusd;
 
 	@Persistent
 	private Date datum;
 
-	public Zaras(String zaras, String penztaros, Float kivethuf, Float kiveteur, Float kivetusd, Float egyenleghuf, Float egyenlegeur, Float egyenlegusd, Date datum) {
+	public Zaras(String zaras, String penztaros, Double kivethuf, Double kiveteur, Double kivetusd, Double egyenleghuf, Double egyenlegeur, Double egyenlegusd, Date datum) {
 		this.zaras = zaras;
 		this.penztaros = penztaros;
 		this.kivetusd = kivetusd ;
@@ -63,51 +63,51 @@ public class Zaras {
 		this.penztaros = penztaros;
 	}
 	
-	public Float getKivetusd() {
+	public Double getKivetusd() {
 		return kivetusd;
 	}
 
-	public void setKivetusd(Float kivetusd) {
+	public void setKivetusd(Double kivetusd) {
 		this.kivetusd = kivetusd;
 	}
 
-	public Float getKiveteur() {
+	public Double getKiveteur() {
 		return kiveteur;
 	}
 
-	public void setKiveteur(Float kiveteur) {
+	public void setKiveteur(Double kiveteur) {
 		this.kiveteur = kiveteur;
 	}
 
-	public Float getKivethuf() {
+	public Double getKivethuf() {
 		return kivethuf;
 	}
 
-	public void setKivethuf(Float kivethuf) {
+	public void setKivethuf(Double kivethuf) {
 		this.kivethuf = kivethuf;
 	}
 
-	public Float getEgyenlegusd() {
+	public Double getEgyenlegusd() {
 		return egyenlegusd;
 	}
 
-	public void setEgyenlegusd(Float egyenlegusd) {
+	public void setEgyenlegusd(Double egyenlegusd) {
 		this.egyenlegusd = egyenlegusd;
 	}
 
-	public Float getEgyenlegeur() {
+	public Double getEgyenlegeur() {
 		return egyenlegeur;
 	}
 
-	public void setEgyenlegeur(Float egyenlegeur) {
+	public void setEgyenlegeur(Double egyenlegeur) {
 		this.egyenlegeur = egyenlegeur;
 	}
 
-	public Float getEgyenleghuf() {
+	public Double getEgyenleghuf() {
 		return egyenleghuf;
 	}
 
-	public void setEgyenleghuf(Float egyenleghuf) {
+	public void setEgyenleghuf(Double egyenleghuf) {
 		this.egyenleghuf = egyenleghuf;
 	}
 

@@ -22,19 +22,19 @@ public class Vevo {
 	private String elerhetoseg;
 
 	@Persistent
-	private Float egyenlegusd;
+	private Double egyenlegusd;
 
 	@Persistent
-	private Float egyenlegeur;
+	private Double egyenlegeur;
 
 	@Persistent
-	private Float egyenleghuf;
+	private Double egyenleghuf;
 
 	@Persistent
-	private Float tarolasidij;
+	private Double tarolasidij;
 
 	@Persistent
-	private Float eloleg;
+	private Double eloleg;
 
 	@Persistent
 	private String bankszamlaszam;
@@ -43,10 +43,10 @@ public class Vevo {
 	private String euadoszam;
 
 	@Persistent
-	private Float elorarkedvezmeny;
+	private Double elorarkedvezmeny;
 
 	@Persistent
-	private Float ajanlottarkedvezmeny;
+	private Double ajanlottarkedvezmeny;
 
 	@Persistent
 	private String orszag;
@@ -64,10 +64,10 @@ public class Vevo {
 	private Boolean torolt;
 
 	public Vevo(String rovidnev, String tipus, String nev, String cim,
-			String elerhetoseg, Float egyenlegusd, Float egyenlegeur,
-			Float egyenleghuf, Float tarolasidij, Float eloleg,
-			String bankszamlaszam, String euadoszam, Float elorarkedvezmeny,
-			Float ajanlottarkedvezmeny, String orszag, String megjegyzes,
+			String elerhetoseg, Double egyenlegusd, Double egyenlegeur,
+			Double egyenleghuf, Double tarolasidij, Double eloleg,
+			String bankszamlaszam, String euadoszam, Double elorarkedvezmeny,
+			Double ajanlottarkedvezmeny, String orszag, String megjegyzes,
 			Boolean internet, Boolean szinkron, Boolean torolt) {
 		this.rovidnev = rovidnev;
 		this.tipus = tipus;
@@ -154,43 +154,43 @@ public class Vevo {
 		this.torolt = torolt;
 	}
 
-	public Float getEgyenlegusd() {
+	public Double getEgyenlegusd() {
 		return egyenlegusd;
 	}
 
-	public void setEgyenlegusd(Float egyenlegusd) {
+	public void setEgyenlegusd(Double egyenlegusd) {
 		this.egyenlegusd = egyenlegusd;
 	}
 
-	public Float getEgyenlegeur() {
+	public Double getEgyenlegeur() {
 		return egyenlegeur;
 	}
 
-	public void setEgyenlegeur(Float egyenlegeur) {
+	public void setEgyenlegeur(Double egyenlegeur) {
 		this.egyenlegeur = egyenlegeur;
 	}
 
-	public Float getEgyenleghuf() {
+	public Double getEgyenleghuf() {
 		return egyenleghuf;
 	}
 
-	public void setEgyenleghuf(Float egyenleghuf) {
+	public void setEgyenleghuf(Double egyenleghuf) {
 		this.egyenleghuf = egyenleghuf;
 	}
 
-	public Float getTarolasidij() {
+	public Double getTarolasidij() {
 		return tarolasidij;
 	}
 
-	public void setTarolasidij(Float tarolasidij) {
+	public void setTarolasidij(Double tarolasidij) {
 		this.tarolasidij = tarolasidij;
 	}
 
-	public Float getEloleg() {
+	public Double getEloleg() {
 		return eloleg;
 	}
 
-	public void setEloleg(Float eloleg) {
+	public void setEloleg(Double eloleg) {
 		this.eloleg = eloleg;
 	}
 
@@ -210,19 +210,19 @@ public class Vevo {
 		this.euadoszam = euadoszam;
 	}
 
-	public Float getElorarkedvezmeny() {
+	public Double getElorarkedvezmeny() {
 		return elorarkedvezmeny;
 	}
 
-	public void setElorarkedvezmeny(Float elorarkedvezmeny) {
+	public void setElorarkedvezmeny(Double elorarkedvezmeny) {
 		this.elorarkedvezmeny = elorarkedvezmeny;
 	}
 
-	public Float getAjanlottarkedvezmeny() {
+	public Double getAjanlottarkedvezmeny() {
 		return ajanlottarkedvezmeny;
 	}
 
-	public void setAjanlottarkedvezmeny(Float ajanlottarkedvezmeny) {
+	public void setAjanlottarkedvezmeny(Double ajanlottarkedvezmeny) {
 		this.ajanlottarkedvezmeny = ajanlottarkedvezmeny;
 	}
 

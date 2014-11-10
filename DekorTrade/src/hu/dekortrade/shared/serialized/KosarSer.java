@@ -16,11 +16,11 @@ public class KosarSer implements IsSerializable {
 
 	private String megnevezes;
 
-	private Float ar;
+	private Double ar;
 
-	private Float areur;
+	private Double areur;
 
-	private Float arusd;
+	private Double arusd;
 
 	private Integer exportkarton;
 
@@ -28,11 +28,11 @@ public class KosarSer implements IsSerializable {
 
 	private Integer darab;
 
-	private Float fizet;
+	private Double fizet;
 
-	private Float fizeteur;
+	private Double fizeteur;
 
-	private Float fizetusd;
+	private Double fizetusd;
 
 	private String cedula;
 
@@ -84,27 +84,27 @@ public class KosarSer implements IsSerializable {
 		this.megnevezes = megnevezes;
 	}
 
-	public Float getAr() {
+	public Double getAr() {
 		return ar;
 	}
 
-	public void setAr(Float ar) {
+	public void setAr(Double ar) {
 		this.ar = ar;
 	}
 
-	public Float getAreur() {
+	public Double getAreur() {
 		return areur;
 	}
 
-	public void setAreur(Float areur) {
+	public void setAreur(Double areur) {
 		this.areur = areur;
 	}
 
-	public Float getArusd() {
+	public Double getArusd() {
 		return arusd;
 	}
 
-	public void setArusd(Float arusd) {
+	public void setArusd(Double arusd) {
 		this.arusd = arusd;
 	}
 
@@ -132,27 +132,27 @@ public class KosarSer implements IsSerializable {
 		this.darab = darab;
 	}
 
-	public Float getFizet() {
+	public Double getFizet() {
 		return fizet;
 	}
 
-	public void setFizet(Float fizet) {
+	public void setFizet(Double fizet) {
 		this.fizet = fizet;
 	}
 
-	public Float getFizeteur() {
+	public Double getFizeteur() {
 		return fizeteur;
 	}
 
-	public void setFizeteur(Float fizeteur) {
+	public void setFizeteur(Double fizeteur) {
 		this.fizeteur = fizeteur;
 	}
 
-	public Float getFizetusd() {
+	public Double getFizetusd() {
 		return fizetusd;
 	}
 
-	public void setFizetusd(Float fizetusd) {
+	public void setFizetusd(Double fizetusd) {
 		this.fizetusd = fizetusd;
 	}
 

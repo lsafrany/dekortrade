@@ -114,7 +114,7 @@ public class Init extends HttpServlet {
 
 			Gyarto gyarto = new Gyarto("1", "CHAMP HANNA LIMITED",
 					"WAH MOU FACTORY BUILDING 5TH FL.", "0085223061083", "",
-					"", "", new Float(0), "1", "", Boolean.FALSE);
+					"", "", new Double(0), "1", "", Boolean.FALSE);
 			pm.makePersistent(gyarto);
 
 			out.append("<h1>Cikk</h1>");
@@ -175,13 +175,13 @@ public class Init extends HttpServlet {
 					fields[9] = fields[9].replaceAll(",", ".");
 					Cikk cikk = new Cikk(fields[0], fields[1], "1", null,
 							fields[2], "", null, null, null, null, fields[3],
-							null, new Float(0), new Float(0), new Float(0),
-							new Float(0), new Float(2.3), new Float(0),
-							new Float(0), new Float(0), new Float(0),
-							new Float(0), new Float(fields[4]), new Float(0),
-							new Float(0), new Integer(fields[5]), new Integer(
-									fields[6]), new Float(fields[7]),
-							new Float(0), new Float(fields[8]), new Float(
+							null, new Double(0), new Double(0), new Double(0),
+							new Double(0), new Double(2.3), new Double(0),
+							new Double(0), new Double(0), new Double(0),
+							new Double(0), new Double(fields[4]), new Double(0),
+							new Double(0), new Integer(fields[5]), new Integer(
+									fields[6]), new Double(fields[7]),
+							new Double(0), new Double(fields[8]), new Double(
 									fields[9]), null, null, Boolean.FALSE,
 							"DB", 0, Boolean.FALSE, Boolean.FALSE,0L,0L,"");
 					pm.makePersistent(cikk);
@@ -253,17 +253,19 @@ public class Init extends HttpServlet {
 
 			Jog csabijog20 = new Jog("Csabi", Constants.MENU_LEKERDEZES);
 			Jog csabijog21 = new Jog("Csabi", Constants.MENU_LEKERDEZES_CEDULAK);
-			Jog csabijog22 = new Jog("Csabi", Constants.MENU_LEKERDEZES_ZARASOK);
-			Jog csabijog23 = new Jog("Csabi",
+			Jog csabijog22 = new Jog("Csabi",
 					Constants.MENU_LEKERDEZES_TORLESZTESEK);
+			Jog csabijog23 = new Jog("Csabi", Constants.MENU_LEKERDEZES_ZARASOK);
+			Jog csabijog24 = new Jog("Csabi",
+					Constants.MENU_LEKERDEZES_FORGALOM);
 
-			Jog csabijog24 = new Jog("Csabi", Constants.MENU_PENZTAR);
-			Jog csabijog25 = new Jog("Csabi", Constants.MENU_PENZTAR_FIZETES);
-			Jog csabijog26 = new Jog("Csabi", Constants.MENU_PENZTAR_TORLESZTES);
-			Jog csabijog27 = new Jog("Csabi", Constants.MENU_PENZTAR_HAZI);
-			Jog csabijog28 = new Jog("Csabi", Constants.MENU_PENZTAR_ZARAS);
+			Jog csabijog25 = new Jog("Csabi", Constants.MENU_PENZTAR);
+			Jog csabijog26 = new Jog("Csabi", Constants.MENU_PENZTAR_FIZETES);
+			Jog csabijog27 = new Jog("Csabi", Constants.MENU_PENZTAR_TORLESZTES);
+			Jog csabijog28 = new Jog("Csabi", Constants.MENU_PENZTAR_HAZI);
+			Jog csabijog29 = new Jog("Csabi", Constants.MENU_PENZTAR_ZARAS);
 
-			Jog csabijog29 = new Jog("Csabi", Constants.JOG_ROVANCS);
+			Jog csabijog30 = new Jog("Csabi", Constants.JOG_ROVANCS);
 			
 			Jog tamasjog1 = new Jog("Tamás", Constants.MENU_PENZTAR);
 
@@ -299,25 +301,26 @@ public class Init extends HttpServlet {
 			pm.makePersistent(csabijog27);
 			pm.makePersistent(csabijog28);
 			pm.makePersistent(csabijog29);
+			pm.makePersistent(csabijog30);
 			
 			pm.makePersistent(tamasjog1);
 
 			out.append("<h1>Vevők</h1>");
 
 			Vevo vevo1 = new Vevo("Floradekor", "BELFOLDI", "Flora Dekor",
-					"24413 Palics Nikola Tesla 7.", "", new Float(0),
-					new Float(0), new Float(0), new Float(0), new Float(0), "",
-					"", new Float(0), new Float(0), "hu", "", Boolean.TRUE,
+					"24413 Palics Nikola Tesla 7.", "", new Double(0),
+					new Double(0), new Double(0), new Double(0), new Double(0), "",
+					"", new Double(0), new Double(0), "hu", "", Boolean.TRUE,
 					Boolean.FALSE, Boolean.FALSE);
 			Vevo vevo2 = new Vevo("Floratrade", "EXPORT", "Flora Trade Kft",
-					"", "", new Float(0), new Float(0), new Float(0),
-					new Float(0), new Float(0), "", "", new Float(0),
-					new Float(0), "hu", "", Boolean.TRUE, Boolean.FALSE,
+					"", "", new Double(0), new Double(0), new Double(0),
+					new Double(0), new Double(0), "", "", new Double(0),
+					new Double(0), "hu", "", Boolean.TRUE, Boolean.FALSE,
 					Boolean.FALSE);
 			Vevo vevo3 = new Vevo("Berendi", "EXPORT", "S.C. Berendi S.R.L.",
-					"Satu Mare ROMĆNIA", "", new Float(0), new Float(0),
-					new Float(0), new Float(0), new Float(0), "", "",
-					new Float(0), new Float(0), "hu", "", Boolean.FALSE,
+					"Satu Mare ROMĆNIA", "", new Double(0), new Double(0),
+					new Double(0), new Double(0), new Double(0), "", "",
+					new Double(0), new Double(0), "hu", "", Boolean.FALSE,
 					Boolean.FALSE, Boolean.FALSE);
 
 			pm.makePersistent(vevo1);

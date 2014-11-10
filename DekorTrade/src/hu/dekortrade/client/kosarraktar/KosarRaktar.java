@@ -34,9 +34,14 @@ import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.validator.IsIntegerValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
+import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -171,14 +176,6 @@ public class KosarRaktar {
 				KosarConstants.KOSAR_DARAB);
 		darabGridField.setWidth("10%");
 
-		kosarCikkDataSource.getField(KosarConstants.KOSAR_AR).setCanView(false);
-		kosarCikkDataSource.getField(KosarConstants.KOSAR_AREUR).setCanView(
-				false);
-		kosarCikkDataSource.getField(KosarConstants.KOSAR_FIZET).setCanView(
-				false);
-		kosarCikkDataSource.getField(KosarConstants.KOSAR_FIZETEUR).setCanView(
-				false);
-
 		kosarGrid.setFields(cikkszamGridField, szinkodGridField,
 				exportkartonGridField, kiskartonGridField, darabGridField);
 
@@ -216,19 +213,47 @@ public class KosarRaktar {
 		fizetLayout.setWidth("90%");
 
 		HLayout usdCurrLabelLayout = new HLayout();
-		usdCurrLabelLayout.setWidth("70%");
 		Label usdCurrLabel = new Label("USD :");
+		usdCurrLabel.setWidth("5%");
 		usdCurrLabel.setAlign(Alignment.CENTER);
 		usdCurrLabelLayout.addMember(usdCurrLabel);
 
 		HLayout usdLabelLayout = new HLayout();
-		usdLabelLayout.setWidth("30%");
 		final Label usdLabel = new Label("0");
-		usdLabel.setAlign(Alignment.CENTER);
+		usdLabel.setWidth("25%");
+		usdLabel.setAlign(Alignment.RIGHT);
 		usdLabelLayout.addMember(usdLabel);
 
+		HLayout eurCurrLabelLayout = new HLayout();
+		Label eurCurrLabel = new Label("EUR :");
+		eurCurrLabel.setWidth("5%");
+		eurCurrLabel.setAlign(Alignment.CENTER);
+		eurCurrLabelLayout.addMember(eurCurrLabel);
+
+		HLayout eurLabelLayout = new HLayout();
+		final Label eurLabel = new Label("0");
+		eurLabel.setWidth("25%");
+		eurLabel.setAlign(Alignment.RIGHT);
+		eurLabelLayout.addMember(eurLabel);
+
+		HLayout ftCurrLabelLayout = new HLayout();
+		Label ftCurrLabel = new Label("Ft :");
+		ftCurrLabel.setWidth("5%");
+		ftCurrLabel.setAlign(Alignment.CENTER);
+		ftCurrLabelLayout.addMember(ftCurrLabel);
+
+		HLayout ftLabelLayout = new HLayout();
+		final Label ftLabel = new Label("0");
+		ftLabel.setWidth("25%");
+		ftLabel.setAlign(Alignment.RIGHT);
+		ftLabelLayout.addMember(ftLabel);
+	
 		fizetLayout.addMember(usdCurrLabelLayout);
 		fizetLayout.addMember(usdLabelLayout);
+		fizetLayout.addMember(eurCurrLabelLayout);
+		fizetLayout.addMember(eurLabelLayout);
+		fizetLayout.addMember(ftCurrLabelLayout);
+		fizetLayout.addMember(ftLabelLayout);
 
 		HLayout buttons1Layout = new HLayout();
 		buttons1Layout.setHeight("3%");
@@ -283,186 +308,325 @@ public class KosarRaktar {
 			}
 		});
 
+		kosarGrid.addRecordClickHandler(new RecordClickHandler() {
+			public void onRecordClick(RecordClickEvent event) {
+				deleteButton.setDisabled(false);
+			}
+		});
+
+		deleteButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				SC.ask(commonLabels.sure(), new BooleanCallback() {
+					public void execute(Boolean value) {
+						if (value != null && value) {
+							kosarGrid.removeSelectedData();
+							deleteButton.setDisabled(true);
+						}
+					}
+				});
+			}
+		});
+
+		kosarGrid.addDataArrivedHandler(new DataArrivedHandler() {
+			public void onDataArrived(DataArrivedEvent event) {
+
+				float fizetusd = 0;
+				float fizeteur = 0;
+				float fizetft = 0;
+				for (int i = 0; i < kosarGrid.getRecords().length; i++) {
+					if (kosarGrid.getRecord(i).getAttribute(
+							KosarConstants.KOSAR_FIZETUSD) != null) {
+						fizetusd = fizetusd
+								+ kosarGrid.getRecord(i).getAttributeAsFloat(
+										KosarConstants.KOSAR_FIZETUSD);
+					}
+					if (kosarGrid.getRecord(i).getAttribute(
+							KosarConstants.KOSAR_FIZETEUR) != null) {
+						fizeteur = fizeteur
+								+ kosarGrid.getRecord(i).getAttributeAsFloat(
+										KosarConstants.KOSAR_FIZETEUR);
+					}
+					if (kosarGrid.getRecord(i).getAttribute(
+							KosarConstants.KOSAR_FIZET) != null) {
+						fizetft = fizetft
+								+ kosarGrid.getRecord(i).getAttributeAsFloat(
+										KosarConstants.KOSAR_FIZET);
+					}
+				}
+				usdLabel.setContents(Float.valueOf(fizetusd).toString());
+				eurLabel.setContents(Float.valueOf(fizeteur).toString());
+				ftLabel.setContents(Float.valueOf(fizetft).toString());
+			}
+		});
 		
 		addButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				if (keszletSelect) {
-					final Window winModal = new Window();
-					winModal.setWidth(500);
-					winModal.setHeight(230);
-					winModal.setTitle(kosarRaktarLabels.kosar_cikkszam());
-					winModal.setShowMinimizeButton(false);
-					winModal.setShowCloseButton(false);
-					winModal.setIsModal(true);
-					winModal.setShowModalMask(true);
-					winModal.centerInPage();
+				boolean found = false;
+				for (int i = 0; i < kosarGrid.getRecords().length; i++) {
 
-					final DynamicForm kosarEditForm = new DynamicForm();
-					kosarEditForm.setNumCols(2);
-					kosarEditForm.setColWidths("40%", "*");
-					kosarEditForm.setDataSource(kosarCikkDataSource);
-					kosarEditForm.setUseAllDataSourceFields(true);
+					if ((kosarGrid.getRecord(i).getAttribute(
+							KosarConstants.KOSAR_CIKKSZAM).equals(keszlet
+							.getSelectedRecord().getAttribute(
+									KeszletConstants.KESZLET_CIKKSZAM)))
+							&& (kosarGrid.getRecord(i).getAttribute(
+									KosarConstants.KOSAR_SZINKOD)
+									.equals(keszlet
+											.getSelectedRecord()
+											.getAttribute(
+													KeszletConstants.KESZLET_SZINKOD)))) {
+						found = true;
 
-					int found = 0;
-					for (int i = 0; i < kosarGrid.getRecords().length; i++) {
-						if ((kosarGrid.getRecord(i).getAttribute(
-								KosarConstants.KOSAR_CIKKSZAM).equals(keszlet
-								.getSelectedRecord().getAttribute(
-										KeszletConstants.KESZLET_CIKKSZAM)))
-								&& (kosarGrid.getRecord(i).getAttribute(
-										KosarConstants.KOSAR_SZINKOD)
-										.equals(keszlet
-												.getSelectedRecord()
-												.getAttribute(
-														KeszletConstants.KESZLET_SZINKOD)))) {
-							found = i;
-							i = kosarGrid.getRecords().length;
-						}
+						i = kosarGrid.getRecords().length;							
 					}
+				}
 
-					if (found > 0)
-						kosarEditForm.editRecord(kosarGrid.getRecord(found));
-					else
+				if (keszletSelect) {
+					
+					if (!found) {
+						
+						final Window winModal = new Window();
+						winModal.setWidth(500);
+						winModal.setHeight(250);
+						winModal.setTitle(kosarRaktarLabels.kosar_cikkszam());
+						winModal.setShowMinimizeButton(false);
+						winModal.setShowCloseButton(false);
+						winModal.setIsModal(true);
+						winModal.setShowModalMask(true);
+						winModal.centerInPage();
+	
+						final DynamicForm kosarEditForm = new DynamicForm();
+						kosarEditForm.setNumCols(2);
+						kosarEditForm.setColWidths("40%", "*");
+						kosarEditForm.setDataSource(kosarCikkDataSource);
+						kosarEditForm.setUseAllDataSourceFields(true);
+						
 						kosarEditForm.editNewRecord();
-
-					kosarEditForm.getField(KosarConstants.KOSAR_CIKKSZAM)
-							.setValue(
-									keszlet.getSelectedRecord().getAttribute(
-											KeszletConstants.KESZLET_CIKKSZAM));
-					kosarEditForm.getField(KosarConstants.KOSAR_CIKKSZAM)
-							.setCanEdit(false);
-					kosarEditForm.getField(KosarConstants.KOSAR_SZINKOD)
-							.setValue(
-									keszlet.getSelectedRecord().getAttribute(
-											KeszletConstants.KESZLET_SZINKOD));
-					kosarEditForm.getField(KosarConstants.KOSAR_SZINKOD)
-							.setCanEdit(false);
-					kosarEditForm
-							.getField(KosarConstants.KOSAR_MEGNEVEZES)
-							.setValue(
-									keszlet.getSelectedRecord().getAttribute(
-											KeszletConstants.KESZLET_MEGNEVEZES));
-					kosarEditForm.getField(KosarConstants.KOSAR_MEGNEVEZES)
-							.setCanEdit(false);
-					kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON)
-							.setValidateOnChange(true);
-					kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON)
-							.setValidators(new IsIntegerValidator());
-					kosarEditForm.getField(KosarConstants.KOSAR_KISKARTON)
-							.setValidators(new IsIntegerValidator());
-					kosarEditForm.getField(KosarConstants.KOSAR_DARAB)
-							.setValidators(new IsIntegerValidator());
-
-					kosarEditForm
-							.getField(KosarConstants.KOSAR_ARUSD)
-							.setValue(
-									keszlet.getSelectedRecord()
+	
+						kosarEditForm.getField(KosarConstants.KOSAR_CIKKSZAM)
+								.setValue(
+										keszlet.getSelectedRecord().getAttribute(
+												KeszletConstants.KESZLET_CIKKSZAM));
+						kosarEditForm.getField(KosarConstants.KOSAR_CIKKSZAM)
+								.setCanEdit(false);
+						kosarEditForm.getField(KosarConstants.KOSAR_SZINKOD)
+								.setValue(
+										keszlet.getSelectedRecord().getAttribute(
+												KeszletConstants.KESZLET_SZINKOD));
+						kosarEditForm.getField(KosarConstants.KOSAR_SZINKOD)
+								.setCanEdit(false);
+						kosarEditForm
+								.getField(KosarConstants.KOSAR_MEGNEVEZES)
+								.setValue(
+										keszlet.getSelectedRecord().getAttribute(
+												KeszletConstants.KESZLET_MEGNEVEZES));
+						kosarEditForm.getField(KosarConstants.KOSAR_MEGNEVEZES)
+								.setCanEdit(false);
+						kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON)
+								.setValidateOnChange(true);
+						kosarEditForm.getField(KosarConstants.KOSAR_EXPORTKARTON)
+								.setValidators(new IsIntegerValidator());
+						kosarEditForm.getField(KosarConstants.KOSAR_KISKARTON)
+								.setValidators(new IsIntegerValidator());
+						kosarEditForm.getField(KosarConstants.KOSAR_KISKARTON)
+								.setValidateOnChange(true);
+						kosarEditForm.getField(KosarConstants.KOSAR_DARAB)
+								.setValidators(new IsIntegerValidator());
+						kosarEditForm.getField(KosarConstants.KOSAR_DARAB)
+								.setValidateOnChange(true);
+						
+						kosarEditForm
+								.getField(KosarConstants.KOSAR_ARUSD)
+								.setValue(
+										keszlet.getSelectedRecord()
+												.getAttributeAsFloat(
+														KeszletConstants.KESZLET_ELORAR));
+						kosarEditForm
+								.getField(KosarConstants.KOSAR_AREUR)
+								.setValue(
+										keszlet.getSelectedRecord()
+												.getAttributeAsFloat(
+														KeszletConstants.KESZLET_AREUR));
+						kosarEditForm
+								.getField(KosarConstants.KOSAR_AR)
+								.setValue(
+										keszlet.getSelectedRecord()
 											.getAttributeAsFloat(
-													KeszletConstants.KESZLET_ELORAR));
-					kosarEditForm.getField(KosarConstants.KOSAR_ARUSD)
-							.setVisible(false);
-
-					kosarEditForm.getField(KosarConstants.KOSAR_FIZETUSD)
-							.setVisible(false);
-
-					HLayout buttonsLayout = new HLayout();
-					buttonsLayout.setWidth100();
-
-					HLayout saveLayout = new HLayout();
-					IButton saveIButton = new IButton(commonLabels.ok());
-
-					saveLayout.addMember(saveIButton);
-					buttonsLayout.addMember(saveLayout);
-
-					HLayout cancelLayout = new HLayout();
-					cancelLayout.setAlign(Alignment.RIGHT);
-					final IButton cancelIButton = new IButton(commonLabels
-							.cancel());
-					cancelLayout.addMember(cancelIButton);
-					buttonsLayout.addMember(cancelLayout);
-
-					saveIButton.addClickHandler(new ClickHandler() {
-						public void onClick(ClickEvent event) {
-							cancelIButton.setDisabled(true);
-
-							int exp = 0;
-							int kk = 0;
-							int db = 0;
-							if (kosarEditForm.getField(
-									KosarConstants.KOSAR_EXPORTKARTON)
-									.getValue() == null)
-								kosarEditForm.getField(
+													KeszletConstants.KESZLET_AR));
+	
+						kosarEditForm.getField(KosarConstants.KOSAR_ARUSD)
+								.setVisible(false);
+	
+						kosarEditForm.getField(KosarConstants.KOSAR_FIZETUSD)
+								.setVisible(false);
+	
+						kosarEditForm.getField(KosarConstants.KOSAR_AREUR)
+								.setVisible(false);
+	
+						kosarEditForm.getField(KosarConstants.KOSAR_FIZETEUR)
+								.setVisible(false);
+	
+						kosarEditForm.getField(KosarConstants.KOSAR_AR)
+								.setVisible(false);
+	
+						kosarEditForm.getField(KosarConstants.KOSAR_FIZET)
+								.setVisible(false);
+	
+						final DynamicForm arForm = new DynamicForm();
+						arForm.setNumCols(2);
+						arForm.setColWidths("40%", "*");
+						
+						final SelectItem arselect = new SelectItem();
+						arselect.setTitle(kosarRaktarLabels.artipus());
+						arselect.setValueMap(KosarRaktarConstants.getArtipus());
+						arselect.setDefaultValue(KosarRaktarConstants.PIACI_AR);
+						
+						arForm.setFields(arselect);
+	
+						HLayout buttonsLayout = new HLayout();
+						buttonsLayout.setWidth100();
+	
+						HLayout saveLayout = new HLayout();
+						IButton saveIButton = new IButton(commonLabels.ok());
+	
+						saveLayout.addMember(saveIButton);
+						buttonsLayout.addMember(saveLayout);
+	
+						HLayout cancelLayout = new HLayout();
+						cancelLayout.setAlign(Alignment.RIGHT);
+						final IButton cancelIButton = new IButton(commonLabels
+								.cancel());
+						cancelLayout.addMember(cancelIButton);
+						buttonsLayout.addMember(cancelLayout);
+	
+						saveIButton.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event) {
+								cancelIButton.setDisabled(true);
+	
+								int exp = 0;
+								int kk = 0;
+								int db = 0;
+								if (kosarEditForm.getField(
 										KosarConstants.KOSAR_EXPORTKARTON)
-										.setValue("0");
-							if (kosarEditForm.getField(
-									KosarConstants.KOSAR_KISKARTON).getValue() == null)
-								kosarEditForm.getField(
-										KosarConstants.KOSAR_KISKARTON)
-										.setValue("0");
-							if (kosarEditForm.getField(
-									KosarConstants.KOSAR_DARAB).getValue() == null)
-								kosarEditForm.getField(
-										KosarConstants.KOSAR_DARAB).setValue(
-										"0");
-
-							exp = new Integer((String) kosarEditForm.getField(
-									KosarConstants.KOSAR_EXPORTKARTON)
-									.getValue());
-							kk = new Integer((String) kosarEditForm.getField(
-									KosarConstants.KOSAR_KISKARTON).getValue());
-							db = new Integer((String) kosarEditForm.getField(
-									KosarConstants.KOSAR_DARAB).getValue());
-
-							int ckk = 0;
-							int cdb = 0;
-							if (keszlet.getSelectedRecord().getAttributeAsInt(
-									KeszletConstants.KESZLET_KISKARTON) != null)
-								ckk = keszlet
-										.getSelectedRecord()
-										.getAttributeAsInt(
-												KeszletConstants.KESZLET_KISKARTON);
-							if (keszlet.getSelectedRecord().getAttributeAsInt(
-									KeszletConstants.KESZLET_DARAB) != null)
-								cdb = keszlet.getSelectedRecord()
-										.getAttributeAsInt(
-												KeszletConstants.KESZLET_DARAB);
-
-							float elarar = 0;
-							if (keszlet.getSelectedRecord().getAttributeAsFloat(
-									KeszletConstants.KESZLET_ELORAR) != null)
-								elarar = keszlet.getSelectedRecord()
-										.getAttributeAsFloat(
-												KeszletConstants.KESZLET_ELORAR);
-
-							float fizet = (float) (((((ckk * cdb) * exp)
-									+ (cdb * kk) + db) * elarar) * 0.2);
-
-							kosarEditForm.getField(
-									KosarConstants.KOSAR_FIZETUSD).setValue(
-									fizet);
-
-							kosarEditForm.saveData(new DSCallback() {
-								public void execute(DSResponse response,
-										Object rawData, DSRequest request) {
-									if (response.getStatus() == DSResponse.STATUS_SUCCESS)
-										winModal.destroy();
-									else
-										cancelIButton.setDisabled(false);
+										.getValue() == null)
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_EXPORTKARTON)
+											.setValue("0");
+								if (kosarEditForm.getField(
+										KosarConstants.KOSAR_KISKARTON).getValue() == null)
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_KISKARTON)
+											.setValue("0");
+								if (kosarEditForm.getField(
+										KosarConstants.KOSAR_DARAB).getValue() == null)
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_DARAB).setValue("0");
+								
+								exp = new Integer((String) kosarEditForm.getField(
+										KosarConstants.KOSAR_EXPORTKARTON)
+										.getValue());
+								kk = new Integer((String) kosarEditForm.getField(
+										KosarConstants.KOSAR_KISKARTON).getValue());
+								db = new Integer((String) kosarEditForm.getField(
+										KosarConstants.KOSAR_DARAB).getValue());
+								
+								int ckk = 0;
+								int cdb = 0;
+								if (keszlet.getSelectedRecord().getAttributeAsInt(
+										KeszletConstants.KESZLET_KISKARTON) != null)
+									ckk = keszlet
+											.getSelectedRecord()
+											.getAttributeAsInt(
+													KeszletConstants.KESZLET_KISKARTON);
+								if (keszlet.getSelectedRecord().getAttributeAsInt(
+										KeszletConstants.KESZLET_DARAB) != null)
+									cdb = keszlet.getSelectedRecord()
+											.getAttributeAsInt(
+													KeszletConstants.KESZLET_DARAB);
+	
+								if (arselect.getValue().equals(KosarRaktarConstants.ELORENDELO_AR)) {
+									double elarar = 0;
+									if (keszlet.getSelectedRecord().getAttributeAsDouble(
+											KeszletConstants.KESZLET_ELORAR) != null)
+										elarar = keszlet.getSelectedRecord()
+											.getAttributeAsFloat(
+													KeszletConstants.KESZLET_ELORAR);						
+									double fizetusd = (double) (((((ckk * cdb) * exp)
+											+ (cdb * kk) + db) * elarar));
+				
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_ARUSD).setValue(keszlet.getSelectedRecord()
+													.getAttributeAsFloat(
+															KeszletConstants.KESZLET_ELORAR));
+	
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_FIZETUSD).setValue(
+											ClientConstants.round(fizetusd,5));
 								}
-							});
-						}
-					});
-
-					cancelIButton.addClickHandler(new ClickHandler() {
-						public void onClick(ClickEvent event) {
-							winModal.destroy();
-						}
-					});
-
-					winModal.addItem(kosarEditForm);
-					winModal.addItem(buttonsLayout);
-					winModal.show();
+								
+								if (arselect.getValue().equals(KosarRaktarConstants.EXPORT_AR)) {
+									double exportar = 0;
+									if (keszlet.getSelectedRecord().getAttributeAsDouble(
+											KeszletConstants.KESZLET_ELORAR) != null)
+										exportar = keszlet.getSelectedRecord()
+											.getAttributeAsFloat(
+													KeszletConstants.KESZLET_AREUR);						
+									double fizeteur = (double) (((((ckk * cdb) * exp)
+											+ (cdb * kk) + db) * exportar));
+	
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_AREUR).setValue(keszlet.getSelectedRecord()
+													.getAttributeAsFloat(
+															KeszletConstants.KESZLET_AREUR));
+									
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_FIZETEUR).setValue(
+											ClientConstants.round(fizeteur,5));
+								}
+	
+								if (arselect.getValue().equals(KosarRaktarConstants.PIACI_AR)) {
+									double piaciar = 0;
+									if (keszlet.getSelectedRecord().getAttributeAsDouble(
+											KeszletConstants.KESZLET_AR) != null)
+										piaciar = keszlet.getSelectedRecord()
+											.getAttributeAsFloat(
+													KeszletConstants.KESZLET_AR);						
+									double fizetft = (double) (((((ckk * cdb) * exp)
+											+ (cdb * kk) + db) * piaciar));
+		
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_AR).setValue(keszlet.getSelectedRecord()
+													.getAttributeAsFloat(
+															KeszletConstants.KESZLET_AR));
+	
+									kosarEditForm.getField(
+											KosarConstants.KOSAR_FIZET).setValue(
+											ClientConstants.round(fizetft,2));
+								}
+															
+								kosarEditForm.saveData(new DSCallback() {
+									public void execute(DSResponse response,
+											Object rawData, DSRequest request) {
+										if (response.getStatus() == DSResponse.STATUS_SUCCESS)
+											winModal.destroy();
+										else
+											cancelIButton.setDisabled(false);
+									}
+								});
+							}
+						});
+	
+						cancelIButton.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event) {
+								winModal.destroy();
+							}
+						});
+	
+						winModal.addItem(kosarEditForm);
+						winModal.addItem(arForm);
+						winModal.addItem(buttonsLayout);
+						winModal.show();
+					}
 				} else {
 				}
 			}
@@ -476,6 +640,11 @@ public class KosarRaktar {
 							DisplayRequest.startRequest();
 
 							if (menu.equals(Constants.MENU_ELADAS)) {
+								
+								final Double tmpbefizet = new Double(ftLabel.getContents());
+								final Double tmpbefizeteur = new Double(eurLabel.getContents());
+								final Double tmpbefizetusd = new Double(usdLabel.getContents());
+
 								dekorTradeService.createCedula(elado, vevo,
 										menu, new AsyncCallback<String>() {
 											public void onFailure(
@@ -497,21 +666,23 @@ public class KosarRaktar {
 												middleLayout
 														.removeMembers(middleLayout
 																.getMembers());
-												Cedulak cedula = new Cedulak();
-												middleLayout.addMember(cedula
+												Cedulak cedulak = new Cedulak();
+												middleLayout.addMember(cedulak
 														.printCedula(
 																result,
 																Constants.CEDULA_STATUSZ_ELADOTT,
-																vevonev, null,null, null, menu));
+																vevonev, tmpbefizet,
+																tmpbefizeteur,
+																tmpbefizetusd, menu));
 											}
 										});
 							}
 
 							if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
 								
-								final Float tmpbefizet = new Float("0");
-								final Float tmpbefizeteur = new Float(usdLabel.getContents());
-								final Float tmpbefizetusd = new Float("0");
+								final Double tmpbefizet = new Double(ftLabel.getContents());
+								final Double tmpbefizeteur = new Double(eurLabel.getContents());
+								final Double tmpbefizetusd = new Double(usdLabel.getContents());
 
 								dekorTradeService.kosarToCedula(
 										UserInfo.userId, vevo,

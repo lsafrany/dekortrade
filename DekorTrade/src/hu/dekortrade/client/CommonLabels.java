@@ -60,6 +60,8 @@ public interface CommonLabels extends Constants {
 
 	String menu_lekerdezes_torlesztesek();
 
+	String menu_lekerdezes_forgalom();
+	
 	String jog_rovancs();
 	
 	String server_error();

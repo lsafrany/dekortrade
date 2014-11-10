@@ -12,7 +12,6 @@ import hu.dekortrade.shared.serialized.SQLExceptionSer;
 import hu.dekortrade.shared.serialized.ZarasEgyenlegSer;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
@@ -271,8 +270,8 @@ public class Zaras {
 					okIButton.setDisabled(true);
 				}
 				
-				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizetusd).replaceAll(",", "."));
+				usdLabel.setContents(Float.valueOf(fizetusd).toString());
+	
 			}
 		});
 
@@ -328,9 +327,9 @@ public class Zaras {
 								if (value != null && value) {
 									DisplayRequest.startRequest();
 														
-									final float tmpkivet = new Float(kivet.getValueAsString());
-									final float tmpkiveteur = new Float(kiveteur.getValueAsString());
-									final float tmpkivetusd = new Float(kivetusd.getValueAsString());
+									final double tmpkivet = new Double(kivet.getValueAsString());
+									final double tmpkiveteur = new Double(kiveteur.getValueAsString());
+									final double tmpkivetusd = new Double(kivetusd.getValueAsString());
 
 									dekorTradeService.createZaras(UserInfo.userId,zarasEgyenlegSer.getEgyenleghuf(),
 											zarasEgyenlegSer.getEgyenlegeur(),
@@ -398,7 +397,7 @@ public class Zaras {
 
 	}
 
-	public Canvas printZaras(final String zaras, final String menu, Float kivethuf,Float kiveteur, Float kivetusd) {
+	public Canvas printZaras(final String zaras, final String menu, Double kivet, Double kiveteur, Double kivetusd) {
 		DisplayRequest.counterInit();
 
 		final VLayout middleLayout = new VLayout();
@@ -507,38 +506,98 @@ public class Zaras {
 		fizetLayout.setWidth("80%");
 
 		HLayout usdCurrLabelLayout = new HLayout();
-		usdCurrLabelLayout.setWidth("80%");
+		usdCurrLabelLayout.setWidth("15%");
 		Label usdCurrLabel = new Label(zarasLabels.fizetusd());
 		usdCurrLabel.setAlign(Alignment.CENTER);
 		usdCurrLabelLayout.addMember(usdCurrLabel);
 
 		HLayout usdLabelLayout = new HLayout();
-		usdLabelLayout.setWidth("20%");
+		usdLabelLayout.setWidth("15%");
 		final Label usdLabel = new Label("0");
 		usdLabel.setAlign(Alignment.CENTER);
 		usdLabelLayout.addMember(usdLabel);
 
+		HLayout eurCurrLabelLayout = new HLayout();
+		eurCurrLabelLayout.setWidth("15%");
+		Label eurCurrLabel = new Label(zarasLabels.fizeteur());
+		eurCurrLabel.setAlign(Alignment.CENTER);
+		eurCurrLabelLayout.addMember(eurCurrLabel);
+
+		HLayout eurLabelLayout = new HLayout();
+		eurLabelLayout.setWidth("15%");
+		final Label eurLabel = new Label("0");
+		eurLabel.setAlign(Alignment.CENTER);
+		eurLabelLayout.addMember(eurLabel);
+
+		HLayout ftCurrLabelLayout = new HLayout();
+		ftCurrLabelLayout.setWidth("15%");
+		Label ftCurrLabel = new Label(zarasLabels.fizet());
+		ftCurrLabel.setAlign(Alignment.CENTER);
+		ftCurrLabelLayout.addMember(ftCurrLabel);
+
+		HLayout ftLabelLayout = new HLayout();
+		ftLabelLayout.setWidth("15%");
+		final Label ftLabel = new Label("0");
+		ftLabel.setAlign(Alignment.CENTER);
+		ftLabelLayout.addMember(ftLabel);
+				
 		fizetLayout.addMember(usdCurrLabelLayout);
 		fizetLayout.addMember(usdLabelLayout);
+
+		fizetLayout.addMember(eurCurrLabelLayout);
+		fizetLayout.addMember(eurLabelLayout);
+
+		fizetLayout.addMember(ftCurrLabelLayout);
+		fizetLayout.addMember(ftLabelLayout);
 
 		HLayout kivetLayout = new HLayout();
 		kivetLayout.setHeight("3%");
 		kivetLayout.setWidth("80%");
 
 		HLayout kivetusdCurrLabelLayout = new HLayout();
-		kivetusdCurrLabelLayout.setWidth("80%");
+		kivetusdCurrLabelLayout.setWidth("15%");
 		Label kivetusdCurrLabel = new Label(zarasLabels.kivetusd());
 		kivetusdCurrLabel.setAlign(Alignment.CENTER);
 		kivetusdCurrLabelLayout.addMember(kivetusdCurrLabel);
 
 		HLayout kivetusdLabelLayout = new HLayout();
-		kivetusdLabelLayout.setWidth("20%");
+		kivetusdLabelLayout.setWidth("15%");
 		final Label kivetusdLabel = new Label(kivetusd.toString());
 		kivetusdLabel.setAlign(Alignment.CENTER);
 		kivetusdLabelLayout.addMember(kivetusdLabel);
 
+		HLayout kiveteurCurrLabelLayout = new HLayout();
+		kiveteurCurrLabelLayout.setWidth("15%");
+		Label kiveteurCurrLabel = new Label(zarasLabels.kiveteur());
+		kiveteurCurrLabel.setAlign(Alignment.CENTER);
+		kiveteurCurrLabelLayout.addMember(kiveteurCurrLabel);
+
+		HLayout kiveteurLabelLayout = new HLayout();
+		kiveteurLabelLayout.setWidth("15%");
+		final Label kiveteurLabel = new Label(kiveteur.toString());
+		kiveteurLabel.setAlign(Alignment.CENTER);
+		kiveteurLabelLayout.addMember(kiveteurLabel);
+
+		HLayout kivetftCurrLabelLayout = new HLayout();
+		kivetftCurrLabelLayout.setWidth("15%");
+		Label kivetftCurrLabel = new Label(zarasLabels.kivet());
+		kivetftCurrLabel.setAlign(Alignment.CENTER);
+		kivetftCurrLabelLayout.addMember(kivetftCurrLabel);
+
+		HLayout kivetftLabelLayout = new HLayout();
+		kivetftLabelLayout.setWidth("15%");
+		final Label kivetftLabel = new Label(kivet.toString());
+		kivetftLabel.setAlign(Alignment.CENTER);
+		kivetftLabelLayout.addMember(kivetftLabel);
+
 		kivetLayout.addMember(kivetusdCurrLabelLayout);
 		kivetLayout.addMember(kivetusdLabelLayout);
+
+		kivetLayout.addMember(kiveteurCurrLabelLayout);
+		kivetLayout.addMember(kiveteurLabelLayout);
+
+		kivetLayout.addMember(kivetftCurrLabelLayout);
+		kivetLayout.addMember(kivetftLabelLayout);
 
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setAlign(Alignment.CENTER);
@@ -571,19 +630,35 @@ public class Zaras {
 
 		fizetesGrid.addDataArrivedHandler(new DataArrivedHandler() {
 			public void onDataArrived(DataArrivedEvent event) {
-
+				
+				float fizetusd = 0;
+				float fizeteur = 0;
 				float fizet = 0;
 				for (int i = 0; i < fizetesGrid.getRecords().length; i++) {
 					if (fizetesGrid.getRecord(i).getAttribute(
 							ZarasConstants.ZARASFIZETES_FIZETUSD) != null) {
-						fizet = fizet
+						fizetusd = fizetusd
 								+ fizetesGrid.getRecord(i).getAttributeAsFloat(
 										ZarasConstants.ZARASFIZETES_FIZETUSD);
 					}
-
+					if (fizetesGrid.getRecord(i).getAttribute(
+							ZarasConstants.ZARASFIZETES_FIZETUSD) != null) {
+						fizeteur = fizeteur
+								+ fizetesGrid.getRecord(i).getAttributeAsFloat(
+										ZarasConstants.ZARASFIZETES_FIZETEUR);
+					}
+					if (fizetesGrid.getRecord(i).getAttribute(
+							ZarasConstants.ZARASFIZETES_FIZETUSD) != null) {
+						fizet = fizet
+								+ fizetesGrid.getRecord(i).getAttributeAsFloat(
+										ZarasConstants.ZARASFIZETES_FIZET);
+					}
 				}
-				usdLabel.setContents(NumberFormat.getFormat("#.0000").format(
-						fizet).replaceAll(",", "."));
+
+				usdLabel.setContents(Float.valueOf(fizetusd).toString());
+				eurLabel.setContents(Float.valueOf(fizeteur).toString());
+				ftLabel.setContents(Float.valueOf(fizet).toString());
+
 			}
 		});
 

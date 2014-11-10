@@ -7,6 +7,7 @@ import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
 import hu.dekortrade.shared.serialized.CikkfotipusSer;
+import hu.dekortrade.shared.serialized.EladasSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.FizetesSer;
 import hu.dekortrade.shared.serialized.GyartoSer;
@@ -138,9 +139,6 @@ public interface DekorTradeServiceAsync {
 
 	void addKosarCikk(KosarSer kosarSer, AsyncCallback<KosarSer> asyncCallback);
 
-	void updateKosarCikk(KosarSer kosarSer,
-			AsyncCallback<KosarSer> asyncCallback);
-
 	void removeKosarCikk(KosarSer kosarSer,
 			AsyncCallback<KosarSer> asyncCallback);
 
@@ -160,15 +158,15 @@ public interface DekorTradeServiceAsync {
 			AsyncCallback<String> asyncCallback);
 
 	void kosarToCedula(String elado, String vevo, String menu, String tipus, String ujtipus, String cedula,
-			Float befizet, Float befizeteur, Float befizetusd,
+			Double befizet, Double befizeteur, Double befizetusd,
 			AsyncCallback<String> asyncCallback);
 
 	void getFizetes(AsyncCallback<List<FizetesSer>> asyncCallback);
 
 	void getElozoZaras(AsyncCallback<ZarasEgyenlegSer> asyncCallback);
 
-	void createZaras(String penztaros, Float egyenleghuf, Float egyenlegeur,
-			Float egyenlegusd, Float kivethuf, Float kiveteur, Float kivetusd,
+	void createZaras(String penztaros, Double egyenleghuf, Double egyenlegeur,
+			Double egyenlegusd, Double kivethuf, Double kiveteur, Double kivetusd,
 			AsyncCallback<String> asyncCallback);
 
 	void getZarasFizetes(String zaras,
@@ -176,8 +174,8 @@ public interface DekorTradeServiceAsync {
 
 	void getZaras(AsyncCallback<List<ZarasSer>> asyncCallback);
 
-	void createTorlesztes(String penztaros, String vevo, Float torleszthuf,
-			Float torleszteur, Float torlesztusd,
+	void createTorlesztes(String penztaros, String vevo, Double torleszthuf,
+			Double torleszteur, Double torlesztusd,
 			AsyncCallback<String> asyncCallback);
 
 	void getTorlesztesek(AsyncCallback<List<FizetesSer>> asyncCallback);
@@ -217,5 +215,7 @@ public interface DekorTradeServiceAsync {
 
 	void getRendeles(String vevo,
 			AsyncCallback<List<RendeltcikkSer>> asyncCallback);
+
+	void getEladas(String cikkszam, String szinkod,AsyncCallback<List<EladasSer>> asyncCallback);
 
 }

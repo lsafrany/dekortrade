@@ -6,6 +6,8 @@ public class VevoKosarSer implements IsSerializable {
 
 	private String cedula = null;
 
+	private String cedulatipus = null;
+	
 	private String vevo = null;
 
 	private String vevonev = null;
@@ -18,6 +20,14 @@ public class VevoKosarSer implements IsSerializable {
 
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
+	}
+	
+	public String getCedulatipus() {
+		return cedulatipus;
+	}
+
+	public void setCedulatipus(String cedulatipus) {
+		this.cedulatipus = cedulatipus;
 	}
 
 	public String getVevo() {

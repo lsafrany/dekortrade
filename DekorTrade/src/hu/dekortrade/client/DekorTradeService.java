@@ -7,6 +7,7 @@ import hu.dekortrade.shared.serialized.CikkSelectsSer;
 import hu.dekortrade.shared.serialized.CikkSer;
 import hu.dekortrade.shared.serialized.CikkaltipusSer;
 import hu.dekortrade.shared.serialized.CikkfotipusSer;
+import hu.dekortrade.shared.serialized.EladasSer;
 import hu.dekortrade.shared.serialized.FelhasznaloSer;
 import hu.dekortrade.shared.serialized.FizetesSer;
 import hu.dekortrade.shared.serialized.GyartoSer;
@@ -157,9 +158,6 @@ public interface DekorTradeService extends RemoteService {
 	KosarSer addKosarCikk(KosarSer kosarSer) throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	KosarSer updateKosarCikk(KosarSer kosarSer)
-			throws IllegalArgumentException, SQLExceptionSer;
-
 	KosarSer removeKosarCikk(KosarSer kosarSer)
 			throws IllegalArgumentException, SQLExceptionSer;
 
@@ -179,7 +177,7 @@ public interface DekorTradeService extends RemoteService {
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	String kosarToCedula(String elado, String vevo, String menu, String tipus, String ujtipus, String cedula,
-			Float befizet, Float befizeteur, Float befizetusd)
+			Double befizet, Double befizeteur, Double befizetusd)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	List<FizetesSer> getFizetes() throws IllegalArgumentException,
@@ -188,8 +186,8 @@ public interface DekorTradeService extends RemoteService {
 	ZarasEgyenlegSer getElozoZaras() throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	String createZaras(String penztaros, Float egyenleghuf, Float egyenlegeur,
-			Float egyenlegusd, Float kivethuf, Float kiveteur, Float kivetusd)
+	String createZaras(String penztaros, Double egyenleghuf, Double egyenlegeur,
+			Double egyenlegusd, Double kivethuf, Double kiveteur, Double kivetusd)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	List<FizetesSer> getZarasFizetes(String zaras)
@@ -197,8 +195,8 @@ public interface DekorTradeService extends RemoteService {
 
 	List<ZarasSer> getZaras() throws IllegalArgumentException, SQLExceptionSer;
 
-	String createTorlesztes(String penztaros, String vevo, Float torleszthuf,
-			Float torleszteur, Float torlesztusd)
+	String createTorlesztes(String penztaros, String vevo, Double torleszthuf,
+			Double torleszteur, Double torlesztusd)
 			throws IllegalArgumentException, SQLExceptionSer;
 
 	List<FizetesSer> getTorlesztesek() throws IllegalArgumentException,
@@ -241,5 +239,7 @@ public interface DekorTradeService extends RemoteService {
 			SQLExceptionSer;
 
 	List<RendeltcikkSer> getRendeles(String vevo) throws IllegalArgumentException, SQLExceptionSer;
+
+	List<EladasSer> getEladas(String cikkszam, String sznikod) throws IllegalArgumentException, SQLExceptionSer;
 
 }

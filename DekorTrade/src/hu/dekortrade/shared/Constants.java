@@ -40,6 +40,7 @@ public class Constants {
 	public static final String MENU_LEKERDEZES_CEDULAK = "MENU7_LEKERDEZES1_CEDULAK";
 	public static final String MENU_LEKERDEZES_TORLESZTESEK = "MENU7_LEKERDEZES2_TORLESZTESEK";
 	public static final String MENU_LEKERDEZES_ZARASOK = "MENU7_LEKERDEZES3_ZARASOK";
+	public static final String MENU_LEKERDEZES_FORGALOM = "MENU7_LEKERDEZES4_FORGALOM";
 	
 	public static final String JOG_ROVANCS = "ROVANCS";
 	
