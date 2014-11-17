@@ -118,12 +118,12 @@ public class ClientConstants {
 			cedulatipus = new LinkedHashMap<String, String>();
 			cedulatipus.put(Constants.CEDULA_STATUSZ_ELORENDELT,
 					commonLabels.cedulaelorendelo());
-			cedulatipus.put(Constants.CEDULA_STATUSZ_VEGLEGESIT,
-					commonLabels.cedulavegleges());
+//			cedulatipus.put(Constants.CEDULA_STATUSZ_VEGLEGESIT,
+//					commonLabels.cedulavegleges());
 			cedulatipus.put(Constants.CEDULA_STATUSZ_FIZETENDO_ELORENDELES,
 					commonLabels.fizetendoelorendeles());
-			cedulatipus.put(Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES,
-					commonLabels.elorendelesfizetes());
+//			cedulatipus.put(Constants.CEDULA_STATUSZ_ELORENDELES_FIZETES,
+//					commonLabels.elorendelesfizetes());
 			cedulatipus.put(Constants.CEDULA_STATUSZ_FIZETETT_ELORENDELES,
 					commonLabels.fizetettelorendeles());
 			cedulatipus.put(Constants.CEDULA_STATUSZ_ELADOTT,

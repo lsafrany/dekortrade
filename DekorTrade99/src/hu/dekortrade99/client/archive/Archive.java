@@ -96,7 +96,7 @@ public class Archive {
 
 		ListGridField statuszGridField = new ListGridField(
 				ArchiveConstants.RENDELT_STATUSZ);
-		statuszGridField.setWidth("15%");
+		statuszGridField.setWidth("35%");
 
 		rendeltGrid.setFields(rendelesGridField, datumGridField,
 				statuszGridField);
@@ -161,6 +161,10 @@ public class Archive {
 		ListGridField cikkszamGridField = new ListGridField(
 				ArchiveConstants.RENDELTCIKK_CIKKSZAM);
 
+		ListGridField szinkodGridField = new ListGridField(
+				ArchiveConstants.RENDELTCIKK_SZINKOD);
+		szinkodGridField.setWidth("15%");
+
 		ListGridField exportkartonGridField = new ListGridField(
 				ArchiveConstants.RENDELTCIKK_EXPORTKARTON);
 		exportkartonGridField.setWidth("20%");
@@ -173,7 +177,7 @@ public class Archive {
 				ArchiveConstants.RENDELTCIKK_DARAB);
 		darabGridField.setWidth("20%");
 
-		rendeltcikkGrid.setFields(cikkszamGridField, exportkartonGridField, kiskartonGridField, darabGridField);
+		rendeltcikkGrid.setFields(cikkszamGridField, szinkodGridField, exportkartonGridField, kiskartonGridField, darabGridField);
 
 		rendeltcikkLayout.addMember(rendeltcikkGrid);
 

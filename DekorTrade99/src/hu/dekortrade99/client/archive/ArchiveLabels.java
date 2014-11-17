@@ -20,6 +20,8 @@ public interface ArchiveLabels extends Constants {
 
 	String rendelt_cikkszam();
 
+	String rendelt_szinkod();
+	
 	String rendelt_exportkarton();
 	
 	String rendelt_kiskarton();

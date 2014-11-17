@@ -43,6 +43,10 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 				archiveLabels.rendelt_cikkszam());
 		addField(field);
 
+		field = new DataSourceTextField(ArchiveConstants.RENDELTCIKK_SZINKOD,
+				archiveLabels.rendelt_szinkod());
+		addField(field);
+
 		field = new DataSourceIntegerField(
 				ArchiveConstants.RENDELTCIKK_EXPORTKARTON,
 				archiveLabels.rendelt_exportkarton());
@@ -120,6 +124,8 @@ public class RendeltcikkDataSource extends GwtRpcDataSource {
 				from.getRendeles());
 		to.setAttribute(ArchiveConstants.RENDELTCIKK_CIKKSZAM,
 				from.getCikkszam());
+		to.setAttribute(ArchiveConstants.RENDELTCIKK_SZINKOD,
+				from.getSzinkod());
 		to.setAttribute(ArchiveConstants.RENDELTCIKK_EXPORTKARTON,
 				from.getExportkarton());
 		to.setAttribute(ArchiveConstants.RENDELTCIKK_KISKARTON,

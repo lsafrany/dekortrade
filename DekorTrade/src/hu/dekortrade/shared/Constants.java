@@ -73,8 +73,8 @@ public class Constants {
 	public static final String CEDULA_TORLESZTES = "TORLESZTES";
 	public static final String CEDULA_RAKTAR = "RAKTAR";
 	
-	public static final String INTERNET_IMPORTED = "IMPORTED";
-	public static final String INTERNET_ELORENDEL = "ELORENDEL";
+	public static final String INTERNET_IMPORTED = "INTERNET_IMPORTED";
+	public static final String INTERNET_ELORENDEL = "INTERNET_ELORENDELT";
 	public static final String ELORENDELT_VEGLEGESITETT = "VEGLEGESITETT";
 	public static final String ELORENDELT_MEGRENDELT = "MEGRENDELT";
 	public static final String ELORENDELT_BEERKEZETT = "BEERKEZETT";

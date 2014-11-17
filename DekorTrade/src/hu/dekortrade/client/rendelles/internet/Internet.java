@@ -42,6 +42,7 @@ public class Internet {
 		middleLayout.setStyleName("middle");
 
 		VLayout rendeltLayout = new VLayout();
+		rendeltLayout.setWidth("40%");
 		rendeltLayout.setDefaultLayoutAlign(Alignment.CENTER);
 
 		final InternetRendeltDataSource rendeltDataSource = new InternetRendeltDataSource() {
@@ -78,7 +79,7 @@ public class Internet {
 
 		final ListGrid rendeltGrid = new ListGrid();
 		rendeltGrid.setTitle(internetorderLabels.rendeles());
-		rendeltGrid.setWidth("60%");
+		rendeltGrid.setWidth("90%");
 		rendeltGrid.setShowHeaderContextMenu(false);
 		rendeltGrid.setShowHeaderMenuButton(false);
 		rendeltGrid.setCanSort(false);
@@ -150,7 +151,7 @@ public class Internet {
 
 		final ListGrid rendeltcikkGrid = new ListGrid();
 		rendeltcikkGrid.setTitle(internetorderLabels.rendeltcikk());
-		rendeltcikkGrid.setWidth("80%");
+		rendeltcikkGrid.setWidth("90%");
 		rendeltcikkGrid.setShowHeaderContextMenu(false);
 		rendeltcikkGrid.setShowHeaderMenuButton(false);
 		rendeltcikkGrid.setCanSort(false);
@@ -162,7 +163,7 @@ public class Internet {
 
 		ListGridField szinkodGridField = new ListGridField(
 				InternetConstants.INTERNETRENDELTCIKK_SZINKOD);
-		szinkodGridField.setWidth("10%");
+		szinkodGridField.setWidth("15%");
 
 		ListGridField exportkartonGridField = new ListGridField(
 				InternetConstants.INTERNETRENDELTCIKK_EXPORTKARTON);

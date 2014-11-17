@@ -1929,9 +1929,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.flush();
 
 			MemcacheServiceFactory.getMemcacheService().clearAll();;
-            
-        	System.out.println("Clearing cache.");
-        	
+                    	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -1984,9 +1982,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.flush();
 
 			MemcacheServiceFactory.getMemcacheService().clearAll();;
-            
-        	System.out.println("Clearing cache.");
-        	
+                   	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2014,8 +2010,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.flush();
 
 			MemcacheServiceFactory.getMemcacheService().clearAll();;
-            
-        	System.out.println("Clearing cache.");
         	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
@@ -2049,12 +2043,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					pm.deletePersistent(l);
 				}
 			}
+            
+			pm.flush();
 
 			MemcacheServiceFactory.getMemcacheService().clearAll();;
-            
-        	System.out.println("Clearing cache.");
-        	
-			pm.flush();
 
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
@@ -2121,6 +2113,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 									rendeles);
 							pm.makePersistent(kosarcikk);
 						}
+						l.setStatus(Constants.INTERNET_IMPORTED);
 					}
 
 				}
@@ -2128,14 +2121,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			Query query2 = pm.newQuery(Rendelt.class);
 			query2.setFilter("(this.rovidnev == providnev) && (this.rendeles == prendeles) && (this.status == pstatus)");
-			query2.declareParameters("String providnev,String prendeles,String pstatus");
-			Map<String, String> parameters = new HashMap<String, String>();
-			parameters.put("providnev", vevo);
-			parameters.put("prendeles", rendeles);
-			parameters.put("pstatus", Constants.CEDULA_STATUSZ_ELORENDELT);
+			query2.declareParameters("String providnev,String prendeles");
 			@SuppressWarnings("unchecked")
 			List<Rendelt> list2 = (List<Rendelt>) pm.newQuery(query2)
-					.executeWithMap(parameters);
+					.execute(vevo,rendeles);
 			if ((list2 != null) && (!list2.isEmpty())) {
 				for (Rendelt l : list2) {
 					l.setStatus(Constants.INTERNET_IMPORTED);
@@ -2219,8 +2208,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			MemcacheServiceFactory.getMemcacheService().clearAll();;
             
-        	System.out.println("Clearing cache.");
-        	
 			} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2446,8 +2433,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			MemcacheServiceFactory.getMemcacheService().clearAll();;
             
-        	System.out.println("Clearing cache.");
-        	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2467,11 +2452,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query vevoquery = pm.newQuery(Vevo.class);
 			vevoquery.setFilter("this.rovidnev == providnev");
 			vevoquery.declareParameters("String providnev");
-		
-			System.out.println(elado);
-			System.out.println(vevo);
-			System.out.println(tipus);
-			
+					
 			Query query = pm.newQuery(Kosarcikk.class);
 			query.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
 			query.declareParameters("String pelado,String pvevo,String ptipus");
@@ -2577,9 +2558,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.flush();
 
 			MemcacheServiceFactory.getMemcacheService().clearAll();;
-            
-        	System.out.println("Clearing cache.");
-        	
+                  	
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2734,9 +2713,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			pm.flush();
 
 			MemcacheServiceFactory.getMemcacheService().clearAll();;
-            
-        	System.out.println("Clearing cache.");
-        	
+ 
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2914,19 +2891,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			pm.flush();
 
-			boolean flush = false;
-
-			while (!flush) {
-				Query query1 = pm.newQuery(Fizetes.class);
-				query1.setFilter("(this.cedula == pcedula)");
-				query1.declareParameters("String pcedula");
-				@SuppressWarnings("unchecked")
-				List<Zarasfizetes> list1 = (List<Zarasfizetes>) pm.newQuery(
-						query1).execute(cedulasorszam);
-				if ((list1 != null) && (!list1.isEmpty())) {
-					flush = true;
-				}
-			}
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
 
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
@@ -3678,9 +3643,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		ArrayList<EladasSer> eladas = new ArrayList<EladasSer>();
 		try {
 
-			System.out.println(cikkszam);
-			System.out.println(szinkod);
-					
 			Query query = pm.newQuery(Cedulacikk.class);
 			query.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod) && (this.status == '" + Constants.CEDULA_STATUSZ_FIZETETT + "')");
 			query.declareParameters("String pcikkszam,String pszinkod");

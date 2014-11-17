@@ -32,6 +32,7 @@ import java.util.Map;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -270,6 +271,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					KosarSer kosarSer = new KosarSer();
 					kosarSer.setRovidnev(l.getRovidnev());
 					kosarSer.setCikkszam(l.getCikkszam());
+					kosarSer.setSzinkod(l.getSzinkod());
 					kosarSer.setExportkarton(l.getExportkarton());
 					kosarSer.setKiskarton(l.getKiskarton());
 					kosarSer.setDarab(l.getDarab());
@@ -340,6 +342,7 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					rendeltcikkSer.setRovidnev(l.getRovidnev());
 					rendeltcikkSer.setRendeles(l.getRendeles());
 					rendeltcikkSer.setCikkszam(l.getCikkszam());
+					rendeltcikkSer.setSzinkod(l.getSzinkod());
 					rendeltcikkSer.setExportkarton(l.getExportkarton());
 					rendeltcikkSer.setKiskarton(l.getKiskarton());
 					rendeltcikkSer.setDarab(l.getDarab());
@@ -364,6 +367,9 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 					kosarSer.getCikkszam(), kosarSer.getSzinkod(), kosarSer.getExportkarton(), kosarSer.getKiskarton(),  kosarSer.getDarab());
 			pm.makePersistent(kosar);
 			pm.flush();
+			
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+            
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -392,6 +398,9 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 			pm.flush();
+			
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+			 
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -419,6 +428,9 @@ public class DekorTrade99ServiceImpl extends RemoteServiceServlet implements
 				}
 			}
 			pm.flush();
+			
+			MemcacheServiceFactory.getMemcacheService().clearAll();;
+			 
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {

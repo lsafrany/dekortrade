@@ -271,15 +271,15 @@ public class Cedulak {
 
 		ListGridField fizetusdGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_FIZETUSD);
-		fizetusdGridField.setWidth("10%");
+		fizetusdGridField.setWidth("15%");
 
 		ListGridField fizeteurGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_FIZETEUR);
-		fizeteurGridField.setWidth("10%");
+		fizeteurGridField.setWidth("15%");
 
 		ListGridField fizetGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_FIZET);
-		fizetGridField.setWidth("10%");
+		fizetGridField.setWidth("15%");
 
 		cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
 				exportkartonGridField, kiskartonGridField, darabGridField,
