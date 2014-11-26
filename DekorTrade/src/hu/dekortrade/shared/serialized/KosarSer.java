@@ -33,9 +33,13 @@ public class KosarSer implements IsSerializable {
 	private Double fizeteur;
 
 	private Double fizetusd;
-
+	
 	private String cedula;
 
+	private String rendeles;
+	
+	private String helykod;
+	
 	public String getElado() {
 		return elado;
 	}
@@ -164,4 +168,20 @@ public class KosarSer implements IsSerializable {
 		this.cedula = cedula;
 	}
 
+	public String getRendeles() {
+		return rendeles;
+	}
+
+	public void setRendeles(String rendeles) {
+		this.rendeles = rendeles;
+	}
+
+	public String getHelykod() {
+		return helykod;
+	}
+
+	public void setHelykod(String helykod) {
+		this.helykod = helykod;
+	}
+	
 }

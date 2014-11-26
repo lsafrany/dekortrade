@@ -119,4 +119,8 @@ public interface CommonLabels extends Constants {
 	String elorendelesveglegesitett();	
 
 	String elorendelesmegrendelt();	
+	
+	String elorendelesbeerkezett();	
+
+	String elorendelesrendezett();
 }

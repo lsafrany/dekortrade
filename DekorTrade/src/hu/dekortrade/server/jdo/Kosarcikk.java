@@ -51,10 +51,13 @@ public class Kosarcikk {
 	@Persistent
 	private String cedula;
 
+	@Persistent
+	private String rendeles;
+
 	public Kosarcikk(String elado, String vevo, String tipus, String cikkszam,
 			String szinkod, Double ar, Double areur, Double arusd,
 			Integer exportkarton, Integer kiskarton, Integer darab,
-			Double fizet, Double fizeteur, Double fizetusd, String cedula) {
+			Double fizet, Double fizeteur, Double fizetusd, String cedula, String rendeles) {
 
 		this.elado = elado;
 		this.vevo = vevo;
@@ -71,6 +74,7 @@ public class Kosarcikk {
 		this.fizeteur = fizeteur;
 		this.fizetusd = fizetusd;
 		this.cedula = cedula;
+		this.rendeles = rendeles;
 	}
 
 	public String getElado() {
@@ -191,6 +195,14 @@ public class Kosarcikk {
 
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
+	}
+
+	public String getRendeles() {
+		return rendeles;
+	}
+
+	public void setRendeles(String rendeles) {
+		this.rendeles = rendeles;
 	}
 
 }

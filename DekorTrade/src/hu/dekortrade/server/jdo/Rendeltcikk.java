@@ -31,8 +31,14 @@ public class Rendeltcikk {
 	private Integer darab;
 
 	@Persistent
-	private boolean szamolt;
+	private Double arusd;
+
+	@Persistent
+	private Double fizetusd;
 	
+	@Persistent
+	private boolean szamolt;
+
 	public Rendeltcikk(String rovidnev, String rendeles, String cikkszam,
 			String szinkod, String status, Integer exportkarton, Integer kiskarton,
 			Integer darab, boolean szamolt) {
@@ -117,6 +123,22 @@ public class Rendeltcikk {
 
 	public void setSzamolt(boolean szamolt) {
 		this.szamolt = szamolt;
+	}
+
+	public Double getArusd() {
+		return arusd;
+	}
+
+	public void setArusd(Double arusd) {
+		this.arusd = arusd;
+	}
+
+	public Double getFizetusd() {
+		return fizetusd;
+	}
+
+	public void setFizetusd(Double fizetusd) {
+		this.fizetusd = fizetusd;
 	}
 
 }

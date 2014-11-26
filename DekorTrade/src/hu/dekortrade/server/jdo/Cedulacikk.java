@@ -45,10 +45,13 @@ public class Cedulacikk {
 	@Persistent
 	private Double fizetusd;
 
+	@Persistent
+	private String rendeles;
+
 	public Cedulacikk(String cedula, String status, String cikkszam,
 			String szinkod, Double ar, Double areur, Double arusd,
 			Integer exportkarton, Integer kiskarton, Integer darab,
-			Double fizet, Double fizeteur, Double fizetusd) {
+			Double fizet, Double fizeteur, Double fizetusd, String rendeles) {
 
 		this.cedula = cedula;
 		this.status = status;
@@ -64,6 +67,7 @@ public class Cedulacikk {
 		this.fizeteur = fizeteur;
 		this.fizetusd = fizetusd;
 		this.cedula = cedula;
+		this.rendeles = rendeles;
 	}
 
 	public String getCedula() {
@@ -168,6 +172,14 @@ public class Cedulacikk {
 
 	public void setFizetusd(Double fizetusd) {
 		this.fizetusd = fizetusd;
+	}
+
+	public String getRendeles() {
+		return rendeles;
+	}
+
+	public void setRendeles(String rendeles) {
+		this.rendeles = rendeles;
 	}
 
 }

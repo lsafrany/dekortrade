@@ -4,6 +4,7 @@ import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
+import hu.dekortrade.client.raktar.kesztlet.KeszletConstants;
 import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.KosarSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
@@ -106,27 +107,36 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_AR,
-				kosarCikkLabels.koasr_ar());
+				kosarCikkLabels.kosar_ar());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_AREUR,
-				kosarCikkLabels.koasr_areur());
+				kosarCikkLabels.kosar_areur());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_ARUSD,
-				kosarCikkLabels.koasr_arusd());
+				kosarCikkLabels.kosar_arusd());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZET,
-				kosarCikkLabels.koasr_fizet());
+				kosarCikkLabels.kosar_fizet());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZETEUR,
-				kosarCikkLabels.koasr_fizeteur());
+				kosarCikkLabels.kosar_fizeteur());
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZETUSD,
-				kosarCikkLabels.koasr_fizetusd());
+				kosarCikkLabels.kosar_fizetusd());
+		addField(field);
+
+		field = new DataSourceTextField(KosarConstants.KOSAR_RENDELES,
+				kosarCikkLabels.kosar_rendeles());
+		addField(field);
+
+		field = new DataSourceTextField(KosarConstants.KOSAR_HELYKOD,
+				kosarCikkLabels.kosar_hely());
+		field.setValueMap(KeszletConstants.getHely());
 		addField(field);
 
 	}
@@ -263,6 +273,8 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		to.setAttribute(KosarConstants.KOSAR_FIZET, from.getFizet());
 		to.setAttribute(KosarConstants.KOSAR_FIZETEUR, from.getFizeteur());
 		to.setAttribute(KosarConstants.KOSAR_FIZETUSD, from.getFizetusd());
+		to.setAttribute(KosarConstants.KOSAR_RENDELES, from.getRendeles());
+		to.setAttribute(KosarConstants.KOSAR_HELYKOD, from.getHelykod());
 	}
 
 	private static void copyValues(ListGridRecord from, KosarSer to) {
@@ -283,6 +295,8 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 		to.setFizet(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZET));
 		to.setFizeteur(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZETEUR));
 		to.setFizetusd(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZETUSD));
+		to.setRendeles(from.getAttributeAsString(KosarConstants.KOSAR_RENDELES));
+		to.setHelykod(from.getAttributeAsString(KosarConstants.KOSAR_HELYKOD));
 	}
 
 }

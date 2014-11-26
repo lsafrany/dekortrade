@@ -23,9 +23,12 @@ import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -37,6 +40,8 @@ public class Eladas {
 	private EladasLabels eladasLabels = GWT.create(EladasLabels.class);
 	
 	private CommonLabels commonLabels = GWT.create(CommonLabels.class);
+	
+	ListGrid rendelesGrid;
 	
 	public Canvas get() {
 		DisplayRequest.counterInit();
@@ -102,7 +107,7 @@ public class Eladas {
 
 	}
 
-	public Canvas rendeles (final String vevo) {
+	public Canvas rendeles (final String vevo,final IButton eladbutton) {
 
 		DisplayRequest.counterInit();
 
@@ -150,14 +155,15 @@ public class Eladas {
 			}
 		});
 
-		final ListGrid rendelesGrid = new ListGrid();
+		rendelesGrid = new ListGrid();
 		rendelesGrid.setTitle(eladasLabels.rendeles());
-		rendelesGrid.setWidth("60%");
+		rendelesGrid.setWidth("80%");
 		rendelesGrid.setShowHeaderContextMenu(false);
 		rendelesGrid.setShowHeaderMenuButton(false);
 		rendelesGrid.setCanSort(false);
 		rendelesGrid.setShowAllRecords(true);
 		rendelesGrid.setDataSource(rendelesDataSource);
+		rendelesGrid.setAutoFetchData(true);
 		rendelesGrid.setCanExpandRecords(true);
 		rendelesGrid.setExpansionMode(ExpansionMode.DETAILS);
 
@@ -170,7 +176,7 @@ public class Eladas {
 
 		ListGridField szinkodGridField = new ListGridField(
 				EladasConstants.RENDELES_SZINKOD);
-		szinkodGridField.setWidth("10%");
+		szinkodGridField.setWidth("15%");
 
 		ListGridField exportkartonGridField = new ListGridField(
 				EladasConstants.RENDELES_EXPORTKARTON);
@@ -184,10 +190,27 @@ public class Eladas {
 				EladasConstants.RENDELES_DARAB);
 		darabGridField.setWidth("10%");
 		
-		rendelesGrid.setFields(cikkszamGridField, szinkodGridField,exportkartonGridField,kiskartonGridField,darabGridField);
+		rendelesGrid.setFields(rendelesGridField,cikkszamGridField,szinkodGridField,exportkartonGridField,kiskartonGridField,darabGridField);
 
+		rendelesGrid.addRecordClickHandler(new RecordClickHandler() {
+			public void onRecordClick(RecordClickEvent event) {
+				eladbutton.setDisabled(false);
+			}
+		});
+		
 		middleLayout.addMember(rendelesGrid);
 
 		return middleLayout;
+	}
+
+	public ListGrid getRendelesGrid() {
+		return rendelesGrid;
+	}
+
+	public void refreshRendelesGrid() {
+		if (rendelesGrid != null) {
+			rendelesGrid.invalidateCache();
+			rendelesGrid.fetchData();
+		}
 	}
 }

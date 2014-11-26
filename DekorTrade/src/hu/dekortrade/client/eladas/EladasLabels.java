@@ -10,5 +10,7 @@ public interface EladasLabels extends Constants {
 	String rendeles_exportkarton();
 	String rendeles_kiskarton();
 	String rendeles_darab();	
-
+	String rendeles_arusd();
+	String rendeles_fizetusd();
+	
 }

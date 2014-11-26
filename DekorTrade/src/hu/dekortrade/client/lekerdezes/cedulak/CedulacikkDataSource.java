@@ -89,6 +89,15 @@ public class CedulacikkDataSource extends GwtRpcDataSource {
 				cedulaLabels.fizetusd());
 		addField(field);
 
+		field = new DataSourceFloatField(CedulakConstants.CEDULACIKK_RENDELES,
+				cedulaLabels.rendeles());
+		addField(field);
+		
+//		field = new DataSourceTextField(CedulakConstants.CEDULACIKK_RENDELES,
+//				cedulaLabels.hely());
+//		field.setValueMap(KeszletConstants.getHely());
+//		addField(field);
+
 	}
 
 	@Override
@@ -165,6 +174,8 @@ public class CedulacikkDataSource extends GwtRpcDataSource {
 				from.getFizeteur());
 		to.setAttribute(CedulakConstants.CEDULACIKK_FIZETUSD,
 				from.getFizetusd());
+		to.setAttribute(CedulakConstants.CEDULACIKK_RENDELES,
+				from.getRendeles());
 	}
 
 }

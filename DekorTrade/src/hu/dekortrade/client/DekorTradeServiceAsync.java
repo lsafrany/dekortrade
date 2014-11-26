@@ -218,4 +218,7 @@ public interface DekorTradeServiceAsync {
 
 	void getEladas(String cikkszam, String szinkod,AsyncCallback<List<EladasSer>> asyncCallback);
 
+	void removeRendeles(RendeltcikkSer rendeltcikkSer,
+			AsyncCallback<RendeltcikkSer> asyncCallback);
+
 }

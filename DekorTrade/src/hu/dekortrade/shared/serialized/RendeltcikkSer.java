@@ -22,6 +22,10 @@ public class RendeltcikkSer implements IsSerializable {
 
 	private Integer darab;
 
+	private Double arusd;
+	
+	private Double fizetusd;
+
 	public String getRovidnev() {
 		return rovidnev;
 	}
@@ -92,6 +96,22 @@ public class RendeltcikkSer implements IsSerializable {
 
 	public void setDarab(Integer darab) {
 		this.darab = darab;
+	}
+
+	public Double getArusd() {
+		return arusd;
+	}
+
+	public void setArusd(Double arusd) {
+		this.arusd = arusd;
+	}
+
+	public Double getFizetusd() {
+		return fizetusd;
+	}
+
+	public void setFizetusd(Double fizetusd) {
+		this.fizetusd = fizetusd;
 	}
 
 }

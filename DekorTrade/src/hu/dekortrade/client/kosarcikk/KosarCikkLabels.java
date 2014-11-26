@@ -24,20 +24,23 @@ public interface KosarCikkLabels extends Constants {
 
 	String kosar_darab();
 
-	String koasr_ar();
+	String kosar_ar();
 
-	String koasr_areur();
+	String kosar_areur();
 
-	String koasr_arusd();
+	String kosar_arusd();
 
-	String koasr_fizet();
+	String kosar_fizet();
 
-	String koasr_fizeteur();
+	String kosar_fizeteur();
 
-	String koasr_fizetusd();
+	String kosar_fizetusd();
 
 	String kosar_ctorzs();
 
 	String kosar_internet();
 
+	String kosar_rendeles();
+	
+	String kosar_hely();
 }

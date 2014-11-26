@@ -242,4 +242,6 @@ public interface DekorTradeService extends RemoteService {
 
 	List<EladasSer> getEladas(String cikkszam, String sznikod) throws IllegalArgumentException, SQLExceptionSer;
 
+	RendeltcikkSer removeRendeles(RendeltcikkSer rendeltcikkSer) throws IllegalArgumentException, SQLExceptionSer;
+
 }

@@ -150,6 +150,10 @@ public class ClientConstants {
 					commonLabels.elorendelesveglegesitett());
 			rendelesstatus.put(Constants.ELORENDELT_MEGRENDELT,
 					commonLabels.elorendelesmegrendelt());
+			rendelesstatus.put(Constants.ELORENDELT_BEERKEZETT,
+					commonLabels.elorendelesbeerkezett());		
+			rendelesstatus.put(Constants.ELORENDELT_RENDEZETT,
+					commonLabels.elorendelesrendezett());				
 		}
 		return rendelesstatus;
 	}

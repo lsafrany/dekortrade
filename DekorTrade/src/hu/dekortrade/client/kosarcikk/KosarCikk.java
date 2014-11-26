@@ -422,6 +422,12 @@ public class KosarCikk {
 						kosarEditForm.getField(KosarConstants.KOSAR_FIZETUSD)
 								.setVisible(false);
 	
+						kosarEditForm.getField(KosarConstants.KOSAR_RENDELES)
+								.setVisible(false);
+
+						kosarEditForm.getField(KosarConstants.KOSAR_HELYKOD)
+								.setVisible(false);
+
 						HLayout buttonsLayout = new HLayout();
 						buttonsLayout.setWidth100();
 	

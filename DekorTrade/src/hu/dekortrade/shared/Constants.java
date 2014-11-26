@@ -78,5 +78,5 @@ public class Constants {
 	public static final String ELORENDELT_VEGLEGESITETT = "VEGLEGESITETT";
 	public static final String ELORENDELT_MEGRENDELT = "MEGRENDELT";
 	public static final String ELORENDELT_BEERKEZETT = "BEERKEZETT";
-
+	public static final String ELORENDELT_RENDEZETT = "RENDEZETT";
 }

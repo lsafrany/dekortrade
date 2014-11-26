@@ -53,4 +53,7 @@ public interface CedulakLabels extends Constants {
 	String befizetusd();
 
 	String cedulatipus();
+	
+	String rendeles();
+
 }

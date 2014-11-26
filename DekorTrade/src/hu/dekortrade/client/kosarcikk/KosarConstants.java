@@ -17,5 +17,6 @@ public class KosarConstants {
 	public static final String KOSAR_FIZET = "kosar_fizet";
 	public static final String KOSAR_FIZETEUR = "kosar_fizeteur";
 	public static final String KOSAR_FIZETUSD = "kosar_fizetusd";
-
+	public static final String KOSAR_RENDELES = "kosar_rendeles";
+	public static final String KOSAR_HELYKOD = "kosar_helykod";
 }

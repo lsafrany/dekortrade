@@ -672,9 +672,13 @@ public class Cedulak {
 				CedulakConstants.CEDULACIKK_FIZET);
 		fizetGridField.setWidth("10%");
 
+		ListGridField rendelesGridField = new ListGridField(
+				CedulakConstants.CEDULACIKK_RENDELES);
+		rendelesGridField.setWidth("10%");
+
 		cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
 				exportkartonGridField, kiskartonGridField, darabGridField,
-				arusdGridField, fizetusdGridField, fizeteurGridField, fizetGridField);
+				arusdGridField, fizetusdGridField, fizeteurGridField, fizetGridField, rendelesGridField);
 
 		cedulacikkLayout.addMember(cedulacikkGrid);
 

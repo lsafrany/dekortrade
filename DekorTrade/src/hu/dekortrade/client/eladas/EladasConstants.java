@@ -8,5 +8,6 @@ public class EladasConstants {
 	public static final String RENDELES_EXPORTKARTON = "rendeles_exportkarton";
 	public static final String RENDELES_KISKARTON = "rendeles_kiskarton";
 	public static final String RENDELES_DARAB = "rendeles_darab";
-
+	public static final String RENDELES_ARUSD = "rendeles_arusd";
+	public static final String RENDELES_FIZETUSD = "rendeles_fizetusd";
 }

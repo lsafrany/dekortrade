@@ -28,4 +28,5 @@ public class CedulakConstants {
 	public static final String CEDULACIKK_FIZET = "cedulacikk_fizet";
 	public static final String CEDULACIKK_FIZETEUR = "cedulacikk_fizeteur";
 	public static final String CEDULACIKK_FIZETUSD = "cedulacikk_fizetusd";
+	public static final String CEDULACIKK_RENDELES = "cedulacikk_rendeles";
 }
