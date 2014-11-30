@@ -1,2 +1,3 @@
 # Module dekortrade
 # RPC service class, partial path of RPC policy file
+hu.dekortrade.client.DekorTradeService, 5E9CD82FB928EA5F648B10208401C75C.gwt.rpc

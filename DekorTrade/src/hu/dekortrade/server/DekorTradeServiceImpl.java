@@ -3197,54 +3197,36 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Rendeltcikk.class);
 			query.setFilter("(this.status == pstatus)");
 			query.declareParameters("String pstatus");
-			query.setOrdering("cikkszam,szinkod");
+//			query.setOrdering("cikkszam,szinkod");
 			@SuppressWarnings("unchecked")
 			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
 					.execute(status);
+			
 			if (!list.isEmpty()) {
-				String cikkszam = null;
-				String szinkod = null;
-				int exp = 0;
-				int kk = 0;
-				int db = 0;
-				boolean kiirt = false;
+				boolean found = false;
 				for (Rendeltcikk l : list) {
-					if ((cikkszam == null) && (szinkod == null)) {
-						cikkszam = l.getCikkszam();
-						szinkod = l.getSzinkod();
+					found = false;				
+					for(int i=0; i<rendeles.size(); i++) {
+						if ((rendeles.get(i).getCikkszam().equals(l.getCikkszam())) && (rendeles.get(i).getSzinkod().equals(l.getSzinkod()))) {
+							rendeles.get(i).setExportkarton(rendeles.get(i).getExportkarton() + l.getExportkarton());
+							rendeles.get(i).setKiskarton(rendeles.get(i).getKiskarton() + l.getKiskarton());
+							rendeles.get(i).setDarab(rendeles.get(i).getDarab() + l.getDarab());
+							found = true;	
+							i = rendeles.size();
+						}
 					}
-					if ((cikkszam.equals(l.getCikkszam()) && (szinkod.equals(l
-							.getSzinkod())))) {
-						exp = l.getExportkarton();
-						kk = l.getKiskarton();
-						db = (l.getDarab());
-						kiirt = false;
-					} else {
+					if (!found) {
 						RendeltcikkSer rendeltcikkSer = new RendeltcikkSer();
-						rendeltcikkSer.setCikkszam(cikkszam);
-						rendeltcikkSer.setSzinkod(szinkod);
-						rendeltcikkSer.setExportkarton(exp);
-						rendeltcikkSer.setKiskarton(kk);
-						rendeltcikkSer.setDarab(db);
+						rendeltcikkSer.setCikkszam(l.getCikkszam());
+						rendeltcikkSer.setSzinkod(l.getSzinkod());
+						rendeltcikkSer.setExportkarton(l.getExportkarton());
+						rendeltcikkSer.setKiskarton(l.getKiskarton());
+						rendeltcikkSer.setDarab(l.getDarab());
 						rendeles.add(rendeltcikkSer);
-						cikkszam = l.getCikkszam();
-						szinkod = l.getSzinkod();
-						exp = l.getExportkarton();
-						kk = l.getKiskarton();
-						db = (l.getDarab());
-						kiirt = false;
 					}
+					
 					l.setSzamolt(Boolean.TRUE);
 					pm.makePersistent(l);
-				}
-				if (!kiirt) {
-					RendeltcikkSer rendeltcikkSer = new RendeltcikkSer();
-					rendeltcikkSer.setCikkszam(cikkszam);
-					rendeltcikkSer.setSzinkod(szinkod);
-					rendeltcikkSer.setExportkarton(exp);
-					rendeltcikkSer.setKiskarton(kk);
-					rendeltcikkSer.setDarab(db);
-					rendeles.add(rendeltcikkSer);
 				}
 				pm.flush();
 			}
