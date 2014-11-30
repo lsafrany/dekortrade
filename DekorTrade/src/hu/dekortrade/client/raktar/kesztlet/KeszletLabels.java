@@ -61,4 +61,5 @@ public interface KeszletLabels extends Constants {
 	
 	String hely_polc1();
 	String hely_polc2();
+
 }

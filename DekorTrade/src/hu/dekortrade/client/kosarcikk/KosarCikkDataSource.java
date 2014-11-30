@@ -96,47 +96,65 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceIntegerField(KosarConstants.KOSAR_EXPORTKARTON,
 				kosarCikkLabels.kosar_exportkarton());
+		field.setLength(6);
 		addField(field);
 
 		field = new DataSourceIntegerField(KosarConstants.KOSAR_KISKARTON,
 				kosarCikkLabels.kosar_kiskarton());
+		field.setLength(6);
 		addField(field);
 
 		field = new DataSourceIntegerField(KosarConstants.KOSAR_DARAB,
 				kosarCikkLabels.kosar_darab());
+		field.setLength(6);
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_AR,
 				kosarCikkLabels.kosar_ar());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_AREUR,
 				kosarCikkLabels.kosar_areur());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_ARUSD,
 				kosarCikkLabels.kosar_arusd());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZET,
 				kosarCikkLabels.kosar_fizet());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZETEUR,
 				kosarCikkLabels.kosar_fizeteur());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceFloatField(KosarConstants.KOSAR_FIZETUSD,
 				kosarCikkLabels.kosar_fizetusd());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceTextField(KosarConstants.KOSAR_RENDELES,
 				kosarCikkLabels.kosar_rendeles());
+		if ((!menu.equals(Constants.MENU_ELADAS)) 
+				&& (!menu.equals(Constants.MENU_PENZTAR_FIZETES)) 
+				) {
+			field.setHidden(true);
+		}
+		
 		addField(field);
 
 		field = new DataSourceTextField(KosarConstants.KOSAR_HELYKOD,
 				kosarCikkLabels.kosar_hely());
 		field.setValueMap(KeszletConstants.getHely());
+		if (!menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+			field.setHidden(true);
+		}
 		addField(field);
 
 	}

@@ -4,6 +4,7 @@ import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
+import hu.dekortrade.client.raktar.kesztlet.KeszletConstants;
 import hu.dekortrade.shared.serialized.CedulacikkSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
@@ -93,10 +94,10 @@ public class CedulacikkDataSource extends GwtRpcDataSource {
 				cedulaLabels.rendeles());
 		addField(field);
 		
-//		field = new DataSourceTextField(CedulakConstants.CEDULACIKK_RENDELES,
-//				cedulaLabels.hely());
-//		field.setValueMap(KeszletConstants.getHely());
-//		addField(field);
+		field = new DataSourceTextField(CedulakConstants.CEDULACIKK_HELYKOD,
+				cedulaLabels.hely());
+		field.setValueMap(KeszletConstants.getHely());
+		addField(field);
 
 	}
 
@@ -176,6 +177,8 @@ public class CedulacikkDataSource extends GwtRpcDataSource {
 				from.getFizetusd());
 		to.setAttribute(CedulakConstants.CEDULACIKK_RENDELES,
 				from.getRendeles());
+		to.setAttribute(CedulakConstants.CEDULACIKK_HELYKOD,
+				from.getHelykod());
 	}
 
 }

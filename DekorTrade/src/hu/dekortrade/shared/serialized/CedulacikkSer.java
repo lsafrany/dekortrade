@@ -34,6 +34,8 @@ public class CedulacikkSer implements IsSerializable {
 
 	private String rendeles;
 	
+	private String helykod;
+	
 	public String getCedula() {
 		return cedula;
 	}
@@ -152,6 +154,14 @@ public class CedulacikkSer implements IsSerializable {
 
 	public void setRendeles(String rendeles) {
 		this.rendeles = rendeles;
+	}
+
+	public String getHelykod() {
+		return helykod;
+	}
+
+	public void setHelykod(String helykod) {
+		this.helykod = helykod;
 	}
 
 }

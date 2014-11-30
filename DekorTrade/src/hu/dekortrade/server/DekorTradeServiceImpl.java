@@ -1774,9 +1774,6 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 							kosarSer.setDarab(l.getDarab());
 							kosarSer.setFizetusd(l.getFizetusd());				
 							kosarSer.setRendeles(l.getRendeles());
-							
-// TODO helykod							
-							
 							kosar.add(kosarSer);
 						}
 					}
@@ -2051,15 +2048,16 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			@SuppressWarnings("unchecked")
 			List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(query)
 					.executeWithMap(parameters);
+						
 			if ((list != null) && (!list.isEmpty())) {
 				boolean found = false;
 
 				if ((kosarSer.getRendeles() != null) && !kosarSer.getRendeles().equals("")) {
 					for (Kosarcikk l : list) {	
 						
-						if (!found && (l.getRendeles().equals(kosarSer.getRendeles())) && (l.getExportkarton() == kosarSer.getExportkarton()) && 
-								(l.getKiskarton() == kosarSer.getKiskarton()) && 
-								(l.getDarab() == kosarSer.getDarab())) {
+						if (!found && (l.getRendeles().equals(kosarSer.getRendeles())) && (l.getExportkarton().intValue() == kosarSer.getExportkarton().intValue()) && 
+								(l.getKiskarton().intValue() == kosarSer.getKiskarton().intValue()) && 
+								(l.getDarab().intValue() == kosarSer.getDarab().intValue())) {
 							pm.deletePersistent(l);
 							found = true;
 						}
@@ -2076,10 +2074,11 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					}
 				}
 				else {
-					for (Kosarcikk l : list) {	
-						if (!found && (l.getExportkarton() == kosarSer.getExportkarton()) && 
-								(l.getKiskarton() == kosarSer.getKiskarton()) && 
-								(l.getDarab() == kosarSer.getDarab())) {
+					for (Kosarcikk l : list) {									
+						if (!found && 
+								(l.getExportkarton().intValue() == kosarSer.getExportkarton().intValue()) && 
+								(l.getKiskarton().intValue() == kosarSer.getKiskarton().intValue()) && 
+								(l.getDarab().intValue() == kosarSer.getDarab().intValue())) {
 							pm.deletePersistent(l);
 							found = true;
 						}	
@@ -2197,6 +2196,74 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if (menu.equals(Constants.MENU_ELADAS)) {
 				tipus = Constants.CEDULA_STATUSZ_ELADOTT;
 				sorszamtipus = Constants.CEDULA_RAKTAR;
+					
+				Query query1 = pm.newQuery(Cikk.class);
+				query1.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
+				query1.declareParameters("String pcikkszam,String pszinkod");
+
+				Query checkquery = pm.newQuery(Kosarcikk.class);
+				checkquery.setFilter("(this.elado == pelado) && (this.vevo == pvevo) && (this.tipus == ptipus)");
+				checkquery.declareParameters("String pelado,String pvevo,String ptipus");
+				@SuppressWarnings("unchecked")
+				List<Kosarcikk> list = (List<Kosarcikk>) pm.newQuery(checkquery)
+						.execute(elado, vevo, tipus);
+				List<Kosarcikk> listsum = new ArrayList<Kosarcikk> ();
+				boolean found = false;
+				if ((list != null) && (!list.isEmpty())) {
+					for (Kosarcikk l : list) {
+						found = false;
+						if ((listsum != null) && (!listsum.isEmpty())) {
+							for (Kosarcikk lsum : listsum) {
+								if ((lsum.getCikkszam().equals(l.getCikkszam())) && (lsum.getSzinkod().equals(l.getSzinkod()))) {
+									lsum.setExportkarton(lsum.getExportkarton() + l.getExportkarton());
+									lsum.setKiskarton(lsum.getKiskarton() + l.getKiskarton());
+									lsum.setDarab(lsum.getDarab() + l.getDarab());
+								}
+							}
+						}
+						if (!found) listsum.add(l);
+					}
+				}
+
+				if ((listsum != null) && (!listsum.isEmpty())) {
+					for (Kosarcikk lsum : listsum) {
+						@SuppressWarnings("unchecked")
+						List<Cikk> list1 = (List<Cikk>) pm.newQuery(query1)
+								.execute(lsum.getCikkszam(), lsum.getSzinkod());
+
+						if ((list1 != null) && (!list1.isEmpty())) {
+							long tmpkeszlet = ((lsum.getExportkarton()
+									* list1.get(0).getKiskarton() * list1.get(0).getDarab()) + (lsum
+									.getKiskarton()) * list1.get(0).getDarab())
+									+ lsum.getDarab();
+														
+							if ((list1.get(0).getKeszlet() - tmpkeszlet) < 0) {
+								throw new Exception (lsum.getCikkszam() + " - " + lsum.getSzinkod());
+							}									
+						}
+					}
+				}
+							
+				if ((list != null) && (!list.isEmpty())) {
+					for (Kosarcikk l : list) {
+						@SuppressWarnings("unchecked")
+						List<Cikk> list1 = (List<Cikk>) pm.newQuery(query1)
+								.execute(l.getCikkszam(), l.getSzinkod());
+						if ((list1 != null) && (!list1.isEmpty())) {
+							long tmpkeszlet = ((l.getExportkarton()
+									* list1.get(0).getKiskarton() * list1.get(0).getDarab()) + (l
+									.getKiskarton()) * list1.get(0).getDarab())
+									+ l.getDarab();
+							
+							list1.get(0).setKeszlet(list1.get(0).getKeszlet() - tmpkeszlet);
+							if ((l.getRendeles() != null) && (!l.getRendeles().equals(""))) {
+								list1.get(0).setRendelt(list1.get(0).getRendelt() - tmpkeszlet);
+							}
+						}
+						
+					}
+				}
+								
 			}
 			
 			Query sorszamQuery = pm.newQuery(Sorszam.class);
@@ -2392,6 +2459,8 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 					if (!cikklist.isEmpty()) {
 						cedulacikkSer.setMegnevezes(cikklist.get(0)
 								.getMegnevezes());
+						cedulacikkSer.setHelykod(cikklist.get(0)
+								.getHelykod());
 					}
 
 					cedulacikkSer.setAr(l.getAr());
@@ -2538,7 +2607,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 							double elorfizet = (double) (((((cikklist.get(0).getKiskarton() * cikklist.get(0).getDarab()) * l.getExportkarton())
 									+ (cikklist.get(0).getDarab() * l.getKiskarton()) + l.getDarab()) * l.getArusd()) * 0.8);
 							
-							rendeltcikk.setFizetusd(elorfizet);
+							rendeltcikk.setFizetusd(Constants.round(elorfizet,5));
 						}
 						pm.makePersistent(rendeltcikk);
 					}
@@ -2582,13 +2651,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				if ((vevolist != null) && (!vevolist.isEmpty())) {
 					double egyenleghuf = vevolist.get(0).getEgyenleghuf();
 					egyenleghuf = egyenleghuf + (befizet - fizet);
-					vevolist.get(0).setEgyenleghuf(egyenleghuf);
+					vevolist.get(0).setEgyenleghuf(Constants.round(egyenleghuf,2));
 					double egyenlegeur = vevolist.get(0).getEgyenlegeur();
 					egyenlegeur = egyenlegeur + (befizeteur - fizeteur);
-					vevolist.get(0).setEgyenlegeur(egyenlegeur);
+					vevolist.get(0).setEgyenlegeur(Constants.round(egyenlegeur,5));
 					double egyenlegusd = vevolist.get(0).getEgyenlegusd();
 					egyenlegusd = egyenlegusd + (befizetusd - fizetusd);
-					vevolist.get(0).setEgyenlegusd(egyenlegusd);
+					vevolist.get(0).setEgyenlegusd(Constants.round(egyenlegusd,5));
 				}
 					
 			}
@@ -2605,13 +2674,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 				if ((vevolist != null) && (!vevolist.isEmpty())) {
 					double egyenleghuf = vevolist.get(0).getEgyenleghuf();
 					egyenleghuf = egyenleghuf + (befizet - fizet);
-					vevolist.get(0).setEgyenleghuf(egyenleghuf);
+					vevolist.get(0).setEgyenleghuf(Constants.round(egyenleghuf,2));
 					double egyenlegeur = vevolist.get(0).getEgyenlegeur();
 					egyenlegeur = egyenlegeur + (befizeteur - fizeteur);
-					vevolist.get(0).setEgyenlegeur(egyenlegeur);
+					vevolist.get(0).setEgyenlegeur(Constants.round(egyenlegeur,5));
 					double egyenlegusd = vevolist.get(0).getEgyenlegusd();
 					egyenlegusd = egyenlegusd + (befizetusd - fizetusd);
-					vevolist.get(0).setEgyenlegusd(egyenlegusd);
+					vevolist.get(0).setEgyenlegusd(Constants.round(egyenlegusd,5));
 				}
 					
 			}
@@ -2936,13 +3005,13 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			if ((vevolist != null) && (!vevolist.isEmpty())) {
 				double egyenleghuf = vevolist.get(0).getEgyenleghuf();
 				egyenleghuf = egyenleghuf + torleszthuf;
-				vevolist.get(0).setEgyenleghuf(egyenleghuf);
+				vevolist.get(0).setEgyenleghuf(Constants.round(egyenleghuf,2));
 				double egyenlegeur = vevolist.get(0).getEgyenlegeur();
 				egyenlegeur = egyenlegeur + torleszteur;
-				vevolist.get(0).setEgyenlegeur(egyenlegeur);
+				vevolist.get(0).setEgyenlegeur(Constants.round(egyenlegeur,5));
 				double egyenlegusd = vevolist.get(0).getEgyenlegusd();
 				egyenlegusd = egyenlegusd + torlesztusd;
-				vevolist.get(0).setEgyenlegusd(egyenlegusd);
+				vevolist.get(0).setEgyenlegusd(Constants.round(egyenlegusd,5));
 			}
 
 			Fizetes fizetes = new Fizetes(cedulasorszam, vevo,

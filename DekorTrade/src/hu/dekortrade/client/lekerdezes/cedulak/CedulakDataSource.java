@@ -4,6 +4,8 @@ import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
+import hu.dekortrade.client.torzsadat.vevo.VevoConstants;
+import hu.dekortrade.shared.Constants;
 import hu.dekortrade.shared.serialized.CedulaSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
@@ -44,10 +46,12 @@ public class CedulakDataSource extends GwtRpcDataSource {
 		field = new DataSourceEnumField(CedulakConstants.CEDULA_STATUS,
 				cedulaLabels.status());
 		field.setValueMap(ClientConstants.getCedulaTipus());
+		field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceTextField(CedulakConstants.CEDULA_VEVO,
 				cedulaLabels.vevo());
+		field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceTextField(CedulakConstants.CEDULA_VEVONEV,
@@ -56,10 +60,12 @@ public class CedulakDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceTextField(CedulakConstants.CEDULA_VEVOTIPUS,
 				cedulaLabels.vevotipus());
+		field.setValueMap(VevoConstants.getTipus());
 		addField(field);
 
 		field = new DataSourceTextField(CedulakConstants.CEDULA_ELADO,
 				cedulaLabels.elado());
+		field.setHidden(true);
 		addField(field);
 
 		field = new DataSourceTextField(CedulakConstants.CEDULA_ELADONEV,
@@ -68,14 +74,17 @@ public class CedulakDataSource extends GwtRpcDataSource {
 
 		field = new DataSourceFloatField(CedulakConstants.CEDULA_BEFIZETHUF,
 				cedulaLabels.befizet());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);			
 		addField(field);
 
 		field = new DataSourceFloatField(CedulakConstants.CEDULA_BEFIZETEUR,
 				cedulaLabels.befizeteur());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);			
 		addField(field);
 
 		field = new DataSourceFloatField(CedulakConstants.CEDULA_BEFIZETUSD,
 				cedulaLabels.befizetusd());
+		if (menu.equals(Constants.MENU_RAKTAR_KIADAS)) field.setHidden(true);			
 		addField(field);
 
 		field = new DataSourceDateField(CedulakConstants.CEDULA_DATUM,

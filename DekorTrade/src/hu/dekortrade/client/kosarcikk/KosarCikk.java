@@ -422,12 +422,6 @@ public class KosarCikk {
 						kosarEditForm.getField(KosarConstants.KOSAR_FIZETUSD)
 								.setVisible(false);
 	
-						kosarEditForm.getField(KosarConstants.KOSAR_RENDELES)
-								.setVisible(false);
-
-						kosarEditForm.getField(KosarConstants.KOSAR_HELYKOD)
-								.setVisible(false);
-
 						HLayout buttonsLayout = new HLayout();
 						buttonsLayout.setWidth100();
 	
@@ -502,7 +496,7 @@ public class KosarCikk {
 	
 								kosarEditForm.getField(
 										KosarConstants.KOSAR_FIZETUSD).setValue(
-												ClientConstants.round(fizet,5));
+												Constants.round(fizet,5));
 	
 								kosarEditForm.saveData(new DSCallback() {
 									public void execute(DSResponse response,

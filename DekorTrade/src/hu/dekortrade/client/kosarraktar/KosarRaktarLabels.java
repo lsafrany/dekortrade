@@ -49,4 +49,6 @@ public interface KosarRaktarLabels extends Constants {
 	
 	String piaci_ar();
 
+	String rendeltkeszlet();
+	
 }

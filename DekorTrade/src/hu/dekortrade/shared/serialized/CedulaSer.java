@@ -27,7 +27,7 @@ public class CedulaSer implements IsSerializable {
 	private Double befizetusd;
 	
 	private Date datum;
-
+	
 	public String getCedula() {
 		return cedula;
 	}

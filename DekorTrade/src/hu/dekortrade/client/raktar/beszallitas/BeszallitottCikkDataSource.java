@@ -168,7 +168,7 @@ public class BeszallitottCikkDataSource extends GwtRpcDataSource {
 		to.setAttribute(BeszallitasConstants.BESZALLITAS_ROGZITO, from.getRogzito());
 		to.setAttribute(BeszallitasConstants.BESZALLITAS_DATUM, from.getDatum());		
 		to.setAttribute(BeszallitasConstants.BESZALLITAS_ROVANCS, from.getRovancs());		
-		
+		to.setAttribute(BeszallitasConstants.BESZALLITAS_ROGZITO, from.getRogzito());	
 		if (from.getRovancs().booleanValue()) {
 			to.set_baseStyle("myRedGridCell");			
 		}
@@ -187,6 +187,7 @@ public class BeszallitottCikkDataSource extends GwtRpcDataSource {
 		to.setRogzito(from.getAttributeAsString(BeszallitasConstants.BESZALLITAS_ROGZITO));	
 		to.setDatum(from.getAttributeAsDate(BeszallitasConstants.BESZALLITAS_DATUM));	
 		to.setRovancs(from.getAttributeAsBoolean(BeszallitasConstants.BESZALLITAS_ROVANCS));	
+		to.setRogzito(from.getAttributeAsString(BeszallitasConstants.BESZALLITAS_ROGZITO));	
 	}
 
 }

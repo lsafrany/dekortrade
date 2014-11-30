@@ -56,4 +56,6 @@ public interface CedulakLabels extends Constants {
 	
 	String rendeles();
 
+	String hely();
+	
 }

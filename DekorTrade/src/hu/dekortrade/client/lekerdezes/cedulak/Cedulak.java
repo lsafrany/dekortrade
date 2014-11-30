@@ -144,7 +144,7 @@ public class Cedulak {
 		
 		ListGridField cedulaGridField = new ListGridField(
 				CedulakConstants.CEDULA_CEDULA);
-		cedulaGridField.setWidth("10%");
+		cedulaGridField.setWidth("20%");
 
 		ListGridField vevoGridField = new ListGridField(
 				CedulakConstants.CEDULA_VEVONEV);
@@ -247,9 +247,11 @@ public class Cedulak {
 		cedulacikkGrid.setCanSort(false);
 		cedulacikkGrid.setShowAllRecords(true);
 		cedulacikkGrid.setDataSource(cedulacikkDataSource);
-		cedulacikkGrid.setCanExpandRecords(true);
-		cedulacikkGrid.setExpansionMode(ExpansionMode.DETAILS);
-	
+		if (!menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+			cedulacikkGrid.setCanExpandRecords(true);
+			cedulacikkGrid.setExpansionMode(ExpansionMode.DETAILS);
+		}
+		
 		ListGridField cikkszamGridField = new ListGridField(
 				CedulakConstants.CEDULACIKK_CIKKSZAM);
 
@@ -269,22 +271,33 @@ public class Cedulak {
 				CedulakConstants.CEDULACIKK_DARAB);
 		darabGridField.setWidth("10%");
 
-		ListGridField fizetusdGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_FIZETUSD);
-		fizetusdGridField.setWidth("15%");
+		if (!menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+			ListGridField fizetusdGridField = new ListGridField(
+					CedulakConstants.CEDULACIKK_FIZETUSD);
+			fizetusdGridField.setWidth("15%");
+	
+			ListGridField fizeteurGridField = new ListGridField(
+					CedulakConstants.CEDULACIKK_FIZETEUR);
+			fizeteurGridField.setWidth("15%");
+	
+			ListGridField fizetGridField = new ListGridField(
+					CedulakConstants.CEDULACIKK_FIZET);
+			fizetGridField.setWidth("15%");
+	
+			cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
+					exportkartonGridField, kiskartonGridField, darabGridField,
+					fizetusdGridField, fizeteurGridField, fizetGridField);
+		}
+		else {
+			
+			ListGridField helyGridField = new ListGridField(
+					CedulakConstants.CEDULACIKK_HELYKOD);
+			helyGridField.setWidth("10%");
 
-		ListGridField fizeteurGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_FIZETEUR);
-		fizeteurGridField.setWidth("15%");
-
-		ListGridField fizetGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_FIZET);
-		fizetGridField.setWidth("15%");
-
-		cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
-				exportkartonGridField, kiskartonGridField, darabGridField,
-				fizetusdGridField, fizeteurGridField, fizetGridField);
-
+			cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
+					exportkartonGridField, kiskartonGridField, darabGridField, helyGridField);
+		}
+			
 		cedulacikkLayout.addMember(cedulacikkGrid);
 
 		HLayout fizetLayout = new HLayout();
@@ -327,15 +340,16 @@ public class Cedulak {
 		ftLabel.setAlign(Alignment.CENTER);
 		ftLabelLayout.addMember(ftLabel);
 
-		fizetLayout.addMember(usdCurrLabelLayout);
-		fizetLayout.addMember(usdLabelLayout);
-
-		fizetLayout.addMember(eurCurrLabelLayout);
-		fizetLayout.addMember(eurLabelLayout);
-
-		fizetLayout.addMember(ftCurrLabelLayout);
-		fizetLayout.addMember(ftLabelLayout);
-
+		if (!menu.equals(Constants.MENU_RAKTAR_KIADAS)) {
+			fizetLayout.addMember(usdCurrLabelLayout);
+			fizetLayout.addMember(usdLabelLayout);
+	
+			fizetLayout.addMember(eurCurrLabelLayout);
+			fizetLayout.addMember(eurLabelLayout);
+	
+			fizetLayout.addMember(ftCurrLabelLayout);
+			fizetLayout.addMember(ftLabelLayout);
+		}
 		cedulacikkLayout.addMember(fizetLayout);
 
 		middleLayout.addMember(cedulaLayout);
@@ -656,30 +670,47 @@ public class Cedulak {
 				CedulakConstants.CEDULACIKK_DARAB);
 		darabGridField.setWidth("10%");
 
-		ListGridField arusdGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_ARUSD);
-		arusdGridField.setWidth("10%");
+		if (!tipus.equals(Constants.CEDULA_STATUSZ_KIADAS)) {
+			ListGridField arusdGridField = new ListGridField(
+					CedulakConstants.CEDULACIKK_ARUSD);
+			arusdGridField.setWidth("10%");
+	
+			ListGridField fizetusdGridField = new ListGridField(
+					CedulakConstants.CEDULACIKK_FIZETUSD);
+			fizetusdGridField.setWidth("10%");
+	
+			if ( (!tipus.equals(Constants.CEDULA_STATUSZ_ELORENDELT)) && (!tipus.equals(Constants.CEDULA_STATUSZ_VEGLEGESIT)) ) {
+				ListGridField fizeteurGridField = new ListGridField(
+						CedulakConstants.CEDULACIKK_FIZETEUR);
+				fizeteurGridField.setWidth("10%");
+		
+				ListGridField fizetGridField = new ListGridField(
+						CedulakConstants.CEDULACIKK_FIZET);
+				fizetGridField.setWidth("10%");
+		
+				ListGridField rendelesGridField = new ListGridField(
+						CedulakConstants.CEDULACIKK_RENDELES);
+				rendelesGridField.setWidth("10%");
+		
+				cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
+						exportkartonGridField, kiskartonGridField, darabGridField,
+						arusdGridField, fizetusdGridField, fizeteurGridField, fizetGridField, rendelesGridField);
+			}
+			else {
+				cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
+						exportkartonGridField, kiskartonGridField, darabGridField,
+						arusdGridField, fizetusdGridField);			
+			}
+		}
+		else {
+			
+			ListGridField helyGridField = new ListGridField(
+					CedulakConstants.CEDULACIKK_HELYKOD);
+			helyGridField.setWidth("20%");
 
-		ListGridField fizetusdGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_FIZETUSD);
-		fizetusdGridField.setWidth("10%");
-
-		ListGridField fizeteurGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_FIZETEUR);
-		fizeteurGridField.setWidth("10%");
-
-		ListGridField fizetGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_FIZET);
-		fizetGridField.setWidth("10%");
-
-		ListGridField rendelesGridField = new ListGridField(
-				CedulakConstants.CEDULACIKK_RENDELES);
-		rendelesGridField.setWidth("10%");
-
-		cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
-				exportkartonGridField, kiskartonGridField, darabGridField,
-				arusdGridField, fizetusdGridField, fizeteurGridField, fizetGridField, rendelesGridField);
-
+			cedulacikkGrid.setFields(cikkszamGridField, szinkodGridField,
+					exportkartonGridField, kiskartonGridField, darabGridField,helyGridField);		
+		}
 		cedulacikkLayout.addMember(cedulacikkGrid);
 
 		HLayout fizetLayout = new HLayout();
@@ -730,15 +761,19 @@ public class Cedulak {
 		ftLabel.setAlign(Alignment.CENTER);
 		ftLabelLayout.addMember(ftLabel);		
 		
-		fizetLayout.addMember(usdCurrLabelLayout);
-		fizetLayout.addMember(usdLabelLayout);
+		if (!tipus.equals(Constants.CEDULA_STATUSZ_KIADAS)) {
+			fizetLayout.addMember(usdCurrLabelLayout);
+			fizetLayout.addMember(usdLabelLayout);
+			
+			if ( (!tipus.equals(Constants.CEDULA_STATUSZ_ELORENDELT)) && (!tipus.equals(Constants.CEDULA_STATUSZ_VEGLEGESIT)) ) {
+				fizetLayout.addMember(eurCurrLabelLayout);
+				fizetLayout.addMember(eurLabelLayout);
 		
-		fizetLayout.addMember(eurCurrLabelLayout);
-		fizetLayout.addMember(eurLabelLayout);
-
-		fizetLayout.addMember(ftCurrLabelLayout);
-		fizetLayout.addMember(ftLabelLayout);
-
+				fizetLayout.addMember(ftCurrLabelLayout);
+				fizetLayout.addMember(ftLabelLayout);
+			}	
+		}
+		
 		HLayout befizetLayout = new HLayout();
 		befizetLayout.setHeight("3%");
 		befizetLayout.setWidth("100%");
