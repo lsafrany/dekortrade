@@ -157,7 +157,7 @@ public class Init extends HttpServlet {
 
 			Query cikkQuery = pm.newQuery(Cikk.class);
 			cikkQuery.deletePersistentAll();
-
+/*
 			final InputStream inputStream = Init.class
 					.getResourceAsStream("CTORZS.csv");
 			final InputStreamReader inputStreamReader = new InputStreamReader(
@@ -190,7 +190,7 @@ public class Init extends HttpServlet {
 			}
 
 			out.append("<h1>" + counter + "</h1>");
-
+*/
 			Query kepQuery = pm.newQuery(Kep.class);
 			kepQuery.deletePersistentAll();
 

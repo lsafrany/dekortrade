@@ -1,6 +1,7 @@
 package hu.dekortrade.client.torzsadat.vevo;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -317,7 +318,7 @@ public class VevoDataSource extends GwtRpcDataSource {
 				.getAttributeAsDouble(VevoConstants.VEVO_EGYENLEG_HUF));
 		to.setTarolasidij(from
 				.getAttributeAsDouble(VevoConstants.VEVO_TAROLASIDIJ));
-		to.setEloleg(from.getAttributeAsDouble(VevoConstants.VEVO_ELOLEG));
+		to.setEloleg(CommonUtils.doubleCheck(from.getAttributeAsDouble(VevoConstants.VEVO_ELOLEG)));
 		to.setBankszamlaszam(from
 				.getAttributeAsString(VevoConstants.VEVO_BANKSZAMLASZAM));
 		to.setEuadoszam(from.getAttributeAsString(VevoConstants.VEVO_EUADOSZAM));

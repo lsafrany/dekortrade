@@ -280,7 +280,7 @@ public class KosarCikk {
 				ctorzsButton.setDisabled(false);
 				addButton.setDisabled(true);
 				rightLayout.removeMembers(rightLayout.getMembers());
-				rightLayout.addMember(internetOrder.get(addButton));
+				rightLayout.addMember(internetOrder.get(vevo,addButton));
 			}
 		});
 
@@ -339,25 +339,25 @@ public class KosarCikk {
 		addButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				boolean found = false;
-				for (int i = 0; i < kosarGrid.getRecords().length; i++) {
-					if ((kosarGrid.getRecord(i).getAttribute(
-							KosarConstants.KOSAR_CIKKSZAM).equals(ctorzs
-							.getSelectedRecord().getAttribute(
-									CikktorzsConstants.CIKK_CIKKSZAM)))
-							&& (kosarGrid.getRecord(i).getAttribute(
-									KosarConstants.KOSAR_SZINKOD)
-									.equals(ctorzs
-											.getSelectedRecord()
-											.getAttribute(
-													CikktorzsConstants.CIKK_SZINKOD)))) {
-						found = true;
-						i = kosarGrid.getRecords().length;
-					}
-				}
-
 				if (ctorzsSelect) {
-					
+				
+					boolean found = false;
+					for (int i = 0; i < kosarGrid.getRecords().length; i++) {
+						if ((kosarGrid.getRecord(i).getAttribute(
+								KosarConstants.KOSAR_CIKKSZAM).equals(ctorzs
+								.getSelectedRecord().getAttribute(
+										CikktorzsConstants.CIKK_CIKKSZAM)))
+								&& (kosarGrid.getRecord(i).getAttribute(
+										KosarConstants.KOSAR_SZINKOD)
+										.equals(ctorzs
+												.getSelectedRecord()
+												.getAttribute(
+														CikktorzsConstants.CIKK_SZINKOD)))) {
+							found = true;
+							i = kosarGrid.getRecords().length;
+						}
+					}
+
 					if (!found) {
 						
 						final Window winModal = new Window();
@@ -552,7 +552,7 @@ public class KosarCikk {
 																.getMembers());
 												rightLayout
 														.addMember(internetOrder
-																.get(addButton));
+																.get(vevo,addButton));
 											}
 										});
 							}

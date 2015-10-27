@@ -1,6 +1,7 @@
 package hu.dekortrade.client.raktar.kesztlet;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -340,35 +341,35 @@ public class RaktarDataSource extends GwtRpcDataSource {
 				.getAttributeAsString(KeszletConstants.KESZLET_SZINKOD));
 		to.setMegnevezes(from
 				.getAttributeAsString(KeszletConstants.KESZLET_MEGNEVEZES));
-		to.setElorar(from.getAttributeAsDouble(KeszletConstants.KESZLET_ELORAR));
-		to.setAr(from.getAttributeAsDouble(KeszletConstants.KESZLET_AR));
-		to.setAreur(from.getAttributeAsDouble(KeszletConstants.KESZLET_AREUR));
-		to.setKiskarton(from
-				.getAttributeAsInt(KeszletConstants.KESZLET_KISKARTON));
-		to.setDarab(from.getAttributeAsInt(KeszletConstants.KESZLET_DARAB));
+		to.setElorar(CommonUtils.doubleCheck(from.getAttributeAsDouble(KeszletConstants.KESZLET_ELORAR)));
+		to.setAr(CommonUtils.doubleCheck(from.getAttributeAsDouble(KeszletConstants.KESZLET_AR)));
+		to.setAreur(CommonUtils.doubleCheck(from.getAttributeAsDouble(KeszletConstants.KESZLET_AREUR)));
+		to.setKiskarton(CommonUtils.intCheck(from
+				.getAttributeAsInt(KeszletConstants.KESZLET_KISKARTON)));
+		to.setDarab(CommonUtils.intCheck(from.getAttributeAsInt(KeszletConstants.KESZLET_DARAB)));
 		to.setMertekegyseg(from
 				.getAttributeAsString(KeszletConstants.KESZLET_MERTEKEGYSEG));
-		to.setTerfogat(from
-				.getAttributeAsDouble(KeszletConstants.KESZLET_TERFOGAT));
-		to.setTerfogatlab(from
-				.getAttributeAsDouble(KeszletConstants.KESZLET_TERFOGATLAB));
-		to.setBsuly(from.getAttributeAsDouble(KeszletConstants.KESZLET_BSULY));
-		to.setNsuly(from.getAttributeAsDouble(KeszletConstants.KESZLET_NSULY));
+		to.setTerfogat(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(KeszletConstants.KESZLET_TERFOGAT)));
+		to.setTerfogatlab(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(KeszletConstants.KESZLET_TERFOGATLAB)));
+		to.setBsuly(CommonUtils.doubleCheck(from.getAttributeAsDouble(KeszletConstants.KESZLET_BSULY)));
+		to.setNsuly(CommonUtils.doubleCheck(from.getAttributeAsDouble(KeszletConstants.KESZLET_NSULY)));
 		to.setLeiras(from.getAttributeAsString(KeszletConstants.KESZLET_LEIRAS));
 		to.setMegjegyzes(from
 				.getAttributeAsString(KeszletConstants.KESZLET_MEGJEGYZES));
-		to.setKexportkarton(from
-				.getAttributeAsLong(KeszletConstants.KESZLET_KEXPORTKARTON));
-		to.setKkiskarton(from
-				.getAttributeAsLong(KeszletConstants.KESZLET_KKISKARTON));
-		to.setKdarab(from
-				.getAttributeAsLong(KeszletConstants.KESZLET_KDARAB));
-		to.setMexportkarton(from
-				.getAttributeAsLong(KeszletConstants.KESZLET_MEXPORTKARTON));
-		to.setMkiskarton(from
-				.getAttributeAsLong(KeszletConstants.KESZLET_MKISKARTON));
-		to.setMdarab(from
-				.getAttributeAsLong(KeszletConstants.KESZLET_MDARAB));
+		to.setKexportkarton(CommonUtils.longCheck(from
+				.getAttributeAsLong(KeszletConstants.KESZLET_KEXPORTKARTON)));
+		to.setKkiskarton(CommonUtils.longCheck(from
+				.getAttributeAsLong(KeszletConstants.KESZLET_KKISKARTON)));
+		to.setKdarab(CommonUtils.longCheck(from
+				.getAttributeAsLong(KeszletConstants.KESZLET_KDARAB)));
+		to.setMexportkarton(CommonUtils.longCheck(from
+				.getAttributeAsLong(KeszletConstants.KESZLET_MEXPORTKARTON)));
+		to.setMkiskarton(CommonUtils.longCheck(from
+				.getAttributeAsLong(KeszletConstants.KESZLET_MKISKARTON)));
+		to.setMdarab(CommonUtils.longCheck(from
+				.getAttributeAsLong(KeszletConstants.KESZLET_MDARAB)));
 
 		to.setHelykod(from
 				.getAttributeAsString(KeszletConstants.KESZLET_HELYKOD));

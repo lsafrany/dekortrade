@@ -1,6 +1,7 @@
 package hu.dekortrade.client.rendeles.megrendeles;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -143,9 +144,9 @@ public class RendeltCikkSzamoltDataSource extends GwtRpcDataSource {
 
 		to.setCikkszam(from.getAttributeAsString(MegrendelesConstants.MEGRENDELES_CIKKSZAM));
 		to.setSzinkod(from.getAttributeAsString(MegrendelesConstants.MEGRENDELES_SZINKOD));
-		to.setExportkarton(from.getAttributeAsInt(MegrendelesConstants.MEGRENDELES_EXPORTKARTON));
-		to.setKiskarton(from.getAttributeAsInt(MegrendelesConstants.MEGRENDELES_KISKARTON));
-		to.setDarab(from.getAttributeAsInt(MegrendelesConstants.MEGRENDELES_DARAB));
+		to.setExportkarton(CommonUtils.intCheck(from.getAttributeAsInt(MegrendelesConstants.MEGRENDELES_EXPORTKARTON)));
+		to.setKiskarton(CommonUtils.intCheck(from.getAttributeAsInt(MegrendelesConstants.MEGRENDELES_KISKARTON)));
+		to.setDarab(CommonUtils.intCheck(from.getAttributeAsInt(MegrendelesConstants.MEGRENDELES_DARAB)));
 		
 		
 	}

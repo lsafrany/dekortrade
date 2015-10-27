@@ -961,7 +961,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Cikk.class);
 			query.declareParameters(params);
 			query.setFilter(filter);
-//			query.setOrdering("cikkszam,szinkod");
+			query.setOrdering("cikkszam");
 			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
 					* Constants.FETCH_SIZE);
 			@SuppressWarnings("unchecked")
@@ -1171,7 +1171,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 		return raktarSer;
 	}
 
-	public List<RendeltSer> getRendelt() throws IllegalArgumentException,
+	public List<RendeltSer> getRendelt(String vevo) throws IllegalArgumentException,
 			SQLExceptionSer {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -1180,21 +1180,42 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 		try {
 			Query query = pm.newQuery(Rendelt.class);
-			query.setFilter("this.status == pstatus");
-			query.declareParameters("String pstatus");
-			@SuppressWarnings("unchecked")
-			List<Rendelt> list = (List<Rendelt>) pm.newQuery(query).execute(
+			if (vevo == null) {
+				query.setFilter("this.status == pstatus");
+				query.declareParameters("String pstatus");
+				@SuppressWarnings("unchecked")
+				List<Rendelt> list = (List<Rendelt>) pm.newQuery(query).execute(
 					Constants.INTERNET_ELORENDEL);
-			if (!list.isEmpty()) {
-				for (Rendelt l : list) {
-					RendeltSer rendeltSer = new RendeltSer();
-					rendeltSer.setRovidnev(l.getRovidnev());
-					rendeltSer.setRendeles(l.getRendeles());
-					rendeltSer.setDatum(new Date(l.getDatum().getTime()));
-					rendelt.add(rendeltSer);
+				
+				if (!list.isEmpty()) {
+					for (Rendelt l : list) {
+						RendeltSer rendeltSer = new RendeltSer();
+						rendeltSer.setRovidnev(l.getRovidnev());
+						rendeltSer.setRendeles(l.getRendeles());
+						rendeltSer.setDatum(new Date(l.getDatum().getTime()));
+						rendelt.add(rendeltSer);
+					}
 				}
-			}
 
+			}
+			else {
+				query.setFilter("(this.status == pstatus)  && (this.rovidnev == providnev)");
+				query.declareParameters("String pstatus,String providnev");
+				@SuppressWarnings("unchecked")
+				List<Rendelt> list = (List<Rendelt>) pm.newQuery(query).execute(
+					Constants.INTERNET_ELORENDEL,vevo);
+				
+				if (!list.isEmpty()) {
+					for (Rendelt l : list) {
+						RendeltSer rendeltSer = new RendeltSer();
+						rendeltSer.setRovidnev(l.getRovidnev());
+						rendeltSer.setRendeles(l.getRendeles());
+						rendeltSer.setDatum(new Date(l.getDatum().getTime()));
+						rendelt.add(rendeltSer);
+					}
+				}				
+			}
+			
 		} catch (Exception e) {
 			throw new SQLExceptionSer(e.getMessage());
 		} finally {
@@ -2112,8 +2133,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			List<Rendeltcikk> list = (List<Rendeltcikk>) pm.newQuery(query)
 					.execute(vevo, rendeles);
 			if ((list != null) && (!list.isEmpty())) {
-				for (Rendeltcikk l : list) {
-
+				for (Rendeltcikk l : list) {					
 					Query query1 = pm.newQuery(Cikk.class);
 					query1.setFilter("(this.cikkszam == pcikkszam) && (this.szinkod == pszinkod)");
 					query1.declareParameters("String pcikkszam,String pszinkod");
@@ -2136,7 +2156,9 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 						List<Kosarcikk> list3 = (List<Kosarcikk>) pm.newQuery(
 								query3).executeWithMap(parameters);
 						if ((list3 != null) && (!list3.isEmpty())) {
-							for (Kosarcikk l3 : list3) {
+					
+							System.out.println("Update");
+							for (Kosarcikk l3 : list3) {								
 								l3.setExportkarton(l3.getExportkarton()
 										+ l.getExportkarton());
 								l3.setKiskarton(l3.getKiskarton()
@@ -2144,6 +2166,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 								l3.setDarab(l3.getDarab() + l.getDarab());
 							}
 						} else {
+							System.out.println("Insert");
 							Kosarcikk kosarcikk = new Kosarcikk(elado, vevo,
 									Constants.CEDULA_STATUSZ_ELORENDELT,
 									l.getCikkszam(), l.getSzinkod(), list1.get(
@@ -2163,10 +2186,10 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 
 			Query query2 = pm.newQuery(Rendelt.class);
 			query2.setFilter("(this.rovidnev == providnev) && (this.rendeles == prendeles) && (this.status == pstatus)");
-			query2.declareParameters("String providnev,String prendeles");
+			query2.declareParameters("String providnev,String prendeles,String pstatus");
 			@SuppressWarnings("unchecked")
 			List<Rendelt> list2 = (List<Rendelt>) pm.newQuery(query2)
-					.execute(vevo,rendeles);
+					.execute(vevo,rendeles,Constants.INTERNET_ELORENDEL);
 			if ((list2 != null) && (!list2.isEmpty())) {
 				for (Rendelt l : list2) {
 					l.setStatus(Constants.INTERNET_IMPORTED);
@@ -3588,7 +3611,7 @@ public class DekorTradeServiceImpl extends RemoteServiceServlet implements
 			Query query = pm.newQuery(Cikk.class);
 			query.declareParameters(params);
 			query.setFilter(filter);
-//			query.setOrdering("keszlet,cikkszam,szinkod");
+			query.setOrdering("cikkszam");
 			query.setRange(page * Constants.FETCH_SIZE, (page + 1)
 					* Constants.FETCH_SIZE);
 			@SuppressWarnings("unchecked")

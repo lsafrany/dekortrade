@@ -48,7 +48,7 @@ public class Rendeles {
 				final Internet internet = new Internet();
 
 				if (!selecTab) {
-					tab.setPane(internet.get(null));
+					tab.setPane(internet.get(null,null));
 					tabSet.selectTab(0);
 					selecTab = true;
 				}
@@ -58,7 +58,7 @@ public class Rendeles {
 					@Override
 					public void onTabSelected(TabSelectedEvent event) {
 
-						tab.setPane(internet.get(null));
+						tab.setPane(internet.get(null,null));
 					}
 
 				});

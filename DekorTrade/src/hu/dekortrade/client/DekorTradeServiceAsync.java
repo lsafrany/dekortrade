@@ -85,7 +85,7 @@ public interface DekorTradeServiceAsync {
 
 	void removeCikk(CikkSer ctorzsSer, AsyncCallback<CikkSer> asyncCallback);
 
-	void getRendelt(AsyncCallback<List<RendeltSer>> asyncCallback);
+	void getRendelt(String vevo,AsyncCallback<List<RendeltSer>> asyncCallback);
 
 	void getRendeltcikk(String rovidnev, String rendeles,
 			AsyncCallback<List<RendeltcikkSer>> asyncCallback);

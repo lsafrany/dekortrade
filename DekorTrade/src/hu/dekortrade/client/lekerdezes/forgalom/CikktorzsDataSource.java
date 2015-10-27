@@ -1,6 +1,7 @@
 package hu.dekortrade.client.lekerdezes.forgalom;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -483,38 +484,38 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 				.getAttributeAsString(ForgalomConstants.CIKK_MEGNEVEZES));
 		to.setVamtarifaszam(from
 				.getAttributeAsString(ForgalomConstants.CIKK_VAMTARIFASZAM));
-		to.setFob(from.getAttributeAsDouble(ForgalomConstants.CIKK_FOB));
-		to.setSzallitas(from
-				.getAttributeAsDouble(ForgalomConstants.CIKK_SZALLITAS));
-		to.setDdu(from.getAttributeAsDouble(ForgalomConstants.CIKK_DDU));
-		to.setErsz(from.getAttributeAsDouble(ForgalomConstants.CIKK_ERSZ));
-		to.setElorar(from.getAttributeAsDouble(ForgalomConstants.CIKK_ELORAR));
-		to.setUjfob(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJFOB));
-		to.setUjszallitas(from
-				.getAttributeAsDouble(ForgalomConstants.CIKK_UJSZALLITAS));
-		to.setUjddu(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJDDU));
-		to.setUjersz(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJERSZ));
-		to.setUjelorar(from
-				.getAttributeAsDouble(ForgalomConstants.CIKK_UJELORAR));
-		to.setAr(from.getAttributeAsDouble(ForgalomConstants.CIKK_AR));
-		to.setAreur(from.getAttributeAsDouble(ForgalomConstants.CIKK_AREUR));
-		to.setArszorzo(from
-				.getAttributeAsDouble(ForgalomConstants.CIKK_ARSZORZO));
-		to.setKiskarton(from
-				.getAttributeAsInt(ForgalomConstants.CIKK_KISKARTON));
-		to.setDarab(from.getAttributeAsInt(ForgalomConstants.CIKK_DARAB));
+		to.setFob(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_FOB)));
+		to.setSzallitas(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(ForgalomConstants.CIKK_SZALLITAS)));
+		to.setDdu(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_DDU)));
+		to.setErsz(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_ERSZ)));
+		to.setElorar(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_ELORAR)));
+		to.setUjfob(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJFOB)));
+		to.setUjszallitas(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(ForgalomConstants.CIKK_UJSZALLITAS)));
+		to.setUjddu(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJDDU)));
+		to.setUjersz(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_UJERSZ)));
+		to.setUjelorar(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(ForgalomConstants.CIKK_UJELORAR)));
+		to.setAr(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_AR)));
+		to.setAreur(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_AREUR)));
+		to.setArszorzo(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(ForgalomConstants.CIKK_ARSZORZO)));
+		to.setKiskarton(CommonUtils.intCheck(from
+				.getAttributeAsInt(ForgalomConstants.CIKK_KISKARTON)));
+		to.setDarab(CommonUtils.intCheck(from.getAttributeAsInt(ForgalomConstants.CIKK_DARAB)));
 		to.setMertekegyseg(from
 				.getAttributeAsString(ForgalomConstants.CIKK_MERTEKEGYSEG));
-		to.setTerfogat(from
-				.getAttributeAsDouble(ForgalomConstants.CIKK_TERFOGAT));
-		to.setTerfogatlab(from
-				.getAttributeAsDouble(ForgalomConstants.CIKK_TERFOGATLAB));
-		to.setBsuly(from.getAttributeAsDouble(ForgalomConstants.CIKK_BSULY));
-		to.setNsuly(from.getAttributeAsDouble(ForgalomConstants.CIKK_NSULY));
+		to.setTerfogat(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(ForgalomConstants.CIKK_TERFOGAT)));
+		to.setTerfogatlab(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(ForgalomConstants.CIKK_TERFOGATLAB)));
+		to.setBsuly(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_BSULY)));
+		to.setNsuly(CommonUtils.doubleCheck(from.getAttributeAsDouble(ForgalomConstants.CIKK_NSULY)));
 		to.setLeiras(from.getAttributeAsString(ForgalomConstants.CIKK_LEIRAS));
 		to.setMegjegyzes(from
 				.getAttributeAsString(ForgalomConstants.CIKK_MEGJEGYZES));
-		to.setKepek(from.getAttributeAsInt(ForgalomConstants.CIKK_KEPEK));
+		to.setKepek(CommonUtils.intCheck(from.getAttributeAsInt(ForgalomConstants.CIKK_KEPEK)));
 	}
 
 	private ListGridRecord getEditedRecord(DSRequest request) {

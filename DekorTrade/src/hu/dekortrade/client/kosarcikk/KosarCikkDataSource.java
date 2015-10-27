@@ -1,6 +1,7 @@
 package hu.dekortrade.client.kosarcikk;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -305,14 +306,14 @@ public class KosarCikkDataSource extends GwtRpcDataSource {
 				.getAttributeAsString(KosarConstants.KOSAR_MEGNEVEZES));
 		to.setExportkarton(from
 				.getAttributeAsInt(KosarConstants.KOSAR_EXPORTKARTON));
-		to.setKiskarton(from.getAttributeAsInt(KosarConstants.KOSAR_KISKARTON));
-		to.setDarab(from.getAttributeAsInt(KosarConstants.KOSAR_DARAB));
-		to.setAr(from.getAttributeAsDouble(KosarConstants.KOSAR_AR));
-		to.setAreur(from.getAttributeAsDouble(KosarConstants.KOSAR_AREUR));
-		to.setArusd(from.getAttributeAsDouble(KosarConstants.KOSAR_ARUSD));
-		to.setFizet(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZET));
-		to.setFizeteur(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZETEUR));
-		to.setFizetusd(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZETUSD));
+		to.setKiskarton(CommonUtils.intCheck(from.getAttributeAsInt(KosarConstants.KOSAR_KISKARTON)));
+		to.setDarab(CommonUtils.intCheck(from.getAttributeAsInt(KosarConstants.KOSAR_DARAB)));
+		to.setAr(CommonUtils.doubleCheck(from.getAttributeAsDouble(KosarConstants.KOSAR_AR)));
+		to.setAreur(CommonUtils.doubleCheck(from.getAttributeAsDouble(KosarConstants.KOSAR_AREUR)));
+		to.setArusd(CommonUtils.doubleCheck(from.getAttributeAsDouble(KosarConstants.KOSAR_ARUSD)));
+		to.setFizet(CommonUtils.doubleCheck(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZET)));
+		to.setFizeteur(CommonUtils.doubleCheck(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZETEUR)));
+		to.setFizetusd(CommonUtils.doubleCheck(from.getAttributeAsDouble(KosarConstants.KOSAR_FIZETUSD)));
 		to.setRendeles(from.getAttributeAsString(KosarConstants.KOSAR_RENDELES));
 		to.setHelykod(from.getAttributeAsString(KosarConstants.KOSAR_HELYKOD));
 	}

@@ -1,6 +1,7 @@
 package hu.dekortrade.client.torzsadat.cikktorzs;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -161,6 +162,7 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 		field = new DataSourceFloatField(CikktorzsConstants.CIKK_DDU,
 				ctorzsLabels.cikk_ddu());
 		field.setLength(12);
+		field.setCanEdit(false);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
@@ -185,6 +187,7 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 		field = new DataSourceFloatField(CikktorzsConstants.CIKK_ELORAR,
 				ctorzsLabels.cikk_elorar());
 		field.setLength(12);
+		field.setCanEdit(false);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
@@ -197,6 +200,7 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 		field = new DataSourceFloatField(CikktorzsConstants.CIKK_AR,
 				ctorzsLabels.cikk_ar());
 		field.setLength(10);
+		field.setCanEdit(false);
 		field.setValidators(isFloatValidator);
 		addField(field);
 
@@ -483,38 +487,49 @@ public class CikktorzsDataSource extends GwtRpcDataSource {
 				.getAttributeAsString(CikktorzsConstants.CIKK_MEGNEVEZES));
 		to.setVamtarifaszam(from
 				.getAttributeAsString(CikktorzsConstants.CIKK_VAMTARIFASZAM));
-		to.setFob(from.getAttributeAsDouble(CikktorzsConstants.CIKK_FOB));
-		to.setSzallitas(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_SZALLITAS));
-		to.setDdu(from.getAttributeAsDouble(CikktorzsConstants.CIKK_DDU));
-		to.setErsz(from.getAttributeAsDouble(CikktorzsConstants.CIKK_ERSZ));
-		to.setElorar(from.getAttributeAsDouble(CikktorzsConstants.CIKK_ELORAR));
-		to.setUjfob(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJFOB));
-		to.setUjszallitas(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_UJSZALLITAS));
-		to.setUjddu(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJDDU));
-		to.setUjersz(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJERSZ));
-		to.setUjelorar(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_UJELORAR));
-		to.setAr(from.getAttributeAsDouble(CikktorzsConstants.CIKK_AR));
-		to.setAreur(from.getAttributeAsDouble(CikktorzsConstants.CIKK_AREUR));
-		to.setArszorzo(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_ARSZORZO));
-		to.setKiskarton(from
-				.getAttributeAsInt(CikktorzsConstants.CIKK_KISKARTON));
-		to.setDarab(from.getAttributeAsInt(CikktorzsConstants.CIKK_DARAB));
+		to.setFob(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_FOB)));
+		to.setSzallitas(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(CikktorzsConstants.CIKK_SZALLITAS)));
+		to.setDdu(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_DDU)));
+		to.setErsz(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_ERSZ)));
+		to.setElorar(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_ELORAR)));
+		to.setUjfob(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJFOB)));
+		to.setUjszallitas(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(CikktorzsConstants.CIKK_UJSZALLITAS)));
+		to.setUjddu(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJDDU)));
+		to.setUjersz(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_UJERSZ)));
+		to.setUjelorar(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(CikktorzsConstants.CIKK_UJELORAR)));
+		to.setAr(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_AR)));
+		to.setAreur(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_AREUR)));
+		to.setArszorzo(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(CikktorzsConstants.CIKK_ARSZORZO)));
+		to.setKiskarton(CommonUtils.intCheck(from
+				.getAttributeAsInt(CikktorzsConstants.CIKK_KISKARTON)));
+		to.setDarab(CommonUtils.intCheck(from.getAttributeAsInt(CikktorzsConstants.CIKK_DARAB)));
 		to.setMertekegyseg(from
 				.getAttributeAsString(CikktorzsConstants.CIKK_MERTEKEGYSEG));
-		to.setTerfogat(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_TERFOGAT));
-		to.setTerfogatlab(from
-				.getAttributeAsDouble(CikktorzsConstants.CIKK_TERFOGATLAB));
-		to.setBsuly(from.getAttributeAsDouble(CikktorzsConstants.CIKK_BSULY));
-		to.setNsuly(from.getAttributeAsDouble(CikktorzsConstants.CIKK_NSULY));
+		to.setTerfogat(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(CikktorzsConstants.CIKK_TERFOGAT)));
+		to.setTerfogatlab(CommonUtils.doubleCheck(from
+				.getAttributeAsDouble(CikktorzsConstants.CIKK_TERFOGATLAB)));
+		to.setBsuly(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_BSULY)));
+		to.setNsuly(CommonUtils.doubleCheck(from.getAttributeAsDouble(CikktorzsConstants.CIKK_NSULY)));
 		to.setLeiras(from.getAttributeAsString(CikktorzsConstants.CIKK_LEIRAS));
 		to.setMegjegyzes(from
 				.getAttributeAsString(CikktorzsConstants.CIKK_MEGJEGYZES));
-		to.setKepek(from.getAttributeAsInt(CikktorzsConstants.CIKK_KEPEK));
+		to.setKepek(CommonUtils.intCheck(from.getAttributeAsInt(CikktorzsConstants.CIKK_KEPEK)));
+		
+		// DDU= (köbméter X szállítás)/ (kiskarton X darab)+FOB Ár.
+		if ((to.getKiskarton().intValue() * to.getDarab().intValue()) > 0)
+			to.setDdu(  ((to.getTerfogat() * to.getSzallitas()) / (to.getKiskarton() * to.getDarab())) + to.getFob());
+		
+		// Elorendelt ar = ERSZ X DDU  (Most az ERSZ 1,95.)
+		to.setElorar(to.getErsz() * to.getDdu());
+		
+		// Ajanlott ar = Ajanlott ar szorzó X Elorendelt ar. (Ajanlott ar szorzo most 360)
+		to.setAr(to.getArszorzo() * to.getElorar( ));
+		
 	}
 
 	private ListGridRecord getEditedRecord(DSRequest request) {

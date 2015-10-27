@@ -1,6 +1,7 @@
 package hu.dekortrade.client.raktar.beszallitas;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -156,9 +157,9 @@ public class MegRendeltCikkDataSource extends GwtRpcDataSource {
 		to.setRendeles(from.getAttributeAsString(BeszallitasConstants.MEGRENDELT_RENDELES));
 		to.setCikkszam(from.getAttributeAsString(BeszallitasConstants.MEGRENDELT_CIKKSZAM));
 		to.setSzinkod(from.getAttributeAsString(BeszallitasConstants.MEGRENDELT_SZINKOD));
-		to.setExportkarton(from.getAttributeAsInt(BeszallitasConstants.MEGRENDELT_EXPORTKARTON));
-		to.setKiskarton(from.getAttributeAsInt(BeszallitasConstants.MEGRENDELT_KISKARTON));
-		to.setDarab(from.getAttributeAsInt(BeszallitasConstants.MEGRENDELT_DARAB));
+		to.setExportkarton(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.MEGRENDELT_EXPORTKARTON)));
+		to.setKiskarton(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.MEGRENDELT_KISKARTON)));
+		to.setDarab(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.MEGRENDELT_DARAB)));
 	}
 
 }

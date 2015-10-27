@@ -34,7 +34,7 @@ public class Internet {
 
 	private String rendeles = "";
 
-	public Canvas get(final IButton extIButton) {
+	public Canvas get(final String vevo,final IButton extIButton) {
 		DisplayRequest.counterInit();
 
 		final HLayout middleLayout = new HLayout();
@@ -85,7 +85,10 @@ public class Internet {
 		rendeltGrid.setCanSort(false);
 		rendeltGrid.setShowAllRecords(true);
 		rendeltGrid.setDataSource(rendeltDataSource);
-		rendeltGrid.setAutoFetchData(true);
+		
+		Criteria criteria = new Criteria();
+		criteria.addCriteria(InternetConstants.INTERNETRENDELT_ROVIDNEV,vevo);
+		rendeltGrid.fetchData(criteria);
 
 		ListGridField rovidnevGridField = new ListGridField(
 				InternetConstants.INTERNETRENDELT_ROVIDNEV);
@@ -187,8 +190,13 @@ public class Internet {
 
 		frissitIButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				if (extIButton != null) {
+					extIButton.setDisabled(true);
+				}
 				rendeltGrid.invalidateCache();
-				rendeltGrid.fetchData();
+				Criteria criteria = new Criteria();
+				criteria.addCriteria(InternetConstants.INTERNETRENDELT_ROVIDNEV,vevo);
+				rendeltGrid.fetchData(criteria);
 				rendeltcikkGrid.setData(new ListGridRecord[] {});
 			}
 		});

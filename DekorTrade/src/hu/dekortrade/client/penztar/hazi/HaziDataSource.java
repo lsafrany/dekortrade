@@ -1,6 +1,7 @@
 package hu.dekortrade.client.penztar.hazi;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -156,9 +157,9 @@ public class HaziDataSource extends GwtRpcDataSource {
 	private static void copyValues(ListGridRecord from, FizetesSer to) {
 		to.setMegjegyzes(from.getAttributeAsString(HaziConstants.HAZI_MEGJEGYZES));
 		to.setPenztaros(UserInfo.userId);
-		to.setFizet(from.getAttributeAsDouble(HaziConstants.HAZI_FIZET));
-		to.setFizeteur(from.getAttributeAsDouble(HaziConstants.HAZI_FIZETEUR));
-		to.setFizetusd(from.getAttributeAsDouble(HaziConstants.HAZI_FIZETUSD));
+		to.setFizet(CommonUtils.doubleCheck(from.getAttributeAsDouble(HaziConstants.HAZI_FIZET)));
+		to.setFizeteur(CommonUtils.doubleCheck(from.getAttributeAsDouble(HaziConstants.HAZI_FIZETEUR)));
+		to.setFizetusd(CommonUtils.doubleCheck(from.getAttributeAsDouble(HaziConstants.HAZI_FIZETUSD)));
 	}
 
 }

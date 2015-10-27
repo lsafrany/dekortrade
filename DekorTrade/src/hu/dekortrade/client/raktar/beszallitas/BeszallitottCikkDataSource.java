@@ -1,6 +1,7 @@
 package hu.dekortrade.client.raktar.beszallitas;
 
 import hu.dekortrade.client.ClientConstants;
+import hu.dekortrade.client.CommonUtils;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
@@ -178,12 +179,12 @@ public class BeszallitottCikkDataSource extends GwtRpcDataSource {
 	private static void copyValues(ListGridRecord from, BeszallitottcikkSer to) {
 		to.setCikkszam(from.getAttributeAsString(BeszallitasConstants.BESZALLITAS_CIKKSZAM));
 		to.setSzinkod(from.getAttributeAsString(BeszallitasConstants.BESZALLITAS_SZINKOD));
-		to.setExportkarton(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_EXPORTKARTON));
-		to.setKiskarton(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_KISKARTON));	
-		to.setDarab(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_DARAB));	
-		to.setMegrendexportkarton(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDEXPORTKARTON));	
-		to.setMegrendkiskarton(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDKISKARTON));	
-		to.setMegrenddarab(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDDARAB));	
+		to.setExportkarton(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_EXPORTKARTON)));
+		to.setKiskarton(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_KISKARTON)));	
+		to.setDarab(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_DARAB)));	
+		to.setMegrendexportkarton(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDEXPORTKARTON)));	
+		to.setMegrendkiskarton(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDKISKARTON)));	
+		to.setMegrenddarab(CommonUtils.intCheck(from.getAttributeAsInt(BeszallitasConstants.BESZALLITAS_MEGRENDDARAB)));	
 		to.setRogzito(from.getAttributeAsString(BeszallitasConstants.BESZALLITAS_ROGZITO));	
 		to.setDatum(from.getAttributeAsDate(BeszallitasConstants.BESZALLITAS_DATUM));	
 		to.setRovancs(from.getAttributeAsBoolean(BeszallitasConstants.BESZALLITAS_ROVANCS));	

@@ -1,6 +1,7 @@
 package hu.dekortrade99.client.order;
 
 import hu.dekortrade99.client.ClientConstants;
+import hu.dekortrade99.client.CommonUtils;
 import hu.dekortrade99.client.DekorTrade99Service;
 import hu.dekortrade99.client.DekorTrade99ServiceAsync;
 import hu.dekortrade99.client.GwtRpcDataSource;
@@ -204,12 +205,12 @@ public class KosarDataSource extends GwtRpcDataSource {
 		to.setRovidnev(UserInfo.userId);
 		to.setCikkszam(from.getAttribute(OrderConstants.KOSAR_CIKKSZAM));
 		to.setSzinkod(from.getAttribute(OrderConstants.KOSAR_SZINKOD));
-		to.setExportkarton(from
-				.getAttributeAsInt(OrderConstants.KOSAR_EXPORTKARTON));
-		to.setKiskarton(from
-				.getAttributeAsInt(OrderConstants.KOSAR_KISKARTON));
-		to.setDarab(from
-				.getAttributeAsInt(OrderConstants.KOSAR_DARAB));
+		to.setExportkarton(CommonUtils.intCheck(from
+				.getAttributeAsInt(OrderConstants.KOSAR_EXPORTKARTON)));
+		to.setKiskarton(CommonUtils.intCheck(from
+				.getAttributeAsInt(OrderConstants.KOSAR_KISKARTON)));
+		to.setDarab(CommonUtils.intCheck(from
+				.getAttributeAsInt(OrderConstants.KOSAR_DARAB)));
 	}
 
 	private static void copyValues(KosarSer from, ListGridRecord to) {

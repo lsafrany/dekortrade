@@ -4,6 +4,7 @@ import hu.dekortrade.client.ClientConstants;
 import hu.dekortrade.client.DekorTradeService;
 import hu.dekortrade.client.DekorTradeServiceAsync;
 import hu.dekortrade.client.GwtRpcDataSource;
+import hu.dekortrade.client.torzsadat.cikktorzs.CikktorzsConstants;
 import hu.dekortrade.shared.serialized.RendeltSer;
 import hu.dekortrade.shared.serialized.SQLExceptionSer;
 
@@ -49,7 +50,8 @@ public class InternetRendeltDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch(final String requestId,
 			final DSRequest request, final DSResponse response) {
-		dekorTradeService.getRendelt(new AsyncCallback<List<RendeltSer>>() {
+		dekorTradeService.getRendelt(request.getCriteria().getAttributeAsString(InternetConstants.INTERNETRENDELT_ROVIDNEV),
+ new AsyncCallback<List<RendeltSer>>() {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof SQLExceptionSer)
 					response.setAttribute(ClientConstants.SERVER_SQLERROR,

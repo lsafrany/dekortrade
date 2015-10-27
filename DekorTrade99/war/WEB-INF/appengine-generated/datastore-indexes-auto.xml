@@ -1,4 +1,4 @@
-<!-- Indices written at Wed, 12 Nov 2014 21:42:49 UTC -->
+<!-- Indices written at Tue, 27 Oct 2015 21:11:11 UTC -->
 
 <datastore-indexes>
 
@@ -6,20 +6,6 @@
     <datastore-index kind="Kosar" ancestor="false" source="auto">
         <property name="rovidnev" direction="asc"/>
         <property name="cikkszam" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Cikk" ancestor="false" source="auto">
-        <property name="altipus" direction="asc"/>
-        <property name="fotipus" direction="asc"/>
-        <property name="torolt" direction="asc"/>
-        <property name="cikkszam" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Rendelt" ancestor="false" source="auto">
-        <property name="rovidnev" direction="asc"/>
-        <property name="rendeles" direction="asc"/>
     </datastore-index>
 
 </datastore-indexes>

@@ -102,7 +102,7 @@ public interface DekorTradeService extends RemoteService {
 	CikkSer removeCikk(CikkSer ctorzsSer) throws IllegalArgumentException,
 			SQLExceptionSer;
 
-	List<RendeltSer> getRendelt() throws IllegalArgumentException,
+	List<RendeltSer> getRendelt(String vevo) throws IllegalArgumentException,
 			SQLExceptionSer;
 
 	List<RendeltcikkSer> getRendeltcikk(String rovidnev, String rendeles)
